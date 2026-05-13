@@ -7,7 +7,7 @@ icon: "file-lines"
 The applications plugin lets you create forms that members fill in and submit for staff review. Use it for staff applications, event sign-ups, allowlist requests, or any situation where you need structured information from members.
 
 <Frame>
-  <img src="/images/screenshots/docs-applications.png" alt="Applications dashboard showing configured forms and pending submissions" />
+  ![Applications Overview](/images/Applications_Overview.png)
 </Frame>
 
 ## How applications work
@@ -19,7 +19,7 @@ You create a form in the dashboard with as many questions as needed. Members acc
 Navigate to **Applications** in the dashboard and click **New Form**.
 
 | Setting | Description |
-|---|---|
+| --- | --- |
 | **Name** | The form's display name, shown to members when they select it |
 | **Description** | A short explanation of what the form is for |
 | **Channel** | Where submission notifications are posted for staff |
@@ -31,14 +31,14 @@ Navigate to **Applications** in the dashboard and click **New Form**.
 ### Question types
 
 | Type | Description |
-|---|---|
+| --- | --- |
 | **Short text** | A single-line text input, up to 256 characters |
 | **Long text** | A multi-line text input, up to 4000 characters |
 | **Multiple choice** | The member selects one option from a defined list |
 
 ## Submitting an application
 
-```
+```text
 /application list
 /application post <form>
 ```
@@ -56,7 +56,7 @@ Navigate to **Applications** in the dashboard. Each submission shows all questio
 ## Required permissions
 
 | Action | Permission key |
-|---|---|
+| --- | --- |
 | Submitting an application | `applications.open` (default allow) |
 | Viewing form submissions | `applications.review` |
 | Approving and declining submissions | `applications.manage` |

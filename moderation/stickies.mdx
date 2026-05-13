@@ -9,12 +9,12 @@ A sticky message is a message that the bot re-posts to the bottom of a channel w
 This is useful for pinning rules, instructions, or important announcements in active channels where a standard Discord pin would easily go unnoticed.
 
 <Frame>
-  <img src="/images/screenshots/docs-moderation-stickies.png" alt="Sticky messages dashboard showing active stickies and their configured channels" />
+  ![Moderation Sticky Messages](/images/Moderation_Sticky_messages.png)
 </Frame>
 
 ## Creating a sticky
 
-```
+```text
 /sticky create [channel]
 ```
 
@@ -24,7 +24,7 @@ Only one sticky can be active per channel.
 
 ## Managing stickies via the dashboard
 
-Navigate to **Moderation > Stickies** in the dashboard. This page lists all active sticky messages across your server. From here you can:
+Navigate to **Moderation \> Stickies** in the dashboard. This page lists all active sticky messages across your server. From here you can:
 
 - **View the content** of each sticky
 - **Edit** a sticky's message content
@@ -32,7 +32,7 @@ Navigate to **Moderation > Stickies** in the dashboard. This page lists all acti
 
 ## Editing and deleting via command
 
-```
+```text
 /sticky delete [channel]
 ```
 
@@ -47,6 +47,6 @@ Sticky messages are posted under the bot's own account. If a moderator manually 
 ## Required permissions
 
 | Action | Permission key |
-|---|---|
+| --- | --- |
 | Creating and deleting stickies | `moderation.manageRules` |
 | Viewing stickies in the dashboard | `moderation.config.view_config` |

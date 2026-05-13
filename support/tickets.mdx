@@ -7,7 +7,7 @@ icon: "ticket"
 The ticket system creates private Discord threads for individual support requests. Members open a ticket, staff respond inside the thread, and the ticket is closed when the issue is resolved. Configuration in the dashboard defines which categories of support are available, who can open tickets, and how the system behaves automatically.
 
 <Frame>
-  <img src="/images/screenshots/tickets-dashboard.png" alt="Tickets dashboard showing open tickets, categories, and management controls" />
+  ![Tickets Dashboard](/images/Tickets_Dashboard.png)
 </Frame>
 
 ## How tickets work for members
@@ -20,10 +20,10 @@ When the issue is resolved, either the member or a staff member closes the ticke
 
 ### Creating categories
 
-Navigate to **Tickets > Categories** in the dashboard and click **New Category**. Each category defines:
+Navigate to **Tickets \> Categories** in the dashboard and click **New Category**. Each category defines:
 
 | Setting | Description |
-|---|---|
+| --- | --- |
 | **Name** | Displayed when a member selects a ticket type |
 | **Description** | Brief explanation of what this category is for |
 | **Channel** | The parent channel where ticket threads are created |
@@ -34,7 +34,7 @@ Navigate to **Tickets > Categories** in the dashboard and click **New Category**
 
 ### Configuring openers
 
-Openers are the buttons or select menus members use to create tickets. Navigate to **Tickets > Openers** and click **New Opener**. After configuring the opener, click **Post** to have the bot send the opener panel to a channel of your choice.
+Openers are the buttons or select menus members use to create tickets. Navigate to **Tickets \> Openers** and click **New Opener**. After configuring the opener, click **Post** to have the bot send the opener panel to a channel of your choice.
 
 An opener can present a single "Open Ticket" button or a select menu listing multiple categories, depending on how you configure it.
 
@@ -43,7 +43,7 @@ An opener can present a single "Open Ticket" button or a select menu listing mul
 The `/ticket` command provides the following subcommands:
 
 | Subcommand | Description |
-|---|---|
+| --- | --- |
 | `/ticket open [category]` | Open a new ticket, optionally pre-selecting a category |
 | `/ticket close [reason]` | Close the current ticket thread |
 | `/ticket claim` | Assign the ticket to yourself as the handling staff member |
@@ -64,12 +64,12 @@ If the AI plugin is enabled and connected to your ticket categories, Heimdall ca
 
 ## Reviews
 
-Members can optionally be prompted to leave a satisfaction review when a ticket is closed. Review scores appear in the analytics dashboard. Enable reviews in **Tickets > Configuration**.
+Members can optionally be prompted to leave a satisfaction review when a ticket is closed. Review scores appear in the analytics dashboard. Enable reviews in **Tickets \> Configuration**.
 
 ## Required permissions
 
 | Action | Permission key |
-|---|---|
+| --- | --- |
 | Opening a ticket | `tickets.open` (default allow) |
 | Closing any ticket | `tickets.manage` |
 | Claiming tickets | `tickets.claim` |

@@ -7,7 +7,7 @@ icon: "scale-balanced"
 The appeals system gives banned members a way to contest their ban through a form submission rather than requiring them to contact staff directly. Submissions arrive in the dashboard for staff review, and the appeals site (a separate web interface accessible without a Discord account) handles the member-facing form.
 
 <Frame>
-  <img src="/images/screenshots/docs-moderation-appeals.png" alt="Appeals inbox in the dashboard showing pending and reviewed submissions" />
+  ![Moderation Appeals](/images/Moderation_Appeals.png)
 </Frame>
 
 ## How it works for members
@@ -18,7 +18,7 @@ The submitted appeal appears in the dashboard for staff review.
 
 ## Setting up the appeals system
 
-Navigate to **Moderation > Appeals** in the dashboard.
+Navigate to **Moderation \> Appeals** in the dashboard.
 
 ### Configure the appeal form
 
@@ -36,7 +36,7 @@ The appeals site is deployed separately from the main dashboard. Enter its URL i
 
 ## Reviewing appeals in the dashboard
 
-Navigate to **Moderation > Appeals** and open the **Submissions** tab. Each appeal shows:
+Navigate to **Moderation \> Appeals** and open the **Submissions** tab. Each appeal shows:
 
 - The submitter's stated Discord username and ID
 - Submission date
@@ -50,7 +50,7 @@ From the review panel you can:
 
 ## Appeal form via command
 
-```
+```text
 /appeals config
 ```
 
@@ -59,7 +59,7 @@ Opens the appeal configuration panel in Discord, allowing quick access to form s
 ## Required permissions
 
 | Action | Permission key |
-|---|---|
+| --- | --- |
 | Viewing appeal submissions | `moderation.appeals.view` |
 | Reviewing and actioning appeals | `moderation.appeals.manage` |
 | Configuring the appeal form | `moderation.appeals.manageForms` |
