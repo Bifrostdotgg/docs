@@ -1,0 +1,118 @@
+---
+title: "Dashboard Settings"
+description: "Configuring general dashboard behaviour, slash command settings, server templates, file storage, and the audit log."
+icon: "gear"
+---
+
+The Settings page is the central configuration area for the dashboard itself rather than any individual plugin. Access it by clicking **Settings** in the sidebar. It is divided into tabs, each covering a different aspect of how the dashboard and bot behave for your server.
+
+## General
+
+The General tab controls top-level dashboard behaviour.
+
+### Hide denied features
+
+When enabled, dashboard sections that the current user does not have permission to access are hidden from the sidebar entirely rather than shown greyed out. This keeps the sidebar clean for staff members who only need access to specific areas.
+
+Administrators always see the full sidebar regardless of this setting.
+
+### Setup wizard
+
+The setup wizard walks you through the initial configuration of Heimdall's core features. If you need to revisit it — for example when enabling a new set of plugins — click **Re-run Setup Wizard** to start it again from the beginning. This does not reset any existing configuration; it simply guides you through each step again.
+
+## Commands
+
+The Commands tab lets you configure how Heimdall's slash commands appear and behave in your server.
+
+Each command can be individually:
+
+- **Enabled or disabled** — disabled commands are removed from Discord's command list for your server
+- **Renamed** — give a command a custom name that fits your server's conventions (e.g. rename `/suggest` to `/feedback`)
+- **Description overridden** — change the description shown in Discord's autocomplete
+
+Changes take effect within a minute as Discord propagates the updated command list to your server.
+
+## Role Permissions
+
+The Role Permissions tab is the primary place for configuring which Discord roles have access to which Heimdall features. See [Permissions](/permissions) for a full explanation of how the system works.
+
+Select a role from the dropdown to view and edit its permission overrides. Each permission key displays its current state — **Allow**, **Deny**, or **Default** — using a three-position toggle.
+
+## User Permissions
+
+The User Permissions tab lets you apply per-user overrides on top of role-based permissions. A user-level override takes priority over any role the member holds, making it useful for granting access to a specific person without changing their roles, or for blocking one individual from a feature their roles would otherwise allow.
+
+Select a user by searching their Discord username or ID, then configure overrides the same way as role permissions.
+
+## Server Template
+
+The Server Template tab lets you export your server's complete Heimdall configuration as a JSON file and import it into another server.
+
+### Exporting
+
+Click **Export Configuration** to download a JSON file containing every plugin's settings, permission overrides, automod rules, categories, and other configuration stored by Heimdall for your server.
+
+### Importing
+
+Click **Import Configuration** and upload a previously exported JSON file. You can choose to import all sections or select specific plugins to import. Existing configuration for the selected plugins is overwritten.
+
+<Warning>
+Importing a template overwrites existing configuration for the selected sections. Take an export of your current setup before importing if you need a backup.
+</Warning>
+
+## File Storage
+
+The File Storage tab connects Heimdall to an external storage provider for attachments. By default, files attached to ticket and modmail conversations are stored via Discord's own CDN. External storage lets you retain those files after Discord deletes them (typically after a year) and removes file size limitations.
+
+### Storage providers
+
+| Provider | Notes |
+|---|---|
+| **S3-compatible** | AWS S3, Cloudflare R2, MinIO, and any S3-compatible endpoint |
+| **UploadThing** | Managed file hosting with no infrastructure to maintain |
+| **Zipline** | Self-hosted file sharing server |
+| **FiveManage** | FiveM community file hosting |
+| **Google Drive** | Store files in a Google Drive folder |
+| **OneDrive** | Store files in a OneDrive folder |
+| **Discord Channel** | Upload files to a private Discord channel as a fallback |
+
+### Storage modes
+
+- **Oversized only** — only files that exceed Discord's upload limit are sent to external storage; smaller files continue using Discord's CDN.
+- **All files** — all attachments are routed through external storage regardless of size.
+
+### Overflow provider
+
+You can configure a secondary overflow provider. Files exceeding a configured byte threshold are automatically routed to the overflow provider instead of the primary one. This is useful when your primary provider has storage quotas and you want to keep large files elsewhere.
+
+### Setup
+
+Select your provider, enter the required credentials (API key, bucket name, region, endpoint as applicable), then click **Save**. The dashboard provides a guided setup doc specific to each provider accessible from the **Setup Guide** link next to the provider selector.
+
+<Note>
+Credentials are encrypted at rest and are never exposed in the dashboard after being saved. To update a credential, paste a new value and save.
+</Note>
+
+## Audit Log
+
+The Audit Log tab records actions taken in the Heimdall dashboard — which staff member changed a configuration, created or deleted a category, modified a permission, and so on. This is separate from Discord's server audit log.
+
+Each entry shows:
+
+| Field | Description |
+|---|---|
+| **Timestamp** | When the action occurred |
+| **User** | Which dashboard user performed the action |
+| **Action** | What was changed (e.g. "Permission override updated", "Category deleted") |
+| **Details** | A summary of what changed, including before and after values where applicable |
+
+The audit log is read-only and cannot be cleared. Entries are retained for a rolling 90-day window.
+
+## Required permissions
+
+| Action | Permission key |
+|---|---|
+| Viewing and changing general settings | `dashboard.manage_settings` |
+| Viewing and changing role/user permissions | `dashboard.manage_permissions` |
+| Managing file storage configuration | `file-storage.manage_config` |
+| Viewing the audit log | `dashboard.manage_permissions` |

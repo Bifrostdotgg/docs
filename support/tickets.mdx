@@ -64,7 +64,35 @@ If the AI plugin is enabled and connected to your ticket categories, Heimdall ca
 
 ## Reviews
 
-Members can optionally be prompted to leave a satisfaction review when a ticket is closed. Review scores appear in the analytics dashboard. Enable reviews in **Tickets \> Configuration**.
+Members can optionally be prompted to leave a satisfaction review when a ticket is closed. The review prompt asks the member to rate their experience and optionally leave a comment. Scores and comments are aggregated in the analytics dashboard under **Tickets > Reviews** and can be filtered by category and date range.
+
+Enable reviews in **Tickets > Configuration**. You can configure whether the review prompt is sent for all closures or only when closed by staff.
+
+## Auto-Responses
+
+Ticket auto-responses are pre-written replies that fire automatically when a ticket is opened if the opening message matches a trigger. Navigate to **Tickets > Auto-Responses** to configure them.
+
+Each auto-response has:
+
+| Setting | Description |
+|---|---|
+| **Name** | Internal label |
+| **Trigger** | A keyword or phrase that must appear in the opening message |
+| **Response** | The message posted automatically inside the ticket thread |
+| **Category scope** | Optionally restrict the auto-response to specific ticket categories |
+
+Auto-responses post as the bot inside the thread. They do not close the ticket — staff still handle the conversation.
+
+## Quotas
+
+Quotas limit how many open tickets an individual staff member can be assigned to at once. Navigate to **Tickets > Quotas** to configure per-role or per-user limits.
+
+When a staff member reaches their quota:
+
+- Auto-assignment skips them when distributing new tickets
+- Manual assignment is still possible if a manager overrides the quota
+
+Quota usage is visible in the analytics dashboard alongside response time and closure metrics.
 
 ## Required permissions
 

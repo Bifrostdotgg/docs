@@ -54,6 +54,21 @@ Gift card codes are generated through the Tebex API and can be distributed to me
 
 Claims allow you to manually grant packages to members. Navigate to **Tebex > Claims** in the dashboard or use the Tebex slash command to manage pending claims.
 
+## Role Mappings
+
+Role mappings automatically assign Discord roles when a member purchases a specific Tebex package. Navigate to **Tebex > Role Mappings** to configure them.
+
+Each mapping defines:
+
+| Setting | Description |
+|---|---|
+| **Package** | The Tebex package that triggers the mapping |
+| **Role to grant** | The Discord role assigned on purchase |
+| **Role to remove** | An optional Discord role removed on purchase (useful for upgrading membership tiers) |
+| **Persistent** | Whether the role assignment is permanent or should be removed if the member's subscription lapses |
+
+For subscription packages, Heimdall can optionally remove the role when the subscription expires or is cancelled. This requires your Tebex webhook to be configured to send subscription events.
+
 ## Required permissions
 
 | Action | Permission key |

@@ -75,11 +75,27 @@ Navigate to **Minecraft > Configuration** in the dashboard and enter:
 | **Whitelist roles** | Discord roles that entitle a member to whitelist access |
 | **Require approval** | Whether linked accounts require manual approval |
 
+## Offenses
+
+The Offenses page (**Minecraft > Offenses**) records Minecraft-level infractions for players linked to your Discord server. An offense is logged whenever a player is banned, kicked, or muted on the Minecraft server while their account is linked to a Discord member.
+
+Staff can:
+
+- **View** the full offense history for any linked player, including the reason and which staff member issued it
+- **Pardon** an offense to unban or unmute the player on the Minecraft server via RCON
+- **Filter** by player name, Discord user, or offense type
+
+Offenses are separate from Heimdall's Discord infraction system. They represent actions taken on the Minecraft server itself rather than Discord moderation actions.
+
 ## Required permissions
 
 | Action | Permission key |
 |---|---|
 | Linking a Minecraft account | `minecraft.useLinking` (default allow) |
-| Viewing the player list | `minecraft.viewPlayers` |
-| Managing players and approvals | `minecraft.managePlayers` |
-| Approving whitelist requests | `minecraft.approveWhitelist` |
+| Viewing the player list | `minecraft.players.view_players` |
+| Managing players and approvals | `minecraft.players.manage_players` |
+| Approving whitelist requests | `minecraft.players.approve_whitelist` |
+| Viewing server status | `minecraft.server.view_status` |
+| Using RCON | `minecraft.server.use_rcon` |
+| Viewing offenses | `minecraft.offenses.view_infractions` |
+| Managing and pardoning offenses | `minecraft.offenses.manage_offenses` |

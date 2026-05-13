@@ -1,0 +1,79 @@
+---
+title: "Auto-Responses"
+description: "Configuring keyword and AI-triggered automatic replies to member messages."
+icon: "reply"
+---
+
+Auto-responses are automated replies that Heimdall posts when a member sends a message matching a configured pattern. Unlike automod rules, which enforce and punish, auto-responses simply reply — they are informational. Common uses include answering frequently asked questions, directing members to the right channel, or acknowledging a keyword with a helpful resource link.
+
+## How auto-responses work
+
+Every message sent in a covered channel is checked against your configured auto-responses. When a match is found, the bot replies directly to the triggering message. Each auto-response has a per-channel cooldown to prevent the bot from spamming the same reply repeatedly.
+
+Matching works in two phases:
+
+1. **Regex matching** — patterns are evaluated in priority order. The first pattern that matches the message fires immediately and no further patterns are checked.
+2. **AI matching** — if no regex pattern matched and you have AI-enabled auto-responses configured, all of those candidates are sent to the AI classifier in a single call. The classifier picks the best match based on your natural-language descriptions, or returns nothing if no description fits.
+
+## Creating an auto-response
+
+Navigate to **Moderation > Auto-Responses** in the dashboard and click **New Auto-Response**.
+
+| Setting | Description |
+|---|---|
+| **Name** | Internal label for this auto-response |
+| **Trigger type** | **Regex** (pattern match) or **AI** (natural language description) |
+| **Pattern** (regex) | A regular expression matched against the message content, case-insensitive by default |
+| **Description** (AI) | A plain-language description of what the message should be about, used by the AI classifier |
+| **Priority** | Lower numbers run first when multiple regex rules are present |
+| **Response type** | **Text** — plain message reply, or **Embed** — a rich embed with title, description, colour, image, and footer |
+| **Response content** | The text or embed content to reply with |
+| **Scope** | **Global** — fires in all channels, or **Channel** — fires only in selected channels |
+| **Cooldown** | How long (in seconds) before the same response can fire again in the same channel |
+| **Immune roles** | Roles that are exempt from triggering this auto-response |
+
+## Regex triggers
+
+Regex patterns are matched against the full message content. The match is case-insensitive by default. You do not need to anchor the pattern — a pattern of `how.*join` will match "how do I join", "how can I join the server", and similar phrases.
+
+If you need case-sensitive matching or other flags, you can configure pattern flags on the auto-response.
+
+## AI triggers
+
+AI-triggered auto-responses use a natural-language description rather than a pattern. For example, an AI auto-response with the description "member asking where to find the server rules" will fire when the AI classifier determines a message is asking about rules, even if the wording is entirely different each time.
+
+AI classification happens in a single batched call across all AI-enabled auto-responses, so the performance cost is low regardless of how many you configure.
+
+<Note>
+AI auto-responses require the AI plugin to be enabled and configured on your server. Regex auto-responses work independently.
+</Note>
+
+## Channel scoping
+
+By default, a new auto-response is global — it applies to every channel. Setting the scope to **Channel** lets you pick specific channels (or categories) where the rule applies. Thread messages also check the parent channel's auto-responses, so a channel-scoped rule covers that channel's threads as well.
+
+## Cooldowns
+
+Each auto-response has a per-channel cooldown. If the bot already replied with a given auto-response in a channel within the cooldown window, it skips the match to avoid repetition. The cooldown resets separately per channel, so a reply in one channel does not block the auto-response from firing in another.
+
+## Response formats
+
+**Text responses** — the reply is sent as plain text. Long responses are automatically split at code fences or paragraph boundaries to stay within Discord's 2000-character message limit.
+
+**Embed responses** — the reply is sent as a rich Discord embed. You can configure:
+
+| Field | Description |
+|---|---|
+| **Title** | Bold header text at the top of the embed |
+| **Description** | The main body text |
+| **Colour** | A hex colour for the left border |
+| **Image** | A full-width image below the body |
+| **Thumbnail** | A small image in the top-right corner |
+| **Footer** | Small text at the bottom of the embed |
+
+## Required permissions
+
+| Action | Permission key |
+|---|---|
+| Viewing auto-responses | `moderation.enforcement.manage_auto_responses` |
+| Creating and editing auto-responses | `moderation.enforcement.manage_auto_responses` |

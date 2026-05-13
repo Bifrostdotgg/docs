@@ -19,7 +19,24 @@
               "index",
               "adding-to-server",
               "dashboard",
-              "permissions"
+              "permissions",
+              "settings"
+            ]
+          },
+          {
+            "group": "AI",
+            "pages": [
+              "ai/odin",
+              "ai/translate"
+            ]
+          },
+          {
+            "group": "Conversations",
+            "pages": [
+              "support/tickets",
+              "support/modmail",
+              "support/applications",
+              "support/analytics"
             ]
           },
           {
@@ -32,16 +49,11 @@
               "moderation/infractions",
               "moderation/channel-controls",
               "moderation/stickies",
-              "moderation/appeals"
-            ]
-          },
-          {
-            "group": "Support",
-            "pages": [
-              "support/tickets",
-              "support/modmail",
-              "support/applications",
-              "support/analytics"
+              "moderation/auto-responses",
+              "moderation/appeals",
+              "utilities/logging",
+              "utilities/attachment-blocker",
+              "utilities/dont-at-me"
             ]
           },
           {
@@ -64,7 +76,7 @@
             ]
           },
           {
-            "group": "Games and Economy",
+            "group": "Games",
             "pages": [
               "games/overview",
               "games/board-games",
@@ -78,23 +90,14 @@
               "integrations/minecraft",
               "integrations/planetside",
               "integrations/tebex",
-              "integrations/namelessmc"
+              "integrations/namelessmc",
+              "utilities/customer-portal"
             ]
           },
           {
-            "group": "AI and Language",
+            "group": "Reference",
             "pages": [
-              "ai/odin",
-              "ai/translate"
-            ]
-          },
-          {
-            "group": "Utilities",
-            "pages": [
-              "utilities/logging",
-              "utilities/attachment-blocker",
-              "utilities/dont-at-me",
-              "utilities/customer-portal",
+              "reference/commands",
               "utilities/ping"
             ]
           }

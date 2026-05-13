@@ -53,9 +53,56 @@ Navigate to **Games > Configuration > Economy** to configure:
 
 Individual games can be hidden from the command list without being disabled. Navigate to **Games > Configuration > Visibility** to toggle which games appear to members.
 
-## Player stats and leaderboard
+## Player stats
 
-Navigate to **Games > Players** in the dashboard to view all members who have interacted with the games system, their current balance, win/loss records, and game-specific statistics.
+Navigate to **Games > Players** in the dashboard to view all members who have interacted with the games system. For each player you can see their current balance, total games played, win/loss record across each game type, and the last time they were active.
+
+Staff with the `games.manage` permission can adjust a player's balance, reset their statistics, or remove them from the leaderboard from this page.
+
+## Transactions
+
+Navigate to **Games > Transactions** to view the full ledger of economy transactions across your server. Each entry records:
+
+| Field | Description |
+|---|---|
+| **Player** | Which member the transaction belongs to |
+| **Type** | The source of the transaction (daily claim, game win/loss, tip, admin adjustment, vote reward) |
+| **Amount** | How many coins were added or deducted |
+| **Balance after** | The player's balance after the transaction |
+| **Timestamp** | When the transaction occurred |
+
+Filter by player, transaction type, or date range. The transaction log is read-only.
+
+## Analytics
+
+Navigate to **Games > Analytics** for aggregate statistics across your server's games:
+
+- Most played games by session count
+- Total coins in circulation
+- Daily active players over time
+- Top earners and top spenders
+
+## Trivia questions
+
+If the trivia game is enabled, navigate to **Games > Trivia Questions** to manage the question bank. You can:
+
+- Add custom trivia questions with multiple-choice answers
+- Import a batch of questions from a CSV file
+- Edit or delete existing questions
+- Enable or disable individual questions without deleting them
+
+Custom questions appear in the trivia rotation alongside any built-in questions.
+
+## Vote rewards
+
+Navigate to **Games > Vote Rewards** to configure economy rewards for members who vote for your server on top.gg. When a member votes, Heimdall receives a webhook notification from top.gg and automatically credits the configured coin reward to their balance.
+
+To set up vote rewards:
+
+1. Enter your top.gg server URL in the configuration
+2. Copy the webhook URL provided and paste it into your top.gg server listing's webhook settings
+3. Set the reward amount (coins per vote)
+4. Optionally configure a bonus multiplier for weekend votes
 
 ## Required permissions
 
