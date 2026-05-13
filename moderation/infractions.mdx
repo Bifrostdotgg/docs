@@ -7,14 +7,14 @@ icon: "clock-rotate-left"
 Every moderation action in Heimdall — whether issued by a staff member or triggered by an automod rule — creates an infraction record. The infraction history gives staff a complete picture of any member's moderation record, including the current active point total.
 
 <Frame>
-  <img src="/images/screenshots/docs-moderation-infractions.png" alt="Infraction history dashboard showing a member's moderation record and point total" />
+  ![Moderation Infraction History](/images/Moderation_Infraction_History.png)
 </Frame>
 
 ## Viewing a member's infractions
 
 ### Via slash command
 
-```
+```text
 /infractions <user>
 ```
 
@@ -22,7 +22,7 @@ Displays the member's infraction history directly in Discord. The response lists
 
 ### Via the dashboard
 
-Navigate to **Moderation > Infractions** in the dashboard. Use the search bar to find a member by username or ID. Click on a member to open their full record.
+Navigate to **Moderation \> Infractions** in the dashboard. Use the search bar to find a member by username or ID. Click on a member to open their full record.
 
 The dashboard view includes:
 
@@ -40,7 +40,7 @@ From the dashboard, staff with the appropriate permissions can:
 
 ## Setting points directly
 
-```
+```text
 /setpoints <user> <points>
 ```
 
@@ -58,6 +58,6 @@ The Infractions dashboard page supports filtering by:
 ## Required permissions
 
 | Action | Permission key |
-|---|---|
+| --- | --- |
 | Viewing infraction history | `moderation.config.view_config` |
 | Editing and expiring infractions | `moderation.manageRules` |

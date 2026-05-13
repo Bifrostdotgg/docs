@@ -7,7 +7,7 @@ icon: "robot"
 Automod lets you define rules that the bot evaluates against every message in your server. When a message matches a rule, the bot can delete it, warn the sender, apply a mute, or any combination of actions you configure. Rules run in the background with no staff involvement required.
 
 <Frame>
-  <img src="/images/screenshots/docs-moderation-rules.png" alt="Automod rules list showing configured trigger patterns and actions" />
+  ![Moderation Automod Rules](/images/Moderation_Automod_rules.png)
 </Frame>
 
 ## How rules work
@@ -18,12 +18,12 @@ Rules are evaluated in order. A single message can match multiple rules, each ap
 
 ## Creating a rule
 
-Navigate to **Moderation > Rules** in the dashboard and click **New Rule**.
+Navigate to **Moderation \> Rules** in the dashboard and click **New Rule**.
 
 ### Trigger types
 
 | Type | Description |
-|---|---|
+| --- | --- |
 | **Keyword** | Match messages containing specific words or phrases. Case-insensitive by default. |
 | **Regex** | Match messages using a regular expression pattern for complex filtering. |
 | **Spam** | Detect repeated messages, mention spam, or message rate limits. |
@@ -34,7 +34,7 @@ Navigate to **Moderation > Rules** in the dashboard and click **New Rule**.
 ### Rule actions
 
 | Action | Description |
-|---|---|
+| --- | --- |
 | **Delete** | Remove the message immediately. |
 | **Warn** | Issue a warning infraction with a configurable point value. |
 | **Mute** | Apply a timeout for a configurable duration. |
@@ -42,7 +42,7 @@ Navigate to **Moderation > Rules** in the dashboard and click **New Rule**.
 | **Ban** | Ban the member, optionally with a duration. |
 | **Send response** | Post a message (optionally a DM) explaining why the action was taken. |
 
-Actions can be combined. A common setup is delete + warn, where the message is removed and a warning is added to the member's infraction record.
+Actions can be combined. A common setup is delete \+ warn, where the message is removed and a warning is added to the member's infraction record.
 
 ### Exemptions
 
@@ -63,6 +63,6 @@ Rules are evaluated top-to-bottom. Drag rules in the list to reorder them. A **S
 ## Required permissions
 
 | Action | Permission key |
-|---|---|
+| --- | --- |
 | Viewing rules | `moderation.config.view_config` |
 | Creating and editing rules | `moderation.manageRules` |
