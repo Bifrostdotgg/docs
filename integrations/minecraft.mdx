@@ -7,14 +7,14 @@ icon: "server"
 The Minecraft integration connects your Discord server to one or more Minecraft Java Edition servers. It provides account linking (tying a Discord user to their Minecraft username), whitelist management that syncs with Discord roles, RCON access for remote commands, and a live server status display.
 
 <Frame>
-  <img src="/images/screenshots/minecraft-dashboard.png" alt="Minecraft integration dashboard showing linked servers, whitelist entries, and server status" />
+  ![Integrations Minecraft](/images/Integrations_Minecraft.png)
 </Frame>
 
 ## Account linking
 
 Members link their Minecraft account to their Discord account through a two-step verification process.
 
-```
+```text
 /link-minecraft <username>
 ```
 
@@ -28,17 +28,17 @@ Once linked, Heimdall can:
 
 ## Whitelist management
 
-Navigate to **Minecraft > Players** in the dashboard to view the full whitelist status — who is linked, who is pending verification, and who has been manually approved or denied.
+Navigate to **Minecraft \> Players** in the dashboard to view the full whitelist status — who is linked, who is pending verification, and who has been manually approved or denied.
 
 ### Automatic whitelist sync
 
-Configure which Discord roles entitle a member to be on the whitelist in **Minecraft > Configuration**. When a member gains or loses the configured role, the bot automatically updates the Minecraft server's whitelist through RCON.
+Configure which Discord roles entitle a member to be on the whitelist in **Minecraft \> Configuration**. When a member gains or loses the configured role, the bot automatically updates the Minecraft server's whitelist through RCON.
 
 ### Manual approval
 
-If you prefer manual review before adding members to the whitelist, enable the approval queue in **Minecraft > Configuration**. Linked accounts enter a pending state and require staff approval before the whitelist entry is created.
+If you prefer manual review before adding members to the whitelist, enable the approval queue in **Minecraft \> Configuration**. Linked accounts enter a pending state and require staff approval before the whitelist entry is created.
 
-```
+```text
 /import-whitelist
 ```
 
@@ -46,27 +46,27 @@ Imports an existing whitelist file from your Minecraft server, linking each user
 
 ## Server status
 
-```
+```text
 /mcstatus [server]
 /minecraft-status
 ```
 
 Displays the live status of your configured Minecraft server — online/offline, current player count, player list, and server version. The information is fetched directly from the Minecraft server protocol and does not require RCON.
 
-The dashboard **Minecraft > Status** page shows the same information in a continuously updating format.
+The dashboard **Minecraft \> Status** page shows the same information in a continuously updating format.
 
 ## RCON
 
-RCON lets you run commands on the Minecraft server directly from Discord. Configure the RCON connection in **Minecraft > Configuration** with your server's RCON host, port, and password.
+RCON lets you run commands on the Minecraft server directly from Discord. Configure the RCON connection in **Minecraft \> Configuration** with your server's RCON host, port, and password.
 
 Once configured, administrators can send commands through the dashboard status page or through dedicated bot commands. RCON access is limited to members with the appropriate Heimdall permission.
 
 ## Minecraft server setup
 
-Navigate to **Minecraft > Configuration** in the dashboard and enter:
+Navigate to **Minecraft \> Configuration** in the dashboard and enter:
 
 | Setting | Description |
-|---|---|
+| --- | --- |
 | **Server address** | The Minecraft server's IP or hostname |
 | **Server port** | Default 25565 |
 | **RCON host** | RCON endpoint (often the same as the server address) |
@@ -77,7 +77,7 @@ Navigate to **Minecraft > Configuration** in the dashboard and enter:
 
 ## Offenses
 
-The Offenses page (**Minecraft > Offenses**) records Minecraft-level infractions for players linked to your Discord server. An offense is logged whenever a player is banned, kicked, or muted on the Minecraft server while their account is linked to a Discord member.
+The Offenses page (**Minecraft \> Offenses**) records Minecraft-level infractions for players linked to your Discord server. An offense is logged whenever a player is banned, kicked, or muted on the Minecraft server while their account is linked to a Discord member.
 
 Staff can:
 
@@ -90,7 +90,7 @@ Offenses are separate from Heimdall's Discord infraction system. They represent 
 ## Required permissions
 
 | Action | Permission key |
-|---|---|
+| --- | --- |
 | Linking a Minecraft account | `minecraft.useLinking` (default allow) |
 | Viewing the player list | `minecraft.players.view_players` |
 | Managing players and approvals | `minecraft.players.manage_players` |

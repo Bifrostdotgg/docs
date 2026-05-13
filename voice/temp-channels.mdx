@@ -9,7 +9,7 @@ The temporary voice channel system lets members create their own voice channels 
 This eliminates the need for administrators to manually create and delete voice channels for small groups and gives members control over their own spaces without granting them Manage Channels permissions.
 
 <Frame>
-  <img src="/images/screenshots/docs-tempvc.png" alt="Temporary voice channels dashboard showing active channels and creator channel configuration" />
+  ![Voice Temp VC](/images/Voice_TempVC.png)
 </Frame>
 
 ## How it works for members
@@ -20,10 +20,10 @@ While in your temporary channel, you have control over it through the `/tempvc` 
 
 ## Setting up
 
-Navigate to **Temp VC > Configuration** in the dashboard.
+Navigate to **Temp VC \> Configuration** in the dashboard.
 
 | Setting | Description |
-|---|---|
+| --- | --- |
 | **Creator channel** | The voice channel members join to trigger channel creation |
 | **Category** | The category where new temporary channels are created |
 | **Default name** | Template for new channel names. Supports `{user}` and `{count}` variables. |
@@ -35,14 +35,14 @@ You can have multiple creator channels with different settings.
 
 ## Member controls
 
-```
+```text
 /tempvc create
 /tempvc delete
 /tempvc delete-all
 ```
 
 | Subcommand | Description |
-|---|---|
+| --- | --- |
 | `create` | Manually create a temporary channel (without joining the creator channel) |
 | `delete` | Delete your current temporary channel immediately |
 | `delete-all` | Delete all temporary channels you own |
@@ -51,12 +51,12 @@ Members can also rename, set a user limit, or lock their temporary channel using
 
 ## Viewing active channels
 
-Navigate to **Temp VC > Active** in the dashboard to see all currently active temporary channels — who created them, how many members are in them, and how long they have been active.
+Navigate to **Temp VC \> Active** in the dashboard to see all currently active temporary channels — who created them, how many members are in them, and how long they have been active.
 
 ## Required permissions
 
 | Action | Permission key |
-|---|---|
+| --- | --- |
 | Using the creator channel | Available to all members by default |
 | Viewing configuration | `tempvc.viewConfig` |
 | Changing configuration | `tempvc.manageConfig` |

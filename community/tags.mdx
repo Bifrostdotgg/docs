@@ -7,12 +7,12 @@ icon: "tags"
 Tags are reusable pieces of content — a block of text, an embed, or a formatted message — that can be posted to any channel with a single command. They are particularly useful for staff who frequently answer the same questions, share the same resources, or post formatted announcements. Tags save the content once and let anyone with access deploy it instantly.
 
 <Frame>
-  <img src="/images/screenshots/docs-tags.png" alt="Tags management dashboard showing the tag list with names and content previews" />
+  ![Community Tags](/images/Community_Tags.png)
 </Frame>
 
 ## Using a tag
 
-```
+```text
 /tag use <name>
 ```
 
@@ -20,7 +20,7 @@ Posts the tag's content to the current channel. Tag names support autocomplete �
 
 ## Creating a tag
 
-```
+```text
 /tag create <name>
 ```
 
@@ -34,7 +34,7 @@ To create a tag via the dashboard, navigate to **Tags** and click **New Tag**. T
 
 ## Editing and deleting
 
-```
+```text
 /tag edit <name>
 /tag delete <name>
 ```
@@ -43,7 +43,7 @@ Editing opens the same modal used for creation. Deleting removes the tag permane
 
 ## Listing tags
 
-```
+```text
 /tag list
 ```
 
@@ -53,7 +53,7 @@ Lists all tags available on your server. The dashboard **Tags** page provides th
 
 Posts are similar to tags but are intended for longer-form content pinned to specific channels. The `/post` command works alongside `/tag`:
 
-```
+```text
 /post send <name> [channel]
 /post list
 ```
@@ -62,12 +62,12 @@ A post sends the content to a designated channel rather than the channel where t
 
 ## Templates
 
-Templates are skeleton embeds saved in the dashboard that staff can use as a starting point when creating new tags. Navigate to **Tags > Templates** to manage them.
+Templates are skeleton embeds saved in the dashboard that staff can use as a starting point when creating new tags. Navigate to **Tags \> Templates** to manage them.
 
 ## Required permissions
 
 | Action | Permission key |
-|---|---|
+| --- | --- |
 | Using tags | `tags.viewTags` (default allow) |
 | Creating, editing, and deleting tags | `tags.manageTags` |
 | Sending posts | `tags.managePosts` |

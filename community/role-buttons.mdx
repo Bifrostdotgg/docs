@@ -7,12 +7,12 @@ icon: "circle-check"
 Role buttons are persistent panels posted in a channel containing buttons that members click to assign or remove roles from themselves. Unlike Discord's built-in role selection feature, Heimdall's panels support toggle modes, role grouping, and custom button labels and styles.
 
 <Frame>
-  <img src="/images/screenshots/docs-rolebuttons.png" alt="Role buttons dashboard showing configured panels and button assignments" />
+  ![Community Role Buttons](/images/Community_Role_Buttons.png)
 </Frame>
 
 ## Creating a panel
 
-```
+```text
 /rolebuttons create
 ```
 
@@ -21,7 +21,7 @@ Running this command opens a configuration flow where you define the panel. You 
 ### Panel settings
 
 | Setting | Description |
-|---|---|
+| --- | --- |
 | **Title** | The panel's header text |
 | **Description** | Explanatory text shown below the title |
 | **Mode** | How roles are assigned (see below) |
@@ -29,7 +29,7 @@ Running this command opens a configuration flow where you define the panel. You 
 ### Assignment modes
 
 | Mode | Behaviour |
-|---|---|
+| --- | --- |
 | **Toggle** | Clicking adds the role if not held, removes it if held |
 | **Add only** | Clicking always adds the role, never removes it |
 | **Remove only** | Clicking always removes the role, never adds it |
@@ -40,7 +40,7 @@ Running this command opens a configuration flow where you define the panel. You 
 Each button on a panel corresponds to one Discord role. For each button you configure:
 
 | Setting | Description |
-|---|---|
+| --- | --- |
 | **Role** | The Discord role to assign |
 | **Label** | The button's text label |
 | **Style** | Primary (blurple), Secondary (grey), Success (green), or Danger (red) |
@@ -50,7 +50,7 @@ A single panel supports up to 25 buttons (5 rows of 5).
 
 ## Posting the panel
 
-```
+```text
 /rolebuttons post <panel_id> [channel]
 ```
 
@@ -60,7 +60,7 @@ If you need to update the panel's content after posting, use the dashboard to ed
 
 ## Managing panels
 
-```
+```text
 /rolebuttons list
 /rolebuttons edit <panel_id>
 /rolebuttons delete <panel_id>
@@ -72,7 +72,7 @@ The dashboard at **Role Buttons** shows all panels with their posted location, b
 ## Required permissions
 
 | Action | Permission key |
-|---|---|
+| --- | --- |
 | Using role button panels | All members by default |
 | Viewing panels in the dashboard | `rolebuttons.view` |
 | Creating and editing panels | `rolebuttons.manage` |

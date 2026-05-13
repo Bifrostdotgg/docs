@@ -7,7 +7,7 @@ icon: "gamepad"
 The games plugin provides a full suite of interactive games — board games, casino games, and an economy system — all playable directly inside Discord. Each game is its own slash command. The economy layer gives members a virtual currency they earn through daily claims, game winnings, and tipping.
 
 <Frame>
-  <img src="/images/screenshots/docs-games.png" alt="Games configuration dashboard showing enabled games, access controls, and economy settings" />
+  ![Games Overview](/images/Games_Overview.png)
 </Frame>
 
 ## Games available
@@ -16,9 +16,11 @@ The games plugin provides a full suite of interactive games — board games, cas
   <Card title="Board games" icon="chess-board" href="/games/board-games">
     2048, Connect Four, Memory, Tic-Tac-Toe, Battleship, Solitaire
   </Card>
+
   <Card title="Casino games" icon="dice" href="/games/casino">
     Blackjack, Coinflip, Dice, Higher-Lower, Horse Racing, Mines, Roulette
   </Card>
+
   <Card title="Economy" icon="coins" href="/games/economy">
     Balance, daily coins, tipping, leaderboard, and claim rewards
   </Card>
@@ -26,23 +28,23 @@ The games plugin provides a full suite of interactive games — board games, cas
 
 ## Enabling games
 
-Navigate to **Games > Configuration** in the dashboard. Games are enabled by default for all members once the plugin is active.
+Navigate to **Games \> Configuration** in the dashboard. Games are enabled by default for all members once the plugin is active.
 
 ## Access control
 
 You can restrict which channels and roles have access to games:
 
-- **Channels** — Navigate to **Games > Configuration > Channels** and specify the channels where games are allowed. If no channels are configured, games work everywhere.
-- **Roles** — Navigate to **Games > Configuration > Openers** to restrict game commands to specific roles.
+- **Channels** — Navigate to **Games \> Configuration \> Channels** and specify the channels where games are allowed. If no channels are configured, games work everywhere.
+- **Roles** — Navigate to **Games \> Configuration \> Openers** to restrict game commands to specific roles.
 
 Restricting games to a dedicated channel keeps them from cluttering other parts of your server.
 
 ## Economy configuration
 
-Navigate to **Games > Configuration > Economy** to configure:
+Navigate to **Games \> Configuration \> Economy** to configure:
 
 | Setting | Description |
-|---|---|
+| --- | --- |
 | **Currency name** | What your server calls its currency (e.g. "coins", "gold", "credits") |
 | **Currency emoji** | An optional emoji displayed alongside balances |
 | **Daily claim amount** | How many coins members receive per daily claim |
@@ -51,20 +53,20 @@ Navigate to **Games > Configuration > Economy** to configure:
 
 ## Visibility settings
 
-Individual games can be hidden from the command list without being disabled. Navigate to **Games > Configuration > Visibility** to toggle which games appear to members.
+Individual games can be hidden from the command list without being disabled. Navigate to **Games \> Configuration \> Visibility** to toggle which games appear to members.
 
 ## Player stats
 
-Navigate to **Games > Players** in the dashboard to view all members who have interacted with the games system. For each player you can see their current balance, total games played, win/loss record across each game type, and the last time they were active.
+Navigate to **Games \> Players** in the dashboard to view all members who have interacted with the games system. For each player you can see their current balance, total games played, win/loss record across each game type, and the last time they were active.
 
 Staff with the `games.manage` permission can adjust a player's balance, reset their statistics, or remove them from the leaderboard from this page.
 
 ## Transactions
 
-Navigate to **Games > Transactions** to view the full ledger of economy transactions across your server. Each entry records:
+Navigate to **Games \> Transactions** to view the full ledger of economy transactions across your server. Each entry records:
 
 | Field | Description |
-|---|---|
+| --- | --- |
 | **Player** | Which member the transaction belongs to |
 | **Type** | The source of the transaction (daily claim, game win/loss, tip, admin adjustment, vote reward) |
 | **Amount** | How many coins were added or deducted |
@@ -75,7 +77,7 @@ Filter by player, transaction type, or date range. The transaction log is read-o
 
 ## Analytics
 
-Navigate to **Games > Analytics** for aggregate statistics across your server's games:
+Navigate to **Games \> Analytics** for aggregate statistics across your server's games:
 
 - Most played games by session count
 - Total coins in circulation
@@ -84,7 +86,7 @@ Navigate to **Games > Analytics** for aggregate statistics across your server's 
 
 ## Trivia questions
 
-If the trivia game is enabled, navigate to **Games > Trivia Questions** to manage the question bank. You can:
+If the trivia game is enabled, navigate to **Games \> Trivia Questions** to manage the question bank. You can:
 
 - Add custom trivia questions with multiple-choice answers
 - Import a batch of questions from a CSV file
@@ -95,7 +97,7 @@ Custom questions appear in the trivia rotation alongside any built-in questions.
 
 ## Vote rewards
 
-Navigate to **Games > Vote Rewards** to configure economy rewards for members who vote for your server on top.gg. When a member votes, Heimdall receives a webhook notification from top.gg and automatically credits the configured coin reward to their balance.
+Navigate to **Games \> Vote Rewards** to configure economy rewards for members who vote for your server on top.gg. When a member votes, Heimdall receives a webhook notification from top.gg and automatically credits the configured coin reward to their balance.
 
 To set up vote rewards:
 
@@ -107,6 +109,6 @@ To set up vote rewards:
 ## Required permissions
 
 | Action | Permission key |
-|---|---|
+| --- | --- |
 | Playing games | `games.use` (default allow) |
 | Managing configuration | `games.manage` |

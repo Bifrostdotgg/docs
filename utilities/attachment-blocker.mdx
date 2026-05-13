@@ -7,7 +7,7 @@ icon: "file-slash"
 The attachment blocker prevents members from uploading files that match a blocked extension or MIME type. When a member sends a message containing a blocked file, the bot deletes the message and optionally sends a warning.
 
 <Frame>
-  <img src="/images/screenshots/docs-attachment-blocker.png" alt="Attachment blocker configuration showing the blocked extension list and per-channel overrides" />
+  ![Moderation Attachment Blocker](/images/Moderation_Attachment_Blocker.png)
 </Frame>
 
 ## How it works
@@ -16,9 +16,9 @@ When a message with an attachment is posted in a channel covered by the attachme
 
 ## Global configuration
 
-Navigate to **Attachment Blocker > Global Settings** in the dashboard to define the server-wide blocklist.
+Navigate to **Attachment Blocker \> Global Settings** in the dashboard to define the server-wide blocklist.
 
-```
+```text
 /attachment-blocker setup
 ```
 
@@ -27,7 +27,7 @@ The command provides quick access to the configuration panel in Discord. From th
 Common examples of what to block:
 
 | Extension | Type |
-|---|---|
+| --- | --- |
 | `.exe`, `.bat`, `.cmd`, `.sh` | Executable files |
 | `.dll`, `.so` | Library files |
 | `.scr`, `.pif` | Potentially malicious Windows files |
@@ -35,9 +35,9 @@ Common examples of what to block:
 
 ## Per-channel overrides
 
-You can override the global configuration for specific channels. Navigate to **Attachment Blocker > Channels** in the dashboard or use the command:
+You can override the global configuration for specific channels. Navigate to **Attachment Blocker \> Channels** in the dashboard or use the command:
 
-```
+```text
 /attachment-blocker channel add <channel> <extension>
 /attachment-blocker channel remove <channel> <extension>
 ```
@@ -49,11 +49,11 @@ Use channel overrides to:
 
 ## Temporary voice channel override
 
-Navigate to **Attachment Blocker > Temp VC** to configure whether the attachment blocker applies inside temporary voice channels. By default it follows the global rules.
+Navigate to **Attachment Blocker \> Temp VC** to configure whether the attachment blocker applies inside temporary voice channels. By default it follows the global rules.
 
 ## Required permissions
 
 | Action | Permission key |
-|---|---|
+| --- | --- |
 | Viewing configuration | `attachmentBlocker.viewConfig` |
 | Changing configuration | `attachmentBlocker.manageConfig` |

@@ -9,24 +9,24 @@ The voice transcription plugin converts Discord voice messages — the audio cli
 This makes voice messages accessible to members who cannot or prefer not to listen to audio, improves searchability of conversations, and helps in noisy environments where listening is impractical.
 
 <Note>
-This plugin transcribes Discord voice messages (the record-a-voice-message feature in the Discord client). It does not transcribe audio from voice channels.
+  This plugin transcribes Discord voice messages (the record-a-voice-message feature in the Discord client). It does not transcribe audio from voice channels.
 </Note>
 
 <Frame>
-  <img src="/images/screenshots/docs-vc-transcription.png" alt="Voice transcription configuration showing enabled channels and Whisper model settings" />
+  ![Voice Transcription](/images/Voice_Transcription.png)
 </Frame>
 
 ## Setup
 
 Navigate to **VC Transcription** in the dashboard, or use the slash command:
 
-```
+```text
 /voice-transcription set <channel>
 ```
 
 Configure which channels the bot should watch for voice messages. You can enable transcription for specific channels or server-wide.
 
-```
+```text
 /voice-transcription status
 ```
 
@@ -49,6 +49,6 @@ Navigate to **VC Transcription** in the dashboard to:
 ## Required permissions
 
 | Action | Permission key |
-|---|---|
+| --- | --- |
 | Viewing configuration | `vcTranscription.viewConfig` |
 | Changing configuration | `vcTranscription.manageConfig` |

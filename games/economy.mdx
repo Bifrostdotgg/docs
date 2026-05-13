@@ -7,12 +7,12 @@ icon: "coins"
 The economy system gives your server a virtual currency that members earn and spend through games and daily claims. The currency is server-specific — balances do not carry across servers.
 
 <Frame>
-  <img src="/images/screenshots/docs-games-config.png" alt="Economy configuration showing starting balance, daily reward amount, and leaderboard settings" />
+  ![Games Economy](/images/Games_Economy.png)
 </Frame>
 
 ## Checking your balance
 
-```
+```text
 /balance [user]
 ```
 
@@ -20,17 +20,17 @@ Displays your current coin balance. If you specify a user, it shows that member'
 
 ## Daily claim
 
-```
+```text
 /dailycoins
 ```
 
-Claims your daily coin allocation. Members can run this once per cooldown period (24 hours by default). The amount awarded is set in **Games > Configuration > Economy**.
+Claims your daily coin allocation. Members can run this once per cooldown period (24 hours by default). The amount awarded is set in **Games \> Configuration \> Economy**.
 
 Administrators can also create additional claim commands with custom amounts and cooldowns using the `/claim` configuration.
 
 ## Tipping other members
 
-```
+```text
 /tip <user> <amount>
 ```
 
@@ -38,34 +38,34 @@ Transfers coins from your balance to another member. The tip is immediate and ca
 
 ## Leaderboard
 
-```
+```text
 /leaderboard
 ```
 
 Displays the top coin holders on your server ranked by balance. The leaderboard is server-specific.
 
-Administrators can also view the full leaderboard in the dashboard under **Games > Players**, which includes more detail than the in-Discord version.
+Administrators can also view the full leaderboard in the dashboard under **Games \> Players**, which includes more detail than the in-Discord version.
 
 ## Claim rewards
 
-The `/claim` command family allows administrators to set up one-time or recurring claim events. Members run the command to receive a reward defined by the administrator. Configure claim events in **Games > Configuration**.
+The `/claim` command family allows administrators to set up one-time or recurring claim events. Members run the command to receive a reward defined by the administrator. Configure claim events in **Games \> Configuration**.
 
 ## Managing member balances
 
-Administrators can view and adjust individual member balances through the dashboard at **Games > Players**. Select a member and use the balance adjustment tools to add, remove, or set their balance directly. All adjustments are logged.
+Administrators can view and adjust individual member balances through the dashboard at **Games \> Players**. Select a member and use the balance adjustment tools to add, remove, or set their balance directly. All adjustments are logged.
 
 ## Transaction history
 
-The dashboard at **Games > Transactions** shows a log of all economy transactions: daily claims, tips, game wins and losses, and admin adjustments. Each entry shows the member, the amount, the type of transaction, and the timestamp.
+The dashboard at **Games \> Transactions** shows a log of all economy transactions: daily claims, tips, game wins and losses, and admin adjustments. Each entry shows the member, the amount, the type of transaction, and the timestamp.
 
 ## Currency customisation
 
-Configure the currency name, emoji, daily claim amount, and starting balance in **Games > Configuration > Economy**. Changing the currency name does not affect existing balances.
+Configure the currency name, emoji, daily claim amount, and starting balance in **Games \> Configuration \> Economy**. Changing the currency name does not affect existing balances.
 
 ## Required permissions
 
 | Action | Permission key |
-|---|---|
+| --- | --- |
 | Checking balance and claiming | `games.use` (default allow) |
 | Tipping | `games.use` (default allow) |
 | Managing player balances | `games.manage` |

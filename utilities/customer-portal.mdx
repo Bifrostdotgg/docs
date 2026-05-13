@@ -9,12 +9,12 @@ The customer portal is a member-facing dashboard delivered entirely through Disc
 The portal acts as a single entry point for members to manage their relationship with the bot and server services without needing to navigate multiple commands.
 
 <Frame>
-  <img src="/images/screenshots/docs-customer-portal.png" alt="Customer portal configuration and example of the member-facing portal panel" />
+  ![Integrations Customer Portal](/images/Integrations_Customer_Portal.png)
 </Frame>
 
 ## Opening the portal
 
-```
+```text
 /portal setup
 ```
 
@@ -25,7 +25,7 @@ Opens the customer portal panel for the member who ran the command. The panel is
 The portal's content depends on which plugins are active on your server:
 
 | Section | Shown when |
-|---|---|
+| --- | --- |
 | **Linked accounts** | Minecraft, PlanetSide 2, or NamelessMC integrations are enabled |
 | **Active tickets** | Tickets plugin is enabled and the member has open tickets |
 | **Modmail threads** | Modmail plugin is enabled and the member has open conversations |
@@ -36,19 +36,19 @@ Members can take actions directly from the portal — close a ticket, view a rem
 
 ## Configuring the portal
 
-Navigate to **Customer Portal > Configuration** in the dashboard to:
+Navigate to **Customer Portal \> Configuration** in the dashboard to:
 
 - Enable or disable which sections appear
 - Set which integrations the portal includes
 - Configure which channels the portal command is available in
 
-```
+```text
 /portal close
 ```
 
 Closes an active portal panel. Portals automatically time out after a period of inactivity.
 
-```
+```text
 /portal refresh
 ```
 
@@ -57,7 +57,7 @@ Re-fetches all data and updates the portal panel with current information. Usefu
 ## Required permissions
 
 | Action | Permission key |
-|---|---|
+| --- | --- |
 | Using the portal | Available to all members by default |
 | Viewing portal configuration | `customerPortal.viewConfig` |
 | Managing portal configuration | `customerPortal.manageConfig` |

@@ -7,7 +7,7 @@ icon: "star"
 The starboard collects messages that receive enough reactions and reposts them to a dedicated channel. It is a community-driven curation tool — members vote with reactions and the most popular content surfaces automatically.
 
 <Frame>
-  <img src="/images/screenshots/docs-starboard.png" alt="Starboard configuration showing reaction threshold and starred channel settings" />
+  ![Community Starboard](/images/Community_Starboard.png)
 </Frame>
 
 ## How it works
@@ -21,7 +21,7 @@ If the reaction count drops below the threshold (because members remove their re
 Navigate to **Starboard** in the dashboard and configure:
 
 | Setting | Description |
-|---|---|
+| --- | --- |
 | **Channel** | The channel where starred messages are reposted |
 | **Reaction emoji** | Which reaction triggers the starboard (default: star emoji) |
 | **Threshold** | Minimum number of reactions required |
@@ -46,7 +46,7 @@ Raising the threshold after setup does not remove already-posted starboard entri
 The starboard is fully automatic and requires no member permissions. Configuration is admin-only:
 
 | Action | Permission key |
-|---|---|
+| --- | --- |
 | Viewing configuration | `starboard.viewConfig` |
 | Changing configuration | `starboard.manageConfig` |
 | Moderating the approval queue | `starboard.moderate` |

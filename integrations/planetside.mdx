@@ -7,14 +7,14 @@ icon: "crosshairs"
 The PlanetSide 2 integration connects your Discord server to the Daybreak Census API, giving members access to character lookups, outfit management tools, and live server population data directly inside Discord.
 
 <Frame>
-  <img src="/images/screenshots/docs-planetside.png" alt="PlanetSide 2 integration configuration showing Census API key and outfit settings" />
+  ![Integrations Planetside2](/images/Integrations_Planetside2.png)
 </Frame>
 
 ## Account linking
 
 Members link their PlanetSide 2 character to their Discord account:
 
-```
+```text
 /ps2-link <character_name>
 ```
 
@@ -22,7 +22,7 @@ Once linked, members can reference their own stats without specifying a characte
 
 ## Character lookup
 
-```
+```text
 /ps2-lookup <character_name>
 ```
 
@@ -34,7 +34,7 @@ Displays a profile card for the specified character showing:
 - Last login timestamp
 - Lifetime kill/death statistics
 
-```
+```text
 /ps2-info
 ```
 
@@ -42,40 +42,40 @@ Displays the linked character's profile (equivalent to running `/ps2-lookup` wit
 
 ## Outfit management
 
-```
+```text
 /ps2-outfit [outfit_tag]
 ```
 
 Displays information about an outfit — membership count, creation date, faction, and the current online member count. Requires the outfit tag (the short 1–4 character identifier, not the full name).
 
-```
+```text
 /ps2-promote <member> <rank>
 ```
 
-Promotes a member within the outfit. Requires appropriate outfit officer rank and RCON-equivalent API permissions configured in **PlanetSide > Configuration**.
+Promotes a member within the outfit. Requires appropriate outfit officer rank and RCON-equivalent API permissions configured in **PlanetSide \> Configuration**.
 
 ## Server population
 
-```
+```text
 /ps2-population [server]
 ```
 
 Displays the current population breakdown across all three factions on the specified server (or your configured default server). Updated from the Census real-time stream.
 
-The dashboard **PlanetSide > Status** page displays population data in a continuously updating format.
+The dashboard **PlanetSide \> Status** page displays population data in a continuously updating format.
 
 ## Setup
 
-Navigate to **PlanetSide > Configuration** in the dashboard:
+Navigate to **PlanetSide \> Configuration** in the dashboard:
 
-```
+```text
 /ps2-setup
 ```
 
 Or configure entirely through the dashboard. Key settings:
 
 | Setting | Description |
-|---|---|
+| --- | --- |
 | **Default server** | The world (server) used when no server is specified in commands |
 | **Outfit tag** | Your community's outfit tag for outfit-related commands |
 | **Census API key** | Optional; increases rate limits on API requests. Free from Daybreak. |
@@ -83,7 +83,7 @@ Or configure entirely through the dashboard. Key settings:
 ## Required permissions
 
 | Action | Permission key |
-|---|---|
+| --- | --- |
 | Character lookups and population | `planetside.use` (default allow) |
 | Linking an account | `planetside.use` (default allow) |
 | Viewing linked players | `planetside.viewPlayers` |

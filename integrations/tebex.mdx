@@ -7,14 +7,14 @@ icon: "store"
 The Tebex integration links your Tebex game store to Discord. Staff can look up transactions, issue gift cards, and process manual claims without leaving Discord. Members can check the status of their own purchases.
 
 <Frame>
-  <img src="/images/screenshots/docs-tebex.png" alt="Tebex integration dashboard showing recent transactions and gift card management" />
+  ![Integrations Tebex](/images/Integrations_Tebex.png)
 </Frame>
 
 ## Setup
 
-Navigate to **Tebex > Configuration** in the dashboard and enter your Tebex API key. The key is found in your Tebex store's **Settings > API Keys** section.
+Navigate to **Tebex \> Configuration** in the dashboard and enter your Tebex API key. The key is found in your Tebex store's **Settings \> API Keys** section.
 
-```
+```text
 /tebex
 ```
 
@@ -22,7 +22,7 @@ The base command provides access to all Tebex subcommands through an interactive
 
 ## Transactions
 
-```
+```text
 /tebex transaction lookup <transaction_id>
 ```
 
@@ -34,17 +34,17 @@ Looks up a specific transaction by its Tebex transaction ID. Returns:
 - Payment amount and currency
 - Current transaction status
 
-Navigate to **Tebex > Transactions** in the dashboard to browse transactions, search by buyer, and filter by date range or package.
+Navigate to **Tebex \> Transactions** in the dashboard to browse transactions, search by buyer, and filter by date range or package.
 
 ## Gift cards
 
-```
+```text
 /tebex giftcard create <amount>
 /tebex giftcard lookup <code>
 ```
 
 | Subcommand | Description |
-|---|---|
+| --- | --- |
 | `create` | Generates a new gift card for the specified value in your store's currency |
 | `lookup` | Checks the current balance and expiry of an existing gift card code |
 
@@ -52,16 +52,16 @@ Gift card codes are generated through the Tebex API and can be distributed to me
 
 ## Claims
 
-Claims allow you to manually grant packages to members. Navigate to **Tebex > Claims** in the dashboard or use the Tebex slash command to manage pending claims.
+Claims allow you to manually grant packages to members. Navigate to **Tebex \> Claims** in the dashboard or use the Tebex slash command to manage pending claims.
 
 ## Role Mappings
 
-Role mappings automatically assign Discord roles when a member purchases a specific Tebex package. Navigate to **Tebex > Role Mappings** to configure them.
+Role mappings automatically assign Discord roles when a member purchases a specific Tebex package. Navigate to **Tebex \> Role Mappings** to configure them.
 
 Each mapping defines:
 
 | Setting | Description |
-|---|---|
+| --- | --- |
 | **Package** | The Tebex package that triggers the mapping |
 | **Role to grant** | The Discord role assigned on purchase |
 | **Role to remove** | An optional Discord role removed on purchase (useful for upgrading membership tiers) |
@@ -72,7 +72,7 @@ For subscription packages, Heimdall can optionally remove the role when the subs
 ## Required permissions
 
 | Action | Permission key |
-|---|---|
+| --- | --- |
 | Viewing store information | `tebex.viewStore` |
 | Managing store settings | `tebex.manageStore` |
 | Viewing transaction history | `tebex.viewTransactions` |

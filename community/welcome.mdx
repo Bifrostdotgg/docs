@@ -7,12 +7,12 @@ icon: "door-open"
 The welcome plugin posts a message to a designated channel whenever a member joins your server. The message is fully customisable — you can write it as plain text or as a rich embed, and use variables to include the member's name, the server name, and the current member count.
 
 <Frame>
-  <img src="/images/screenshots/docs-welcome.png" alt="Welcome message configuration showing channel selection and message composer" />
+  ![Community Welcome](/images/Community_Welcome.png)
 </Frame>
 
 ## Setting up
 
-```
+```text
 /welcome setup
 ```
 
@@ -23,7 +23,7 @@ Running `/welcome setup` opens a configuration modal where you define the welcom
 Navigate to **Welcome** in the dashboard sidebar. The configuration page has:
 
 | Setting | Description |
-|---|---|
+| --- | --- |
 | **Channel** | The channel where welcome messages are posted |
 | **Message content** | Plain text or embed content for the welcome message |
 | **Embed toggle** | Send the message as a rich embed with colour and fields |
@@ -34,7 +34,7 @@ Navigate to **Welcome** in the dashboard sidebar. The configuration page has:
 Variables are placeholders in your message that the bot fills in at send time. Wrap variables in curly braces:
 
 | Variable | Replaced with |
-|---|---|
+| --- | --- |
 | `{user}` | A mention of the new member (`@Username`) |
 | `{user.name}` | The member's display name (no mention) |
 | `{user.id}` | The member's Discord user ID |
@@ -44,14 +44,14 @@ Variables are placeholders in your message that the bot fills in at send time. W
 
 ### Example message
 
-```
+```text
 Welcome to {server}, {user}! You are member number {server.count}.
 Please read <#channel-id> before getting started.
 ```
 
 ## Testing the welcome message
 
-```
+```text
 /welcome test
 ```
 
@@ -59,7 +59,7 @@ Posts a preview of your welcome message to the current channel using your own ac
 
 ## Viewing the current configuration
 
-```
+```text
 /welcome view
 ```
 
@@ -67,7 +67,7 @@ Displays the current welcome message configuration without triggering a test sen
 
 ## Removing the welcome message
 
-```
+```text
 /welcome remove
 ```
 
@@ -76,6 +76,6 @@ Disables the welcome message. The configuration is retained so you can re-enable
 ## Required permissions
 
 | Action | Permission key |
-|---|---|
+| --- | --- |
 | Viewing welcome configuration | `welcome.viewConfig` |
 | Editing welcome configuration | `welcome.manageConfig` |
