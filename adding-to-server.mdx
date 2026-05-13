@@ -1,0 +1,54 @@
+---
+title: "Adding Bifröst to Your Server"
+description: "How to invite Bifröst, grant it the permissions it needs, and complete first-run setup."
+icon: "robot"
+---
+
+## Prerequisites
+
+You need the **Manage Server** permission in the Discord server you want to add Bifröst to.
+
+## Inviting the bot
+
+Use the invite link provided by your Bifröst instance administrator. The invite link is generated during the bot's initial setup and contains the exact permission set the bot requires. When you follow the link, Discord will ask you to select a server from the list of servers you manage, then confirm the requested permissions.
+
+<Warning>
+Do not remove any of the pre-selected permissions. Bifröst's features depend on the full permission set. Removing permissions will cause individual features to fail silently or produce errors.
+</Warning>
+
+## Required permissions
+
+The following Discord permissions are required for Bifröst to function correctly across all plugins:
+
+| Permission | Why it's needed |
+|---|---|
+| Manage Roles | Assigning roles via role buttons and syncing Minecraft roles |
+| Manage Channels | Creating and deleting temporary voice channels |
+| Kick Members | Executing kick actions from moderation commands |
+| Ban Members | Executing ban actions and managing leave-bans |
+| Manage Messages | Deleting messages during purge operations and sticky message management |
+| Read Message History | Purging messages by count and reading context for modmail |
+| Send Messages | Responding to commands and sending notifications |
+| Embed Links | Sending rich embeds for all formatted output |
+| Attach Files | Sending attachments in ticket and modmail threads |
+| Use Slash Commands | Registering and responding to slash commands |
+| Manage Threads | Creating and archiving ticket and modmail threads |
+| Moderate Members | Applying timeouts for mute actions |
+
+## What happens when the bot joins
+
+When Bifröst joins your server for the first time, it registers all slash commands with Discord and creates a server configuration entry in its database. No channels or roles are created automatically — everything is configured through the dashboard.
+
+## Next steps
+
+<Steps>
+  <Step title="Log in to the dashboard">
+    Visit the Bifröst dashboard and sign in with your Discord account. Your server will appear in the guild selector. See [Using the Dashboard](/dashboard) for a walkthrough.
+  </Step>
+  <Step title="Configure permissions">
+    By default, all moderation commands are restricted to members with the Administrator permission. Set up the permission system to give the right roles access to each feature. See [Permissions](/permissions).
+  </Step>
+  <Step title="Enable and configure plugins">
+    Each feature needs to be configured before it becomes active. Use the dashboard sidebar to navigate to each plugin's configuration page and set it up.
+  </Step>
+</Steps>

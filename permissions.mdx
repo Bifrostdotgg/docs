@@ -1,0 +1,61 @@
+---
+title: "Permissions"
+description: "How Bifröst's permission system works, how to configure it, and how it differs from Discord's built-in permissions."
+icon: "shield-halved"
+---
+
+Bifröst has its own permission system that is independent of Discord's native role permissions. Rather than relying on permissions like **Manage Messages** or **Ban Members**, Bifröst checks whether a member's roles have been granted a specific Bifröst permission key. This lets you grant moderation access to a custom staff role without giving that role broad Discord-level permissions.
+
+## How permissions work
+
+Every feature in Bifröst exposes one or more named permission keys. For example, the moderation plugin exposes keys such as `moderation.ban` and `moderation.warn`. The ticket plugin exposes `tickets.manage` and `tickets.claim`.
+
+You assign these keys to Discord roles through the dashboard. When a member runs a command or accesses a dashboard section, Bifröst checks whether any of their current roles have been granted the matching key. If they have, the action proceeds. If not, the bot responds with a permission denied message.
+
+## Default access
+
+Some features are available to all members by default. These are typically member-facing features — for example, creating a suggestion, opening a ticket, using the games commands, or requesting a translation. These features have **default allow** enabled and do not require any explicit permission grant.
+
+Staff-facing and administrative features default to restricted. No member can run a `ban` command, manage automod rules, or access the dashboard moderation section unless their role has been granted the appropriate permission key.
+
+<Info>
+Members with the Discord **Administrator** permission bypass all Bifröst permission checks and always have full access.
+</Info>
+
+## Configuring permissions
+
+<Steps>
+  <Step title="Open the Permissions page">
+    In the dashboard sidebar, navigate to **Permissions**. You will see a list of all available permission keys grouped by plugin.
+  </Step>
+  <Step title="Select a permission key">
+    Click a key to expand it. You will see which Discord roles currently have access, and an input to add more roles.
+  </Step>
+  <Step title="Assign roles">
+    Search for and select the roles that should have this permission. Changes apply immediately.
+  </Step>
+  <Step title="Verify access">
+    Ask a member with the relevant role to test the command or dashboard section to confirm access is working as expected.
+  </Step>
+</Steps>
+
+## Permission keys by section
+
+Each feature's documentation page lists the permission keys it uses. The keys follow a consistent naming pattern:
+
+```
+<plugin>.<action>
+```
+
+For example:
+- `moderation.ban` — ability to run `/ban`
+- `tickets.manage` — ability to manage all tickets in the dashboard
+- `modmail.viewAnalytics` — ability to view modmail analytics
+
+## Role hierarchy
+
+Bifröst evaluates all of a member's current roles. If any one of their roles has been granted the permission, the member is allowed. There is no role hierarchy within the permission system — it is purely additive. Removing a role removes that source of permissions, but other roles the member holds may still grant access.
+
+## Overriding defaults
+
+If you want to restrict a feature that defaults to allowing all members — for example, you want to limit who can use the `/ask` AI command — you can enable the **Restricted** toggle on that permission key. Once restricted, only roles you explicitly assign will have access.

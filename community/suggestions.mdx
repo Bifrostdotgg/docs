@@ -1,0 +1,73 @@
+---
+title: "Suggestions"
+description: "A structured suggestion system with voting, categories, AI-generated titles, and staff review."
+icon: "lightbulb"
+---
+
+The suggestions plugin creates a dedicated workflow for member feedback. Members submit suggestions through a slash command, the bot posts them as formatted messages in a designated channel with upvote and downvote reactions, and staff review and action them through the dashboard or slash commands.
+
+## Submitting a suggestion
+
+```
+/suggest <content>
+```
+
+The member writes their suggestion text. The bot posts it in the configured suggestions channel with voting reactions already attached. If AI title generation is enabled, the bot also produces a concise summary title for the suggestion based on the content.
+
+## Categories
+
+Suggestions can be routed to different channels based on categories. Navigate to **Suggestions > Categories** in the dashboard to create them.
+
+Each category has:
+
+| Setting | Description |
+|---|---|
+| **Name** | Displayed when a member picks a category |
+| **Channel** | Where suggestions in this category are posted |
+| **Voting style** | Upvote/downvote, star rating, or custom emoji reactions |
+| **Who can suggest** | Restrict submission to specific roles |
+
+When multiple categories exist, the member is prompted to pick one when running `/suggest`.
+
+## Managing suggestions
+
+```
+/suggestion-config
+/suggestion-categories list
+/suggestion-categories create <name>
+/suggestion-categories delete <id>
+```
+
+Staff manage individual suggestions through the dashboard under **Suggestions > List**, or through context menu actions on the suggestion message.
+
+Available actions on a suggestion:
+
+| Action | Description |
+|---|---|
+| **Approve** | Mark the suggestion as accepted; bot adds a status badge to the message |
+| **Reject** | Mark as rejected with an optional reason posted as a reply |
+| **In progress** | Mark as being worked on |
+| **Implemented** | Mark as completed |
+| **Archive** | Remove from the active feed without deleting |
+
+When a suggestion is actioned, the bot updates the original message to show the new status, keeping the voting results visible.
+
+## Dashboard configuration
+
+Navigate to **Suggestions > Configuration** to configure:
+
+| Setting | Description |
+|---|---|
+| **Default channel** | Where suggestions go when no categories are defined |
+| **Anonymous suggestions** | Post suggestions without showing the submitter's name |
+| **Duplicate detection** | Warn the submitter if a similar suggestion already exists |
+| **AI titles** | Automatically generate a short title from the suggestion text |
+| **Min/max length** | Enforce character limits on submission content |
+
+## Required permissions
+
+| Action | Permission key |
+|---|---|
+| Submitting suggestions | `suggestions.createSuggestion` (default allow) |
+| Viewing suggestions in the dashboard | `suggestions.viewSuggestions` |
+| Approving and rejecting suggestions | `suggestions.manageSuggestions` |

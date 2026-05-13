@@ -1,0 +1,41 @@
+---
+title: "NamelessMC"
+description: "Linking Discord accounts to NamelessMC forum profiles."
+icon: "link"
+---
+
+The NamelessMC integration connects Discord accounts to profiles on a NamelessMC-powered forum. Once linked, Bifröst can verify forum membership and sync roles between the forum and Discord.
+
+## Account linking
+
+Members link their forum account to their Discord account using a verification command:
+
+```
+/forumlink
+```
+
+Running this command prompts the member to provide their NamelessMC forum username or email. The bot initiates a verification process through the NamelessMC API — the member confirms the link from their forum account settings page — and once confirmed, the accounts are paired.
+
+After linking, Bifröst can automatically assign Discord roles based on forum group membership, and the customer portal can display the member's forum profile.
+
+## Setup
+
+Navigate to the NamelessMC integration section in the dashboard and enter:
+
+| Setting | Description |
+|---|---|
+| **Forum URL** | The base URL of your NamelessMC forum |
+| **API key** | The API key from your NamelessMC forum's integration settings |
+| **Role sync** | Which NamelessMC groups map to which Discord roles |
+
+The NamelessMC API key is generated in your forum's **Admin Panel > API** section.
+
+## Role synchronisation
+
+When role sync is configured, Bifröst periodically checks each linked member's forum group membership and updates their Discord roles to match. This keeps your Discord access levels aligned with your forum structure automatically.
+
+## Required permissions
+
+| Action | Permission key |
+|---|---|
+| Linking a forum account | `namelessmc.use` (default allow) |

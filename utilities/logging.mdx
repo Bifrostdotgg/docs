@@ -1,0 +1,55 @@
+---
+title: "Logging"
+description: "Routing server events — message edits and deletes, member joins and leaves, bans, role changes — to designated audit log channels."
+icon: "scroll"
+---
+
+The logging plugin captures Discord server events and posts formatted notifications to channels of your choice. Each event category can be routed to a different channel, so you might send message events to one channel, member events to another, and moderation actions to a third.
+
+## Setup
+
+```
+/logging setup <category> <channel>
+```
+
+Configures a specific event category to log to the specified channel. Run the command once per category you want to enable.
+
+```
+/logging disable <category>
+```
+
+Stops logging for a category without removing the rest of your configuration.
+
+Navigate to **Logging** in the dashboard for a visual overview of all configured categories and their target channels.
+
+## Event categories
+
+| Category | Events logged |
+|---|---|
+| **Messages** | Message edits (showing before and after content), message deletions, bulk deletes |
+| **Members** | Member joins, member leaves, username changes, avatar changes, nickname changes |
+| **Roles** | Role creation, deletion, and edits; role assignments and removals |
+| **Channels** | Channel creation, deletion, and setting changes |
+| **Voice** | Members joining, leaving, or moving between voice channels |
+| **Moderation** | Bans, unbans, kicks, timeouts, and their reasons (from Discord's audit log) |
+| **Server** | Server name, icon, or setting changes |
+| **Invites** | Invite creation and deletion (which invite a member used to join) |
+
+## Log message format
+
+Each log entry shows:
+
+- The type of event as a header
+- The relevant user, channel, or role with a mention or name
+- Before and after values for edits
+- A timestamp
+- Where applicable, a link to the original message or context
+
+The bot uses Discord's audit log to attribute events to the staff member who performed them where possible. Events not covered by the audit log (such as message edits by the author) are attributed to the author directly.
+
+## Required permissions
+
+| Action | Permission key |
+|---|---|
+| Viewing logging configuration | `logging.viewConfig` |
+| Changing logging configuration | `logging.manageConfig` |

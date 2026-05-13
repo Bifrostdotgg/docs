@@ -1,0 +1,48 @@
+---
+title: "Starboard"
+description: "Automatically reposting highly-reacted messages to a dedicated highlight channel."
+icon: "star"
+---
+
+The starboard collects messages that receive enough reactions and reposts them to a dedicated channel. It is a community-driven curation tool — members vote with reactions and the most popular content surfaces automatically.
+
+## How it works
+
+When a message receives a reaction count at or above your configured threshold, the bot copies it to the starboard channel. The reposted message shows the original author, the original channel, a link back to the original, and the current reaction count.
+
+If the reaction count drops below the threshold (because members remove their reactions), the bot either removes the starboard entry or keeps it based on your configuration.
+
+## Setup
+
+Navigate to **Starboard** in the dashboard and configure:
+
+| Setting | Description |
+|---|---|
+| **Channel** | The channel where starred messages are reposted |
+| **Reaction emoji** | Which reaction triggers the starboard (default: star emoji) |
+| **Threshold** | Minimum number of reactions required |
+| **Self-star** | Whether the original author's own reaction counts |
+| **Bot messages** | Whether bot messages can be starred |
+| **NSFW channels** | Whether messages from NSFW-marked channels are included |
+
+## Moderation queue
+
+The starboard has an optional moderation queue. When enabled, messages are not posted to the starboard immediately upon reaching the threshold. Instead, they enter a pending queue in the dashboard where staff can approve or reject them before they appear.
+
+Navigate to **Starboard** in the dashboard and enable **Require approval**. Pending entries appear in the **Queue** tab.
+
+Staff with the `starboard.moderate` permission can approve or reject pending entries. Approved entries are posted; rejected entries are discarded.
+
+## Editing the threshold after setup
+
+Raising the threshold after setup does not remove already-posted starboard entries that were added under the old threshold. Lowering it does not retroactively add old messages. The threshold only applies to reactions received from the moment it changes.
+
+## Required permissions
+
+The starboard is fully automatic and requires no member permissions. Configuration is admin-only:
+
+| Action | Permission key |
+|---|---|
+| Viewing configuration | `starboard.viewConfig` |
+| Changing configuration | `starboard.manageConfig` |
+| Moderating the approval queue | `starboard.moderate` |

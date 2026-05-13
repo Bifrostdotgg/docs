@@ -1,0 +1,60 @@
+---
+title: "Customer Portal"
+description: "A self-service panel giving members access to their linked accounts, active integrations, and open support threads."
+icon: "user-gear"
+---
+
+The customer portal is a member-facing dashboard delivered entirely through Discord. When a member opens the portal, it displays a summary of everything Bifröst knows about them: their linked accounts (Minecraft, PlanetSide 2, forum accounts), any active tickets or modmail threads, open reminders, and their economy balance.
+
+The portal acts as a single entry point for members to manage their relationship with the bot and server services without needing to navigate multiple commands.
+
+## Opening the portal
+
+```
+/portal setup
+```
+
+Opens the customer portal panel for the member who ran the command. The panel is displayed as an interactive message visible only to that member. The portal refreshes its data when opened.
+
+## What the portal shows
+
+The portal's content depends on which plugins are active on your server:
+
+| Section | Shown when |
+|---|---|
+| **Linked accounts** | Minecraft, PlanetSide 2, or NamelessMC integrations are enabled |
+| **Active tickets** | Tickets plugin is enabled and the member has open tickets |
+| **Modmail threads** | Modmail plugin is enabled and the member has open conversations |
+| **Reminders** | Reminders plugin is enabled |
+| **Economy balance** | Games/economy plugin is enabled |
+
+Members can take actions directly from the portal — close a ticket, view a reminder, or see which accounts are linked — without running individual commands.
+
+## Configuring the portal
+
+Navigate to **Customer Portal > Configuration** in the dashboard to:
+
+- Enable or disable which sections appear
+- Set which integrations the portal includes
+- Configure which channels the portal command is available in
+
+```
+/portal close
+```
+
+Closes an active portal panel. Portals automatically time out after a period of inactivity.
+
+```
+/portal refresh
+```
+
+Re-fetches all data and updates the portal panel with current information. Useful if a member's status changed while the portal was open.
+
+## Required permissions
+
+| Action | Permission key |
+|---|---|
+| Using the portal | Available to all members by default |
+| Viewing portal configuration | `customerPortal.viewConfig` |
+| Managing portal configuration | `customerPortal.manageConfig` |
+| Managing member portals | `customerPortal.managePortals` |

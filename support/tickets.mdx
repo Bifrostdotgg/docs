@@ -1,0 +1,74 @@
+---
+title: "Tickets"
+description: "Structured support ticket system with categories, staff assignment, and member-facing controls."
+icon: "ticket"
+---
+
+The ticket system creates private Discord threads for individual support requests. Members open a ticket, staff respond inside the thread, and the ticket is closed when the issue is resolved. Configuration in the dashboard defines which categories of support are available, who can open tickets, and how the system behaves automatically.
+
+## How tickets work for members
+
+A member runs `/ticket open` or clicks an opener button you have placed in a channel. They select a category, optionally fill in an opening form, and a private thread is created. The thread is visible only to the member and staff roles configured for that category. The member and staff exchange messages inside the thread as a normal conversation.
+
+When the issue is resolved, either the member or a staff member closes the ticket. Closed tickets can be reviewed in the dashboard.
+
+## Setting up
+
+### Creating categories
+
+Navigate to **Tickets > Categories** in the dashboard and click **New Category**. Each category defines:
+
+| Setting | Description |
+|---|---|
+| **Name** | Displayed when a member selects a ticket type |
+| **Description** | Brief explanation of what this category is for |
+| **Channel** | The parent channel where ticket threads are created |
+| **Staff roles** | Which roles can see and respond to tickets in this category |
+| **Opening form** | Optional questions the member fills in when opening the ticket |
+| **Opening message** | The first message posted by the bot inside the ticket thread |
+| **Auto-close** | Automatically close inactive tickets after a set period |
+
+### Configuring openers
+
+Openers are the buttons or select menus members use to create tickets. Navigate to **Tickets > Openers** and click **New Opener**. After configuring the opener, click **Post** to have the bot send the opener panel to a channel of your choice.
+
+An opener can present a single "Open Ticket" button or a select menu listing multiple categories, depending on how you configure it.
+
+## Slash commands
+
+The `/ticket` command provides the following subcommands:
+
+| Subcommand | Description |
+|---|---|
+| `/ticket open [category]` | Open a new ticket, optionally pre-selecting a category |
+| `/ticket close [reason]` | Close the current ticket thread |
+| `/ticket claim` | Assign the ticket to yourself as the handling staff member |
+| `/ticket unclaim` | Release your claim on the ticket |
+| `/ticket assign <user>` | Assign the ticket to another staff member |
+| `/ticket add <user>` | Add a member to the private thread |
+| `/ticket remove <user>` | Remove a member from the private thread |
+| `/ticket rename <name>` | Rename the ticket thread |
+| `/ticket priority <level>` | Set the ticket's priority level |
+| `/ticket note <content>` | Add a private staff note to the ticket |
+| `/ticket transcript` | Generate a text transcript of the conversation |
+
+The `/ticket-admin` command provides category management directly from Discord, covering the same operations as the dashboard categories page.
+
+## AI-assisted responses
+
+If the AI plugin is enabled and connected to your ticket categories, Bifröst can suggest draft responses based on your knowledgebase and past resolutions. See [Odin AI](/ai/odin) for setup.
+
+## Reviews
+
+Members can optionally be prompted to leave a satisfaction review when a ticket is closed. Review scores appear in the analytics dashboard. Enable reviews in **Tickets > Configuration**.
+
+## Required permissions
+
+| Action | Permission key |
+|---|---|
+| Opening a ticket | `tickets.open` (default allow) |
+| Closing any ticket | `tickets.manage` |
+| Claiming tickets | `tickets.claim` |
+| Viewing all tickets | `tickets.manage` |
+| Viewing analytics | `tickets.viewAnalytics` |
+| Managing configuration | `tickets.config.view_config` |

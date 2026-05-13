@@ -1,0 +1,263 @@
+---
+title: "Command Reference"
+description: "Complete list of every slash command across all Bifröst plugins."
+icon: "terminal"
+---
+
+Every slash command available in Bifröst is listed below, grouped by plugin. Commands marked with **Default allow** are available to all members without any permission configuration. All other commands require the matching permission key to be granted to the member's role in the dashboard.
+
+## Moderation
+
+| Command | Description | Default allow |
+|---|---|---|
+| `/warn <user> <reason>` | Issue a warning infraction | No |
+| `/ban <user> <reason>` | Ban a member or user from the server | No |
+| `/unban <user>` | Remove a ban | No |
+| `/kick <user> <reason>` | Remove a member from the server | No |
+| `/mute <user> <duration> <reason>` | Apply a Discord timeout | No |
+| `/purge count <count>` | Delete the most recent N messages | No |
+| `/purge time <duration>` | Delete messages sent in the last duration | No |
+| `/lock [channel]` | Prevent members from sending in a channel | No |
+| `/unlock [channel]` | Restore sending permissions to a channel | No |
+| `/channelban <user> [channel]` | Ban a member from a specific channel | No |
+| `/infractions <user>` | View a member's infraction history | No |
+| `/setpoints <user> <points>` | Set a member's active infraction point total | No |
+| `/automod` | Manage automod rules | No |
+| `/sticky create` | Create a sticky message in a channel | No |
+| `/sticky delete [channel]` | Remove a sticky message | No |
+| `/appeals config` | Configure the appeals form | No |
+
+## Tickets
+
+| Command | Description | Default allow |
+|---|---|---|
+| `/ticket open [category]` | Open a new support ticket | Yes |
+| `/ticket close [reason]` | Close the current ticket | No |
+| `/ticket claim` | Claim the ticket for yourself | No |
+| `/ticket unclaim` | Release your claim | No |
+| `/ticket assign <user>` | Assign to another staff member | No |
+| `/ticket add <user>` | Add a member to the ticket thread | No |
+| `/ticket remove <user>` | Remove a member from the ticket thread | No |
+| `/ticket rename <name>` | Rename the ticket thread | No |
+| `/ticket priority <level>` | Set the ticket priority | No |
+| `/ticket note <content>` | Add a private staff note | No |
+| `/ticket transcript` | Generate a conversation transcript | No |
+| `/ticket-admin` | Manage ticket categories and configuration | No |
+
+## Modmail
+
+| Command | Description | Default allow |
+|---|---|---|
+| `/modmail open <user>` | Open a modmail thread for a member | No |
+| `/modmail close [reason]` | Close the current modmail thread | No |
+| `/modmail ban <user> [reason]` | Prevent a member from sending modmail | No |
+| `/modmail unban <user>` | Remove a modmail ban | No |
+| `/modmail note <content>` | Add a private staff note to the thread | No |
+| `/modmail snippet <name>` | Insert a saved response snippet | No |
+| `/modmail transfer <category>` | Move the thread to another category | No |
+
+## Suggestions
+
+| Command | Description | Default allow |
+|---|---|---|
+| `/suggest <content>` | Submit a suggestion | Yes |
+| `/suggestion-categories list` | List all suggestion categories | Yes |
+| `/suggestion-categories create <name>` | Create a suggestion category | No |
+| `/suggestion-categories delete <id>` | Delete a suggestion category | No |
+| `/suggestion-categories edit <id>` | Edit a suggestion category | No |
+| `/suggestion-categories move <id>` | Move a category's order | No |
+| `/suggestion-config` | View and manage suggestion settings | No |
+
+## Applications
+
+| Command | Description | Default allow |
+|---|---|---|
+| `/application list` | List available application forms | Yes |
+| `/application post <form>` | Submit an application | Yes |
+
+## Welcome
+
+| Command | Description | Default allow |
+|---|---|---|
+| `/welcome setup` | Configure the welcome message | No |
+| `/welcome view` | Display the current welcome configuration | No |
+| `/welcome test` | Send a test welcome message | No |
+| `/welcome remove` | Disable the welcome message | No |
+| `/welcome variables` | List available template variables | Yes |
+
+## Role Buttons
+
+| Command | Description | Default allow |
+|---|---|---|
+| `/rolebuttons create` | Create a new role button panel | No |
+| `/rolebuttons edit <id>` | Edit an existing panel | No |
+| `/rolebuttons post <id> [channel]` | Post a panel to a channel | No |
+| `/rolebuttons update <id>` | Refresh a posted panel | No |
+| `/rolebuttons delete <id>` | Delete a panel | No |
+| `/rolebuttons list` | List all panels | No |
+
+## Tags
+
+| Command | Description | Default allow |
+|---|---|---|
+| `/tag use <name>` | Post a tag's content to the channel | Yes |
+| `/tag create <name>` | Create a new tag | No |
+| `/tag edit <name>` | Edit a tag | No |
+| `/tag delete <name>` | Delete a tag | No |
+| `/tag list` | List all tags | Yes |
+| `/post send <name> [channel]` | Send a post to a specific channel | No |
+| `/post list` | List all posts | Yes |
+
+## Reminders
+
+| Command | Description | Default allow |
+|---|---|---|
+| `/reminder` | Open the reminder creation panel | Yes |
+| `/reminders` | View and manage your reminders | Yes |
+
+## Temporary Voice Channels
+
+| Command | Description | Default allow |
+|---|---|---|
+| `/tempvc create` | Manually create a temporary voice channel | Yes |
+| `/tempvc delete` | Delete your current temporary channel | Yes |
+| `/tempvc delete-all` | Delete all temporary channels you own | Yes |
+
+## Voice Transcription
+
+| Command | Description | Default allow |
+|---|---|---|
+| `/voice-transcription set <channel>` | Enable transcription for a channel | No |
+| `/voice-transcription status` | View which channels have transcription enabled | No |
+
+## Translation
+
+| Command | Description | Default allow |
+|---|---|---|
+| `/translate message <message_id> <language>` | Translate a specific message | Yes |
+| `/translate language <language>` | Look up a language's DeepL identifier | Yes |
+| `/translate channel <channel>` | Configure auto-translate for a channel | No |
+
+## Odin AI
+
+| Command | Description | Default allow |
+|---|---|---|
+| `/ask <question>` | Ask the Odin AI assistant a question | Yes |
+
+## Games — Board Games
+
+| Command | Description | Default allow |
+|---|---|---|
+| `/2048` | Play 2048 | Yes |
+| `/connect4 [opponent]` | Play Connect Four | Yes |
+| `/memory` | Play the memory card matching game | Yes |
+| `/tictactoe [opponent]` | Play Tic-Tac-Toe | Yes |
+| `/battleship [opponent]` | Play Battleship | Yes |
+| `/solitaire` | Play Klondike Solitaire | Yes |
+
+## Games — Casino
+
+| Command | Description | Default allow |
+|---|---|---|
+| `/blackjack <bet>` | Play Blackjack | Yes |
+| `/coinflip <bet> <side>` | Flip a coin | Yes |
+| `/dice <bet> <target>` | Roll two dice | Yes |
+| `/higher-lower <bet>` | Play Higher or Lower | Yes |
+| `/horse-racing <bet> <horse>` | Bet on a horse race | Yes |
+| `/mines <bet> <mine_count>` | Play Mines | Yes |
+| `/roulette <bet> <type>` | Play Roulette | Yes |
+
+## Games — Other
+
+| Command | Description | Default allow |
+|---|---|---|
+| `/trivia` | Play a trivia game | Yes |
+| `/wordle` | Play Wordle | Yes |
+| `/rps [opponent]` | Play Rock-Paper-Scissors | Yes |
+| `/emojify <text>` | Convert text to emoji letters | Yes |
+| `/poke <user>` | Poke another member | Yes |
+
+## Economy
+
+| Command | Description | Default allow |
+|---|---|---|
+| `/balance [user]` | Check a member's coin balance | Yes |
+| `/dailycoins` | Claim your daily coin reward | Yes |
+| `/tip <user> <amount>` | Send coins to another member | Yes |
+| `/leaderboard` | View the server coin leaderboard | Yes |
+| `/claim` | Claim a reward from a configured claim event | Yes |
+
+## Minecraft
+
+| Command | Description | Default allow |
+|---|---|---|
+| `/link-minecraft <username>` | Link your Minecraft account | Yes |
+| `/confirm-code <code>` | Confirm a Minecraft account link | Yes |
+| `/mcstatus [server]` | Check the server's live status | Yes |
+| `/minecraft-status` | View detailed server status | No |
+| `/minecraft-setup` | Configure the Minecraft integration | No |
+| `/import-whitelist` | Import an existing Minecraft whitelist | No |
+
+## PlanetSide 2
+
+| Command | Description | Default allow |
+|---|---|---|
+| `/ps2-link <character>` | Link your PlanetSide 2 character | Yes |
+| `/ps2-info` | View your linked character's profile | Yes |
+| `/ps2-lookup <character>` | Look up any character | Yes |
+| `/ps2-outfit [tag]` | View outfit information | Yes |
+| `/ps2-population [server]` | View live server population | Yes |
+| `/ps2-promote <member> <rank>` | Promote an outfit member | No |
+| `/ps2-setup` | Configure the PlanetSide 2 integration | No |
+
+## Tebex
+
+| Command | Description | Default allow |
+|---|---|---|
+| `/tebex transaction lookup <id>` | Look up a transaction | No |
+| `/tebex giftcard create <amount>` | Generate a gift card | No |
+| `/tebex giftcard lookup <code>` | Check a gift card balance | No |
+
+## NamelessMC
+
+| Command | Description | Default allow |
+|---|---|---|
+| `/forumlink` | Link your NamelessMC forum account | Yes |
+
+## Logging
+
+| Command | Description | Default allow |
+|---|---|---|
+| `/logging setup <category> <channel>` | Configure a logging category | No |
+| `/logging disable <category>` | Disable a logging category | No |
+
+## Attachment Blocker
+
+| Command | Description | Default allow |
+|---|---|---|
+| `/attachment-blocker setup` | Configure the attachment blocklist | No |
+| `/attachment-blocker channel add <channel>` | Add a channel override | No |
+| `/attachment-blocker channel remove <channel>` | Remove a channel override | No |
+
+## Don't @ Me
+
+| Command | Description | Default allow |
+|---|---|---|
+| `/dontatme add <role>` | Protect a role from being mentioned | No |
+| `/dontatme remove <role>` | Remove protection from a role | No |
+
+## Customer Portal
+
+| Command | Description | Default allow |
+|---|---|---|
+| `/portal setup` | Open the customer portal | Yes |
+| `/portal close` | Close the portal panel | Yes |
+| `/portal refresh` | Refresh portal data | Yes |
+
+## Status and Info
+
+| Command | Description | Default allow |
+|---|---|---|
+| `/ping` | Check bot and API latency | Yes |
+| `/uptime` | Check how long the bot has been running | Yes |
+| `/userinfo [user]` | View Discord user information | Yes |

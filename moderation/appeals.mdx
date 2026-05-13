@@ -1,0 +1,62 @@
+---
+title: "Appeals"
+description: "Allowing banned members to submit structured appeal requests through a dedicated form."
+icon: "scale-balanced"
+---
+
+The appeals system gives banned members a way to contest their ban through a form submission rather than requiring them to contact staff directly. Submissions arrive in the dashboard for staff review, and the appeals site (a separate web interface accessible without a Discord account) handles the member-facing form.
+
+## How it works for members
+
+When a member is banned, they can visit the Bifröst appeals site URL and submit an appeal form. The form is accessible without being logged in to Discord, so it works even if the member was banned. The member fills in their Discord username, the server they were banned from, and the fields defined in your appeal form, then submits.
+
+The submitted appeal appears in the dashboard for staff review.
+
+## Setting up the appeals system
+
+Navigate to **Moderation > Appeals** in the dashboard.
+
+### Configure the appeal form
+
+Click **Edit Form** to define the questions your appeal form includes. Each question has:
+
+- **Label** — the question text shown to the submitter
+- **Type** — short text, long text, or multiple choice
+- **Required** — whether the submitter must answer before submitting
+
+Common questions include: "Why were you banned?", "Why should your ban be lifted?", and "What will you do differently?"
+
+### Set the appeals site URL
+
+The appeals site is deployed separately from the main dashboard. Enter its URL in the Appeals settings so the bot knows where to direct banned members if you choose to include it in ban notification DMs.
+
+## Reviewing appeals in the dashboard
+
+Navigate to **Moderation > Appeals** and open the **Submissions** tab. Each appeal shows:
+
+- The submitter's stated Discord username and ID
+- Submission date
+- All form field responses
+
+From the review panel you can:
+
+- **Approve** — unban the member and optionally send them a DM with instructions to rejoin
+- **Deny** — record the decision and optionally send a denial reason
+- **Mark under review** — flag the appeal as pending while staff discuss it
+
+## Appeal form via command
+
+```
+/appeals config
+```
+
+Opens the appeal configuration panel in Discord, allowing quick access to form settings without navigating to the dashboard.
+
+## Required permissions
+
+| Action | Permission key |
+|---|---|
+| Viewing appeal submissions | `moderation.appeals.view` |
+| Reviewing and actioning appeals | `moderation.appeals.manage` |
+| Configuring the appeal form | `moderation.appeals.manageForms` |
+| Viewing dashboard configuration | `moderation.config.view_config` |

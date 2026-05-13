@@ -1,0 +1,79 @@
+---
+title: "Casino Games"
+description: "Playing casino-style games in Discord — Blackjack, Coinflip, Dice, Higher-Lower, Horse Racing, Mines, and Roulette."
+icon: "dice"
+---
+
+Casino games are wagering games played using your server's virtual economy. You bet coins on each round; winning pays out based on the game's odds. Losing reduces your balance. No real money is involved.
+
+<Warning>
+Casino games require the economy system to be configured. Members need a coin balance to place bets. See the [Economy](/games/economy) page for setup.
+</Warning>
+
+## Available games
+
+### Blackjack
+
+```
+/blackjack <bet>
+```
+
+Standard Blackjack against the dealer. Get closer to 21 than the dealer without going over. Supports Hit, Stand, Double, and Split where applicable. Blackjack (Ace + 10-value card on the first deal) pays 3:2.
+
+### Coinflip
+
+```
+/coinflip <bet> <heads|tails>
+```
+
+Call heads or tails. 1:1 payout on a correct guess.
+
+### Dice
+
+```
+/dice <bet> <target>
+```
+
+Roll two dice and predict whether the sum will be higher or lower than the target, or hit the target exactly. Payout scales with the probability of the outcome.
+
+### Higher-Lower
+
+```
+/higher-lower <bet>
+```
+
+A card is revealed. Guess whether the next card will be higher or lower. A correct streak multiplies your winnings. Cash out at any point to claim your accumulated payout.
+
+### Horse Racing
+
+```
+/horse-racing <bet> <horse>
+```
+
+Bet on one of several horses in a simulated race. Each horse has different odds. The race plays out over several rounds with position updates posted in the message.
+
+### Mines
+
+```
+/mines <bet> <mine_count>
+```
+
+A grid of tiles hides a set number of mines. Reveal tiles to increase your multiplier, then cash out before hitting a mine. More mines means higher risk and higher potential reward.
+
+### Roulette
+
+```
+/roulette <bet> <type>
+```
+
+Bet on a number, a colour (red/black), or a range (odd/even, 1–18, 19–36). A virtual wheel spins and payouts follow standard roulette odds: single numbers pay 35:1, colours pay 1:1.
+
+## Bet limits
+
+The minimum and maximum bet per game are configured in **Games > Configuration > Economy**. Members cannot bet more than their current balance.
+
+## Required permissions
+
+| Action | Permission key |
+|---|---|
+| Playing casino games | `games.use` (default allow) |

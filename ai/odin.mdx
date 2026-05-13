@@ -1,0 +1,76 @@
+---
+title: "Odin AI"
+description: "AI-powered assistant with configurable conversation context, a knowledge base, and the /ask command."
+icon: "brain"
+---
+
+Odin is Bifröst's AI assistant. Members ask questions and receive answers informed by your server's knowledge base — documentation, FAQs, rules, or any other content you upload. Odin maintains conversation context within a session, so follow-up questions work naturally without repeating background information.
+
+## Asking a question
+
+```
+/ask <question>
+```
+
+Members ask any question in plain language. Odin processes the question against your knowledge base and provides an answer. If the knowledge base contains relevant content, the answer draws from it. If not, Odin falls back to its underlying language model's general knowledge.
+
+By default, `/ask` is available to all members. Access can be restricted in the permissions configuration.
+
+## Knowledge base
+
+The knowledge base is the set of documents Odin uses to answer questions. Navigate to **AI > Knowledge Base** in the dashboard to manage it.
+
+### Adding documents
+
+Click **Add Document** and paste in the content or upload a file. Each document should cover a specific topic — server rules, a FAQ, integration guides, or any structured content you want Odin to reference.
+
+Supported formats:
+- Plain text
+- Markdown
+- PDF
+- Common document formats
+
+Once uploaded, the document is processed and indexed. Odin begins referencing it in answers within a few minutes.
+
+### Managing documents
+
+The knowledge base page lists all documents with their creation date and status. You can:
+
+- **Edit** a document's content if information changes
+- **Delete** a document to stop Odin referencing it
+- **Preview** how Odin interprets and summarises the document
+
+## Conversation context
+
+Odin maintains context within a conversation session. When a member asks a follow-up question, Odin uses the previous exchanges in the same session to understand the reference. Context is scoped to the individual member and expires after a period of inactivity.
+
+Staff can view and manage active contexts in **AI > Context**. This is useful for debugging unexpected responses or clearing stale context for a member.
+
+## Configuration
+
+Navigate to **AI > Configuration** in the dashboard to set:
+
+| Setting | Description |
+|---|---|
+| **AI provider** | Which language model provider powers Odin (configured by your administrator) |
+| **System prompt** | Instructions prepended to every conversation that shape Odin's behaviour and tone |
+| **Context length** | How many previous exchanges Odin remembers in a session |
+| **Response channels** | Optionally restrict `/ask` to specific channels |
+
+## AI in other plugins
+
+Odin integrates with the tickets and modmail plugins to suggest draft responses based on your knowledge base. When a ticket or modmail thread is opened, Odin can post a suggested answer for staff to review before sending. Enable this in **Tickets > AI** or **Modmail > AI**.
+
+Odin also powers AI-generated suggestion titles — when a member submits a suggestion, Odin reads the content and generates a concise title automatically.
+
+## Required permissions
+
+| Action | Permission key |
+|---|---|
+| Using `/ask` | `ai.useAsk` (default allow) |
+| Viewing context | `ai.viewContext` |
+| Managing context | `ai.manageContext` |
+| Viewing configuration | `ai.viewConfig` |
+| Managing configuration | `ai.manageConfig` |
+| Viewing the knowledge base | `ai.viewKnowledgebase` |
+| Managing the knowledge base | `ai.manageKnowledgebase` |

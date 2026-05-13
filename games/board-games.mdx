@@ -1,0 +1,77 @@
+---
+title: "Board Games"
+description: "Playing interactive board games in Discord — 2048, Connect Four, Memory, Tic-Tac-Toe, Battleship, and Solitaire."
+icon: "chess-board"
+---
+
+Bifröst includes six board games playable entirely within Discord using interactive button controls. All games support single-player or two-player modes depending on the game type.
+
+## Available games
+
+### 2048
+
+```
+/2048
+```
+
+The classic sliding number puzzle. A 4x4 grid of numbered tiles — swipe tiles in one direction and matching numbers merge. Reach the 2048 tile to win. Played entirely with direction buttons. Single player.
+
+### Connect Four
+
+```
+/connect4 [opponent]
+```
+
+Drop coloured discs into a 7-column, 6-row grid. First to get four in a row (horizontal, vertical, or diagonal) wins. Supports one player against the bot or two players.
+
+### Memory
+
+```
+/memory
+```
+
+A card-matching game. The board shows face-down cards; flip two at a time and match pairs. Find all pairs in the fewest flips. Single player.
+
+### Tic-Tac-Toe
+
+```
+/tictactoe [opponent]
+```
+
+Classic three-in-a-row on a 3x3 grid. Supports one player against the bot or two players.
+
+### Battleship
+
+```
+/battleship [opponent]
+```
+
+The naval strategy game. Place your ships on a 10x10 grid and attempt to sink your opponent's fleet before they sink yours. Supports two players or one player against the bot.
+
+### Solitaire
+
+```
+/solitaire
+```
+
+Standard Klondike Solitaire. Sort cards into foundation piles by suit in ascending order from Ace to King. Single player.
+
+## Two-player games
+
+For games that support an opponent, specify the other member with the `opponent` option:
+
+```
+/connect4 opponent:@Username
+```
+
+The opponent receives an invitation they must accept before the game starts. If the opponent does not respond within 60 seconds, the invitation expires.
+
+## Game timeout
+
+Active games expire if no moves are made within a set period (typically 5–10 minutes depending on the game). The bot posts a message indicating the game has ended due to inactivity.
+
+## Required permissions
+
+| Action | Permission key |
+|---|---|
+| Playing board games | `games.use` (default allow) |

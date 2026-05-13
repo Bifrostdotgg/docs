@@ -1,0 +1,74 @@
+---
+title: "Support Analytics"
+description: "Response time metrics, ticket volume, staff performance tracking, and customer satisfaction reviews."
+icon: "chart-line"
+---
+
+Both the tickets and modmail plugins include an analytics layer that tracks volume, response times, and staff activity. Analytics give server administrators objective data on how well support is running and which staff members are contributing most.
+
+## Accessing analytics
+
+- Ticket analytics: **Tickets > Analytics**
+- Modmail analytics: **Modmail > Analytics**
+
+Both sections have the same structure and metric types.
+
+## Metrics tracked
+
+### Volume
+
+| Metric | Description |
+|---|---|
+| **Total opened** | Number of tickets or threads opened in the selected period |
+| **Total closed** | Number resolved in the selected period |
+| **Open at end of period** | Tickets that were still unresolved at the end of the date range |
+| **Daily breakdown** | Chart showing opens and closes per day |
+
+### Response times
+
+| Metric | Description |
+|---|---|
+| **First response time** | How long from ticket creation until a staff member sent the first message |
+| **Average handle time** | Total duration from open to close |
+| **SLA compliance** | Percentage of tickets where first response occurred within your configured target |
+
+SLA targets are configured in **Tickets > Configuration** or **Modmail > Configuration** as a duration (e.g. 2 hours for first response).
+
+### Staff performance
+
+The staff performance table shows, per staff member:
+
+- Number of tickets claimed or assigned
+- Average first response time
+- Average handle time
+- Number of tickets closed
+- Customer review score (if reviews are enabled)
+
+Click any staff member's row to drill into their individual ticket history.
+
+## Customer satisfaction reviews
+
+When a ticket or modmail thread is closed, the member can be invited to leave a satisfaction rating. The rating appears as a 1–5 star score alongside an optional comment.
+
+### Enabling reviews
+
+Navigate to **Tickets > Configuration** or **Modmail > Configuration** and enable the **Request review on close** option. You can configure:
+
+- How long after close the member receives the review prompt
+- Whether the review is anonymous to staff or shows who submitted it
+
+### Viewing reviews
+
+Reviews appear in **Tickets > Reviews** and **Modmail > Analytics**. The reviews page shows each rating, the associated ticket, and any comments left by the member.
+
+## Date range filtering
+
+All analytics pages support date range filtering. Select a preset (last 7 days, last 30 days, last 90 days) or define a custom range. Metrics update immediately when the range changes.
+
+## Required permissions
+
+| Action | Permission key |
+|---|---|
+| Viewing ticket analytics | `tickets.viewAnalytics` |
+| Viewing modmail analytics | `modmail.viewAnalytics` |
+| Managing reviews | `tickets.manageReviews`, `modmail.manageReviews` |

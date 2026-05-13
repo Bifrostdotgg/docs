@@ -1,0 +1,74 @@
+---
+title: "Role Buttons"
+description: "Self-assignable role panels with toggle buttons that members use to pick up or drop roles."
+icon: "circle-check"
+---
+
+Role buttons are persistent panels posted in a channel containing buttons that members click to assign or remove roles from themselves. Unlike Discord's built-in role selection feature, Bifröst's panels support toggle modes, role grouping, and custom button labels and styles.
+
+## Creating a panel
+
+```
+/rolebuttons create
+```
+
+Running this command opens a configuration flow where you define the panel. You can also create and manage panels entirely through the dashboard at **Role Buttons**.
+
+### Panel settings
+
+| Setting | Description |
+|---|---|
+| **Title** | The panel's header text |
+| **Description** | Explanatory text shown below the title |
+| **Mode** | How roles are assigned (see below) |
+
+### Assignment modes
+
+| Mode | Behaviour |
+|---|---|
+| **Toggle** | Clicking adds the role if not held, removes it if held |
+| **Add only** | Clicking always adds the role, never removes it |
+| **Remove only** | Clicking always removes the role, never adds it |
+| **Exclusive** | Only one role from the panel can be held at a time; picking a new one removes the previous |
+
+### Adding buttons
+
+Each button on a panel corresponds to one Discord role. For each button you configure:
+
+| Setting | Description |
+|---|---|
+| **Role** | The Discord role to assign |
+| **Label** | The button's text label |
+| **Style** | Primary (blurple), Secondary (grey), Success (green), or Danger (red) |
+| **Emoji** | Optional emoji displayed on the button |
+
+A single panel supports up to 25 buttons (5 rows of 5).
+
+## Posting the panel
+
+```
+/rolebuttons post <panel_id> [channel]
+```
+
+Posts the panel to the specified channel (or the current channel if none is specified). The panel is persistent — it remains in the channel indefinitely and continues working after the bot restarts.
+
+If you need to update the panel's content after posting, use the dashboard to edit it. The posted message updates automatically.
+
+## Managing panels
+
+```
+/rolebuttons list
+/rolebuttons edit <panel_id>
+/rolebuttons delete <panel_id>
+/rolebuttons update <panel_id>
+```
+
+The dashboard at **Role Buttons** shows all panels with their posted location, button count, and last updated time.
+
+## Required permissions
+
+| Action | Permission key |
+|---|---|
+| Using role button panels | All members by default |
+| Viewing panels in the dashboard | `rolebuttons.view` |
+| Creating and editing panels | `rolebuttons.manage` |

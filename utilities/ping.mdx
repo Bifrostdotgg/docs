@@ -1,0 +1,57 @@
+---
+title: "Status and Info Commands"
+description: "Checking bot latency, uptime, and viewing information about a Discord user."
+icon: "circle-info"
+---
+
+These general-purpose commands give members and administrators basic operational information about the bot and Discord users.
+
+## Checking bot latency
+
+```
+/ping
+```
+
+Measures the current round-trip latency between the bot and Discord's API. The response shows:
+
+- **API latency** — time for the bot to receive an event from Discord
+- **Gateway latency** — WebSocket heartbeat round-trip
+- **Database latency** — time to complete a simple database query
+
+This command is useful for verifying that the bot is responsive and identifying whether slowness is coming from the bot, Discord's API, or the database.
+
+## Checking bot uptime
+
+```
+/uptime
+```
+
+Displays how long the bot has been running since its last restart. Shows a human-readable duration (e.g. "3 days, 14 hours, 22 minutes") and the exact date and time the bot started.
+
+## Viewing user information
+
+```
+/userinfo [user]
+```
+
+Displays a profile card for the specified member (or your own profile if no user is specified). The card shows:
+
+| Field | Description |
+|---|---|
+| **Username** | Discord username and display name |
+| **User ID** | Discord snowflake ID |
+| **Account created** | When the Discord account was registered |
+| **Joined server** | When the member joined this server |
+| **Roles** | All roles the member currently holds |
+| **Nickname** | Server-specific nickname if set |
+| **Bot** | Whether the account is a bot |
+
+`/userinfo` works on any visible member, including bots. You can look up members who have left the server by providing their user ID.
+
+## Required permissions
+
+These commands are available to all members by default:
+
+| Command | Permission key |
+|---|---|
+| `/ping`, `/uptime`, `/userinfo` | `ping.use` (default allow) |

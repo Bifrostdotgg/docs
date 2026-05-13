@@ -1,0 +1,69 @@
+---
+title: "Tags"
+description: "Saved text snippets and embed templates that staff can post with a slash command."
+icon: "tags"
+---
+
+Tags are reusable pieces of content — a block of text, an embed, or a formatted message — that can be posted to any channel with a single command. They are particularly useful for staff who frequently answer the same questions, share the same resources, or post formatted announcements. Tags save the content once and let anyone with access deploy it instantly.
+
+## Using a tag
+
+```
+/tag use <name>
+```
+
+Posts the tag's content to the current channel. Tag names support autocomplete — begin typing and the bot suggests matching tags.
+
+## Creating a tag
+
+```
+/tag create <name>
+```
+
+Opens a modal where you write the tag's content. The content supports Discord markdown. If you want to create a rich embed tag, use the dashboard instead, where you have a visual embed builder.
+
+To create a tag via the dashboard, navigate to **Tags** and click **New Tag**. The dashboard editor supports:
+
+- Plain text content
+- Embed with title, description, fields, colour, and thumbnail
+- Attachment file upload
+
+## Editing and deleting
+
+```
+/tag edit <name>
+/tag delete <name>
+```
+
+Editing opens the same modal used for creation. Deleting removes the tag permanently.
+
+## Listing tags
+
+```
+/tag list
+```
+
+Lists all tags available on your server. The dashboard **Tags** page provides the same list with search and filter options.
+
+## Posts
+
+Posts are similar to tags but are intended for longer-form content pinned to specific channels. The `/post` command works alongside `/tag`:
+
+```
+/post send <name> [channel]
+/post list
+```
+
+A post sends the content to a designated channel rather than the channel where the command is run. Use posts for things like weekly announcements or pinned resources that need to go to a specific place regardless of where the command is triggered.
+
+## Templates
+
+Templates are skeleton embeds saved in the dashboard that staff can use as a starting point when creating new tags. Navigate to **Tags > Templates** to manage them.
+
+## Required permissions
+
+| Action | Permission key |
+|---|---|
+| Using tags | `tags.viewTags` (default allow) |
+| Creating, editing, and deleting tags | `tags.manageTags` |
+| Sending posts | `tags.managePosts` |

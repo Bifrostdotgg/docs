@@ -1,0 +1,59 @@
+---
+title: "Temporary Voice Channels"
+description: "Join-to-create temporary voice channels that delete themselves when empty."
+icon: "microphone"
+---
+
+The temporary voice channel system lets members create their own voice channels on demand. You designate one or more "creator" voice channels. When a member joins a creator channel, the bot immediately creates a new voice channel, moves the member into it, and deletes the channel automatically when the last member leaves.
+
+This eliminates the need for administrators to manually create and delete voice channels for small groups and gives members control over their own spaces without granting them Manage Channels permissions.
+
+## How it works for members
+
+Join the creator voice channel (typically named something like "Create a channel" or "Join to create"). The bot creates a new channel named after you by default and moves you into it. You can then invite others to join. When everyone leaves, the bot deletes the channel.
+
+While in your temporary channel, you have control over it through the `/tempvc` command.
+
+## Setting up
+
+Navigate to **Temp VC > Configuration** in the dashboard.
+
+| Setting | Description |
+|---|---|
+| **Creator channel** | The voice channel members join to trigger channel creation |
+| **Category** | The category where new temporary channels are created |
+| **Default name** | Template for new channel names. Supports `{user}` and `{count}` variables. |
+| **Default user limit** | How many members can join new channels (0 = unlimited) |
+| **Default bitrate** | Audio quality of new channels |
+| **Permitted roles** | Which roles can use the creator channel (leave empty for all members) |
+
+You can have multiple creator channels with different settings.
+
+## Member controls
+
+```
+/tempvc create
+/tempvc delete
+/tempvc delete-all
+```
+
+| Subcommand | Description |
+|---|---|
+| `create` | Manually create a temporary channel (without joining the creator channel) |
+| `delete` | Delete your current temporary channel immediately |
+| `delete-all` | Delete all temporary channels you own |
+
+Members can also rename, set a user limit, or lock their temporary channel using the Discord voice channel context menu, provided the bot has granted them the appropriate permissions.
+
+## Viewing active channels
+
+Navigate to **Temp VC > Active** in the dashboard to see all currently active temporary channels — who created them, how many members are in them, and how long they have been active.
+
+## Required permissions
+
+| Action | Permission key |
+|---|---|
+| Using the creator channel | Available to all members by default |
+| Viewing configuration | `tempvc.viewConfig` |
+| Changing configuration | `tempvc.manageConfig` |
+| Managing channels (e.g. force-deleting) | `tempvc.manageChannels` |

@@ -1,0 +1,81 @@
+---
+title: "Minecraft Integration"
+description: "Linking Discord accounts to Minecraft profiles, managing the server whitelist, using RCON, and displaying live server status."
+icon: "server"
+---
+
+The Minecraft integration connects your Discord server to one or more Minecraft Java Edition servers. It provides account linking (tying a Discord user to their Minecraft username), whitelist management that syncs with Discord roles, RCON access for remote commands, and a live server status display.
+
+## Account linking
+
+Members link their Minecraft account to their Discord account through a two-step verification process.
+
+```
+/link-minecraft <username>
+```
+
+The member provides their Minecraft username. The bot generates a unique verification code and instructs the member to join a specific Minecraft server and run a verification command in game. Once verified, the link is confirmed and stored.
+
+Once linked, Bifröst can:
+
+- Automatically add the member to the Minecraft whitelist based on their Discord roles
+- Remove them from the whitelist if they lose the required role
+- Display their Minecraft username alongside their Discord profile in the customer portal
+
+## Whitelist management
+
+Navigate to **Minecraft > Players** in the dashboard to view the full whitelist status — who is linked, who is pending verification, and who has been manually approved or denied.
+
+### Automatic whitelist sync
+
+Configure which Discord roles entitle a member to be on the whitelist in **Minecraft > Configuration**. When a member gains or loses the configured role, the bot automatically updates the Minecraft server's whitelist through RCON.
+
+### Manual approval
+
+If you prefer manual review before adding members to the whitelist, enable the approval queue in **Minecraft > Configuration**. Linked accounts enter a pending state and require staff approval before the whitelist entry is created.
+
+```
+/import-whitelist
+```
+
+Imports an existing whitelist file from your Minecraft server, linking each username to their Discord account where a match can be found.
+
+## Server status
+
+```
+/mcstatus [server]
+/minecraft-status
+```
+
+Displays the live status of your configured Minecraft server — online/offline, current player count, player list, and server version. The information is fetched directly from the Minecraft server protocol and does not require RCON.
+
+The dashboard **Minecraft > Status** page shows the same information in a continuously updating format.
+
+## RCON
+
+RCON lets you run commands on the Minecraft server directly from Discord. Configure the RCON connection in **Minecraft > Configuration** with your server's RCON host, port, and password.
+
+Once configured, administrators can send commands through the dashboard status page or through dedicated bot commands. RCON access is limited to members with the appropriate Bifröst permission.
+
+## Minecraft server setup
+
+Navigate to **Minecraft > Configuration** in the dashboard and enter:
+
+| Setting | Description |
+|---|---|
+| **Server address** | The Minecraft server's IP or hostname |
+| **Server port** | Default 25565 |
+| **RCON host** | RCON endpoint (often the same as the server address) |
+| **RCON port** | Default 25575 |
+| **RCON password** | The password set in your `server.properties` |
+| **Whitelist roles** | Discord roles that entitle a member to whitelist access |
+| **Require approval** | Whether linked accounts require manual approval |
+
+## Required permissions
+
+| Action | Permission key |
+|---|---|
+| Linking a Minecraft account | `minecraft.useLinking` (default allow) |
+| Viewing the player list | `minecraft.viewPlayers` |
+| Managing players and approvals | `minecraft.managePlayers` |
+| Approving whitelist requests | `minecraft.approveWhitelist` |

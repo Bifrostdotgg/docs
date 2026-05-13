@@ -1,0 +1,65 @@
+---
+title: "Channel Controls"
+description: "Locking channels, applying per-channel bans, and preventing ban evasion via leave-and-rejoin."
+icon: "lock"
+---
+
+Bifröst provides three channel-level enforcement tools: channel locks, channel bans, and leave-ban tracking. These work alongside server-wide bans to handle situations where a full server ban is not warranted but access to specific channels or re-entry to the server needs to be controlled.
+
+## Locking and unlocking channels
+
+```
+/lock [channel] [reason] [duration]
+/unlock [channel]
+```
+
+Locking a channel prevents members without explicit override roles from sending messages. The channel remains visible but read-only for affected members.
+
+| Option | Required | Description |
+|---|---|---|
+| `channel` | No | The channel to lock. Defaults to the current channel. |
+| `reason` | No | A reason posted in the channel when it is locked. |
+| `duration` | No | Automatically unlock after this period (e.g. `2h`, `1d`). |
+
+When locked, a system message is optionally posted in the channel to inform members. When unlocked, another message indicates that the channel is open again.
+
+Locked channels are tracked in the dashboard under **Moderation > Locked Channels**, where staff can see all currently locked channels and unlock them from the interface.
+
+## Channel bans
+
+```
+/channelban <user> [channel] [reason] [duration]
+```
+
+Bans a specific member from one channel, removing their ability to read or write in it. This is a targeted tool — the member remains in the server and can access all other channels normally.
+
+| Option | Required | Description |
+|---|---|---|
+| `user` | Yes | The member to ban from the channel |
+| `channel` | No | The channel to ban from. Defaults to the current channel. |
+| `reason` | No | The reason for the ban |
+| `duration` | No | How long the channel ban lasts (e.g. `7d`). Defaults to permanent. |
+
+Channel bans work by modifying the channel's permission overwrites. When a duration expires, the overwrite is automatically removed. You can view and manage active channel bans in the dashboard under **Moderation > Channel Bans**.
+
+## Leave-bans
+
+Leave-bans handle a specific evasion technique: a member receives a warning or mute, then leaves the server and rejoins to avoid it. When leave-bans are enabled, members who leave within a configurable window of receiving an infraction are automatically banned when they attempt to rejoin.
+
+### Configuring leave-bans
+
+Navigate to **Moderation > Settings** and enable **Leave-Ban**. Configure:
+
+- **Infraction window** — how recently a member must have received an infraction for the leave-ban rule to apply
+- **Ban duration** — how long the automatic re-join ban lasts
+- **Minimum point threshold** — only apply leave-bans when the member's active points exceed this value
+
+Leave-bans are logged as infractions so the member's record reflects the reason for the ban.
+
+## Required permissions
+
+| Action | Permission key |
+|---|---|
+| `/lock`, `/unlock` | `moderation.lockChannels` |
+| `/channelban` | `moderation.ban` |
+| Managing leave-ban settings | `moderation.manageRules` |

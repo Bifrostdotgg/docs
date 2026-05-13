@@ -1,72 +1,112 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
-  "name": "Mintlify Starter Kit",
+  "name": "Bifröst",
   "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
+    "primary": "#5f3657",
+    "light": "#b56d6e",
+    "dark": "#301e2e"
   },
-  "favicon": "/favicon.svg",
+  "favicon": "/favicon.png",
   "navigation": {
     "tabs": [
       {
-        "tab": "Guides",
+        "tab": "Documentation",
         "groups": [
           {
-            "group": "Getting started",
+            "group": "Getting Started",
             "pages": [
               "index",
-              "quickstart",
-              "development"
+              "adding-to-server",
+              "dashboard",
+              "permissions"
             ]
           },
           {
-            "group": "Customization",
+            "group": "Moderation",
             "pages": [
-              "essentials/settings",
-              "essentials/navigation"
+              "moderation/overview",
+              "moderation/manual-actions",
+              "moderation/automod",
+              "moderation/escalation",
+              "moderation/infractions",
+              "moderation/channel-controls",
+              "moderation/stickies",
+              "moderation/appeals"
             ]
           },
           {
-            "group": "Writing content",
+            "group": "Support",
             "pages": [
-              "essentials/markdown",
-              "essentials/code",
-              "essentials/images",
-              "essentials/components",
-              "essentials/reusable-snippets"
+              "support/tickets",
+              "support/modmail",
+              "support/applications",
+              "support/analytics"
             ]
           },
           {
-            "group": "Agent ready",
+            "group": "Community",
             "pages": [
-              "agent-ready/prompt",
-              "agent-ready/visibility",
-              "agent-ready/contextual",
-              "ai-tools/cursor",
-              "ai-tools/claude-code",
-              "ai-tools/windsurf"
+              "community/welcome",
+              "community/suggestions",
+              "community/starboard",
+              "community/role-buttons",
+              "community/tags",
+              "community/reminders"
+            ]
+          },
+          {
+            "group": "Voice",
+            "pages": [
+              "voice/temp-channels",
+              "voice/transcription",
+              "voice/waiting-room"
+            ]
+          },
+          {
+            "group": "Games and Economy",
+            "pages": [
+              "games/overview",
+              "games/board-games",
+              "games/casino",
+              "games/economy"
+            ]
+          },
+          {
+            "group": "Integrations",
+            "pages": [
+              "integrations/minecraft",
+              "integrations/planetside",
+              "integrations/tebex",
+              "integrations/namelessmc"
+            ]
+          },
+          {
+            "group": "AI and Language",
+            "pages": [
+              "ai/odin",
+              "ai/translate"
+            ]
+          },
+          {
+            "group": "Utilities",
+            "pages": [
+              "utilities/logging",
+              "utilities/attachment-blocker",
+              "utilities/dont-at-me",
+              "utilities/customer-portal",
+              "utilities/ping"
             ]
           }
         ]
       },
       {
-        "tab": "API reference",
+        "tab": "Command Reference",
         "groups": [
           {
-            "group": "API documentation",
+            "group": "Commands",
             "pages": [
-              "api-reference/introduction"
-            ]
-          },
-          {
-            "group": "Endpoint examples",
-            "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete",
-              "api-reference/endpoint/webhook"
+              "reference/commands"
             ]
           }
         ]
@@ -75,52 +115,28 @@
     "global": {
       "anchors": [
         {
-          "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
-          "icon": "book-open-cover"
-        },
-        {
-          "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
-          "icon": "newspaper"
+          "anchor": "GitHub",
+          "href": "https://github.com/lerndmina/Heimdall",
+          "icon": "github"
         }
       ]
     }
   },
   "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
+    "light": "/logo/bifrost-wordmark.png",
+    "dark": "/logo/bifrost-wordmark.png"
   },
   "navbar": {
     "links": [
       {
-        "label": "Support",
-        "href": "mailto:hi@mintlify.com"
+        "label": "GitHub",
+        "href": "https://github.com/lerndmina/Heimdall"
       }
-    ],
-    "primary": {
-      "type": "button",
-      "label": "Dashboard",
-      "href": "https://dashboard.mintlify.com"
-    }
-  },
-  "contextual": {
-    "options": [
-     "copy",
-     "view",
-     "chatgpt",
-     "claude",
-     "perplexity",
-     "mcp",
-     "cursor",
-     "vscode"
-   ]
+    ]
   },
   "footer": {
     "socials": {
-      "x": "https://x.com/mintlify",
-      "github": "https://github.com/mintlify",
-      "linkedin": "https://linkedin.com/company/mintlify"
+      "github": "https://github.com/lerndmina/Heimdall"
     }
   }
 }

@@ -1,0 +1,60 @@
+---
+title: "Tebex"
+description: "Connecting your Tebex store to Discord — viewing transactions, issuing gift cards, and managing claims."
+icon: "store"
+---
+
+The Tebex integration links your Tebex game store to Discord. Staff can look up transactions, issue gift cards, and process manual claims without leaving Discord. Members can check the status of their own purchases.
+
+## Setup
+
+Navigate to **Tebex > Configuration** in the dashboard and enter your Tebex API key. The key is found in your Tebex store's **Settings > API Keys** section.
+
+```
+/tebex
+```
+
+The base command provides access to all Tebex subcommands through an interactive panel.
+
+## Transactions
+
+```
+/tebex transaction lookup <transaction_id>
+```
+
+Looks up a specific transaction by its Tebex transaction ID. Returns:
+
+- The package purchased
+- The buyer's name and email
+- Purchase date
+- Payment amount and currency
+- Current transaction status
+
+Navigate to **Tebex > Transactions** in the dashboard to browse transactions, search by buyer, and filter by date range or package.
+
+## Gift cards
+
+```
+/tebex giftcard create <amount>
+/tebex giftcard lookup <code>
+```
+
+| Subcommand | Description |
+|---|---|
+| `create` | Generates a new gift card for the specified value in your store's currency |
+| `lookup` | Checks the current balance and expiry of an existing gift card code |
+
+Gift card codes are generated through the Tebex API and can be distributed to members directly.
+
+## Claims
+
+Claims allow you to manually grant packages to members. Navigate to **Tebex > Claims** in the dashboard or use the Tebex slash command to manage pending claims.
+
+## Required permissions
+
+| Action | Permission key |
+|---|---|
+| Viewing store information | `tebex.viewStore` |
+| Managing store settings | `tebex.manageStore` |
+| Viewing transaction history | `tebex.viewTransactions` |
+| Issuing gift cards and processing claims | `tebex.manageClaims` |

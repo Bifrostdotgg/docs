@@ -1,0 +1,61 @@
+---
+title: "Games Overview"
+description: "Enabling games, configuring economy settings, and controlling which channels and roles have access."
+icon: "gamepad"
+---
+
+The games plugin provides a full suite of interactive games — board games, casino games, and an economy system — all playable directly inside Discord. Each game is its own slash command. The economy layer gives members a virtual currency they earn through daily claims, game winnings, and tipping.
+
+## Games available
+
+<Columns cols={2}>
+  <Card title="Board games" icon="chess-board" href="/games/board-games">
+    2048, Connect Four, Memory, Tic-Tac-Toe, Battleship, Solitaire
+  </Card>
+  <Card title="Casino games" icon="dice" href="/games/casino">
+    Blackjack, Coinflip, Dice, Higher-Lower, Horse Racing, Mines, Roulette
+  </Card>
+  <Card title="Economy" icon="coins" href="/games/economy">
+    Balance, daily coins, tipping, leaderboard, and claim rewards
+  </Card>
+</Columns>
+
+## Enabling games
+
+Navigate to **Games > Configuration** in the dashboard. Games are enabled by default for all members once the plugin is active.
+
+## Access control
+
+You can restrict which channels and roles have access to games:
+
+- **Channels** — Navigate to **Games > Configuration > Channels** and specify the channels where games are allowed. If no channels are configured, games work everywhere.
+- **Roles** — Navigate to **Games > Configuration > Openers** to restrict game commands to specific roles.
+
+Restricting games to a dedicated channel keeps them from cluttering other parts of your server.
+
+## Economy configuration
+
+Navigate to **Games > Configuration > Economy** to configure:
+
+| Setting | Description |
+|---|---|
+| **Currency name** | What your server calls its currency (e.g. "coins", "gold", "credits") |
+| **Currency emoji** | An optional emoji displayed alongside balances |
+| **Daily claim amount** | How many coins members receive per daily claim |
+| **Daily claim cooldown** | How long between daily claims (default 24 hours) |
+| **Starting balance** | How many coins new members start with |
+
+## Visibility settings
+
+Individual games can be hidden from the command list without being disabled. Navigate to **Games > Configuration > Visibility** to toggle which games appear to members.
+
+## Player stats and leaderboard
+
+Navigate to **Games > Players** in the dashboard to view all members who have interacted with the games system, their current balance, win/loss records, and game-specific statistics.
+
+## Required permissions
+
+| Action | Permission key |
+|---|---|
+| Playing games | `games.use` (default allow) |
+| Managing configuration | `games.manage` |

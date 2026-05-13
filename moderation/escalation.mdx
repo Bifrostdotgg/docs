@@ -1,0 +1,55 @@
+---
+title: "Escalation"
+description: "Configuring automatic punishments that trigger as a member accumulates infraction points."
+icon: "arrow-up"
+---
+
+Escalation automates the progression from minor warnings to serious punishments. You define thresholds — point totals — and the punishment the bot should apply when a member's active points reach each threshold. This removes the need for staff to manually escalate punishments and ensures consistent enforcement.
+
+## How it works
+
+Every warning, automod violation, and manual infraction assigns a point value. Points are not permanent — each infraction has an expiry period after which its points no longer count toward the member's total. When a member's active point total crosses a configured threshold, the bot immediately applies the corresponding punishment.
+
+Escalation fires again each time a new infraction pushes the member over a threshold. If a member was previously muted at 10 points and then reaches 20 points, the 20-point action fires — the previous punishment does not reset the threshold.
+
+## Configuring escalation thresholds
+
+Navigate to **Moderation > Escalation** in the dashboard and click **New Threshold**.
+
+Each threshold has the following settings:
+
+| Setting | Description |
+|---|---|
+| **Points** | The total active points at which this threshold triggers. |
+| **Action** | The punishment to apply: Warn, Mute, Kick, or Ban. |
+| **Duration** | For Mute and temporary Ban actions, how long the punishment lasts. |
+| **Reason** | The reason recorded in the infraction log and sent to the member. |
+
+### Example configuration
+
+| Points | Action | Duration |
+|---|---|---|
+| 5 | Mute | 1 hour |
+| 10 | Mute | 24 hours |
+| 20 | Kick | — |
+| 30 | Ban | 7 days |
+| 50 | Ban | Permanent |
+
+In this example, a member who receives five 1-point warnings within the expiry window is automatically muted for one hour. If they continue accumulating points after the mute expires, the 10-point threshold fires and the mute becomes 24 hours.
+
+## Infraction point values
+
+Default point values for each action type are set in **Moderation > Settings**. Individual infractions can override the default — for example, a serious automod rule can be configured to assign 10 points per violation rather than the default 1.
+
+## Point expiry
+
+Each infraction's point expiry is set at the time the infraction is created. Infractions created by automod rules use the expiry configured on that rule. Manual actions allow the issuing staff member to specify an expiry or use the server default.
+
+Points from expired infractions are removed from the member's running total automatically. Staff can also manually expire an infraction from the infraction history page.
+
+## Required permissions
+
+| Action | Permission key |
+|---|---|
+| Viewing escalation configuration | `moderation.config.view_config` |
+| Creating and editing thresholds | `moderation.manageRules` |

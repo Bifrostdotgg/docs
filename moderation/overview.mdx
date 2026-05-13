@@ -1,0 +1,60 @@
+---
+title: "Moderation Overview"
+description: "What Bifröst's moderation suite covers and how the different components work together."
+icon: "shield-halved"
+---
+
+Bifröst's moderation plugin combines manual enforcement commands, an automated rule engine, progressive escalation, and a full infraction history. All of these components share the same underlying infraction system, which means manual warnings and automatic rule violations accumulate in the same point total and feed into the same escalation thresholds.
+
+## Components
+
+<Columns cols={2}>
+  <Card title="Manual actions" icon="gavel" href="/moderation/manual-actions">
+    Issue warnings, bans, kicks, mutes, and message purges directly.
+  </Card>
+  <Card title="Automod rules" icon="robot" href="/moderation/automod">
+    Define keyword filters, regex patterns, and content-type rules that enforce automatically.
+  </Card>
+  <Card title="Escalation" icon="arrow-up" href="/moderation/escalation">
+    Configure automatic punishments that trigger as a member accumulates infraction points.
+  </Card>
+  <Card title="Infraction history" icon="clock-rotate-left" href="/moderation/infractions">
+    View every action taken against a member, including point totals and expiry dates.
+  </Card>
+  <Card title="Channel controls" icon="lock" href="/moderation/channel-controls">
+    Lock channels, apply per-channel bans, and prevent members from leaving and rejoining to evade bans.
+  </Card>
+  <Card title="Sticky messages" icon="thumbtack" href="/moderation/stickies">
+    Keep a message pinned to the bottom of a channel automatically.
+  </Card>
+  <Card title="Appeals" icon="scale-balanced" href="/moderation/appeals">
+    Let banned members request a review through a structured form.
+  </Card>
+</Columns>
+
+## How infractions and points work
+
+Every moderation action — whether taken by a staff member or by automod — creates an infraction record. Each record stores the action type, the reason, the staff member or rule that triggered it, a configurable point value, and an optional expiry.
+
+Points accumulate over time. When a member's total active points cross a threshold you configure in the escalation settings, the bot automatically applies the corresponding punishment. Points expire individually based on each infraction's expiry period, and as they expire, the member's total decreases.
+
+This means a member who receives multiple minor warnings over a week may trigger an automatic mute, even if no single action crossed a threshold on its own.
+
+## Dashboard location
+
+Navigate to **Moderation** in the dashboard sidebar. The moderation section has the following tabs: **Overview**, **Rules**, **Escalation**, **Infractions**, **Stickies**, **Channel Bans**, **Locked Channels**, **Appeals**, and **Settings**.
+
+## Required permissions
+
+Dashboard access and command usage are both controlled by the Bifröst permission system. Key permission keys for moderation:
+
+| Key | What it controls |
+|---|---|
+| `moderation.warn` | Running `/warn` |
+| `moderation.ban` | Running `/ban` and `/unban` |
+| `moderation.kick` | Running `/kick` |
+| `moderation.mute` | Running `/mute` |
+| `moderation.purge` | Running `/purge` |
+| `moderation.lockChannels` | Running `/lock` and `/unlock` |
+| `moderation.manageRules` | Creating and editing automod rules in the dashboard |
+| `moderation.config.view_config` | Viewing moderation configuration in the dashboard |

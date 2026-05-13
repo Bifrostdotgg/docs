@@ -1,0 +1,50 @@
+---
+title: "Voice Transcription"
+description: "Automatically transcribing Discord voice messages to text using Whisper."
+icon: "closed-captioning"
+---
+
+The voice transcription plugin converts Discord voice messages — the audio clips members record directly in the Discord client — into text. When a member sends a voice message in a configured channel, the bot replies with a text transcription of what was said.
+
+This makes voice messages accessible to members who cannot or prefer not to listen to audio, improves searchability of conversations, and helps in noisy environments where listening is impractical.
+
+<Note>
+This plugin transcribes Discord voice messages (the record-a-voice-message feature in the Discord client). It does not transcribe audio from voice channels.
+</Note>
+
+## Setup
+
+Navigate to **VC Transcription** in the dashboard, or use the slash command:
+
+```
+/voice-transcription set <channel>
+```
+
+Configure which channels the bot should watch for voice messages. You can enable transcription for specific channels or server-wide.
+
+```
+/voice-transcription status
+```
+
+Shows which channels currently have transcription enabled.
+
+## How transcription works
+
+When a voice message is sent in a configured channel, the bot downloads the audio, sends it to the Whisper speech-to-text model, and posts the transcript as a reply to the voice message. The transcript appears a few seconds after the voice message is sent, depending on the audio length.
+
+Transcriptions are clearly labelled as bot-generated and may contain errors, particularly for unusual accents, technical terms, or poor audio quality.
+
+## Dashboard configuration
+
+Navigate to **VC Transcription** in the dashboard to:
+
+- Add or remove channels from the transcription list
+- View transcription history for a channel
+- Toggle transcription on or off without removing configuration
+
+## Required permissions
+
+| Action | Permission key |
+|---|---|
+| Viewing configuration | `vcTranscription.viewConfig` |
+| Changing configuration | `vcTranscription.manageConfig` |

@@ -1,0 +1,75 @@
+---
+title: "Modmail"
+description: "DM-based support threads that route member messages to your staff team through Discord forum threads."
+icon: "envelope"
+---
+
+Modmail gives members a private line to your staff team through Discord direct messages. When a member DMs the bot, a thread is created in a designated forum channel on your server. Staff respond in that thread and the bot relays their messages back to the member via DM. The member and staff never see each other's servers in the process — from the member's perspective they are having a private conversation with the bot.
+
+## How it works for members
+
+A member sends a direct message to the Bifröst bot. The bot confirms that a support thread has been opened and notifies the member that staff will respond. All subsequent messages from the member are forwarded to the staff thread. When staff reply in the thread, their messages appear in the member's DM conversation as if sent by the bot.
+
+Members cannot tell which staff member is handling their case unless staff choose to identify themselves in their messages.
+
+## Setting up
+
+### Basic configuration
+
+Navigate to **Modmail > Configuration** in the dashboard. The key settings are:
+
+| Setting | Description |
+|---|---|
+| **Forum channel** | The channel where modmail threads are created. Must be a Discord forum channel. |
+| **Staff roles** | Roles that can view and respond to modmail threads |
+| **Opening message** | The DM sent to the member when their thread is first opened |
+| **Auto-close** | Automatically close threads that have been inactive for a set period |
+| **Anonymous replies** | Hide which staff member sent each reply (on by default) |
+
+### Categories
+
+Modmail categories let you route different types of DMs to different forum channels or staff teams. Navigate to **Modmail > Categories** and create categories for different support areas. When a member opens a modmail, they are asked to choose a category if more than one is configured.
+
+### Auto-responses
+
+Auto-responses are pre-written messages the bot sends automatically based on keywords in the member's opening message. Navigate to **Modmail > Auto-responses** to configure these. Auto-responses do not close the thread — they provide initial information while staff take over.
+
+## Slash commands
+
+```
+/modmail open <user>
+/modmail close [reason]
+/modmail ban <user> [reason]
+/modmail unban <user>
+/modmail note <content>
+/modmail snippet <name>
+/modmail transfer <category>
+```
+
+| Subcommand | Description |
+|---|---|
+| `open` | Open a modmail thread for a member without them initiating it |
+| `close` | Close the current thread and send a closure DM to the member |
+| `ban` | Prevent a member from opening new modmail threads |
+| `unban` | Remove a modmail ban |
+| `note` | Add a private staff note not visible to the member |
+| `snippet` | Insert a saved response snippet into the thread |
+| `transfer` | Move the thread to a different category |
+
+## Staff notes
+
+Staff notes are messages posted in the modmail thread that are visible only to staff. They are formatted differently from regular replies and are never forwarded to the member. Use them for internal coordination — tagging team members, adding context, or flagging issues for review.
+
+## Quotas
+
+Staff quotas set limits on how many concurrent open threads a staff member can handle. When a staff member reaches their quota, new threads in categories assigned to them are either queued or routed to other available staff. Configure quotas in **Modmail > Quotas**.
+
+## Required permissions
+
+| Action | Permission key |
+|---|---|
+| Viewing conversations | `modmail.viewConversations` |
+| Managing conversations | `modmail.manageConversations` |
+| Viewing analytics | `modmail.viewAnalytics` |
+| Managing reviews | `modmail.manageReviews` |
+| Viewing configuration | `modmail.config.view_config` |

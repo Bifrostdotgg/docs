@@ -1,0 +1,100 @@
+---
+title: "Manual Moderation Actions"
+description: "Using slash commands to warn, ban, kick, mute, unban, and purge messages."
+icon: "gavel"
+---
+
+Bifröst provides slash commands for all standard moderation actions. Each action creates an infraction record and notifies the affected member via direct message where possible.
+
+## Warn
+
+```
+/warn <user> <reason> [points] [expiry] [silent]
+```
+
+Issues a warning to a member. The warning is recorded as an infraction with an optional point value. If a point value is not specified, it defaults to whatever you have set in the moderation settings.
+
+| Option | Required | Description |
+|---|---|---|
+| `user` | Yes | The member to warn |
+| `reason` | Yes | The reason for the warning, shown to the member |
+| `points` | No | Override the default point value for this warning |
+| `expiry` | No | How long until this infraction's points expire (e.g. `7d`, `30d`) |
+| `silent` | No | If set, the member is not notified by DM |
+
+The warned member receives a DM containing your server name, the reason, and the point value assigned.
+
+## Ban
+
+```
+/ban <user> <reason> [delete_days] [duration] [silent]
+```
+
+Bans a member from the server. Works on members who have left the server as well.
+
+| Option | Required | Description |
+|---|---|---|
+| `user` | Yes | The member or user ID to ban |
+| `reason` | Yes | The reason for the ban |
+| `delete_days` | No | How many days of message history to delete (0–7) |
+| `duration` | No | For a temporary ban, how long until the member is automatically unbanned (e.g. `7d`) |
+| `silent` | No | If set, the member is not notified by DM before being banned |
+
+## Unban
+
+```
+/unban <user> [reason]
+```
+
+Removes a ban from a user.
+
+## Kick
+
+```
+/kick <user> <reason> [silent]
+```
+
+Removes a member from the server. They can rejoin with an invite link. Kicking records an infraction.
+
+## Mute
+
+```
+/mute <user> <duration> <reason> [silent]
+```
+
+Applies a Discord timeout to a member, preventing them from sending messages or joining voice channels for the specified duration.
+
+| Option | Required | Description |
+|---|---|---|
+| `user` | Yes | The member to mute |
+| `duration` | Yes | How long the mute lasts (e.g. `1h`, `12h`, `7d`). Maximum 28 days. |
+| `reason` | Yes | The reason for the mute |
+| `silent` | No | If set, the member is not notified by DM |
+
+## Purge
+
+```
+/purge count <count> [user]
+/purge time <duration> [user]
+```
+
+Bulk-deletes messages from the current channel. Two modes are available:
+
+- **count** — Delete the most recent `count` messages (up to 100).
+- **time** — Delete all messages sent within the last `duration` (e.g. `1h`).
+
+The optional `user` filter limits deletion to messages from a specific member. Discord limits bulk deletion to messages younger than 14 days.
+
+## Infraction notification DMs
+
+When Bifröst punishes a member, it attempts to send them a DM explaining the action, the server it happened in, and the reason. If the member has DMs disabled, the bot silently skips the notification. Using the `silent` flag suppresses the DM regardless.
+
+## Required permissions
+
+| Command | Permission key |
+|---|---|
+| `/warn` | `moderation.warn` |
+| `/ban`, `/unban` | `moderation.ban` |
+| `/kick` | `moderation.kick` |
+| `/mute` | `moderation.mute` |
+| `/purge` | `moderation.purge` |

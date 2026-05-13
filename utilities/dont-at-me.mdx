@@ -1,0 +1,45 @@
+---
+title: "Don't @ Me"
+description: "Warning members who mention protected roles without permission."
+icon: "bell-slash"
+---
+
+The "Don't @ Me" plugin prevents members from pinging roles that should not be mass-mentioned. When a member's message mentions a protected role, the bot deletes the message and warns them. It is a lightweight alternative to disabling @mentions on a role entirely — the role stays mentionable for staff purposes, but the bot intercepts unauthorised uses.
+
+## Configuring protected roles
+
+```
+/dontatme add <role>
+```
+
+Adds a role to the protected list. Members who mention this role (outside of exemptions) have their message deleted and receive a warning.
+
+```
+/dontatme remove <role>
+```
+
+Removes a role from the protected list.
+
+Navigate to **Don't @ Me** in the dashboard for a list of all protected roles. From the dashboard you can also configure the warning message sent to members and whether the warning is posted publicly in the channel or sent as a DM.
+
+## Exemptions
+
+Roles and channels can be exempted from the plugin:
+
+- **Role exemption** — Staff roles that legitimately need to mention protected roles are exempt. Add exempt roles in the dashboard configuration.
+- **Channel exemption** — Specific channels (e.g. staff-only channels) can be excluded from monitoring.
+
+## Warning behaviour
+
+When a protected mention is detected:
+
+1. The message is immediately deleted.
+2. The bot posts a brief warning in the channel (or DMs the member, depending on your configuration) explaining that the role cannot be mentioned.
+3. The warning is optionally logged as an infraction through the moderation plugin, adding points to the member's record.
+
+## Required permissions
+
+| Action | Permission key |
+|---|---|
+| Viewing configuration | `dontAtMe.viewConfig` |
+| Changing configuration | `dontAtMe.manageConfig` |

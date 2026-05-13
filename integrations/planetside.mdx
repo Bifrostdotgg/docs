@@ -1,0 +1,87 @@
+---
+title: "PlanetSide 2"
+description: "Census API lookups, outfit management, and real-time population tracking for PlanetSide 2."
+icon: "crosshairs"
+---
+
+The PlanetSide 2 integration connects your Discord server to the Daybreak Census API, giving members access to character lookups, outfit management tools, and live server population data directly inside Discord.
+
+## Account linking
+
+Members link their PlanetSide 2 character to their Discord account:
+
+```
+/ps2-link <character_name>
+```
+
+Once linked, members can reference their own stats without specifying a character name in lookup commands.
+
+## Character lookup
+
+```
+/ps2-lookup <character_name>
+```
+
+Displays a profile card for the specified character showing:
+
+- Battle rank and ASP rank
+- Outfit membership and rank
+- Faction
+- Last login timestamp
+- Lifetime kill/death statistics
+
+```
+/ps2-info
+```
+
+Displays the linked character's profile (equivalent to running `/ps2-lookup` with your own character name).
+
+## Outfit management
+
+```
+/ps2-outfit [outfit_tag]
+```
+
+Displays information about an outfit — membership count, creation date, faction, and the current online member count. Requires the outfit tag (the short 1–4 character identifier, not the full name).
+
+```
+/ps2-promote <member> <rank>
+```
+
+Promotes a member within the outfit. Requires appropriate outfit officer rank and RCON-equivalent API permissions configured in **PlanetSide > Configuration**.
+
+## Server population
+
+```
+/ps2-population [server]
+```
+
+Displays the current population breakdown across all three factions on the specified server (or your configured default server). Updated from the Census real-time stream.
+
+The dashboard **PlanetSide > Status** page displays population data in a continuously updating format.
+
+## Setup
+
+Navigate to **PlanetSide > Configuration** in the dashboard:
+
+```
+/ps2-setup
+```
+
+Or configure entirely through the dashboard. Key settings:
+
+| Setting | Description |
+|---|---|
+| **Default server** | The world (server) used when no server is specified in commands |
+| **Outfit tag** | Your community's outfit tag for outfit-related commands |
+| **Census API key** | Optional; increases rate limits on API requests. Free from Daybreak. |
+
+## Required permissions
+
+| Action | Permission key |
+|---|---|
+| Character lookups and population | `planetside.use` (default allow) |
+| Linking an account | `planetside.use` (default allow) |
+| Viewing linked players | `planetside.viewPlayers` |
+| Managing player data | `planetside.managePlayers` |
+| Viewing population stats | `planetside.viewPopulation` |
