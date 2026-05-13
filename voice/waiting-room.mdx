@@ -6,6 +6,10 @@ icon: "hourglass"
 
 The waiting room plugin monitors a voice channel you designate as a waiting room. When a member joins that channel, the bot posts a notification in a configured staff channel so that a staff member can attend to them. This is useful for servers that handle one-on-one voice support sessions, interviews, or other cases where a member needs to signal they are ready to talk.
 
+<Frame>
+  <img src="/images/screenshots/docs-waiting-room.png" alt="Waiting room configuration showing the designated voice channel and staff notification channel" />
+</Frame>
+
 ## How it works
 
 A member joins the waiting room voice channel. The bot immediately sends a notification message to the configured staff notification channel. The message includes the member's name and a timestamp. Staff see the notification and can then either join the waiting room voice channel or move the member to a private channel.

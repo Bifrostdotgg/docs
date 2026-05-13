@@ -25,19 +25,26 @@ Members with the Discord **Administrator** permission bypass all Heimdall permis
 ## Configuring permissions
 
 <Steps>
-  <Step title="Open the Permissions page">
-    In the dashboard sidebar, navigate to **Permissions**. You will see a list of all available permission keys grouped by plugin.
+  <Step title="Open Settings">
+    In the dashboard sidebar, click **Settings**. The Settings page organises configuration into several tabs at the top of the page.
   </Step>
-  <Step title="Select a permission key">
-    Click a key to expand it. You will see which Discord roles currently have access, and an input to add more roles.
+  <Step title="Select the Roles or Users tab">
+    Choose the **Roles** tab to configure role-level permission overrides, or the **Users** tab for per-user overrides. User overrides take priority over all role-based permissions and are useful for granting or blocking access for a specific person regardless of their roles.
   </Step>
-  <Step title="Assign roles">
-    Search for and select the roles that should have this permission. Changes apply immediately.
+  <Step title="Pick a role or user">
+    Use the dropdown to select the Discord role (or specific user) you want to configure. All available permission keys appear below, grouped by plugin.
   </Step>
-  <Step title="Verify access">
-    Ask a member with the relevant role to test the command or dashboard section to confirm access is working as expected.
+  <Step title="Set overrides">
+    Each permission key has a three-position toggle: **Allow**, **Deny**, or **Default**. Allow grants the permission. Deny removes it even if the system default would otherwise permit access. Default defers to the system-wide setting for that key — most keys default to deny for staff actions and allow for member-facing features.
+  </Step>
+  <Step title="Save your changes">
+    When you are satisfied, click **Save** in the save bar that appears at the bottom of the page. Changes take effect immediately for any member who holds the configured role.
   </Step>
 </Steps>
+
+<Frame>
+  <img src="/images/screenshots/docs-settings-permissions.png" alt="Settings page showing the Role Permissions tab with permission toggles" />
+</Frame>
 
 ## Permission keys by section
 

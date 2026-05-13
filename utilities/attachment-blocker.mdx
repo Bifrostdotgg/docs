@@ -6,6 +6,10 @@ icon: "file-slash"
 
 The attachment blocker prevents members from uploading files that match a blocked extension or MIME type. When a member sends a message containing a blocked file, the bot deletes the message and optionally sends a warning.
 
+<Frame>
+  <img src="/images/screenshots/docs-attachment-blocker.png" alt="Attachment blocker configuration showing the blocked extension list and per-channel overrides" />
+</Frame>
+
 ## How it works
 
 When a message with an attachment is posted in a channel covered by the attachment blocker, the bot checks the file's extension and MIME type against your configured blocklist. If a match is found, the message is deleted automatically. The member receives a brief notification explaining what was blocked and why.
