@@ -1,24 +1,28 @@
 ---
-title: "Adding Bifröst to Your Server"
-description: "How to invite Bifröst, grant it the permissions it needs, and complete first-run setup."
+title: "Adding Heimdall to Your Server"
+description: "How to invite Heimdall, grant it the permissions it needs, and complete first-run setup."
 icon: "robot"
 ---
 
 ## Prerequisites
 
-You need the **Manage Server** permission in the Discord server you want to add Bifröst to.
+You need the **Manage Server** permission in the Discord server you want to add Heimdall to.
 
 ## Inviting the bot
 
-Use the invite link provided by your Bifröst instance administrator. The invite link is generated during the bot's initial setup and contains the exact permission set the bot requires. When you follow the link, Discord will ask you to select a server from the list of servers you manage, then confirm the requested permissions.
+Visit **[bot.bifrost.gg](https://bot.bifrost.gg)** and click **Add to Server**. This is the Bifröst-hosted version of Heimdall — no self-hosting required. The invite link requests the exact permission set the bot needs. Discord will ask you to select a server from the list of servers you manage, then confirm the requested permissions.
+
+<Note>
+If you are evaluating Heimdall before adding it, review the available plans at **[bifrost.gg/heimdall/pricing](https://bifrost.gg/heimdall/pricing)**. Some features are available on all plans; others require a paid tier.
+</Note>
 
 <Warning>
-Do not remove any of the pre-selected permissions. Bifröst's features depend on the full permission set. Removing permissions will cause individual features to fail silently or produce errors.
+Do not remove any of the pre-selected permissions during the invite flow. Heimdall's features depend on the full permission set. Removing permissions will cause individual features to fail silently or produce errors.
 </Warning>
 
 ## Required permissions
 
-The following Discord permissions are required for Bifröst to function correctly across all plugins:
+The following Discord permissions are required for Heimdall to function correctly across all plugins:
 
 | Permission | Why it's needed |
 |---|---|
@@ -37,13 +41,13 @@ The following Discord permissions are required for Bifröst to function correctl
 
 ## What happens when the bot joins
 
-When Bifröst joins your server for the first time, it registers all slash commands with Discord and creates a server configuration entry in its database. No channels or roles are created automatically — everything is configured through the dashboard.
+When Heimdall joins your server for the first time, it registers all slash commands with Discord and creates a server configuration entry in its database. No channels or roles are created automatically — everything is configured through the dashboard.
 
 ## Next steps
 
 <Steps>
   <Step title="Log in to the dashboard">
-    Visit the Bifröst dashboard and sign in with your Discord account. Your server will appear in the guild selector. See [Using the Dashboard](/dashboard) for a walkthrough.
+    Visit **[bot.bifrost.gg](https://bot.bifrost.gg)** and sign in with your Discord account. Your server will appear in the guild selector. See [Using the Dashboard](/dashboard) for a walkthrough.
   </Step>
   <Step title="Configure permissions">
     By default, all moderation commands are restricted to members with the Administrator permission. Set up the permission system to give the right roles access to each feature. See [Permissions](/permissions).

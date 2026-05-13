@@ -1,16 +1,16 @@
 ---
 title: "Permissions"
-description: "How Bifröst's permission system works, how to configure it, and how it differs from Discord's built-in permissions."
+description: "How Heimdall's permission system works, how to configure it, and how it differs from Discord's built-in permissions."
 icon: "shield-halved"
 ---
 
-Bifröst has its own permission system that is independent of Discord's native role permissions. Rather than relying on permissions like **Manage Messages** or **Ban Members**, Bifröst checks whether a member's roles have been granted a specific Bifröst permission key. This lets you grant moderation access to a custom staff role without giving that role broad Discord-level permissions.
+Heimdall has its own permission system that is independent of Discord's native role permissions. Rather than relying on permissions like **Manage Messages** or **Ban Members**, Heimdall checks whether a member's roles have been granted a specific Heimdall permission key. This lets you grant moderation access to a custom staff role without giving that role broad Discord-level permissions.
 
 ## How permissions work
 
-Every feature in Bifröst exposes one or more named permission keys. For example, the moderation plugin exposes keys such as `moderation.ban` and `moderation.warn`. The ticket plugin exposes `tickets.manage` and `tickets.claim`.
+Every feature in Heimdall exposes one or more named permission keys. For example, the moderation plugin exposes keys such as `moderation.ban` and `moderation.warn`. The ticket plugin exposes `tickets.manage` and `tickets.claim`.
 
-You assign these keys to Discord roles through the dashboard. When a member runs a command or accesses a dashboard section, Bifröst checks whether any of their current roles have been granted the matching key. If they have, the action proceeds. If not, the bot responds with a permission denied message.
+You assign these keys to Discord roles through the dashboard. When a member runs a command or accesses a dashboard section, Heimdall checks whether any of their current roles have been granted the matching key. If they have, the action proceeds. If not, the bot responds with a permission denied message.
 
 ## Default access
 
@@ -19,7 +19,7 @@ Some features are available to all members by default. These are typically membe
 Staff-facing and administrative features default to restricted. No member can run a `ban` command, manage automod rules, or access the dashboard moderation section unless their role has been granted the appropriate permission key.
 
 <Info>
-Members with the Discord **Administrator** permission bypass all Bifröst permission checks and always have full access.
+Members with the Discord **Administrator** permission bypass all Heimdall permission checks and always have full access.
 </Info>
 
 ## Configuring permissions
@@ -54,7 +54,7 @@ For example:
 
 ## Role hierarchy
 
-Bifröst evaluates all of a member's current roles. If any one of their roles has been granted the permission, the member is allowed. There is no role hierarchy within the permission system — it is purely additive. Removing a role removes that source of permissions, but other roles the member holds may still grant access.
+Heimdall evaluates all of a member's current roles. If any one of their roles has been granted the permission, the member is allowed. There is no role hierarchy within the permission system — it is purely additive. Removing a role removes that source of permissions, but other roles the member holds may still grant access.
 
 ## Overriding defaults
 
