@@ -7,12 +7,12 @@ icon: "brain"
 Odin is Heimdall's AI assistant. Members ask questions and receive answers informed by your server's knowledge base — documentation, FAQs, rules, or any other content you upload. Odin maintains conversation context within a session, so follow-up questions work naturally without repeating background information.
 
 <Frame>
-  <img src="/images/screenshots/docs-ai.png" alt="Odin AI configuration showing knowledge base management and system prompt settings" />
+  ![AI Overview](/images/AI_Overview.png)
 </Frame>
 
 ## Asking a question
 
-```
+```text
 /ask <question>
 ```
 
@@ -22,13 +22,14 @@ By default, `/ask` is available to all members. Access can be restricted in the 
 
 ## Knowledge base
 
-The knowledge base is the set of documents Odin uses to answer questions. Navigate to **AI > Knowledge Base** in the dashboard to manage it.
+The knowledge base is the set of documents Odin uses to answer questions. Navigate to **AI \> Knowledge Base** in the dashboard to manage it.
 
 ### Adding documents
 
 Click **Add Document** and paste in the content or upload a file. Each document should cover a specific topic — server rules, a FAQ, integration guides, or any structured content you want Odin to reference.
 
 Supported formats:
+
 - Plain text
 - Markdown
 - PDF
@@ -48,14 +49,14 @@ The knowledge base page lists all documents with their creation date and status.
 
 Odin maintains context within a conversation session. When a member asks a follow-up question, Odin uses the previous exchanges in the same session to understand the reference. Context is scoped to the individual member and expires after a period of inactivity.
 
-Staff can view and manage active contexts in **AI > Context**. This is useful for debugging unexpected responses or clearing stale context for a member.
+Staff can view and manage active contexts in **AI \> Context**. This is useful for debugging unexpected responses or clearing stale context for a member.
 
 ## Configuration
 
-Navigate to **AI > Configuration** in the dashboard to set:
+Navigate to **AI \> Configuration** in the dashboard to set:
 
 | Setting | Description |
-|---|---|
+| --- | --- |
 | **AI provider** | Which language model provider powers Odin (configured by your administrator) |
 | **System prompt** | Instructions prepended to every conversation that shape Odin's behaviour and tone |
 | **Context length** | How many previous exchanges Odin remembers in a session |
@@ -63,51 +64,51 @@ Navigate to **AI > Configuration** in the dashboard to set:
 
 ## Features
 
-Navigate to **AI > Features** to see and enable the individual AI capabilities available on your server. Each feature is a distinct behaviour that Odin can perform.
+Navigate to **AI \> Features** to see and enable the individual AI capabilities available on your server. Each feature is a distinct behaviour that Odin can perform.
 
 ### Text Moderation
 
 Odin can evaluate every message in configured channels and flag or remove content that violates your rules. Unlike regex-based automod, text moderation understands context — it can distinguish between discussing a topic and actually violating a rule about it.
 
-Configure which channels are monitored, what the AI looks for, and what action to take (flag for review, delete, or warn) in **AI > Text Moderation**.
+Configure which channels are monitored, what the AI looks for, and what action to take (flag for review, delete, or warn) in **AI \> Text Moderation**.
 
 ### Image Moderation
 
-When enabled, Odin analyses images attached to messages in monitored channels. Configure sensitivity thresholds and the action to take when a rule violation is detected in **AI > Image Moderation**.
+When enabled, Odin analyses images attached to messages in monitored channels. Configure sensitivity thresholds and the action to take when a rule violation is detected in **AI \> Image Moderation**.
 
 ### Ticket Auto-Reply
 
 When a ticket is opened, Odin reads the opening message against your knowledge base and posts a suggested answer in the thread for staff to review before sending. This reduces the number of tickets staff need to respond to manually and cuts response times for common questions.
 
-Enable and configure this in **AI > Ticket Auto-Reply** or in the **Tickets > AI** section.
+Enable and configure this in **AI \> Ticket Auto-Reply** or in the **Tickets \> AI** section.
 
 ### Modmail Assistant
 
 The same capability as ticket auto-reply, applied to incoming modmail conversations. When a member opens a modmail thread, Odin suggests a reply based on the opening DM and your knowledge base.
 
-Enable and configure this in **AI > Modmail Assistant** or in the **Modmail > AI** section.
+Enable and configure this in **AI \> Modmail Assistant** or in the **Modmail \> AI** section.
 
 ### Q&A Bot
 
 The Q&A Bot monitors configured channels and responds to questions automatically without requiring members to use the `/ask` command. When a message looks like a question, Odin evaluates it against your knowledge base and replies if it finds a confident answer.
 
-This is distinct from auto-responses — the Q&A Bot uses full AI reasoning rather than pattern matching, and only replies when sufficiently confident. Configure the channels it monitors and the confidence threshold in **AI > Q&A Bot**.
+This is distinct from auto-responses — the Q&A Bot uses full AI reasoning rather than pattern matching, and only replies when sufficiently confident. Configure the channels it monitors and the confidence threshold in **AI \> Q&A Bot**.
 
 ### Conversation Modes
 
-Conversation modes let you configure how Odin behaves in specific channels — for example, setting up a channel where Odin maintains ongoing conversation context and acts as a persistent assistant. Configure available modes and the channels they apply to in **AI > Conversation Modes**.
+Conversation modes let you configure how Odin behaves in specific channels — for example, setting up a channel where Odin maintains ongoing conversation context and acts as a persistent assistant. Configure available modes and the channels they apply to in **AI \> Conversation Modes**.
 
 ## Moderation Logs
 
-**AI > Moderation Logs** shows a log of AI moderation actions — text and image moderation events, what was flagged, and what action was taken. Use this to review the AI's decisions and tune your configuration if it is being too aggressive or too permissive.
+**AI \> Moderation Logs** shows a log of AI moderation actions — text and image moderation events, what was flagged, and what action was taken. Use this to review the AI's decisions and tune your configuration if it is being too aggressive or too permissive.
 
 ## Conversations
 
-**AI > Conversations** shows active conversation contexts — members who have recently used `/ask` or interacted with Q&A Bot. Staff can view the conversation history for any context and clear it if needed, for example if a member's context has accumulated incorrect assumptions.
+**AI \> Conversations** shows active conversation contexts — members who have recently used `/ask` or interacted with Q&A Bot. Staff can view the conversation history for any context and clear it if needed, for example if a member's context has accumulated incorrect assumptions.
 
 ## Restrictions
 
-**AI > Restrictions** lets you configure which channels and roles can access Odin's member-facing features:
+**AI \> Restrictions** lets you configure which channels and roles can access Odin's member-facing features:
 
 - Channels where `/ask` is permitted
 - Roles that can use `/ask`
@@ -117,26 +118,26 @@ Without restrictions, `/ask` is available to all members in all channels.
 
 ## Usage and billing
 
-**AI > Usage** shows your server's AI token consumption over time — broken down by feature (Q&A, moderation, ticket auto-reply, etc.) and by day. This is useful for understanding which features are consuming the most tokens.
+**AI \> Usage** shows your server's AI token consumption over time — broken down by feature (Q&A, moderation, ticket auto-reply, etc.) and by day. This is useful for understanding which features are consuming the most tokens.
 
-**AI > Billing** shows your current AI credit balance and allows purchasing additional credits. AI features consume credits per token processed; the exact cost depends on which underlying model is configured for your deployment.
+**AI \> Billing** shows your current AI credit balance and allows purchasing additional credits. AI features consume credits per token processed; the exact cost depends on which underlying model is configured for your deployment.
 
 <Note>
-Usage and Billing are only visible if your Heimdall deployment uses token-based AI credits. Self-hosted deployments using a local model or their own API key will not see these sections.
+  Usage and Billing are only visible if your Heimdall deployment uses token-based AI credits. Self-hosted deployments using a local model or their own API key will not see these sections.
 </Note>
 
 ## AI in other plugins
 
 Odin integrates with tickets, modmail, and suggestions:
 
-- **Tickets > AI** — enable ticket auto-reply for specific ticket categories
-- **Modmail > AI** — enable the modmail assistant for specific modmail categories
+- **Tickets \> AI** — enable ticket auto-reply for specific ticket categories
+- **Modmail \> AI** — enable the modmail assistant for specific modmail categories
 - **Suggestions** — Odin automatically generates a concise title when a member submits a suggestion, if AI titles are enabled in the suggestions configuration
 
 ## Required permissions
 
 | Action | Permission key |
-|---|---|
+| --- | --- |
 | Using `/ask` | `ai.useAsk` (default allow) |
 | Viewing conversation context | `ai.context.view_context` |
 | Managing conversation context | `ai.context.manage_context` |
