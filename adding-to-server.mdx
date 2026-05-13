@@ -16,9 +16,9 @@ Visit **[bot.bifrost.gg](https://bot.bifrost.gg)** and click **Add to Server**. 
 If you are evaluating Heimdall before adding it, review the available plans at **[bifrost.gg/heimdall/pricing](https://bifrost.gg/heimdall/pricing)**. Some features are available on all plans; others require a paid tier.
 </Note>
 
-<Warning>
-Do not remove any of the pre-selected permissions during the invite flow. Heimdall's features depend on the full permission set. Removing permissions will cause individual features to fail silently or produce errors.
-</Warning>
+<Info>
+You can remove permissions from Heimdall after it has joined — Discord allows this through **Server Settings > Roles** or channel-level permission overwrites. However, any feature that requires a permission you have revoked will stop working. When a member attempts to use an affected feature, Heimdall will respond with an error message that identifies exactly which Discord permission is missing, rather than failing silently. This makes it straightforward to diagnose and fix permission gaps if something stops working.
+</Info>
 
 ## Required permissions
 
