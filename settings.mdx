@@ -57,7 +57,7 @@ Click **Export Configuration** to download a JSON file containing every plugin's
 Click **Import Configuration** and upload a previously exported JSON file. You can choose to import all sections or select specific plugins to import. Existing configuration for the selected plugins is overwritten.
 
 <Warning>
-Importing a template overwrites existing configuration for the selected sections. Take an export of your current setup before importing if you need a backup.
+  Importing a template overwrites existing configuration for the selected sections. Take an export of your current setup before importing if you need a backup.
 </Warning>
 
 ## File Storage
@@ -67,7 +67,7 @@ The File Storage tab connects Heimdall to an external storage provider for attac
 ### Storage providers
 
 | Provider | Notes |
-|---|---|
+| --- | --- |
 | **S3-compatible** | AWS S3, Cloudflare R2, MinIO, and any S3-compatible endpoint |
 | **UploadThing** | Managed file hosting with no infrastructure to maintain |
 | **Zipline** | Self-hosted file sharing server |
@@ -83,14 +83,14 @@ The File Storage tab connects Heimdall to an external storage provider for attac
 
 ### Overflow provider
 
-You can configure a secondary overflow provider. Files exceeding a configured byte threshold are automatically routed to the overflow provider instead of the primary one. This is useful when your primary provider has storage quotas and you want to keep large files elsewhere.
+You can configure a secondary overflow provider. Files exceeding a configured byte threshold are automatically routed to the overflow provider instead of the primary one. This is useful when your primary provider has storage quotas and you want to keep large files elsewhere. Discord, for example, only lets you upload files up to 8mb in size. A common use case we see is to use a Discord Channel as a primary provider then configure something else, like S3, as a fallback.
 
 ### Setup
 
 Select your provider, enter the required credentials (API key, bucket name, region, endpoint as applicable), then click **Save**. The dashboard provides a guided setup doc specific to each provider accessible from the **Setup Guide** link next to the provider selector.
 
 <Note>
-Credentials are encrypted at rest and are never exposed in the dashboard after being saved. To update a credential, paste a new value and save.
+  Credentials are encrypted at rest and are never exposed in the dashboard after being saved. To update a credential, paste a new value and save.
 </Note>
 
 ## Audit Log
@@ -100,7 +100,7 @@ The Audit Log tab records actions taken in the Heimdall dashboard — which staf
 Each entry shows:
 
 | Field | Description |
-|---|---|
+| --- | --- |
 | **Timestamp** | When the action occurred |
 | **User** | Which dashboard user performed the action |
 | **Action** | What was changed (e.g. "Permission override updated", "Category deleted") |
@@ -111,7 +111,7 @@ The audit log is read-only and cannot be cleared. Entries are retained for a rol
 ## Required permissions
 
 | Action | Permission key |
-|---|---|
+| --- | --- |
 | Viewing and changing general settings | `dashboard.manage_settings` |
 | Viewing and changing role/user permissions | `dashboard.manage_permissions` |
 | Managing file storage configuration | `file-storage.manage_config` |
