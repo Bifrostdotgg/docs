@@ -7,12 +7,12 @@ icon: "language"
 The translation plugin uses DeepL to translate messages. Members can translate any message on demand, and administrators can configure channels where every message is automatically translated into a target language.
 
 <Frame>
-  <img src="/images/screenshots/docs-translate.png" alt="Translation configuration showing auto-translate channels and target language settings" />
+  ![Translate](/images/Translate.png)
 </Frame>
 
 ## Translating a message
 
-```
+```text
 /translate message <message_id> <target_language>
 ```
 
@@ -22,7 +22,7 @@ You can also translate using the Discord **Apps** context menu: right-click any 
 
 ## Checking a language
 
-```
+```text
 /translate language <language>
 ```
 
@@ -32,10 +32,10 @@ Looks up a language by name or code to confirm how DeepL identifies it and what 
 
 Channels can be configured to automatically translate all messages into a designated target language. This is useful for multilingual communities where you want a single channel accessible to speakers of different languages.
 
-Navigate to **Translate > Channels** in the dashboard to add channels to the auto-translate list. For each channel, configure:
+Navigate to **Translate \> Channels** in the dashboard to add channels to the auto-translate list. For each channel, configure:
 
 | Setting | Description |
-|---|---|
+| --- | --- |
 | **Channel** | The Discord channel to enable auto-translation for |
 | **Target language** | The language all messages are translated into |
 | **Source language** | The expected source language, or auto-detect if left unset |
@@ -45,16 +45,16 @@ When auto-translate is active, the bot posts a translation as a reply to each me
 
 ## Language emoji mapping
 
-Navigate to **Translate > Emoji** in the dashboard to configure which flag or custom emoji represents each language. These emoji are used in translated message headers to indicate the source and target language visually.
+Navigate to **Translate \> Emoji** in the dashboard to configure which flag or custom emoji represents each language. These emoji are used in translated message headers to indicate the source and target language visually.
 
 ## Testing translation
 
-Navigate to **Translate > Test** in the dashboard to send a test string through the translation engine and verify the output before applying it to live channels.
+Navigate to **Translate \> Test** in the dashboard to send a test string through the translation engine and verify the output before applying it to live channels.
 
 ## Required permissions
 
 | Action | Permission key |
-|---|---|
+| --- | --- |
 | Translating messages | `translate.use` (default allow) |
 | Viewing configuration | `translate.viewConfig` |
 | Managing configuration | `translate.manageConfig` |
