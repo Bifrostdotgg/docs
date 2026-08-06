@@ -1,0 +1,471 @@
+---
+title: "Permission keys"
+description: "Every permission key Heimdall recognises, exactly as it must be written."
+icon: "key"
+---
+
+<Note>
+  Generated from the bot source. If a key is not on this page, it does not exist.
+</Note>
+
+## Copy keys exactly, never reconstruct them
+
+A key has two or three parts:
+
+```
+category.action
+category.subcategory.action
+```
+
+Most keys have three. `confessions.log.view_author` is not `confessions.view_author`, and
+`tickets.operations.claim_tickets` is not `tickets.claim`. The middle segment is part of
+the key, not a description of where it lives.
+
+**A key that does not exist is silently refused.** Heimdall resolves an unrecognised key to
+denied and records it in its log at info level. Nothing in the dashboard marks it as wrong,
+so the only symptom is a role that appears configured and cannot use the feature. If a
+permission you granted seems to do nothing, check the key against this page first.
+
+Heimdall recognises **176 keys** across **38 features**.
+
+## Affiliate
+
+[Feature documentation](/docs/utilities/affiliate)
+
+| Permission key | Grants |
+| --- | --- |
+| `affiliate.use` | **Use Affiliate Commands**. View affiliate stats and generate referral codes. |
+
+## Afk
+
+[Feature documentation](/docs/community/afk)
+
+| Permission key | Grants |
+| --- | --- |
+| `afk.set_afk` | **Set AFK Note**. Use /afk to set an away note. |
+
+## Ai
+
+[Feature documentation](/docs/ai/odin)
+
+| Permission key | Grants |
+| --- | --- |
+| `ai.config.manage_config` | **Manage AI Configuration**. Edit AI provider, toggle features, and manage tier settings. |
+| `ai.config.view_config` | **View AI Configuration**. View AI provider settings, feature flags, and usage. |
+| `ai.context.manage_context` | **Manage AI Context**. Edit the AI assistant's identity, personality, rules, and knowledge. |
+| `ai.context.view_context` | **View AI Context**. View the AI assistant's configuration and context settings. |
+| `ai.knowledgebase.manage_knowledgebase` | **Manage Knowledgebase**. Create, edit, and delete knowledgebase entries and documents. |
+| `ai.knowledgebase.view_knowledgebase` | **View Knowledgebase**. View knowledgebase entries and documents. |
+| `ai.moderation.submit_feedback` | **Submit AI Moderation Feedback**. Rate or comment on AI moderation decisions via the escalation log buttons. |
+| `ai.qa.use_ask` | **Use /ask**. Run the /ask command to ask the AI assistant a question. |
+
+## Appeals
+
+[Feature documentation](/docs/moderation/appeals)
+
+| Permission key | Grants |
+| --- | --- |
+| `appeals.config.manage_config` | **Manage Configuration**. Edit appeal settings and SMTP configuration. |
+| `appeals.config.view_config` | **View Configuration**. View appeal settings and SMTP configuration. |
+| `appeals.forms.manage_forms` | **Manage Forms**. Create, edit, and delete appeal forms. |
+| `appeals.submissions.manage` | **Manage Submissions**. Accept or reject appeal submissions. |
+| `appeals.submissions.view` | **View Submissions**. View submitted appeals. |
+
+## Applications
+
+[Feature documentation](/docs/support/applications)
+
+| Permission key | Grants |
+| --- | --- |
+| `applications.manage` | **Manage Forms**. Create, edit, delete, and post application forms. |
+| `applications.review` | **Review Submissions**. Approve, deny, and open linked modmail for submissions. |
+| `applications.view` | **View Applications**. View forms and submissions. |
+
+## Attachment Blocker
+
+[Feature documentation](/docs/utilities/attachment-blocker)
+
+| Permission key | Grants |
+| --- | --- |
+| `attachment-blocker.manage_config` | **Manage Configuration**. Edit global settings, channel overrides, and opener overrides. |
+| `attachment-blocker.manage_own_restrictions` | **Manage Own Restrictions**. Apply and lift attachment restrictions on yourself. |
+| `attachment-blocker.manage_restrictions` | **Manage User Restrictions**. Apply, edit, and lift per-user attachment restrictions. |
+| `attachment-blocker.view_config` | **View Configuration**. View the current attachment blocker configuration and channel overrides. |
+| `attachment-blocker.view_restrictions` | **View User Restrictions**. View per-user attachment restrictions. |
+
+## Auto Reactions
+
+[Feature documentation](/docs/community/auto-reactions)
+
+| Permission key | Grants |
+| --- | --- |
+| `auto-reactions.manage_config` | **Manage Configuration**. Edit global settings and per-channel auto-reaction rules. |
+| `auto-reactions.view_config` | **View Configuration**. View the auto-reactions configuration and configured channels. |
+
+## Birthdays
+
+[Feature documentation](/docs/community/birthdays)
+
+| Permission key | Grants |
+| --- | --- |
+| `birthdays.config.manage_config` | **Manage Birthdays**. Edit the birthdays config, deploy the opener, and manage the birthday role. |
+| `birthdays.config.view_config` | **View Birthdays**. View the birthdays configuration and registered birthdays. |
+| `birthdays.entries.manage_entries` | **Manage Birthday List**. Add, edit, or remove another member's registered birthday. |
+| `birthdays.entries.view_entries` | **View Birthday List**. View every birthday registered in this server. |
+
+## Clock
+
+[Feature documentation](/docs/utilities/clock)
+
+| Permission key | Grants |
+| --- | --- |
+| `clock.config.manage_config` | **Manage Clocks**. Create, update, and remove clock channels. |
+| `clock.config.view_config` | **View Clocks**. List the server's configured clock channels. |
+
+## Confessions
+
+[Feature documentation](/docs/community/confessions)
+
+| Permission key | Grants |
+| --- | --- |
+| `confessions.config.manage_config` | **Manage Configuration**. Change confession settings, the channel and the blocklist. |
+| `confessions.config.view_config` | **View Configuration**. View confession settings. |
+| `confessions.log.delete_confession` | **Delete Confessions**. Remove a posted confession from the channel. |
+| `confessions.log.view_author` | **View Confession Author**. Reveal which member submitted a confession. |
+| `confessions.log.view_log` | **View Confession Log**. Read submitted confessions, without seeing who wrote them. |
+| `confessions.submit` | **Submit Confessions**. Use /confess and the submit panel. |
+
+## Customer Portal
+
+[Feature documentation](/docs/utilities/customer-portal)
+
+| Permission key | Grants |
+| --- | --- |
+| `customer_portal.config.manage_config` | **Manage Configuration**. Edit portal settings, toggle modules, and configure the launcher. |
+| `customer_portal.config.view_config` | **View Configuration**. View portal configuration and module settings. |
+| `customer_portal.portals.manage_portals` | **Manage Portals**. Close, archive, or force-refresh portal channels. |
+| `customer_portal.portals.view_portals` | **View Portals**. View the list of open portal channels and their owners. |
+
+## Dont At Me
+
+[Feature documentation](/docs/utilities/dont-at-me)
+
+| Permission key | Grants |
+| --- | --- |
+| `dont-at-me.manage_config` | **Manage Configuration**. Add, edit, and remove protected roles and configure exemptions. |
+| `dont-at-me.view_config` | **View Configuration**. View the current Don't @ Me configuration and protected roles. |
+
+## Games
+
+[Feature documentation](/docs/games/overview)
+
+| Permission key | Grants |
+| --- | --- |
+| `games.manage` | **Manage Games**. Admin controls for games, economy, and configuration. |
+| `games.use` | **Play Games**. Use game and economy commands. |
+
+## Giveaways
+
+[Feature documentation](/docs/community/giveaways)
+
+| Permission key | Grants |
+| --- | --- |
+| `giveaways.config.manage` | **Manage Settings**. Change the guild timezone, giveaway defaults, and entry-DM toggles. |
+| `giveaways.config.view` | **View Settings**. View the giveaways Settings tab. |
+| `giveaways.create` | **Create Giveaways**. Start new giveaways via /giveaway start or the dashboard. |
+| `giveaways.enter` | **Enter Giveaways**. Click the Enter button to join a running giveaway. |
+| `giveaways.fulfillment.manage` | **Manage Fulfillment Pools**. Create pools, add codes, and delete pools. |
+| `giveaways.fulfillment.view` | **View Fulfillment Pools**. View fulfillment pools, remaining/delivered counts, and delivery logs. |
+| `giveaways.giveaways.manage` | **Manage Giveaways**. End, cancel, and reroll giveaways. |
+| `giveaways.giveaways.view` | **View Giveaways**. View running and past giveaways on the dashboard. |
+| `giveaways.giveaways.view_entrants` | **View Entrants**. See who entered a giveaway. |
+| `giveaways.series.manage` | **Manage Recurring Series**. Pause, resume, skip occurrences of, edit, and delete recurring series (Premium). |
+| `giveaways.series.view` | **View Recurring Series**. View recurring giveaway series and their upcoming occurrences. |
+| `giveaways.sharing.manage` | **Manage Shared Giveaways**. Mint and redeem join codes, add or revoke partner servers, and enable, rotate, or revoke a public entry link (Premium). |
+| `giveaways.sharing.view` | **View Shared Giveaways**. View partner servers and their participation status on a shared giveaway. |
+| `giveaways.templates.manage` | **Manage Templates**. Create, edit, duplicate, and delete giveaway templates. |
+| `giveaways.templates.view` | **View Templates**. View saved giveaway templates. |
+
+## Goals
+
+[Feature documentation](/docs/community/goals)
+
+| Permission key | Grants |
+| --- | --- |
+| `goals.config.manage_config` | **Manage Goals**. Create, edit, deploy, and delete goals (and set manual goal values). |
+| `goals.config.view_config` | **View Goals**. View the configured goals. |
+
+## Honeypot
+
+[Feature documentation](/docs/moderation/honeypot)
+
+| Permission key | Grants |
+| --- | --- |
+| `honeypot.manage_config` | **Manage Configuration**. Edit honeypot channels, exempt roles, and the trigger action. |
+| `honeypot.view_config` | **View Configuration**. View the honeypot channel configuration. |
+
+## Invite Tracker
+
+[Feature documentation](/docs/community/invite-tracker)
+
+| Permission key | Grants |
+| --- | --- |
+| `invites.config.manage_config` | **Manage Configuration**. Turn tracking on and change how invites are counted. |
+| `invites.config.view_config` | **View Configuration**. View invite tracking settings. |
+| `invites.manage.create_invite` | **Create Tracked Invites**. Create a named invite link through the bot. |
+| `invites.manage.manage_bonus` | **Adjust Invite Counts**. Add or remove bonus invites from a member. |
+| `invites.view_others` | **Check Anyone's Invites**. Look up another member's invite count, and see the leaderboard. |
+| `invites.view_own` | **Check Own Invites**. Use /invites to see your own count. |
+
+## Logging
+
+[Feature documentation](/docs/utilities/logging)
+
+| Permission key | Grants |
+| --- | --- |
+| `logging.manage_config` | **Manage Configuration**. Edit logging channels and subcategory toggles. |
+| `logging.view_config` | **View Configuration**. View the current logging configuration. |
+
+## Minecraft
+
+[Feature documentation](/docs/integrations/minecraft)
+
+| Permission key | Grants |
+| --- | --- |
+| `minecraft.bridge.manage_bridge` | **Manage Chat Bridge**. Create, edit, and remove channel mappings for the chat bridge. |
+| `minecraft.offenses.manage_offenses` | **Manage Offenses**. Create, edit, and delete offense types and escalation tiers. |
+| `minecraft.offenses.offend_players` | **Offend Players**. Record offenses against players and trigger escalation. |
+| `minecraft.offenses.pardon_infractions` | **Pardon Infractions**. Pardon infractions to reduce future escalation counts. |
+| `minecraft.offenses.view_infractions` | **View Infractions**. View infraction history and player punishment records. |
+| `minecraft.players.approve_whitelist` | **Approve Whitelist**. Approve or deny pending whitelist requests. |
+| `minecraft.players.manage_players` | **Manage Players**. Edit or remove players from the whitelist. |
+| `minecraft.players.use_linking` | **Link Minecraft Account**. Use self-service Minecraft account linking and code confirmation. |
+| `minecraft.players.view_players` | **View Players**. View the player list and player details. |
+| `minecraft.server.manage_config` | **Manage Configuration**. Edit Minecraft plugin configuration. |
+| `minecraft.server.manage_status` | **Manage Status**. Start, stop, or restart the Minecraft server. |
+| `minecraft.server.use_rcon` | **Use RCON**. Send commands to the server via RCON. |
+| `minecraft.server.use_websocket` | **Use WebSocket Tunnel**. Interact with connected Minecraft servers via the live WebSocket tunnel. |
+| `minecraft.server.view_console` | **View Server Console**. View the live server console output. |
+| `minecraft.server.view_status` | **View Server Status**. View the Minecraft server status. |
+| `minecraft.trace.view_trace` | **View Trace Data**. View player fingerprints, alt accounts, and mod detection results. |
+
+## Moderation
+
+[Feature documentation](/docs/moderation/overview)
+
+| Permission key | Grants |
+| --- | --- |
+| `moderation.config.manage_config` | **Manage Configuration**. Edit moderation settings, escalation tiers, and immune roles. |
+| `moderation.config.view_config` | **View Configuration**. View automod rules, infractions, and moderation settings. |
+| `moderation.enforcement.ban` | **Ban / Unban Members**. Ban or unban server members. |
+| `moderation.enforcement.channel_ban` | **Channel Ban**. Restrict users from specific channels (read/write/both). |
+| `moderation.enforcement.kick` | **Kick Members**. Kick server members. |
+| `moderation.enforcement.lock_channels` | **Lock / Unlock Channels**. Lock or unlock channels to prevent member messages. |
+| `moderation.enforcement.manage_auto_responses` | **Manage Auto-Responses**. Create, edit, delete, and toggle auto-responses. |
+| `moderation.enforcement.manage_infractions` | **Manage Infractions**. View and clear user infractions. |
+| `moderation.enforcement.manage_presets` | **Manage Presets**. Install and uninstall preset automod rules. |
+| `moderation.enforcement.manage_rules` | **Manage Rules**. Create, edit, delete, and toggle automod rules. |
+| `moderation.enforcement.manage_slowmode` | **Manage Slow Mode**. Set or clear per-user slow mode on channels. |
+| `moderation.enforcement.manage_sticky` | **Manage Sticky Messages**. Create, edit, and remove sticky messages in channels. |
+| `moderation.enforcement.mute` | **Mute / Unmute Members**. Timeout server members and lift timeouts. |
+| `moderation.enforcement.purge` | **Purge Messages**. Bulk-delete messages from a channel. |
+| `moderation.enforcement.warn` | **Warn Members**. Issue warnings to server members. |
+
+## Modmail
+
+[Feature documentation](/docs/support/modmail)
+
+| Permission key | Grants |
+| --- | --- |
+| `modmail.analytics.view_analytics` | **View Analytics**. View modmail analytics, staff metrics, and trends. |
+| `modmail.conversations.manage_conversations` | **Manage Conversations**. Manage modmail conversations (bulk operations). |
+| `modmail.conversations.view_conversations` | **View Conversations**. View modmail conversations, messages, and statistics. |
+| `modmail.management.manage_config` | **Manage Configuration**. Edit modmail settings and snippets. |
+| `modmail.management.manage_reviews` | **Manage Reviews**. View and moderate modmail reviews. |
+| `modmail.quotas.manage_quotas` | **Manage Quotas**. Create, edit, and delete staff modmail quotas. |
+
+## Namelessmc
+
+[Feature documentation](/docs/integrations/namelessmc)
+
+| Permission key | Grants |
+| --- | --- |
+| `namelessmc.use` | **Link Forum Account**. Use the forum account linking command. |
+
+## Ping
+
+[Feature documentation](/docs/utilities/ping)
+
+| Permission key | Grants |
+| --- | --- |
+| `ping.use` | **Use Utility Commands**. Use ping, uptime, and user info commands. |
+
+## Planetside
+
+[Feature documentation](/docs/integrations/planetside)
+
+| Permission key | Grants |
+| --- | --- |
+| `planetside.config.manage_config` | **Manage Configuration**. Edit PlanetSide plugin settings, outfit, roles, and channels. |
+| `planetside.config.view_config` | **View Configuration**. View the PlanetSide plugin configuration. |
+| `planetside.monitoring.view_census_status` | **View Census Status**. View Census and Honu API health status. |
+| `planetside.monitoring.view_population` | **View Population**. View live server population data. |
+| `planetside.players.manage_players` | **Manage Players**. Link, unlink, or revoke PlanetSide characters. |
+| `planetside.players.view_players` | **View Players**. View linked PlanetSide characters. |
+| `planetside.use` | **Use PlanetSide Commands**. Use public PlanetSide 2 commands (info, link, outfit, population). |
+
+## Polls
+
+[Feature documentation](/docs/community/polls)
+
+| Permission key | Grants |
+| --- | --- |
+| `polls.create_poll` | **Create Polls**. Create new polls via /poll create or the dashboard wizard. |
+| `polls.polls.manage` | **Manage Polls**. Close, delete, edit, pin, export, and view audit log. |
+| `polls.polls.view_polls` | **View Polls**. View active and closed polls on the dashboard. |
+| `polls.polls.view_voters` | **View Voter Lists**. See who voted for what on Public and Staff-only polls. |
+| `polls.templates.manage_templates` | **Manage Templates**. Create, edit, and delete poll templates. |
+| `polls.templates.view_templates` | **View Templates**. View saved poll templates. |
+| `polls.vote` | **Vote in Polls**. Cast and retract votes on active polls. |
+
+## Reminders
+
+[Feature documentation](/docs/community/reminders)
+
+| Permission key | Grants |
+| --- | --- |
+| `reminders.manage_reminders` | **Manage Reminders**. Create, edit, or delete reminders. |
+| `reminders.send_public_reminders` | **Send Public Reminders**. Post reminders in channels and ping users/roles. |
+| `reminders.view_reminders` | **View Reminders**. View scheduled reminders. |
+
+## Rolebuttons
+
+[Feature documentation](/docs/community/role-buttons)
+
+| Permission key | Grants |
+| --- | --- |
+| `rolebuttons.manage` | **Manage Panels**. Create, edit, delete, and post role button panels. |
+| `rolebuttons.view` | **View Panels**. View role button panel configs. |
+
+## Selfmute
+
+[Feature documentation](/docs/utilities/selfmute)
+
+| Permission key | Grants |
+| --- | --- |
+| `selfmute.config.manage_config` | **Manage Configuration**. Enable self-mute and edit its settings. |
+| `selfmute.config.view_config` | **View Configuration**. View self-mute settings. |
+
+## Starboard
+
+[Feature documentation](/docs/community/starboard)
+
+| Permission key | Grants |
+| --- | --- |
+| `starboard.manage_config` | **Manage Configuration**. Create and edit starboard boards, emoji, thresholds, and channels. |
+| `starboard.moderate` | **Moderate Queue**. Approve or deny pending starboard candidates. |
+| `starboard.view_config` | **View Configuration**. View starboard board settings and pending queue. |
+
+## Suggestions
+
+[Feature documentation](/docs/community/suggestions)
+
+| Permission key | Grants |
+| --- | --- |
+| `suggestions.config.manage_categories` | **Manage Categories**. Create, edit, or delete suggestion categories. |
+| `suggestions.config.manage_config` | **Manage Configuration**. Edit suggestion system settings. |
+| `suggestions.create_suggestion` | **Create Suggestions**. Submit suggestions via the /suggest command. |
+| `suggestions.items.manage_suggestions` | **Manage Suggestions**. Approve, deny, or edit suggestions. |
+| `suggestions.items.view_suggestions` | **View Suggestions**. View submitted suggestions. |
+| `suggestions.items.view_voters` | **View Voter Lists**. See who upvoted or downvoted a Staff-only suggestion. |
+
+## Tags
+
+[Feature documentation](/docs/community/tags)
+
+| Permission key | Grants |
+| --- | --- |
+| `tags.manage_posts` | **Manage Posts**. Create, edit, schedule, and send template posts. |
+| `tags.manage_tags` | **Manage Tags**. Create, edit, or delete tags. |
+| `tags.view_tags` | **View Tags**. View the list of tags and their content. |
+
+## Tebex
+
+[Feature documentation](/docs/integrations/tebex)
+
+| Permission key | Grants |
+| --- | --- |
+| `tebex.config.manage_config` | **Manage Configuration**. Edit Tebex plugin settings, claim mode, channels, and permissions. |
+| `tebex.config.manage_role_maps` | **Manage Role Mappings**. Add, remove, or list package-to-role mappings. |
+| `tebex.config.view_config` | **View Configuration**. View the Tebex plugin configuration. |
+| `tebex.store.manage_claims` | **Manage Claims**. Approve, reject, or review purchase claims. |
+| `tebex.store.manage_store` | **Manage Store**. Create coupons, manage gift cards, bans, and generate checkout links. |
+| `tebex.store.view_store` | **View Store**. View store information, sales, goals, and payments. |
+| `tebex.store.view_transactions` | **View Transactions**. Look up Tebex transactions and purchase history. |
+
+## Tempvc
+
+[Feature documentation](/docs/voice/temp-channels)
+
+| Permission key | Grants |
+| --- | --- |
+| `tempvc.manage_channels` | **Manage Active Channels**. Delete or force-manage active temporary voice channels. |
+| `tempvc.manage_config` | **Manage Configuration**. Edit Temp VC settings and generators. |
+| `tempvc.view_config` | **View Configuration**. View the current Temp VC configuration. |
+
+## Tickets
+
+[Feature documentation](/docs/support/tickets)
+
+| Permission key | Grants |
+| --- | --- |
+| `tickets.analytics.export_data` | **Export Data**. Export ticket data, analytics, and reports. |
+| `tickets.analytics.view_analytics` | **View Analytics Dashboard**. View ticket analytics, charts, and summary metrics. |
+| `tickets.analytics.view_own_analytics` | **View Own Analytics**. View only your own ticket analytics and performance data. |
+| `tickets.analytics.view_staff_performance` | **View Staff Performance**. View staff leaderboard and individual performance drill-downs. |
+| `tickets.config.manage_categories` | **Manage Categories**. Create, edit, or delete ticket categories. |
+| `tickets.config.manage_config` | **Manage Configuration**. Edit general ticket system settings. |
+| `tickets.config.manage_openers` | **Manage Openers**. Configure ticket opener panels and settings. |
+| `tickets.operations.claim_tickets` | **Claim Tickets**. Claim and unclaim support tickets. |
+| `tickets.operations.manage_reviews` | **Manage Reviews**. View and moderate ticket reviews. |
+| `tickets.operations.manage_tickets` | **Manage Tickets**. Perform staff operations on tickets (rename, move, ban, escalate, etc.). |
+| `tickets.operations.view_tickets` | **View Tickets**. View ticket transcripts and statistics. |
+| `tickets.quotas.manage_quotas` | **Manage Quotas**. Create, edit, and delete staff ticket quotas. |
+
+## Translate
+
+[Feature documentation](/docs/ai/translate)
+
+| Permission key | Grants |
+| --- | --- |
+| `translate.manage_config` | **Manage Configuration**. Edit translate configuration, channels, emoji mappings, and API keys. |
+| `translate.use` | **Use Translation**. Run /translate message and set personal language defaults. |
+| `translate.view_config` | **View Configuration**. View translate plugin settings, channels, and emoji mappings. |
+
+## Vc Transcription
+
+[Feature documentation](/docs/voice/transcription)
+
+| Permission key | Grants |
+| --- | --- |
+| `vc-transcription.manage_config` | **Manage Configuration**. Edit transcription mode, provider, model, filters, and API keys. |
+| `vc-transcription.view_config` | **View Configuration**. View the current transcription configuration. |
+
+## Waiting Room
+
+[Feature documentation](/docs/voice/waiting-room)
+
+| Permission key | Grants |
+| --- | --- |
+| `waiting_room.accept` | **Accept Waiting Users**. Use the 'Create TempVC & Join' button to accept users from waiting rooms. |
+| `waiting_room.manage_config` | **Manage Configuration**. Edit waiting room settings. |
+| `waiting_room.view_config` | **View Configuration**. View the waiting room configuration. |
+
+## Welcome
+
+[Feature documentation](/docs/community/welcome)
+
+| Permission key | Grants |
+| --- | --- |
+| `welcome.manage_config` | **Manage Configuration**. Edit welcome messages, channels, and roles. |
+| `welcome.view_config` | **View Configuration**. View the current welcome configuration. |

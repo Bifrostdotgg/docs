@@ -8,6 +8,21 @@ Heimdall has its own permission system that is independent of Discord's native r
 
 ## How permissions work
 
+<Warning>
+  **Copy keys exactly. Never reconstruct one from the feature name and the action.**
+
+  Most keys have three parts, not two: `confessions.log.view_author`, not
+  `confessions.view_author`. The middle segment is part of the key rather than a note about
+  where it sits.
+
+  A key that does not exist is **silently refused**. Heimdall resolves an unrecognised key to
+  denied and records it in its log, so nothing in the dashboard marks it as wrong. The only
+  symptom is a role that looks correctly configured and cannot use the feature.
+
+  [Every key, exactly as it must be written](/docs/reference/permission-keys).
+</Warning>
+
+
 Every feature in Heimdall exposes one or more named permission keys. For example, the moderation plugin exposes keys such as `moderation.enforcement.ban` and `moderation.enforcement.warn`. The ticket plugin exposes `tickets.operations.manage_tickets` and `tickets.operations.claim_tickets`.
 
 You assign these keys to Discord roles through the dashboard. When a member runs a command or accesses a dashboard section, Heimdall checks whether any of their current roles have been granted the matching key. If they have, the action proceeds. If not, the bot responds with a permission denied message.

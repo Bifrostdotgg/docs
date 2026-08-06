@@ -66,11 +66,14 @@ for p in sorted(plugins, key=lambda x: x["name"]):
                 lines.append(f"| `/{c['name']} {s.replace('.', ' ')}` |")
             lines.append("")
 
-    if p["permissionKeys"]:
-        lines.append("Permission keys:")
+    if p.get("permissions"):
+        lines.append("Permission keys, which must be copied exactly")
+        lines.append("([full reference](/docs/reference/permission-keys)):")
         lines.append("")
-        for k in p["permissionKeys"]:
-            lines.append(f"- `{k}`")
+        for entry in p["permissions"]:
+            label = entry.get("label")
+            suffix = " (" + label + ")" if label else ""
+            lines.append("- `" + entry["key"] + "`" + suffix)
         lines.append("")
 
 open(OUT, "w", encoding="utf-8").write("\n".join(lines).rstrip() + "\n")

@@ -108,6 +108,7 @@
             "group": "Reference",
             "pages": [
               "reference/commands",
+              "reference/permission-keys",
               "utilities/ping",
               "utilities/selfmute",
               "utilities/clock",
