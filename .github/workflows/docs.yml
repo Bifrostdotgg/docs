@@ -1,0 +1,54 @@
+name: Docs
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  manifest:
+    name: Pages agree with the bot
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch Heimdall's feature manifest
+        # Generated from the bot source and committed there, so it needs no credentials and is
+        # always the shipped truth rather than a copy kept in step by hand.
+        run: |
+          curl -fsSL \
+            https://raw.githubusercontent.com/Bifrostdotgg/Heimdall/main/docs/generated/heimdall-features.json \
+            -o heimdall-features.json
+          python3 -c "import json;d=json.load(open('heimdall-features.json'));print(f\"manifest: {len(d['plugins'])} features\")"
+
+      - name: Check pages against the manifest
+        run: python3 scripts/check-against-manifest.py heimdall-features.json
+
+      - name: Reference pages are up to date with the manifest
+        # The two generated pages are committed, so a manifest change that nobody regenerated
+        # against shows up here as a diff rather than as a wrong page on the site.
+        run: |
+          python3 scripts/gen-commands.py heimdall-features.json
+          python3 scripts/gen-permission-keys.py heimdall-features.json
+          if ! git diff --quiet -- reference/; then
+            echo "::error::reference/ is stale. Run the two scripts in scripts/ and commit the result."
+            git diff --stat -- reference/
+            exit 1
+          fi
+          echo "reference pages match the manifest"
+
+  em-dash:
+    name: No em dashes
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Scan every page
+        # The same rule the bot repo enforces. Kept here as its own job because this repo has no
+        # build step that could carry it, and prose is exactly where one gets typed.
+        run: |
+          if grep -rInP '\x{2014}|&mdash;|&#8212;|&#x2014;|\\u2014' \
+               --include='*.mdx' --include='*.md' --include='*.json' . ; then
+            echo "::error::em dash found. Use a plain hyphen."
+            exit 1
+          fi
+          echo "no em dashes"

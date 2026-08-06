@@ -75,6 +75,48 @@ support gets asked:
 5. Required permissions, as a table of action against key. Keys must match the generated
    manifest exactly.
 
+## CI checks what it can
+
+Two jobs run on every push and pull request (`.github/workflows/docs.yml`).
+
+**`scripts/check-against-manifest.py`** compares the prose against Heimdall's generated feature
+manifest, fetched from the bot repo at run time so it is always the shipped truth. It fails when a
+page names a permission key or a slash command that no longer exists, and when a plugin declares a
+`docsPath` with no page behind it. It also fails if the two generated pages under `reference/` no
+longer match the manifest, which is what stops a rename from quietly leaving them behind.
+
+That closed the last gap in the arrangement described above. Before it, a renamed key failed the
+*bot* build, because the manifest moved, and nothing anywhere failed for the page still describing
+the old one.
+
+It found four wrong claims the first time it ran: `/claim` for what is really `/economy claim`,
+`/ps2-lookup` for `/ps2 lookup view`, `/honeypot add` for `/honeypot channel add`, and a whole
+category of `dashboard.*` keys the manifest generator had never emitted, so the docs were right and
+the manifest was wrong.
+
+It is deliberately conservative: only strings inside backticks are inspected, because a false
+positive teaches people to ignore the check, which is worse than not having one.
+
+Two things legitimately look like errors and are not, so there is an inline opt-out:
+
+```mdx
+{/* docs-manifest-ignore -- why this string is not a claim */}
+```
+
+Use it for a line that names a wrong form on purpose (`permissions.mdx` says
+"`confessions.log.view_author`, not `confessions.view_author`", and that sentence is the most
+useful line on the page) or for a hypothetical (`settings.mdx` offers `/feedback` as an example of
+a name an admin might choose). The marker covers the sentence it introduces, up to three lines,
+because prose wraps. Do not use it to keep a genuinely stale reference.
+
+**The em dash job** enforces the same rule as the bot repo, in all four spellings. It is a separate
+job because this repo has no build step to hang it off, and prose is exactly where one gets typed.
+
+### What is still not automated
+
+Nobody runs `mint dev` or `mint broken-links` in CI, so a broken internal link or a page that
+fails to render is still found by a human. That is the obvious next job to add.
+
 ## Content boundaries
 
 - Do not document internal features. `lib`, `dev`, `console`, `file-storage`,
