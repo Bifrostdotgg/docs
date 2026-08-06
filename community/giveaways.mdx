@@ -1,0 +1,62 @@
+---
+title: "Giveaways"
+description: "Running timed giveaways with button entry, automatic draws, and rerolls."
+icon: "gift"
+---
+
+Giveaways run on a timer with a button to enter. The entry count updates live, winners are drawn automatically when the timer ends, and you can reroll if a winner does not respond.
+
+## Starting one
+
+`/giveaway start` is the quick route: a prize, a duration, and how many winners. `/giveaway create` opens the fuller flow for anything more involved.
+
+| Setting | Description |
+| --- | --- |
+| **Prize** | What is being given away |
+| **Duration** | How long entry stays open |
+| **Winners** | How many are drawn |
+| **Requirements** | Optional role or account age conditions on who may enter |
+
+Members enter with the button on the giveaway message. The counter updates as people join, so the message stays useful without anybody refreshing anything.
+
+## Drawing and rerolling
+
+When the timer ends the bot draws winners and announces them. Draws are atomic, so two people cannot be picked for the same slot even if the giveaway ends while entries are still arriving.
+
+| Command | What it does |
+| --- | --- |
+| `/giveaway end` | Ends it early and draws now |
+| `/giveaway cancel` | Ends it with no winner |
+| `/giveaway reroll` | Draws a replacement, for when a winner never claims |
+| `/giveaway entrants` | Lists who entered |
+| `/giveaway list` | Shows the running giveaways |
+
+## Templates and series
+
+**Templates** save a giveaway setup so a recurring one does not have to be rebuilt each time. **Series** group repeating giveaways together so you can see them as one thing rather than a dozen unrelated entries.
+
+## Fulfillment
+
+The fulfillment view tracks whether winners actually received their prize, which matters for anything handed over by a person rather than automatically. A giveaway with an undelivered prize stays visible instead of disappearing once the draw is done.
+
+## Partners and sharing
+
+Giveaways can be shared with partner servers, so a giveaway you run appears in theirs and vice versa. `/giveaway partners` manages those relationships, and `/giveaway share` offers a specific giveaway.
+
+## Required permissions
+
+| Action | Permission key |
+| --- | --- |
+| Entering a giveaway | `giveaways.enter` (granted to everyone by default) |
+| Creating one | `giveaways.create` |
+| Viewing giveaways | `giveaways.giveaways.view` |
+| Ending, cancelling, rerolling | `giveaways.giveaways.manage` |
+| Seeing who entered | `giveaways.giveaways.view_entrants` |
+| Viewing fulfillment | `giveaways.fulfillment.view` |
+| Marking prizes delivered | `giveaways.fulfillment.manage` |
+| Viewing and managing templates | `giveaways.templates.view`, `giveaways.templates.manage` |
+| Viewing and managing series | `giveaways.series.view`, `giveaways.series.manage` |
+| Viewing and changing settings | `giveaways.config.view`, `giveaways.config.manage` |
+| Viewing and managing partner sharing | `giveaways.sharing.view`, `giveaways.sharing.manage` |
+
+Seeing who entered is separated from running the giveaway on purpose: the entrant list is a list of your members, and running a draw does not require reading it.

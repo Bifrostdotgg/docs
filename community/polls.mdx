@@ -1,0 +1,48 @@
+---
+title: "Polls"
+description: "Running polls with single-choice, multi-select, ranked-choice, or free-text answers."
+icon: "square-poll-vertical"
+---
+
+Polls go beyond a set of reactions. Four answer types are available, results update live, and everything can be exported.
+
+## Creating one
+
+`/poll create` opens a wizard that walks through the question, the answer type, the options, and the closing time. `/poll from-template` skips the wizard for a poll you run regularly.
+
+| Answer type | Use it for |
+| --- | --- |
+| **Single choice** | One option per member, the usual case |
+| **Multi-select** | Members pick several, useful for "which of these would you attend" |
+| **Ranked choice** | Members order the options, counted by instant-runoff so the winner has genuine majority support rather than the largest minority |
+| **Free text or numeric** | Open answers, when the options are not known in advance |
+
+Ranked choice is worth reaching for when a plain vote would split similar options and let an unpopular one win on a plurality.
+
+## While it runs
+
+Results update as votes arrive. `/poll list` shows what is open, and `/poll close` ends one early.
+
+Whether voters are visible is its own permission, so a poll can be public in its results while keeping who voted for what to staff, or to nobody.
+
+## After it closes
+
+Closing posts the results. Anybody who asked to be told is notified by DM. The full result set can be exported as CSV for anything you want to do outside Discord, and an audit log records who created, edited, and closed each poll.
+
+## Templates
+
+Templates save a whole poll setup. If you run a weekly vote with the same options, build it once and use `/poll from-template` after that.
+
+## Required permissions
+
+| Action | Permission key |
+| --- | --- |
+| Voting | `polls.vote` (granted to everyone by default) |
+| Creating a poll | `polls.create_poll` |
+| Viewing polls | `polls.polls.view_polls` |
+| Seeing who voted for what | `polls.polls.view_voters` |
+| Closing and editing polls | `polls.polls.manage` |
+| Viewing templates | `polls.templates.view_templates` |
+| Creating and editing templates | `polls.templates.manage_templates` |
+
+`view_voters` is deliberately separate from viewing the poll. Seeing the totals and seeing how each member voted are different things, and a secret ballot stops being secret the moment they are granted together.

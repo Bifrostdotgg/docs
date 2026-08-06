@@ -54,7 +54,8 @@
               "moderation/appeals",
               "utilities/logging",
               "utilities/attachment-blocker",
-              "utilities/dont-at-me"
+              "utilities/dont-at-me",
+              "moderation/honeypot"
             ]
           },
           {
@@ -65,7 +66,15 @@
               "community/starboard",
               "community/role-buttons",
               "community/tags",
-              "community/reminders"
+              "community/reminders",
+              "community/birthdays",
+              "community/giveaways",
+              "community/polls",
+              "community/goals",
+              "community/auto-reactions",
+              "community/afk",
+              "community/confessions",
+              "community/invite-tracker"
             ]
           },
           {
@@ -99,7 +108,10 @@
             "group": "Reference",
             "pages": [
               "reference/commands",
-              "utilities/ping"
+              "utilities/ping",
+              "utilities/selfmute",
+              "utilities/clock",
+              "utilities/affiliate"
             ]
           }
         ]

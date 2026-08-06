@@ -1,0 +1,44 @@
+---
+title: "AFK"
+description: "Letting members set an away note that the bot gives out on their behalf."
+icon: "moon"
+---
+
+A member runs `/afk` with an optional reason. While they are away, anyone who mentions them gets a short reply saying they are AFK and how long ago they left. The note clears itself the moment that member sends any message in the server.
+
+The note is per server, not global. Setting one in one server does not affect any other.
+
+## How the notices are kept under control
+
+Three rules stop this turning a busy channel into a wall of bot replies:
+
+- Only mentions typed into the message count. Replying to an older message from an away member does not trigger a notice, and neither does a role ping that happens to include them.
+- One notice per away member per channel per ten minutes. Ten people calling for the same person produce one reply, not ten.
+- The notice shows the away member's display name rather than pinging them, so being told somebody is away never wakes them up.
+
+## What the person calling for them can do
+
+Each notice carries two buttons:
+
+| Button | What it does |
+| --- | --- |
+| **Leave a message** | Opens a box. The message is held and delivered by DM when the away member returns. |
+| **Tell me when they are back** | Sends you a DM once that member speaks again. |
+
+Held messages and watchers belong to that away session. Setting a new AFK note starts a fresh one, so nothing carries over from a previous absence.
+
+## Returning
+
+Any message in the server clears the note. The bot replies with a short confirmation that removes itself after ten seconds, and DMs the member anything that was held for them.
+
+If their DMs are closed the held messages cannot be delivered, which is why the in-channel confirmation says how many there were.
+
+## Required permissions
+
+| Action | Permission key |
+| --- | --- |
+| Setting an AFK note | `afk.set_afk` (granted to everyone by default) |
+
+Everyone can use it out of the box. To restrict it, deny that key on `@everyone` and allow it on the roles that should have it.
+
+Switching AFK off, either as a module or by disabling the `/afk` command under **Settings, Commands**, stops the automatic replies as well as the command.

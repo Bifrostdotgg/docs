@@ -1,0 +1,53 @@
+---
+title: "Confessions"
+description: "Letting members post anonymously, with a staff audit trail for handling abuse."
+icon: "comment-dots"
+---
+
+Members submit a confession and the bot posts it with its own number and no author. Confessions are anonymous to other members. They are not anonymous to staff holding the right permission, and that limit is stated to members on the submit panel so nobody is misled.
+
+## Setting it up
+
+Navigate to **Confessions** in the dashboard.
+
+| Setting | Description |
+| --- | --- |
+| **Enable confessions** | Adds `/confess` to your server. While off, the command is removed and the panel button declines. |
+| **Confessions channel** | Where confessions are posted. Anyone who can read the channel can read them. |
+| **Shortest and longest** | Length limits, applied as the member types. Blank space and hidden characters are not counted, so nobody can pad a submission out to reach the minimum. |
+| **Cooldown** | How long a member waits between confessions. A submission turned down for being too short or too long does not use up the wait. |
+
+## The submit panel
+
+Posting a panel gives members a **Submit a confession!** button, so they do not need to know the command. Posting it again updates the existing message rather than adding a second one. Both routes open the same box and behave identically.
+
+## Who can see who wrote a confession
+
+Other members never find out. There is no name, no avatar, and nothing in the posted message that points back to the author.
+
+Staff are a different matter. Anyone holding `confessions.log.view_author` can look up who submitted a confession, and the bot records every lookup. That is deliberate: an untraceable way to post into your server is a harassment vector with no remedy except switching the feature off, and blocking somebody requires knowing who they are.
+
+**Forget who wrote a confession after (days)** decides how long that stays possible. Leave it at 0 to keep the information indefinitely. Any other number tells the bot to forget the author once a confession reaches that age. The confession itself stays, but from then on nobody can find out who posted it, including you.
+
+## Handling abuse
+
+| Tool | What it does |
+| --- | --- |
+| **Blocklist** | Blocked members are told plainly that they cannot submit, rather than having confessions silently vanish, so they do not keep trying and wondering why. |
+| **Delete** | Removes the message from the channel but keeps the text in the log, because that text is the evidence a report is made from. |
+| **Length limits** | Stop both one-word confessions and walls of text. |
+
+`@everyone` and `@here` inside a confession are defused, so they read as written but ping nobody. Formatting is escaped as well, so a confession cannot post a full-width heading or a link dressed up as something the bot said.
+
+## Required permissions
+
+| Action | Permission key |
+| --- | --- |
+| Submitting a confession | `confessions.submit` (granted to everyone by default) |
+| Viewing settings | `confessions.config.view_config` |
+| Changing settings and the blocklist | `confessions.config.manage_config` |
+| Reading the confession log | `confessions.log.view_log` |
+| Revealing who wrote one | `confessions.log.view_author` |
+| Deleting a posted confession | `confessions.log.delete_confession` |
+
+The config keys deliberately do not grant the log. Setting a channel and a cooldown is administrative work; reading what your members confessed is the private part, and being trusted with one is not the same as being trusted with the other.

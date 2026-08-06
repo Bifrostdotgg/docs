@@ -4,7 +4,7 @@ description: "Configuring keyword and AI-triggered automatic replies to member m
 icon: "reply"
 ---
 
-Auto-responses are automated replies that Heimdall posts when a member sends a message matching a configured pattern. Unlike automod rules, which enforce and punish, auto-responses simply reply — they are informational. Common uses include answering frequently asked questions, directing members to the right channel, or acknowledging a keyword with a helpful resource link.
+Auto-responses are automated replies that Heimdall posts when a member sends a message matching a configured pattern. Unlike automod rules, which enforce and punish, auto-responses simply reply - they are informational. Common uses include answering frequently asked questions, directing members to the right channel, or acknowledging a keyword with a helpful resource link.
 
 ## How auto-responses work
 
@@ -12,8 +12,8 @@ Every message sent in a covered channel is checked against your configured auto-
 
 Matching works in two phases:
 
-1. **Regex matching** — patterns are evaluated in priority order. The first pattern that matches the message fires immediately and no further patterns are checked.
-2. **AI matching** — if no regex pattern matched and you have AI-enabled auto-responses configured, all of those candidates are sent to the AI classifier in a single call. The classifier picks the best match based on your natural-language descriptions, or returns nothing if no description fits.
+1. **Regex matching** - patterns are evaluated in priority order. The first pattern that matches the message fires immediately and no further patterns are checked.
+2. **AI matching** - if no regex pattern matched and you have AI-enabled auto-responses configured, all of those candidates are sent to the AI classifier in a single call. The classifier picks the best match based on your natural-language descriptions, or returns nothing if no description fits.
 
 ## Creating an auto-response
 
@@ -26,15 +26,15 @@ Navigate to **Moderation > Auto-Responses** in the dashboard and click **New Aut
 | **Pattern** (regex) | A regular expression matched against the message content, case-insensitive by default |
 | **Description** (AI) | A plain-language description of what the message should be about, used by the AI classifier |
 | **Priority** | Lower numbers run first when multiple regex rules are present |
-| **Response type** | **Text** — plain message reply, or **Embed** — a rich embed with title, description, colour, image, and footer |
+| **Response type** | **Text** - plain message reply, or **Embed** - a rich embed with title, description, colour, image, and footer |
 | **Response content** | The text or embed content to reply with |
-| **Scope** | **Global** — fires in all channels, or **Channel** — fires only in selected channels |
+| **Scope** | **Global** - fires in all channels, or **Channel** - fires only in selected channels |
 | **Cooldown** | How long (in seconds) before the same response can fire again in the same channel |
 | **Immune roles** | Roles that are exempt from triggering this auto-response |
 
 ## Regex triggers
 
-Regex patterns are matched against the full message content. The match is case-insensitive by default. You do not need to anchor the pattern — a pattern of `how.*join` will match "how do I join", "how can I join the server", and similar phrases.
+Regex patterns are matched against the full message content. The match is case-insensitive by default. You do not need to anchor the pattern - a pattern of `how.*join` will match "how do I join", "how can I join the server", and similar phrases.
 
 If you need case-sensitive matching or other flags, you can configure pattern flags on the auto-response.
 
@@ -50,7 +50,7 @@ AI auto-responses require the AI plugin to be enabled and configured on your ser
 
 ## Channel scoping
 
-By default, a new auto-response is global — it applies to every channel. Setting the scope to **Channel** lets you pick specific channels (or categories) where the rule applies. Thread messages also check the parent channel's auto-responses, so a channel-scoped rule covers that channel's threads as well.
+By default, a new auto-response is global - it applies to every channel. Setting the scope to **Channel** lets you pick specific channels (or categories) where the rule applies. Thread messages also check the parent channel's auto-responses, so a channel-scoped rule covers that channel's threads as well.
 
 ## Cooldowns
 
@@ -58,9 +58,9 @@ Each auto-response has a per-channel cooldown. If the bot already replied with a
 
 ## Response formats
 
-**Text responses** — the reply is sent as plain text. Long responses are automatically split at code fences or paragraph boundaries to stay within Discord's 2000-character message limit.
+**Text responses** - the reply is sent as plain text. Long responses are automatically split at code fences or paragraph boundaries to stay within Discord's 2000-character message limit.
 
-**Embed responses** — the reply is sent as a rich Discord embed. You can configure:
+**Embed responses** - the reply is sent as a rich Discord embed. You can configure:
 
 | Field | Description |
 |---|---|

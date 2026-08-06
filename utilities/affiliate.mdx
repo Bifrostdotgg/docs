@@ -1,0 +1,29 @@
+---
+title: "Affiliate Program"
+description: "Generating a referral link and checking your affiliate stats from Discord."
+icon: "handshake"
+---
+
+The affiliate program pays out for servers that sign up to Heimdall through your referral. This page covers the Discord side of it: joining, getting your link, and checking how it is doing.
+
+## Getting a link
+
+`/affiliate join` enrols you and issues a referral code. `/affiliate view` shows your code, your link, and your current stats.
+
+Your link is your code appended to the dashboard URL. Anyone who follows it and sets Heimdall up is attributed to you.
+
+## Checking your stats
+
+`/affiliate view` reports what has been attributed to your code so far. The reply is private to you.
+
+## Required permissions
+
+| Action | Permission key |
+| --- | --- |
+| Joining and viewing your stats | `affiliate.use` |
+
+The command is global rather than per server, so it works anywhere the bot is present. It only ever shows your own figures.
+
+<Note>
+Payout rates, thresholds, and terms are handled outside Discord. This page documents the commands only.
+</Note>

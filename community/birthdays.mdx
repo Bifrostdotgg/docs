@@ -1,0 +1,50 @@
+---
+title: "Birthdays"
+description: "Announcing member birthdays on the day, with an optional temporary role."
+icon: "cake-candles"
+---
+
+Members register their birthday, and on the day the bot posts an announcement and can hand them a temporary role. Members register themselves, so you never have to collect the dates.
+
+## Setting it up
+
+Navigate to **Birthdays** in the dashboard.
+
+| Setting | Description |
+| --- | --- |
+| **Announcement channel** | Where the birthday message is posted |
+| **Timezone** | Which timezone decides when "today" starts |
+| **Announcement hour** | The hour of the day announcements go out |
+| **Ping role** | An optional role to mention alongside the announcement |
+| **Announcement message** | Supports `{mention}` for a ping and `{user}` for the name without one |
+| **Birthday role** | An optional role applied for the day, with a configurable duration in hours |
+
+## How members register
+
+Two routes, and both write the same record:
+
+- `/birthday set` with a day and month
+- The **opener**, a message with a button that you post to a channel. Members who would never run a slash command will click a button.
+
+`/birthday remove` deletes their entry. `/birthday view` shows one member's, and `/birthday list` shows the upcoming ones.
+
+Only the day and month are stored. Members are not asked for a year, so no age is recorded.
+
+## The birthday list
+
+The dashboard's **Birthday List** tab shows every registered birthday, upcoming first, with search and the ability to add, edit, or remove an entry on somebody's behalf.
+
+Ordering is by how soon the next celebration is, not by calendar date, so December birthdays do not sit at the bottom for eleven months of the year.
+
+A birthday on 29 February is celebrated on 28 February in years that do not have one, rather than being skipped for three years at a time.
+
+## Required permissions
+
+| Action | Permission key |
+| --- | --- |
+| Viewing settings | `birthdays.config.view_config` |
+| Changing settings and the opener | `birthdays.config.manage_config` |
+| Viewing the birthday list | `birthdays.entries.view_entries` |
+| Changing somebody else's entry | `birthdays.entries.manage_entries` |
+
+Registering your own birthday needs no permission. Either config key also grants the list, so staff who already manage birthdays do not need a second grant to keep seeing it.

@@ -1,0 +1,33 @@
+---
+title: "Goals"
+description: "Posting auto-updating progress bars for member count, boosts, roles, or any number you set."
+icon: "bullseye"
+---
+
+A goal is a progress bar posted to a channel that updates itself. Use it for a member milestone, a boost target, a recruitment drive, or anything else you can put a number on.
+
+## What a goal can track
+
+| Source | Progress comes from |
+| --- | --- |
+| **Member count** | How many members the server has |
+| **Boosts** | The server's current boost count |
+| **Role members** | How many members hold a chosen role |
+| **Manual** | A number you set yourself with `/goal set` |
+
+The first three update on their own. Manual goals are for anything the bot cannot see, such as money raised or sign-ups on another site, and you move them with `/goal set` or nudge them with `/goal add`.
+
+## Setting one up
+
+Navigate to **Goals** in the dashboard, choose the source, the target, and the channel. The bot posts the bar and keeps it current on a poller, so it stays accurate without anyone touching it.
+
+Goals are presentational, so they need no member permissions. Nobody can interact with a goal by accident.
+
+## Required permissions
+
+| Action | Permission key |
+| --- | --- |
+| Viewing settings | `goals.config.view_config` |
+| Creating and editing goals | `goals.config.manage_config` |
+
+`/goal set` and `/goal add` also require the manage key, since moving a manual goal is editing it.

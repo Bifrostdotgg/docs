@@ -1,0 +1,30 @@
+---
+title: "Auto Reactions"
+description: "Reacting automatically to every message in chosen channels."
+icon: "thumbs-up"
+---
+
+Pick a channel and a set of emoji, and the bot reacts to every message posted there. The common use is Reddit-style voting in a suggestions or showcase channel, where members should be able to vote without anyone adding the reactions first.
+
+## Setting it up
+
+Navigate to **Auto Reactions** in the dashboard, add a channel, and choose the emoji.
+
+Order matters. The bot reacts in the order you list them, and reactions cannot be reordered afterwards on Discord's side, so an upvote you want on the left has to be first in the list.
+
+## Which emoji you can use
+
+Your server's own custom emoji and standard Unicode emoji both work.
+
+**Heimdall's own emoji cannot be used here.** They belong to the bot's application rather than your server, and Discord does not allow those as reactions at all. The picker on this page simply does not offer them, and if an older rule contains one it is flagged so you can see why that reaction never appears.
+
+An emoji that has since been deleted from your server is flagged the same way, because a stale emoji and one of the wrong kind look identical from the ID alone and need different fixes.
+
+## Required permissions
+
+| Action | Permission key |
+| --- | --- |
+| Viewing settings | `auto-reactions.view_config` |
+| Changing channels and emoji | `auto-reactions.manage_config` |
+
+Auto reactions are fully automatic, so members need no permission. The bot needs **Add Reactions** and **Read Message History** in each configured channel.

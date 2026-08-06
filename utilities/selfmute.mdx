@@ -1,0 +1,38 @@
+---
+title: "Focus Mode"
+description: "Letting members lock themselves out of the server for a while."
+icon: "lock"
+---
+
+Focus mode is self-service. A member runs `/selfmute start` with a duration, and the bot strips their roles and isolates them to a single focus channel until it expires. It is for people who want to revise, work, or sleep and know they will not manage it otherwise.
+
+Nobody else can put a member into focus mode, and it is not a moderation tool. Muting somebody is a moderation action with an infraction record behind it. This is a member choosing, and the two should not be confused.
+
+## How it works
+
+`/selfmute start` takes a duration. Their roles are removed and stored, and they are given access to a focus channel and nothing else. When the timer runs out the bot restores exactly the roles it took.
+
+The focus channel carries a panel with an opt-out button. Whether that button works is up to you.
+
+## The one decision to make
+
+Navigate to **Focus Mode** in the dashboard and decide whether members may end it early.
+
+Allowing early exit makes it a gentle reminder. Refusing it makes it a genuine commitment, which is what some people are asking for. There is no correct answer, but do pick deliberately: a member who expected a commitment and found an escape hatch, or expected an escape hatch and found none, will come to staff either way.
+
+`/selfmute cancel` ends it early where that is permitted.
+
+## Worth knowing
+
+- Roles are restored from what was stored, so a role granted to them while they were in focus mode is not lost.
+- If the bot cannot manage one of their roles, because it sits above the bot in the hierarchy, that role cannot be removed. Keep the bot's role high enough or expect focus mode to be partial for your staff.
+- A member who leaves and rejoins while in focus mode comes back with no roles, since Discord does not preserve roles across a leave. Their stored roles are still restored when the timer expires.
+
+## Required permissions
+
+| Action | Permission key |
+| --- | --- |
+| Viewing settings | `selfmute.config.view_config` |
+| Changing settings | `selfmute.config.manage_config` |
+
+Starting focus mode needs no permission, since a member is only ever acting on themselves.

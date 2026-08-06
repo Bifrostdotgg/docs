@@ -1,0 +1,40 @@
+---
+title: "Honeypot"
+description: "Catching spam bots by punishing anyone who posts in a channel nobody should post in."
+icon: "bug"
+---
+
+A honeypot is a channel that no real member would ever post in. Anyone who does is almost certainly a bot that joined and started posting without reading anything, so the bot acts on them immediately.
+
+It works because spam bots do not read channel names, topics, or pinned messages before posting. A human sees a channel called "do-not-post-here" with a pinned warning and moves on.
+
+## Setting it up
+
+`/honeypot add` designates a channel, and `/honeypot remove` takes one back out. `/honeypot status` shows the current setup and `/honeypot toggle` turns enforcement on and off without losing your channel list.
+
+`/honeypot action` chooses what happens to somebody who posts:
+
+| Action | When to use it |
+| --- | --- |
+| **Ban** | The strongest option, for a channel that is unmistakably a trap |
+| **Kick** | Lets a genuine mistake rejoin |
+| **Mute** | Buys staff time to look before deciding |
+
+Everything is configurable from the **Honeypot** page in the dashboard as well.
+
+## Making it work well
+
+- **Make the channel obviously off limits to a person.** A clear name, a topic, and a pinned message. The point is that humans are warned and bots are not.
+- **Put it somewhere a bot will find it.** A channel buried where new members cannot see it catches nothing.
+- **Consider mute first.** Ban is the most effective and the least forgiving. Starting with mute lets you see what the trap actually catches in your server before you make it permanent.
+
+Actions run through the same moderation pipeline as manual ones, so they appear in your infraction history and moderation log with the honeypot named as the source.
+
+## Required permissions
+
+| Action | Permission key |
+| --- | --- |
+| Viewing settings | `honeypot.view_config` |
+| Changing channels and the action | `honeypot.manage_config` |
+
+The bot needs permission to carry out whichever action you choose, and its role has to sit above the members it is expected to act on.

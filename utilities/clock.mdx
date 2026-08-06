@@ -1,0 +1,30 @@
+---
+title: "Clock Channels"
+description: "Turning a channel name into a live clock for a chosen timezone."
+icon: "clock"
+---
+
+A clock channel is a voice or text channel whose name shows the current time somewhere. Servers with members spread across timezones use them so nobody has to work out what time it is for the staff team, or when an event actually starts.
+
+## Setting one up
+
+`/clock setup` takes a channel and a timezone. `/clock list` shows the ones you have and `/clock remove` deletes one.
+
+The bot renames the channel on a poller. Members do not need any permission, and nobody can interact with it: a locked voice channel that nobody can join works well, since the name is the whole point.
+
+## Worth knowing before you add several
+
+**Discord rate limits channel renames aggressively**, at two renames per ten minutes per channel. A clock therefore cannot tick every minute. It updates as often as the limit allows, which means the displayed time can sit a few minutes behind.
+
+That is a Discord limit rather than a Heimdall one, and it applies to every bot that offers this. It is worth knowing because a clock showing 14:58 when it is 15:01 looks broken and is not.
+
+For the same reason, prefer one clock per timezone you actually need. Six clock channels do not cost six times the rename budget, because the limit is per channel, but they do make a stale-looking name six times more likely to be noticed.
+
+## Required permissions
+
+| Action | Permission key |
+| --- | --- |
+| Viewing settings | `clock.config.view_config` |
+| Adding and removing clocks | `clock.config.manage_config` |
+
+The bot needs **Manage Channels** on each clock channel to rename it.

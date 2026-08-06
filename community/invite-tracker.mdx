@@ -1,0 +1,88 @@
+---
+title: "Invite Tracker"
+description: "Recording which invite each member joined with and how many people each member has brought in."
+icon: "user-plus"
+---
+
+The invite tracker records which invite each new member used, credits the person who created it, and keeps a running total per member. It also adds placeholders you can use in your welcome message.
+
+## Before you start
+
+Invite tracking needs the **Manage Server** permission. Discord only shows invite use counts to bots that have it, and those counts are the only way to tell which invite somebody joined with. Without it the feature switches itself off rather than recording partial data, and the dashboard shows a button that walks you through granting it.
+
+If you would rather not give the bot Manage Server, leave invite tracking off. Nothing else is affected.
+
+Tracking also only counts joins from the moment you enable it. Discord does not say who used an invite in the past, so a link that already has 40 uses cannot have those 40 people credited to anyone. Future joins on that same link are credited normally.
+
+## Setting it up
+
+Navigate to **Invite Tracker** in the dashboard and turn on **Track invites**. That also adds `/invites` to your server. Optionally set a **join log channel**, which gets a line for each join saying who invited them.
+
+## How the total is worked out
+
+```
+total = joined - fake - left + bonus
+```
+
+| Part | Meaning |
+| --- | --- |
+| **joined** | People who joined on that member's invites |
+| **fake** | Their Discord account was newer than the age you set, measured at the moment they joined |
+| **left** | They have since left the server |
+| **bonus** | Anything staff added or removed by hand |
+
+Each subtraction is a switch, because other invite bots disagree about them. Turn off **people who leave do not count** if you think nobody should lose credit for who stays.
+
+Two details worth knowing:
+
+- **Fake is judged at join time and never re-judged.** A member who was new when they joined stays counted as fake. Otherwise every total would quietly drift upward as accounts aged, and somebody would eventually be accused of losing invites they never lost.
+- **Rejoins do not count twice** by default. Leaving and rejoining on one invite is the easiest way to inflate a count and needs no second account. The rejoin is still recorded and visible, it just adds nothing.
+
+## Commands
+
+| Command | Who |
+| --- | --- |
+| `/invites view` | Anyone, for their own count |
+| `/invites view member:` | Needs the "check anyone" permission |
+| `/invites leaderboard` | Top ten inviters |
+| `/invites create` | Staff, makes a labelled invite so campaigns can be told apart |
+| `/invites bonus` | Staff, adds or removes invites by hand |
+
+Every reply is private to whoever ran it. A leaderboard does not ping the people on it.
+
+## Welcome message placeholders
+
+Add these to your welcome message:
+
+| Placeholder | Renders as |
+| --- | --- |
+| `{inviter}` | The display name of whoever invited them |
+| `{invitermention}` | A ping for that person |
+| `{inviterinvites}` | How many invites they now have |
+| `{invitecode}` | The invite code used |
+
+If the inviter cannot be worked out, these render "unknown" and the welcome message still sends.
+
+## When the bot cannot tell
+
+This happens, and it is not a fault. Each case is shown in the join log rather than hidden:
+
+| Shown as | Why |
+| --- | --- |
+| Vanity URL, no inviter to credit | They used your `discord.gg/yourserver` link. |
+| Two invites used at once | Two people joined in the same instant. Two codes advanced and nothing says who used which. |
+| Invite could not be identified | Server Discovery, or the bot had just restarted. |
+| Bot, added through OAuth | Bots are added, not invited. |
+
+## Required permissions
+
+| Action | Permission key |
+| --- | --- |
+| Checking your own count | `invites.view_own` (granted to everyone by default) |
+| Checking anyone's count and the leaderboard | `invites.view_others` (granted to everyone by default) |
+| Viewing settings | `invites.config.view_config` |
+| Changing settings | `invites.config.manage_config` |
+| Creating labelled invites | `invites.manage.create_invite` |
+| Adding or removing bonus invites | `invites.manage.manage_bonus` |
+
+Bonus is the only number here a person can invent, so it has its own key and every adjustment records who made it and why.

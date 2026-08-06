@@ -14,7 +14,7 @@ You assign these keys to Discord roles through the dashboard. When a member runs
 
 ## Default access
 
-Some features are available to all members by default. These are typically member-facing features — for example, creating a suggestion, opening a ticket, using the games commands, or requesting a translation. These features have **default allow** enabled and do not require any explicit permission grant.
+Some features are available to all members by default. These are typically member-facing features - for example, creating a suggestion, opening a ticket, using the games commands, or requesting a translation. These features have **default allow** enabled and do not require any explicit permission grant.
 
 Staff-facing and administrative features default to restricted. No member can run a `ban` command, manage automod rules, or access the dashboard moderation section unless their role has been granted the appropriate permission key.
 
@@ -35,7 +35,7 @@ Staff-facing and administrative features default to restricted. No member can ru
     Use the dropdown to select the Discord role (or specific user) you want to configure. All available permission keys appear below, grouped by plugin.
   </Step>
   <Step title="Set overrides">
-    Each permission key has a three-position toggle: **Allow**, **Deny**, or **Default**. Allow grants the permission. Deny removes it even if the system default would otherwise permit access. Default defers to the system-wide setting for that key — most keys default to deny for staff actions and allow for member-facing features.
+    Each permission key has a three-position toggle: **Allow**, **Deny**, or **Default**. Allow grants the permission. Deny removes it even if the system default would otherwise permit access. Default defers to the system-wide setting for that key - most keys default to deny for staff actions and allow for member-facing features.
   </Step>
   <Step title="Save your changes">
     When you are satisfied, click **Save** in the save bar that appears at the bottom of the page. Changes take effect immediately for any member who holds the configured role.
@@ -56,14 +56,14 @@ Each feature's documentation page lists the permission keys it uses. The keys fo
 
 For example:
 
-- `moderation.enforcement.ban` — ability to run `/ban`
+- `moderation.enforcement.ban` - ability to run `/ban`
 - `tickets.operations.manage_tickets` - ability to manage all tickets in the dashboard
-- `modmail.analytics.view_analytics` — ability to view modmail analytics
+- `modmail.analytics.view_analytics` - ability to view modmail analytics
 
 ## Role hierarchy
 
-Heimdall evaluates all of a member's current roles. If any one of their roles has been granted the permission, the member is allowed. There is no role hierarchy within the permission system — it is purely additive. Removing a role removes that source of permissions, but other roles the member holds may still grant access.
+Heimdall evaluates all of a member's current roles. If any one of their roles has been granted the permission, the member is allowed. There is no role hierarchy within the permission system - it is purely additive. Removing a role removes that source of permissions, but other roles the member holds may still grant access.
 
 ## Overriding defaults
 
-If you want to restrict a feature that defaults to allowing all members — for example, you want to limit who can use the `/ask` AI command — you can enable the **Restricted** toggle on that permission key. Once restricted, only roles you explicitly assign will have access.
+If you want to restrict a feature that defaults to allowing all members - for example, you want to limit who can use the `/ask` AI command - you can enable the **Restricted** toggle on that permission key. Once restricted, only roles you explicitly assign will have access.
