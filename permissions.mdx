@@ -8,7 +8,7 @@ Heimdall has its own permission system that is independent of Discord's native r
 
 ## How permissions work
 
-Every feature in Heimdall exposes one or more named permission keys. For example, the moderation plugin exposes keys such as `moderation.ban` and `moderation.warn`. The ticket plugin exposes `tickets.manage` and `tickets.claim`.
+Every feature in Heimdall exposes one or more named permission keys. For example, the moderation plugin exposes keys such as `moderation.enforcement.ban` and `moderation.enforcement.warn`. The ticket plugin exposes `tickets.operations.manage_tickets` and `tickets.operations.claim_tickets`.
 
 You assign these keys to Discord roles through the dashboard. When a member runs a command or accesses a dashboard section, Heimdall checks whether any of their current roles have been granted the matching key. If they have, the action proceeds. If not, the bot responds with a permission denied message.
 
@@ -56,9 +56,9 @@ Each feature's documentation page lists the permission keys it uses. The keys fo
 
 For example:
 
-- `moderation.ban` — ability to run `/ban`
-- `tickets.manage` — ability to manage all tickets in the dashboard
-- `modmail.viewAnalytics` — ability to view modmail analytics
+- `moderation.enforcement.ban` — ability to run `/ban`
+- `tickets.operations.manage_tickets` - ability to manage all tickets in the dashboard
+- `modmail.analytics.view_analytics` — ability to view modmail analytics
 
 ## Role hierarchy
 
