@@ -1,263 +1,1055 @@
 ---
-title: "Command Reference"
-description: "Complete list of every slash command across all Heimdall plugins."
+title: "Command reference"
+description: "Every slash command Heimdall registers, grouped by the feature that owns it."
 icon: "terminal"
 ---
 
-Every slash command available in Heimdall is listed below, grouped by plugin. Commands marked with **Default allow** are available to all members without any permission configuration. All other commands require the matching permission key to be granted to the member's role in the dashboard.
+<Note>
+  This page is generated from the bot source, so it cannot drift out of date. If a command
+  is missing here it does not exist.
+</Note>
 
-## Moderation
+Commands marked **opt in** are only registered in servers that have enabled the feature.
+They are genuinely absent until then rather than hidden, so do not expect to see them
+before switching the feature on.
 
-| Command | Description | Default allow |
-|---|---|---|
-| `/warn <user> <reason>` | Issue a warning infraction | No |
-| `/ban <user> <reason>` | Ban a member or user from the server | No |
-| `/unban <user>` | Remove a ban | No |
-| `/kick <user> <reason>` | Remove a member from the server | No |
-| `/mute <user> <duration> <reason>` | Apply a Discord timeout | No |
-| `/purge count <count>` | Delete the most recent N messages | No |
-| `/purge time <duration>` | Delete messages sent in the last duration | No |
-| `/lock [channel]` | Prevent members from sending in a channel | No |
-| `/unlock [channel]` | Restore sending permissions to a channel | No |
-| `/channelban <user> [channel]` | Ban a member from a specific channel | No |
-| `/infractions <user>` | View a member's infraction history | No |
-| `/setpoints <user> <points>` | Set a member's active infraction point total | No |
-| `/automod` | Manage automod rules | No |
-| `/sticky create` | Create a sticky message in a channel | No |
-| `/sticky delete [channel]` | Remove a sticky message | No |
-| `/appeals config` | Configure the appeals form | No |
+Heimdall registers **64 commands** with **258 subcommands** across
+**35 features**.
 
-## Tickets
+## Affiliate
 
-| Command | Description | Default allow |
-|---|---|---|
-| `/ticket open [category]` | Open a new support ticket | Yes |
-| `/ticket close [reason]` | Close the current ticket | No |
-| `/ticket claim` | Claim the ticket for yourself | No |
-| `/ticket unclaim` | Release your claim | No |
-| `/ticket assign <user>` | Assign to another staff member | No |
-| `/ticket add <user>` | Add a member to the ticket thread | No |
-| `/ticket remove <user>` | Remove a member from the ticket thread | No |
-| `/ticket rename <name>` | Rename the ticket thread | No |
-| `/ticket priority <level>` | Set the ticket priority | No |
-| `/ticket note <content>` | Add a private staff note | No |
-| `/ticket transcript` | Generate a conversation transcript | No |
-| `/ticket-admin` | Manage ticket categories and configuration | No |
+[Feature documentation](/docs/utilities/affiliate)
 
-## Modmail
+### `/affiliate`
 
-| Command | Description | Default allow |
-|---|---|---|
-| `/modmail open <user>` | Open a modmail thread for a member | No |
-| `/modmail close [reason]` | Close the current modmail thread | No |
-| `/modmail ban <user> [reason]` | Prevent a member from sending modmail | No |
-| `/modmail unban <user>` | Remove a modmail ban | No |
-| `/modmail note <content>` | Add a private staff note to the thread | No |
-| `/modmail snippet <name>` | Insert a saved response snippet | No |
-| `/modmail transfer <category>` | Move the thread to another category | No |
+Affiliate program - earn a share of revenue from people you refer
 
-## Suggestions
+| Subcommand |
+| --- |
+| `/affiliate join` |
+| `/affiliate view` |
 
-| Command | Description | Default allow |
-|---|---|---|
-| `/suggest <content>` | Submit a suggestion | Yes |
-| `/suggestion-categories list` | List all suggestion categories | Yes |
-| `/suggestion-categories create <name>` | Create a suggestion category | No |
-| `/suggestion-categories delete <id>` | Delete a suggestion category | No |
-| `/suggestion-categories edit <id>` | Edit a suggestion category | No |
-| `/suggestion-categories move <id>` | Move a category's order | No |
-| `/suggestion-config` | View and manage suggestion settings | No |
+Permission keys:
+
+- `affiliate.use`
+
+## Afk
+
+[Feature documentation](/docs/community/afk)
+
+### `/afk`
+
+Set an AFK note - the bot will tell anyone who mentions you
+
+Permission keys:
+
+- `afk.set_afk`
+
+## Ai
+
+[Feature documentation](/docs/ai/odin)
+
+### `/ask`
+
+Ask the AI assistant a question
+
+Permission keys:
+
+- `ai.config.manage_config`
+- `ai.config.view_config`
+- `ai.context.manage_context`
+- `ai.context.view_context`
+- `ai.knowledgebase.manage_knowledgebase`
+- `ai.knowledgebase.view_knowledgebase`
+- `ai.moderation.submit_feedback`
+- `ai.qa.use_ask`
+
+## Appeals
+
+[Feature documentation](/docs/moderation/appeals)
+
+### `/appeals`
+
+Manage the ban appeal system
+
+| Subcommand |
+| --- |
+| `/appeals link` |
+| `/appeals status` |
+
+Permission keys:
+
+- `appeals.config.manage_config`
+- `appeals.config.view_config`
+- `appeals.forms.manage_forms`
+- `appeals.submissions.manage`
+- `appeals.submissions.view`
 
 ## Applications
 
-| Command | Description | Default allow |
-|---|---|---|
-| `/application list` | List available application forms | Yes |
-| `/application post <form>` | Submit an application | Yes |
+[Feature documentation](/docs/support/applications)
 
-## Welcome
+### `/application`
 
-| Command | Description | Default allow |
-|---|---|---|
-| `/welcome setup` | Configure the welcome message | No |
-| `/welcome view` | Display the current welcome configuration | No |
-| `/welcome test` | Send a test welcome message | No |
-| `/welcome remove` | Disable the welcome message | No |
-| `/welcome variables` | List available template variables | Yes |
+Manage application forms and panel posting
 
-## Role Buttons
+| Subcommand |
+| --- |
+| `/application list` |
+| `/application post` |
 
-| Command | Description | Default allow |
-|---|---|---|
-| `/rolebuttons create` | Create a new role button panel | No |
-| `/rolebuttons edit <id>` | Edit an existing panel | No |
-| `/rolebuttons post <id> [channel]` | Post a panel to a channel | No |
-| `/rolebuttons update <id>` | Refresh a posted panel | No |
-| `/rolebuttons delete <id>` | Delete a panel | No |
-| `/rolebuttons list` | List all panels | No |
+Permission keys:
 
-## Tags
-
-| Command | Description | Default allow |
-|---|---|---|
-| `/tag use <name>` | Post a tag's content to the channel | Yes |
-| `/tag create <name>` | Create a new tag | No |
-| `/tag edit <name>` | Edit a tag | No |
-| `/tag delete <name>` | Delete a tag | No |
-| `/tag list` | List all tags | Yes |
-| `/post send <name> [channel]` | Send a post to a specific channel | No |
-| `/post list` | List all posts | Yes |
-
-## Reminders
-
-| Command | Description | Default allow |
-|---|---|---|
-| `/reminder` | Open the reminder creation panel | Yes |
-| `/reminders` | View and manage your reminders | Yes |
-
-## Temporary Voice Channels
-
-| Command | Description | Default allow |
-|---|---|---|
-| `/tempvc create` | Manually create a temporary voice channel | Yes |
-| `/tempvc delete` | Delete your current temporary channel | Yes |
-| `/tempvc delete-all` | Delete all temporary channels you own | Yes |
-
-## Voice Transcription
-
-| Command | Description | Default allow |
-|---|---|---|
-| `/voice-transcription set <channel>` | Enable transcription for a channel | No |
-| `/voice-transcription status` | View which channels have transcription enabled | No |
-
-## Translation
-
-| Command | Description | Default allow |
-|---|---|---|
-| `/translate message <message_id> <language>` | Translate a specific message | Yes |
-| `/translate language <language>` | Look up a language's DeepL identifier | Yes |
-| `/translate channel <channel>` | Configure auto-translate for a channel | No |
-
-## Odin AI
-
-| Command | Description | Default allow |
-|---|---|---|
-| `/ask <question>` | Ask the Odin AI assistant a question | Yes |
-
-## Games - Board Games
-
-| Command | Description | Default allow |
-|---|---|---|
-| `/2048` | Play 2048 | Yes |
-| `/connect4 [opponent]` | Play Connect Four | Yes |
-| `/memory` | Play the memory card matching game | Yes |
-| `/tictactoe [opponent]` | Play Tic-Tac-Toe | Yes |
-| `/battleship [opponent]` | Play Battleship | Yes |
-| `/solitaire` | Play Klondike Solitaire | Yes |
-
-## Games - Casino
-
-| Command | Description | Default allow |
-|---|---|---|
-| `/blackjack <bet>` | Play Blackjack | Yes |
-| `/coinflip <bet> <side>` | Flip a coin | Yes |
-| `/dice <bet> <target>` | Roll two dice | Yes |
-| `/higher-lower <bet>` | Play Higher or Lower | Yes |
-| `/horse-racing <bet> <horse>` | Bet on a horse race | Yes |
-| `/mines <bet> <mine_count>` | Play Mines | Yes |
-| `/roulette <bet> <type>` | Play Roulette | Yes |
-
-## Games - Other
-
-| Command | Description | Default allow |
-|---|---|---|
-| `/trivia` | Play a trivia game | Yes |
-| `/wordle` | Play Wordle | Yes |
-| `/rps [opponent]` | Play Rock-Paper-Scissors | Yes |
-| `/emojify <text>` | Convert text to emoji letters | Yes |
-| `/poke <user>` | Poke another member | Yes |
-
-## Economy
-
-| Command | Description | Default allow |
-|---|---|---|
-| `/balance [user]` | Check a member's coin balance | Yes |
-| `/dailycoins` | Claim your daily coin reward | Yes |
-| `/tip <user> <amount>` | Send coins to another member | Yes |
-| `/leaderboard` | View the server coin leaderboard | Yes |
-| `/claim` | Claim a reward from a configured claim event | Yes |
-
-## Minecraft
-
-| Command | Description | Default allow |
-|---|---|---|
-| `/link-minecraft <username>` | Link your Minecraft account | Yes |
-| `/confirm-code <code>` | Confirm a Minecraft account link | Yes |
-| `/mcstatus [server]` | Check the server's live status | Yes |
-| `/minecraft-status` | View detailed server status | No |
-| `/minecraft-setup` | Configure the Minecraft integration | No |
-| `/import-whitelist` | Import an existing Minecraft whitelist | No |
-
-## PlanetSide 2
-
-| Command | Description | Default allow |
-|---|---|---|
-| `/ps2-link <character>` | Link your PlanetSide 2 character | Yes |
-| `/ps2-info` | View your linked character's profile | Yes |
-| `/ps2-lookup <character>` | Look up any character | Yes |
-| `/ps2-outfit [tag]` | View outfit information | Yes |
-| `/ps2-population [server]` | View live server population | Yes |
-| `/ps2-promote <member> <rank>` | Promote an outfit member | No |
-| `/ps2-setup` | Configure the PlanetSide 2 integration | No |
-
-## Tebex
-
-| Command | Description | Default allow |
-|---|---|---|
-| `/tebex transaction lookup <id>` | Look up a transaction | No |
-| `/tebex giftcard create <amount>` | Generate a gift card | No |
-| `/tebex giftcard lookup <code>` | Check a gift card balance | No |
-
-## NamelessMC
-
-| Command | Description | Default allow |
-|---|---|---|
-| `/forumlink` | Link your NamelessMC forum account | Yes |
-
-## Logging
-
-| Command | Description | Default allow |
-|---|---|---|
-| `/logging setup <category> <channel>` | Configure a logging category | No |
-| `/logging disable <category>` | Disable a logging category | No |
+- `applications.manage`
+- `applications.review`
+- `applications.view`
 
 ## Attachment Blocker
 
-| Command | Description | Default allow |
-|---|---|---|
-| `/attachment-blocker setup` | Configure the attachment blocklist | No |
-| `/attachment-blocker channel add <channel>` | Add a channel override | No |
-| `/attachment-blocker channel remove <channel>` | Remove a channel override | No |
+[Feature documentation](/docs/utilities/attachment-blocker)
 
-## Don't @ Me
+### `/attachment-blocker`
 
-| Command | Description | Default allow |
-|---|---|---|
-| `/dontatme add <role>` | Protect a role from being mentioned | No |
-| `/dontatme remove <role>` | Remove protection from a role | No |
+Manage attachment blocking rules for channels
+
+| Subcommand |
+| --- |
+| `/attachment-blocker bypass add` |
+| `/attachment-blocker bypass channel-add` |
+| `/attachment-blocker bypass channel-list` |
+| `/attachment-blocker bypass channel-remove` |
+| `/attachment-blocker bypass list` |
+| `/attachment-blocker bypass remove` |
+| `/attachment-blocker channel add` |
+| `/attachment-blocker channel remove` |
+| `/attachment-blocker disable` |
+| `/attachment-blocker setup` |
+| `/attachment-blocker user list` |
+| `/attachment-blocker user restrict` |
+| `/attachment-blocker user unrestrict` |
+| `/attachment-blocker view` |
+
+### `/attachmentban`
+
+Restrict a user from posting attachments (opens the restriction panel)
+
+### `/attachmentunban`
+
+Lift a user's attachment restriction (opens the restriction panel)
+
+Permission keys:
+
+- `attachment-blocker.manage_config`
+- `attachment-blocker.manage_own_restrictions`
+- `attachment-blocker.manage_restrictions`
+- `attachment-blocker.view_config`
+- `attachment-blocker.view_restrictions`
+
+## Birthdays
+
+[Feature documentation](/docs/community/birthdays)
+
+### `/birthday`
+
+Set or view birthdays
+
+| Subcommand |
+| --- |
+| `/birthday list` |
+| `/birthday remove` |
+| `/birthday set` |
+| `/birthday view` |
+
+Permission keys:
+
+- `birthdays.config.manage_config`
+- `birthdays.config.view_config`
+- `birthdays.entries.manage_entries`
+- `birthdays.entries.view_entries`
+
+## Clock
+
+[Feature documentation](/docs/utilities/clock)
+
+### `/clock`
+
+Manage auto-updating timezone clock channels
+
+| Subcommand |
+| --- |
+| `/clock list` |
+| `/clock remove` |
+| `/clock setup` |
+
+Permission keys:
+
+- `clock.config.manage_config`
+- `clock.config.view_config`
+
+## Confessions
+
+[Feature documentation](/docs/community/confessions)
+
+### `/confess` **opt in**
+
+Post an anonymous confession
+
+Permission keys:
+
+- `confessions.config.manage_config`
+- `confessions.config.view_config`
+- `confessions.log.delete_confession`
+- `confessions.log.view_author`
+- `confessions.log.view_log`
+- `confessions.submit`
 
 ## Customer Portal
 
-| Command | Description | Default allow |
-|---|---|---|
-| `/portal setup` | Open the customer portal | Yes |
-| `/portal close` | Close the portal panel | Yes |
-| `/portal refresh` | Refresh portal data | Yes |
+[Feature documentation](/docs/utilities/customer-portal)
 
-## Status and Info
+### `/portal`
 
-| Command | Description | Default allow |
-|---|---|---|
-| `/ping` | Check bot and API latency | Yes |
-| `/uptime` | Check how long the bot has been running | Yes |
-| `/userinfo [user]` | View Discord user information | Yes |
+Customer portal management
+
+| Subcommand |
+| --- |
+| `/portal close` |
+| `/portal refresh` |
+| `/portal setup` |
+
+Permission keys:
+
+- `customer_portal.config.manage_config`
+- `customer_portal.config.view_config`
+- `customer_portal.portals.manage_portals`
+- `customer_portal.portals.view_portals`
+
+## Dont At Me
+
+[Feature documentation](/docs/utilities/dont-at-me)
+
+### `/dontatme`
+
+Manage Don't @ Me protected roles
+
+| Subcommand |
+| --- |
+| `/dontatme add` |
+| `/dontatme edit` |
+| `/dontatme exempt add` |
+| `/dontatme exempt list` |
+| `/dontatme exempt remove` |
+| `/dontatme list` |
+| `/dontatme remove` |
+| `/dontatme test` |
+| `/dontatme toggle` |
+
+Permission keys:
+
+- `dont-at-me.manage_config`
+- `dont-at-me.view_config`
+
+## Games
+
+[Feature documentation](/docs/games/overview)
+
+### `/economy` **opt in**
+
+Heimdall Coins, levels and achievements
+
+| Subcommand |
+| --- |
+| `/economy achievements grant` |
+| `/economy achievements list` |
+| `/economy achievements revoke` |
+| `/economy balance` |
+| `/economy claim` |
+| `/economy coins give` |
+| `/economy coins remove` |
+| `/economy coins reset` |
+| `/economy coins set` |
+| `/economy dailycoins` |
+| `/economy engagement-admin` |
+| `/economy leaderboard` |
+| `/economy level` |
+| `/economy profile` |
+| `/economy tip` |
+| `/economy vote` |
+
+### `/games` **opt in**
+
+Play a minigame
+
+| Subcommand |
+| --- |
+| `/games 2048` |
+| `/games battleship` |
+| `/games blackjack` |
+| `/games coinflip` |
+| `/games connect4` |
+| `/games dice` |
+| `/games emojify` |
+| `/games higher-lower` |
+| `/games horse-racing` |
+| `/games hub` |
+| `/games memory` |
+| `/games mines` |
+| `/games minesweeper` |
+| `/games poke` |
+| `/games randbetween` |
+| `/games roulette` |
+| `/games rps` |
+| `/games solitaire` |
+| `/games therules` |
+| `/games tictactoe` |
+| `/games trivia` |
+| `/games wordle` |
+
+Permission keys:
+
+- `games.manage`
+- `games.use`
+
+## Giveaways
+
+[Feature documentation](/docs/community/giveaways)
+
+### `/giveaway`
+
+Start, manage, and draw giveaways
+
+| Subcommand |
+| --- |
+| `/giveaway cancel` |
+| `/giveaway create` |
+| `/giveaway end` |
+| `/giveaway entrants` |
+| `/giveaway fix` |
+| `/giveaway fulfillment add` |
+| `/giveaway fulfillment create` |
+| `/giveaway fulfillment delete` |
+| `/giveaway fulfillment list` |
+| `/giveaway fulfillment view` |
+| `/giveaway join` |
+| `/giveaway leave` |
+| `/giveaway list` |
+| `/giveaway partners` |
+| `/giveaway reroll` |
+| `/giveaway share` |
+| `/giveaway start` |
+| `/giveaway template delete` |
+| `/giveaway template list` |
+
+Permission keys:
+
+- `giveaways.config.manage`
+- `giveaways.config.view`
+- `giveaways.create`
+- `giveaways.enter`
+- `giveaways.fulfillment.manage`
+- `giveaways.fulfillment.view`
+- `giveaways.giveaways.manage`
+- `giveaways.giveaways.view`
+- `giveaways.giveaways.view_entrants`
+- `giveaways.series.manage`
+- `giveaways.series.view`
+- `giveaways.sharing.manage`
+- `giveaways.sharing.view`
+- `giveaways.templates.manage`
+- `giveaways.templates.view`
+
+## Goals
+
+[Feature documentation](/docs/community/goals)
+
+### `/goal`
+
+Update a manual goal's progress
+
+| Subcommand |
+| --- |
+| `/goal add` |
+| `/goal set` |
+
+Permission keys:
+
+- `goals.config.manage_config`
+- `goals.config.view_config`
+
+## Honeypot
+
+[Feature documentation](/docs/moderation/honeypot)
+
+### `/honeypot`
+
+Manage honeypot channels that auto-moderate anyone who posts in them
+
+| Subcommand |
+| --- |
+| `/honeypot action` |
+| `/honeypot channel add` |
+| `/honeypot channel remove` |
+| `/honeypot status` |
+| `/honeypot toggle` |
+
+Permission keys:
+
+- `honeypot.manage_config`
+- `honeypot.view_config`
+
+## Invite Tracker
+
+[Feature documentation](/docs/community/invite-tracker)
+
+### `/invites` **opt in**
+
+See how many people you or someone else has invited
+
+| Subcommand |
+| --- |
+| `/invites bonus` |
+| `/invites create` |
+| `/invites leaderboard` |
+| `/invites view` |
+
+Permission keys:
+
+- `invites.config.manage_config`
+- `invites.config.view_config`
+- `invites.manage.create_invite`
+- `invites.manage.manage_bonus`
+- `invites.view_others`
+- `invites.view_own`
+
+## Logging
+
+[Feature documentation](/docs/utilities/logging)
+
+### `/logging`
+
+Configure logging for your server
+
+| Subcommand |
+| --- |
+| `/logging disable` |
+| `/logging setup` |
+| `/logging toggle` |
+| `/logging view` |
+
+Permission keys:
+
+- `logging.manage_config`
+- `logging.view_config`
+
+## Minecraft
+
+[Feature documentation](/docs/integrations/minecraft)
+
+### `/confirm-code`
+
+Confirm your Minecraft authentication code
+
+### `/import-whitelist`
+
+Import legacy whitelist data from a MongoDB JSON export
+
+### `/link-minecraft`
+
+Manage your Minecraft account linking
+
+### `/mcstatus`
+
+Check the status of a Minecraft server
+
+| Subcommand |
+| --- |
+| `/mcstatus add` |
+| `/mcstatus get` |
+| `/mcstatus list` |
+| `/mcstatus remove` |
+| `/mcstatus send` |
+
+### `/minecraft-setup`
+
+Configure Minecraft account linking for this server
+
+| Subcommand |
+| --- |
+| `/minecraft-setup config` |
+| `/minecraft-setup disable` |
+| `/minecraft-setup enable` |
+| `/minecraft-setup messages` |
+| `/minecraft-setup panel` |
+
+Permission keys:
+
+- `minecraft.bridge.manage_bridge`
+- `minecraft.offenses.manage_offenses`
+- `minecraft.offenses.offend_players`
+- `minecraft.offenses.pardon_infractions`
+- `minecraft.offenses.view_infractions`
+- `minecraft.players.approve_whitelist`
+- `minecraft.players.manage_players`
+- `minecraft.players.use_linking`
+- `minecraft.players.view_players`
+- `minecraft.server.manage_config`
+- `minecraft.server.manage_status`
+- `minecraft.server.use_rcon`
+- `minecraft.server.use_websocket`
+- `minecraft.server.view_console`
+- `minecraft.server.view_status`
+- `minecraft.trace.view_trace`
+
+## Moderation
+
+[Feature documentation](/docs/moderation/overview)
+
+### `/automod`
+
+Manage automod settings
+
+| Subcommand |
+| --- |
+| `/automod disable` |
+| `/automod enable` |
+| `/automod stats` |
+| `/automod view` |
+
+### `/ban`
+
+Ban a member from the server
+
+### `/channelban`
+
+Restrict a user's access to specific channels
+
+### `/infractions`
+
+View a user's infraction history
+
+### `/kick`
+
+Kick a member from the server
+
+### `/lock`
+
+Lock a channel, preventing members from sending messages
+
+### `/mute`
+
+Mute a member for a specified duration
+
+### `/purge`
+
+Bulk delete messages with optional filters
+
+| Subcommand |
+| --- |
+| `/purge count` |
+| `/purge time` |
+
+### `/setpoints`
+
+Set a user's infraction points to a specific value
+
+### `/slowmode`
+
+Set per-user slow mode on channels, optionally for a limited time
+
+### `/sticky`
+
+Manage sticky messages that stay at the bottom of a channel
+
+| Subcommand |
+| --- |
+| `/sticky from-tag` |
+| `/sticky remove` |
+| `/sticky set` |
+| `/sticky view` |
+
+### `/unban`
+
+Unban a user from the server
+
+### `/unlock`
+
+Unlock a locked channel, restoring its previous permissions
+
+### `/unmute`
+
+Remove a member's timeout / mute and cancel any scheduled reapply
+
+### `/warn`
+
+Warn a member and assign infraction points
+
+Permission keys:
+
+- `moderation.config.manage_config`
+- `moderation.config.view_config`
+- `moderation.enforcement.ban`
+- `moderation.enforcement.channel_ban`
+- `moderation.enforcement.kick`
+- `moderation.enforcement.lock_channels`
+- `moderation.enforcement.manage_auto_responses`
+- `moderation.enforcement.manage_infractions`
+- `moderation.enforcement.manage_presets`
+- `moderation.enforcement.manage_rules`
+- `moderation.enforcement.manage_slowmode`
+- `moderation.enforcement.manage_sticky`
+- `moderation.enforcement.mute`
+- `moderation.enforcement.purge`
+- `moderation.enforcement.warn`
+
+## Modmail
+
+[Feature documentation](/docs/support/modmail)
+
+### `/modmail`
+
+Modmail system management
+
+| Subcommand |
+| --- |
+| `/modmail ban` |
+| `/modmail close` |
+| `/modmail config` |
+| `/modmail migrate` |
+| `/modmail open` |
+| `/modmail resolve` |
+| `/modmail toggle-autoclose` |
+| `/modmail unban` |
+
+Permission keys:
+
+- `modmail.analytics.view_analytics`
+- `modmail.conversations.manage_conversations`
+- `modmail.conversations.view_conversations`
+- `modmail.management.manage_config`
+- `modmail.management.manage_reviews`
+- `modmail.quotas.manage_quotas`
+
+## Namelessmc
+
+[Feature documentation](/docs/integrations/namelessmc)
+
+### `/forumlink`
+
+Connect your Discord account to NamelessMC
+
+Permission keys:
+
+- `namelessmc.use`
+
+## Ping
+
+[Feature documentation](/docs/utilities/ping)
+
+### `/ping`
+
+Check the bot latency
+
+### `/uptime`
+
+Get the bot's uptime since last restart
+
+### `/userinfo`
+
+Get information about a user
+
+Permission keys:
+
+- `ping.use`
+
+## Planetside
+
+[Feature documentation](/docs/integrations/planetside)
+
+### `/ps2` **opt in**
+
+PlanetSide 2 characters, outfits and population
+
+| Subcommand |
+| --- |
+| `/ps2 info` |
+| `/ps2 link` |
+| `/ps2 lookup add` |
+| `/ps2 lookup view` |
+| `/ps2 lookup yeet` |
+| `/ps2 outfit` |
+| `/ps2 population` |
+| `/ps2 promote` |
+| `/ps2 setup channels` |
+| `/ps2 setup config` |
+| `/ps2 setup disable` |
+| `/ps2 setup enable` |
+| `/ps2 setup outfit` |
+| `/ps2 setup panel` |
+| `/ps2 setup roles` |
+
+Permission keys:
+
+- `planetside.config.manage_config`
+- `planetside.config.view_config`
+- `planetside.monitoring.view_census_status`
+- `planetside.monitoring.view_population`
+- `planetside.players.manage_players`
+- `planetside.players.view_players`
+- `planetside.use`
+
+## Polls
+
+[Feature documentation](/docs/community/polls)
+
+### `/poll`
+
+Create, manage, and view polls
+
+| Subcommand |
+| --- |
+| `/poll close` |
+| `/poll create` |
+| `/poll from-template` |
+| `/poll list` |
+
+Permission keys:
+
+- `polls.create_poll`
+- `polls.polls.manage`
+- `polls.polls.view_polls`
+- `polls.polls.view_voters`
+- `polls.templates.manage_templates`
+- `polls.templates.view_templates`
+- `polls.vote`
+
+## Reminders
+
+[Feature documentation](/docs/community/reminders)
+
+### `/reminder`
+
+Set a personal reminder with an interactive setup panel
+
+### `/reminders`
+
+View and manage your reminders
+
+Permission keys:
+
+- `reminders.manage_reminders`
+- `reminders.send_public_reminders`
+- `reminders.view_reminders`
+
+## Rolebuttons
+
+[Feature documentation](/docs/community/role-buttons)
+
+### `/rolebuttons`
+
+Create and manage reusable self-role button panels
+
+| Subcommand |
+| --- |
+| `/rolebuttons create` |
+| `/rolebuttons delete` |
+| `/rolebuttons edit` |
+| `/rolebuttons list` |
+| `/rolebuttons post` |
+| `/rolebuttons update` |
+
+Permission keys:
+
+- `rolebuttons.manage`
+- `rolebuttons.view`
+
+## Selfmute
+
+[Feature documentation](/docs/utilities/selfmute)
+
+### `/selfmute`
+
+Mute yourself to focus and avoid distractions
+
+| Subcommand |
+| --- |
+| `/selfmute cancel` |
+| `/selfmute start` |
+
+Permission keys:
+
+- `selfmute.config.manage_config`
+- `selfmute.config.view_config`
+
+## Suggestions
+
+[Feature documentation](/docs/community/suggestions)
+
+### `/suggest`
+
+Submit a suggestion for the server
+
+### `/suggestion-categories`
+
+Manage suggestion categories
+
+| Subcommand |
+| --- |
+| `/suggestion-categories add` |
+| `/suggestion-categories edit` |
+| `/suggestion-categories list` |
+| `/suggestion-categories remove` |
+| `/suggestion-categories reorder` |
+| `/suggestion-categories toggle` |
+
+### `/suggestion-config`
+
+Configure the suggestion system
+
+| Subcommand |
+| --- |
+| `/suggestion-config add-channel` |
+| `/suggestion-config create-opener` |
+| `/suggestion-config list-channels` |
+| `/suggestion-config remove-channel` |
+| `/suggestion-config remove-opener` |
+| `/suggestion-config set-limits` |
+| `/suggestion-config view-config` |
+
+Permission keys:
+
+- `suggestions.config.manage_categories`
+- `suggestions.config.manage_config`
+- `suggestions.create_suggestion`
+- `suggestions.items.manage_suggestions`
+- `suggestions.items.view_suggestions`
+- `suggestions.items.view_voters`
+
+## Tags
+
+[Feature documentation](/docs/community/tags)
+
+### `/post`
+
+Send or schedule template-based messages
+
+| Subcommand |
+| --- |
+| `/post list` |
+| `/post send` |
+
+### `/tag`
+
+Create and use custom text tags
+
+| Subcommand |
+| --- |
+| `/tag create` |
+| `/tag delete` |
+| `/tag edit` |
+| `/tag list` |
+| `/tag use` |
+
+Permission keys:
+
+- `tags.manage_posts`
+- `tags.manage_tags`
+- `tags.view_tags`
+
+## Tebex
+
+[Feature documentation](/docs/integrations/tebex)
+
+### `/tebex`
+
+Tebex store integration
+
+| Subcommand |
+| --- |
+| `/tebex ban create` |
+| `/tebex ban list` |
+| `/tebex checkout` |
+| `/tebex claim` |
+| `/tebex config` |
+| `/tebex coupon` |
+| `/tebex giftcard create` |
+| `/tebex giftcard list` |
+| `/tebex giftcard lookup` |
+| `/tebex giftcard topup` |
+| `/tebex giftcard void` |
+| `/tebex goals` |
+| `/tebex info` |
+| `/tebex lookup` |
+| `/tebex map add` |
+| `/tebex map list` |
+| `/tebex map remove` |
+| `/tebex payments` |
+| `/tebex sales` |
+| `/tebex transaction apply` |
+| `/tebex transaction lookup` |
+
+Permission keys:
+
+- `tebex.config.manage_config`
+- `tebex.config.manage_role_maps`
+- `tebex.config.view_config`
+- `tebex.store.manage_claims`
+- `tebex.store.manage_store`
+- `tebex.store.view_store`
+- `tebex.store.view_transactions`
+
+## Tempvc
+
+[Feature documentation](/docs/voice/temp-channels)
+
+### `/tempvc`
+
+Setup and manage temporary voice channels
+
+| Subcommand |
+| --- |
+| `/tempvc ban` |
+| `/tempvc create` |
+| `/tempvc delete` |
+| `/tempvc delete-all` |
+| `/tempvc invite` |
+| `/tempvc limit` |
+| `/tempvc lock` |
+| `/tempvc rename` |
+| `/tempvc unlock` |
+
+Permission keys:
+
+- `tempvc.manage_channels`
+- `tempvc.manage_config`
+- `tempvc.view_config`
+
+## Tickets
+
+[Feature documentation](/docs/support/tickets)
+
+### `/ticket`
+
+Manage support tickets
+
+| Subcommand |
+| --- |
+| `/ticket adduser` |
+| `/ticket ban` |
+| `/ticket claim` |
+| `/ticket close` |
+| `/ticket escalate` |
+| `/ticket keepopen` |
+| `/ticket list` |
+| `/ticket move` |
+| `/ticket open` |
+| `/ticket priority` |
+| `/ticket rename` |
+| `/ticket resolve` |
+| `/ticket toggle-autoclose` |
+| `/ticket transcript` |
+| `/ticket unban` |
+| `/ticket unclaim` |
+
+### `/ticket-admin`
+
+Manage ticket system configuration
+
+| Subcommand |
+| --- |
+| `/ticket-admin category create` |
+| `/ticket-admin category delete` |
+| `/ticket-admin category edit` |
+| `/ticket-admin category list` |
+| `/ticket-admin category preview` |
+| `/ticket-admin category questions` |
+| `/ticket-admin opener create` |
+| `/ticket-admin opener delete` |
+| `/ticket-admin opener edit` |
+| `/ticket-admin opener list` |
+| `/ticket-admin opener post` |
+
+Permission keys:
+
+- `tickets.analytics.export_data`
+- `tickets.analytics.view_analytics`
+- `tickets.analytics.view_own_analytics`
+- `tickets.analytics.view_staff_performance`
+- `tickets.config.manage_categories`
+- `tickets.config.manage_config`
+- `tickets.config.manage_openers`
+- `tickets.operations.claim_tickets`
+- `tickets.operations.manage_reviews`
+- `tickets.operations.manage_tickets`
+- `tickets.operations.view_tickets`
+- `tickets.quotas.manage_quotas`
+
+## Translate
+
+[Feature documentation](/docs/ai/translate)
+
+### `/translate` **opt in**
+
+Translate messages and manage your translation preferences
+
+| Subcommand |
+| --- |
+| `/translate channel` |
+| `/translate language` |
+| `/translate message` |
+
+Permission keys:
+
+- `translate.manage_config`
+- `translate.use`
+- `translate.view_config`
+
+## Vc Transcription
+
+[Feature documentation](/docs/voice/transcription)
+
+### `/voice-transcription`
+
+Configure voice message transcription settings
+
+| Subcommand |
+| --- |
+| `/voice-transcription set` |
+| `/voice-transcription status` |
+
+Permission keys:
+
+- `vc-transcription.manage_config`
+- `vc-transcription.view_config`
+
+## Welcome
+
+[Feature documentation](/docs/community/welcome)
+
+### `/autorole`
+
+Automatically assign roles to members when they join
+
+| Subcommand |
+| --- |
+| `/autorole add` |
+| `/autorole bots` |
+| `/autorole enabled` |
+| `/autorole list` |
+| `/autorole remove` |
+
+### `/welcome`
+
+Setup and manage welcome messages for new members
+
+| Subcommand |
+| --- |
+| `/welcome remove` |
+| `/welcome setup` |
+| `/welcome test` |
+| `/welcome variables` |
+| `/welcome view` |
+
+Permission keys:
+
+- `welcome.manage_config`
+- `welcome.view_config`
