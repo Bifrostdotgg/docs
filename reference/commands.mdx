@@ -13,7 +13,7 @@ Commands marked **opt in** are only registered in servers that have enabled the 
 They are genuinely absent until then rather than hidden, so do not expect to see them
 before switching the feature on.
 
-Heimdall registers **64 commands** with **258 subcommands** across
+Heimdall registers **65 commands** with **266 subcommands** across
 **35 features**.
 
 ## Affiliate
@@ -474,17 +474,32 @@ Import legacy whitelist data from a MongoDB JSON export
 
 Manage your Minecraft account linking
 
-### `/mcstatus`
+### `/mc-punish` **opt in**
 
-Check the status of a Minecraft server
+Issue, revoke, or look up native Minecraft punishments
 
 | Subcommand |
 | --- |
-| `/mcstatus add` |
+| `/mc-punish ban` |
+| `/mc-punish history` |
+| `/mc-punish ipban` |
+| `/mc-punish kick` |
+| `/mc-punish mute` |
+| `/mc-punish unban` |
+| `/mc-punish unmute` |
+| `/mc-punish warn` |
+
+### `/mcstatus`
+
+Check the status of a claimed Minecraft server
+
+| Subcommand |
+| --- |
 | `/mcstatus get` |
 | `/mcstatus list` |
-| `/mcstatus remove` |
 | `/mcstatus send` |
+| `/mcstatus stop` |
+| `/mcstatus watch` |
 
 ### `/minecraft-setup`
 
@@ -510,6 +525,10 @@ Permission keys, which must be copied exactly
 - `minecraft.players.manage_players` (Manage Players)
 - `minecraft.players.use_linking` (Link Minecraft Account)
 - `minecraft.players.view_players` (View Players)
+- `minecraft.punishments.issue` (Issue punishments)
+- `minecraft.punishments.manage` (Manage punishment settings)
+- `minecraft.punishments.revoke` (Revoke punishments)
+- `minecraft.punishments.view` (View punishments)
 - `minecraft.server.manage_config` (Manage Configuration)
 - `minecraft.server.manage_status` (Manage Status)
 - `minecraft.server.use_rcon` (Use RCON)
