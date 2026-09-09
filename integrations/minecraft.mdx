@@ -128,9 +128,10 @@ In-game permission nodes are `heimdall.punishments.<action>`, one per action: ba
 - **Mode** - the offenses-only / hook / replace switch above.
 - **Screens** - the MiniMessage text a player sees on ban, mute, kick and warn, with `{reason}`, `{player}`, and `{appeal_url}` tokens.
 - **Minecraft appeal form** - pick a Minecraft-specific appeal form to fill in `{appeal_url}` on screens. Use a form separate from the Discord infraction appeal form.
-- **Import** - triggers the LiteBans / AdvancedBan / BanManager / vanilla import described above.
-- **Public bans page** - publish toggle, required Discord roles, and reason/staff-name hide toggles. See below.
-- **Browser** - a filterable list of punishments (by type, status, target, issuer and source) with inline revoke.
+- **Import existing punishments** - one button asks the connected server to run its LiteBans, AdvancedBan, BanManager and vanilla `banned-players.json` importers in a single pass, skipping whichever it does not find. IP addresses are hashed on that server before anything reaches Heimdall. Imported rows are written straight into the punishment store: importing itself never immediately pushes an enforcement update, so it does not kick a player who happens to be online and never overrides a punishment that is already active for the same target, but a row that is imported still active and unexpired is picked up by the normal sync afterward like anything else.
+- **Public bans page** - publish toggle, required Discord roles, show-expired toggle, and reason/staff-name hide toggles. See below.
+- **Enforcement settings** - root command aliases, silent-by-default, and the blocked-command list a mute enforces are guild-level punishment settings saved here, gated by `minecraft.punishments.manage`, not on the general Minecraft configuration page.
+- **Browse punishments** - a filterable, paginated list. Filters are type, status, target (name or UUID), issuer (staff name or Discord ID), and source. Status defaults to Active and can be narrowed to Expired, Revoked, Inactive, or All: a punishment counts as Expired the moment its duration runs out, whether or not a connected server has synced since, Revoked means a person lifted it, and Inactive covers one-shot rows such as a kick or an imported row that arrived already ended. A Load more button pages through further results, and revoking a row here uses the same `minecraft.punishments.revoke` key as `/mc-punish unban` / `unmute`.
 - **Issue** - a quick form to ban a player without leaving the dashboard.
 
 ### `/mc-punish`
@@ -150,7 +151,11 @@ In-game permission nodes are `heimdall.punishments.<action>`, one per action: ba
 
 ### Public bans page
 
-Publishing the Punishments tab's public bans page gives you a URL at `/<nanoId>` on your bans site host, a random id for the server rather than its Discord id. Set the page to public, or gate it behind one or more required Discord roles - if it is not public, or roles are set, a visitor signs in with Discord to view it.
+Publishing the Punishments tab's public bans page gives you a URL at `/<nanoId>` on your bans site host, a random id for the server rather than its Discord id. Turning publishing off removes that id and the URL stops resolving; turning it back on mints a fresh id, so the link changes each time you republish.
+
+"Publish a public list" controls whether that URL needs a Discord sign-in at all. On, anyone with the link can view it, no sign-in required. Off, or with one or more required Discord roles set, a visitor signs in with Discord through the main dashboard to view it - the bans site itself never runs its own Discord sign-in - and if roles are set they need at least one of them.
+
+A separate "Show expired punishments" toggle, off by default, decides whether punishments that ran out their own duration are listed, marked Expired. A punishment staff revoked early is never listed, whether or not this toggle is on.
 
 The public page can hide reasons and staff names per your Public bans page settings. It never shows an IP address or a hashed digest, on the public view or the signed-in one.
 
@@ -158,10 +163,10 @@ The public page can hide reasons and staff names per your Public bans page setti
 
 The Minecraft player page (**Minecraft \> Players**, then a player) shows a combined timeline of that player's punishments and offense-ladder infractions.
 
-A "shares an address with" section lists other players who connected from the same address, without ever showing that address. It merges two sources: other players who share a hashed IP on an active IP ban, and a local match the connected proxy or standalone server reports from its own recent-connection history. Both are scoped to your guild's own connected servers.
+A "Shares an address with" card lists other accounts that connected from the same address as this player, without ever showing that address. It needs `minecraft.trace.view_trace`, not the punishments keys, because it exists to surface alt associations. It merges two sources: punishment records whose hashed address digest matches (labelled "From punishment records"), and a live query to the connected servers' own address history (labelled "Seen on your servers"). Only a gatekeeper proxy or a standalone server keeps that address history, so a backend server sitting behind a proxy cannot answer it, and the card names the gap rather than showing an empty list: it can say no proxy or standalone server could be asked, that no server which answered has ever seen this player, or, once both sources have genuinely come back empty, that no other account shares an address with this player. Each source is capped at 50 accounts, noted when a source is truncated. Names shown are whatever a server last saw for that account and can be stale, so every row links by the account's UUID, never by name.
 
 <Note>
-Heimdall never displays an IP address, on the player page, the bans page, or anywhere else in the dashboard. On its own database it stores an HMAC digest of each IP using a per-guild salt it holds, which is enough to match two connections to the same address but is not shown anywhere in the UI. That digest is not a cryptographic privacy boundary against someone with database and salt access, only against what the UI displays.
+Heimdall never displays an IP address, on the player page, the bans page, or anywhere else in the dashboard. On its own database it stores an HMAC digest of each IP using a per-guild salt it holds, which is enough to match two connections to the same address but is not shown anywhere in the UI. That digest is not a cryptographic privacy boundary against someone with database and salt access, only against what the UI displays. A shared address is not proof of a shared owner.
 </Note>
 
 ### If Heimdall is unreachable
