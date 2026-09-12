@@ -1,14 +1,30 @@
 ---
 title: "Minecraft Integration"
-description: "Linking Discord accounts to Minecraft profiles, managing the server whitelist, using RCON, and displaying live server status."
+description: "Linking Discord accounts to Minecraft profiles, managing the server whitelist, punishing players, using RCON, and displaying live server status."
 icon: "server"
 ---
 
-The Minecraft integration connects your Discord server to one or more Minecraft Java Edition servers. It provides account linking (tying a Discord user to their Minecraft username), whitelist management that syncs with Discord roles, RCON access for remote commands, and a live server status display.
+The Minecraft integration connects your Discord server to one or more Minecraft Java Edition servers. It provides account linking (tying a Discord user to their Minecraft username), whitelist management that syncs with Discord roles, RCON access for remote commands, a live server status display, and a native punishment engine for bans, mutes, warns and kicks.
 
 <Frame>
   ![Integrations Minecraft](/images/Integrations_Minecraft.png)
 </Frame>
+
+## Dashboard navigation
+
+The Minecraft feature has seven pages in the dashboard sidebar:
+
+| Page | What is on it |
+| --- | --- |
+| **Networks** | Your servers, who is on them, and what just happened |
+| **Players** | The roster, the join queue, and every player profile |
+| **Rules** | What counts as an offense and how it escalates |
+| **History** | Everything that happened to a player, by time |
+| **Enforcement** | How Heimdall punishes, and what the public sees |
+| **Chat Bridge** | Relay in-game chat into Discord channels, and back |
+| **Settings** | Guild-wide linking, RCON, role sync, alerts and messages |
+
+Older page names still resolve, so nothing you bookmarked breaks. **Configuration** and **Server Status** land on Networks, **Offenses** lands on History, and **Punishments** lands on Enforcement.
 
 ## Account linking
 
@@ -32,11 +48,11 @@ Navigate to **Minecraft \> Players** in the dashboard to view the full whitelist
 
 ### Automatic whitelist sync
 
-Configure which Discord roles entitle a member to be on the whitelist in **Minecraft \> Configuration**. When a member gains or loses the configured role, the bot automatically updates the Minecraft server's whitelist through RCON.
+Configure which Discord roles entitle a member to be on the whitelist in **Minecraft \> Settings**. When a member gains or loses the configured role, the bot automatically updates the Minecraft server's whitelist through RCON.
 
 ### Manual approval
 
-If you prefer manual review before adding members to the whitelist, enable the approval queue in **Minecraft \> Configuration**. Linked accounts enter a pending state and require staff approval before the whitelist entry is created.
+If you prefer manual review before adding members to the whitelist, enable the approval queue in **Minecraft \> Settings**. Linked accounts enter a pending state and require staff approval before the whitelist entry is created.
 
 ```text
 /import-whitelist
@@ -53,17 +69,17 @@ Imports an existing whitelist file from your Minecraft server, linking each user
 
 Displays the live status of your configured Minecraft server - online/offline, current player count, player list, and server version. The information is fetched directly from the Minecraft server protocol and does not require RCON.
 
-The dashboard **Minecraft \> Status** page shows the same information in a continuously updating format.
+The dashboard **Minecraft \> Networks** page shows the same information in a continuously updating format, per server.
 
 ## RCON
 
-RCON lets you run commands on the Minecraft server directly from Discord. Configure the RCON connection in **Minecraft \> Configuration** with your server's RCON host, port, and password.
+RCON lets you run commands on the Minecraft server directly from Discord. Configure the RCON connection in **Minecraft \> Settings** with your server's RCON host, port, and password.
 
-Once configured, administrators can send commands through the dashboard status page or through dedicated bot commands. RCON access is limited to members with the appropriate Heimdall permission.
+Once configured, administrators can send commands through the dashboard server view or through dedicated bot commands. RCON access is limited to members with the appropriate Heimdall permission.
 
 ## Minecraft server setup
 
-Navigate to **Minecraft \> Configuration** in the dashboard and enter:
+Navigate to **Minecraft \> Settings** in the dashboard and enter:
 
 | Setting | Description |
 | --- | --- |
@@ -75,74 +91,300 @@ Navigate to **Minecraft \> Configuration** in the dashboard and enter:
 | **Whitelist roles** | Discord roles that entitle a member to whitelist access |
 | **Require approval** | Whether linked accounts require manual approval |
 
-## Offenses
+Servers running the companion plugin are claimed with a setup code instead, and then appear under **Minecraft \> Networks** with their own health, console and module views.
 
-The Offenses page (**Minecraft \> Offenses**) records Minecraft-level infractions for players linked to your Discord server. An offense is logged whenever a player is banned, kicked, or muted on the Minecraft server while their account is linked to a Discord member.
+## Rules
 
-Staff can:
+**Minecraft \> Rules** is where you define what counts as an offense on your Minecraft server and how repeat offenses escalate. Each rule is an offense type - griefing, chat spam, and so on - with a tier ladder: the first breach might warn, a later one might kick, and a further one might hand off to your ban plugin or to native punishments, depending on your punishment mode under Enforcement.
 
-- **View** the full offense history for any linked player, including the reason and which staff member issued it
-- **Pardon** an offense to unban or unmute the player on the Minecraft server via RCON
-- **Filter** by player name, Discord user, or offense type
+Staff log a breach in game with the offend command, choosing the offense type; Heimdall looks up which tier the player is on and runs the command configured for that tier.
 
-Offenses are separate from Heimdall's Discord infraction system. They represent actions taken on the Minecraft server itself rather than Discord moderation actions.
+## History
 
-## Punishments
+**Minecraft \> History** is one timeline of everything that has happened to a player. The offense log that Rules feeds and the native ban, mute, warn and kick log are merged into a single list ordered by time.
+
+They used to be two places, and the punishment list was a card at the bottom of the settings page, which is not where anyone looks for a ban.
+
+The table shows Kind, Player, Reason, Staff, Length and Status. A punishment that can end on its own is badged **Temporary**; one that cannot reads **Permanent**.
+
+### Filters
+
+Four filters, all of them kept in the URL, so a filtered view can be pasted into a ticket and opened by somebody else.
+
+| Filter | Accepts |
+| --- | --- |
+| **Kind** | All, Offense, Ban, IP ban, Mute, Warn, Kick, Other |
+| **Status** | All, Active, Expired or done, Revoked or pardoned |
+| **Player** | A name or a UUID |
+| **Staff** | A staff name or a Discord ID |
+
+Kind spans both ledgers: an offense whose tier warned the player is a **Warn** here, not only an **Offense**. **Other** covers the types nobody browses for by name (geo, subnet and freeze). Under Status, **Expired or done** groups a punishment that ran out with one that was over the moment it landed, such as a kick; they are labelled Expired and Done in the table, because only one of them ever had an end date.
+
+The list pages with a **Load more** button that appends rows rather than replacing them.
+
+### Acting on a row
+
+**Revoke** lifts a punishment and **Pardon** lifts an infraction. Both ask for an optional reason and store it, which is the only record of why something was lifted. Revoking needs `minecraft.punishments.revoke`; pardoning needs `minecraft.offenses.pardon_infractions`.
+
+### Issue punishment
+
+The **Issue punishment** button in the page header opens a modal:
+
+| Field | Notes |
+| --- | --- |
+| **Type** | Ban, Mute, Warn or Kick |
+| **Player** | A name or a UUID |
+| **Length** | Only for Ban and Mute. Blank means permanent |
+| **Reason** | Free text |
+| **Announcement** | Shown only if you hold `minecraft.punishments.silent` |
+
+<Note>
+History opens for anyone holding any of the offense view keys or any of the punishment keys, but the feed re-checks both families against you and returns only the halves you hold. Someone with `minecraft.offenses.view_infractions` and no punishment key opens History and sees no bans in it.
+</Note>
+
+## Enforcement
 
 {/* UNRELEASED-MARKER: remove this comment and the callout below when native punishments ship in a Heimdall release. Tracking: https://github.com/Bifrostdotgg/Heimdall/pull/1062 */}
 
 <Note>
-Native punishments are not in a released build of Heimdall yet. This section describes what is coming: the punishment modes, the in-game commands, the dashboard tab, and `/mc-punish`. Keep using your current punishment plugin until native punishments ship.
+Native punishments are not in a released build of Heimdall yet. This section describes what is coming: the punishment modes, the in-game commands, the Enforcement page, and `/mc-punish`. The composable screens, the announcement templates, the shared duration grammar and in-game tab completion ship with plugin v3.0.0-rc.11 and the next Heimdall release. Keep using your current punishment plugin until native punishments ship.
 </Note>
 
-Punishments is Heimdall's native ban, IP-ban, mute, warn and kick engine for connected Minecraft servers. It replaces dispatching a console command to a separate banning plugin with Heimdall enforcing directly, and it keeps a single punishment record that the dashboard, `/mc-punish`, and the in-game commands below all read and write.
+**Minecraft \> Enforcement** is how Heimdall punishes and what the public sees. It is Heimdall's native ban, IP-ban, mute, warn and kick engine for connected Minecraft servers. It replaces dispatching a console command to a separate banning plugin with Heimdall enforcing directly, and it keeps a single punishment record that History, `/mc-punish`, and the in-game commands below all read and write.
 
-Every server has three modes, set on **Minecraft \> Punishments**:
+Every server has one of three modes, chosen from three cards on **Minecraft \> Enforcement** - and, for a network that has never had a mode chosen, as a step in the setup wizard:
 
 | Mode | What happens |
 | --- | --- |
-| **Offenses-only** | The default. The in-game offend command still dispatches a console command (usually to LiteBans or another banning plugin) and nothing is enforced natively. Pick this if you do not want Heimdall enforcing punishments at all. |
-| **Hook** | Heimdall mirrors your existing banning plugin's events so staff get history and the dashboard timeline, but that plugin still enforces. The in-game ban command does not natively enforce in this mode. Pick this as the first step of a cutover, so staff can see history before anything changes on the server. |
-| **Replace** | Heimdall is the source of truth. The in-game ban commands, `/mc-punish`, and the offend command all write to Heimdall's own store, and Heimdall enforces network-wide. Pick this once you have imported history and are ready to remove the old banning plugin. |
+| **Offenses only** | The default. Heimdall records offenses and runs the commands on your escalation tiers; your existing ban plugin, if you run one, stays in charge in game and nothing is enforced natively. Pick this if you do not want Heimdall enforcing punishments at all. |
+| **Alongside your ban plugin** | Heimdall issues punishments through your existing plugin and mirrors them here, so the dashboard, appeals and the public bans page see everything. Your plugin stays the source of truth in game. Requires LiteBans on the server. Pick this as the first step of a cutover, so staff can see history before anything changes on the server. |
+| **Heimdall runs bans** | No other ban plugin. Heimdall enforces bans, mutes, warns and kicks itself, with your screens, the public bans page and appeals all from here. Adds `/mc-punish` in Discord, and the in-game punishment commands below. Pick this once you have imported history and are ready to remove the old banning plugin. |
+
+Switching modes takes effect immediately, so the dashboard asks you to confirm first and spells out what changes - which commands appear or disappear, and who enforces punishments afterward. Every punishment already recorded is kept no matter which mode you switch to or from.
+
+### What is on the Enforcement page
+
+- **Mode** - the Offenses only / Alongside your ban plugin / Heimdall runs bans switch above.
+- **Enforcement settings** - root command aliases (one guild-wide toggle, no per-server override), silent-by-default, and the blocked-command list a mute enforces. All guild-level, all saved here, all gated by `minecraft.punishments.manage`.
+- **Screens** - the nine MiniMessage segments a punished player reads, plus the two announcement templates. See [Screens](#screens) below.
+- **Minecraft appeal form** - pick a Minecraft-specific appeal form to fill in `{appeal_url}` on the screens. Use a form separate from the Discord infraction appeal form.
+- **Import existing punishments** - one button asks the connected server to run its LiteBans, AdvancedBan, BanManager and vanilla `banned-players.json` importers in a single pass, skipping whichever it does not find. IP addresses are hashed on that server before anything reaches Heimdall. Imported rows are written straight into the punishment store: importing itself never immediately pushes an enforcement update, so it does not kick a player who happens to be online and never overrides a punishment that is already active for the same target, but a row that is imported still active and unexpired is picked up by the normal sync afterward like anything else.
+- **Public bans page** - publish toggle, visibility level, required Discord roles, and the reason / issuer / expired-punishments display toggles. See below.
+
+The punishment browser and the issue form are no longer here. They moved to [History](#history), which merges them with the offense log. An old `/minecraft/punishments` link still works: it lands on Enforcement, unless it carries one of the old browser's filters, in which case it lands on History with those filters translated.
 
 ### Cutover from LiteBans
 
 If you are running LiteBans today, move over in this order:
 
-1. Switch the mode to **Hook**. Staff see history in the dashboard while LiteBans keeps enforcing.
-2. Run the import from the Punishments tab. The connected plugin reads LiteBans, AdvancedBan, BanManager and vanilla `banned-players.json` in one pass, whichever are present, and hashes IPs on the server before anything is uploaded.
-3. Switch the mode to **Replace**.
+1. Switch to **Alongside your ban plugin**. Staff see history in the dashboard while LiteBans keeps enforcing.
+2. Run the import from the Enforcement page. The connected plugin reads LiteBans, AdvancedBan, BanManager and vanilla `banned-players.json` in one pass, whichever are present, and hashes IPs on the server before anything is uploaded.
+3. Switch to **Heimdall runs bans**.
 4. Remove the `LiteBans.jar` (or whichever plugin you were running).
-5. Optionally turn on root command aliases so the network's own `ban`, `mute` and similar commands register as Heimdall's own commands, rather than only the `hd`-prefixed ones.
+5. Optionally turn on **Register root command aliases**, so the network's own `ban`, `mute` and similar commands register as Heimdall's own commands, rather than only the `hd`-prefixed ones. This is one guild-wide setting - there is no separate per-server toggle - and the aliases are only registered in **Heimdall runs bans** mode.
 
-Servers that never want the native engine can stay on offenses-only indefinitely; that is a supported end state, not a step on the way to replace.
+Servers that never want the native engine can stay on Offenses only indefinitely; that is a supported end state, not a step on the way to Heimdall runs bans.
 
 ### In-game commands
 
 <Note>
-The commands on this page are Minecraft in-game and console commands, run on the connected server, not Discord slash commands. They are not covered by Heimdall's Discord [command reference](/docs/reference/commands).
+The commands in this section are Minecraft in-game and console commands, run on the connected server, not Discord slash commands. They are not covered by Heimdall's Discord [command reference](/docs/reference/commands).
 </Note>
 
-Once punishments mode is hook or replace, the plugin always registers an `hd`-prefixed family on backend servers and an `hdp`-prefixed family on the proxy: ban, ipban, mute, warn, kick, unban, unmute, and history. A per-guild toggle on the Punishments tab additionally registers the bare command names (ban, mute, kick, and so on) as in-game aliases. Leave that toggle off while a banning plugin like LiteBans is still installed, since both plugins would otherwise fight over the same command name; turn it on only after that plugin is removed. These in-game aliases are separate from, and share no code with, Heimdall's own Discord `/ban`, `/mute` and `/kick` moderation commands.
+Once punishments mode is Alongside your ban plugin or Heimdall runs bans, the plugin registers an `hd`-prefixed family on backend servers and an `hdp`-prefixed family on the proxy:
+
+```text
+/hd ban       /hd tempban    /hd ipban
+/hd mute      /hd tempmute   /hd kick      /hd warn
+/hd unban     /hd unmute     /hd unwarn
+/hd history   /hd banlist
+```
+
+Most punishment verbs take the same shape:
+
+```text
+/hd ban <player> [duration] [reason] [-s|-p]
+```
+
+A kick and a warn have no length, so theirs is `<player> [reason]` and nothing else, while `tempban` and `tempmute` require a length. Get a shape wrong and the verb tells you its own, whether you typed the `hd` spelling or a root alias.
+
+**The duration can go anywhere after the player, and so can the flags.** The first whole token that is a duration becomes the length, and everything else in any order is the reason, so these are the same ban:
+
+```text
+/hd ban Steve griefing spawn 7d
+/hd ban Steve 7d griefing spawn
+```
+
+A word with a duration buried in it stays a word: `abc5m` and `1day-old` are reason text, not lengths.
+
+In **Heimdall runs bans** mode, the **Register root command aliases** toggle additionally registers the bare command names (`ban`, `mute`, `kick`, and so on) as in-game aliases. That is one guild-wide setting applying to every connected server, with no per-server override, and both spellings behave identically. Leave it off while a banning plugin like LiteBans is still installed, since both plugins would otherwise fight over the same command name; turn it on only after that plugin is removed. These in-game aliases are separate from, and share no code with, Heimdall's own Discord `/ban`, `/mute` and `/kick` moderation commands.
+
+### Tab completion
+
+Tab completion follows the same rule the parser does, so it never suggests a name into the middle of a reason. Flags are not counted when working out which word is the target, so a name still completes after a `-s`.
+
+| Where you press tab | What is offered |
+| --- | --- |
+| The target position | Player names. Everyone online first, then everyone this server has seen or punished |
+| The target of a revoke verb | Only players who actually have one of those to lift |
+| A word starting with `-` | The `-s` and `-p` flags, and only if you may use them |
+| After the target, on a verb that has a length, before one is typed | A short list of common lengths: 30m, 1h, 6h, 1d, 7d, 30d, perm |
+| Inside the reason | Nothing |
+
+Suggestions are capped at 100. An enforcer backend has no address history of its own, so it completes from online players and the punishment store only.
+
+### Durations
+
+One grammar, shared by the in-game commands, `/mc-punish`, and the dashboard's Issue punishment form, and pinned by a fixture table both the bot and the plugin test against. Lengths are kept in seconds, so `30s` is thirty seconds rather than rounding up to a minute.
+
+| Unit | Spellings |
+| --- | --- |
+| seconds | `s`, `sec`, `secs`, `second`, `seconds` |
+| minutes | `m`, `min`, `mins`, `minute`, `minutes` |
+| hours | `h`, `hr`, `hrs`, `hour`, `hours` |
+| days | `d`, `day`, `days` |
+| weeks | `w`, `week`, `weeks` |
+| months | `mo`, `month`, `months` (30 days) |
+| years | `y`, `year`, `years` (365 days) |
+| permanent | `perm`, `permanent` |
+
+A month is always 30 days and a year always 365, on purpose: a ban has to be the same length whichever calendar month it was issued in.
+
+- **Case-insensitive.** `1D12H` is `1d12h`.
+- **Compound, with no spaces inside a token.** `1d12h`, `2h30m`, `1w2d3h`. Parts are summed, so `1h1h` is two hours. `2 hours` is two words and neither one is a length.
+- **Whole tokens only.** A token is a length or it is not; there is no substring match. This is what lets the in-game parser pick the length out of a free-form command line without eating part of the reason.
+- **Zero is not a length.** `0s` is not a duration, so a stray `0` in a reason cannot quietly issue a zero-second ban.
+- **Ten years is the longest punishment anyone can issue.** Every surface a human types a length into agrees on that, so a typo'd `1000d` is refused wherever it was typed. Use permanent instead. Imports and offense tiers are not typed in and are bounded separately, and in **Alongside your ban plugin** mode a LiteBans ban longer than ten years is mirrored as permanent rather than refused, because the ban is already live over there and nobody is present to be told.
+
+**A warn and a kick have no length.** Only a ban, an IP ban and a mute can be temporary; everything else is a moment rather than a state. A warning is a note on a record that does not expire, and a kick has already happened by the time it is recorded.
+
+In game, those two verbs complete no lengths, and a command that carries one anyway is refused with a message naming the word, rather than having it quietly taken out of the reason. Put the word in the reason or drop it. This catches `perm` too, which is a length token even though it resolves to no length.
+
+Permanent is spelled the same way everywhere: `perm` or `permanent`, or no length at all. In game that means omitting the token, in the dashboard's Issue punishment form it means leaving **Length** blank, and on `/mc-punish` it means omitting the `duration` option. All three accept the word and the blank interchangeably.
+
+### Silent punishments
+
+Every guild has a **Silent by default** toggle on the Enforcement page. A public punishment is announced in chat to everyone on the server; a silent one is announced only to staff holding the in-game permission node `heimdall.punishments.notify`, prefixed `(silent)` so it is obvious which is which.
+
+Staff can depart from the guild default on a single punishment:
+
+- **In game**, adding `-s` (silent) or `-p` (public) to a punishment command needs the in-game node `heimdall.punishments.silent`.
+- **In Discord or the dashboard**, doing the same needs the dashboard permission key `minecraft.punishments.silent` ("Override silent punishments").
+
+Either way, without the permission the flag is refused outright rather than silently dropped - a moderator never believes a punishment went out quietly when it did not. A flag that agrees with the guild default is always allowed, since it changes nothing.
+
+On a proxied network, only the proxy announces punishments in chat - an enforcer backend never does - so it is the proxy's own permission nodes that decide who sees a silent announcement there. An expired punishment is never announced, and neither is one that a newer punishment has replaced.
+
+On Bukkit, `heimdall.punishments.notify` and `heimdall.punishments.silent` are declared as op-default children of `heimdall.admin`, so an admin already holds both. Velocity and BungeeCord have no such descriptor to read, so grant both nodes to your staff ranks through your permission plugin (LuckPerms or similar) before you rely on them there.
 
 In-game permission nodes are `heimdall.punishments.<action>`, one per action: ban, ipban, mute, warn, kick, unban, unmute, history, and dupeip. These do not inherit from `litebans.*` or any other plugin's nodes, so grant them to your staff ranks before you remove the old plugin, not after, or staff lose access the moment it comes out.
 
-### Dashboard Punishments tab
+### Screens
 
-**Minecraft \> Punishments** covers:
+Screens are what a punished player reads. They are [MiniMessage](https://docs.advntr.dev/minimessage/format.html) templates edited on the Enforcement page, not in any file on the server, and they ship with a Bifrost-branded default rather than a blank box.
 
-- **Mode** - the offenses-only / hook / replace switch above.
-- **Screens** - the MiniMessage text a player sees on ban, mute, kick and warn, with `{reason}`, `{player}`, and `{appeal_url}` tokens.
-- **Minecraft appeal form** - pick a Minecraft-specific appeal form to fill in `{appeal_url}` on screens. Use a form separate from the Discord infraction appeal form.
-- **Import existing punishments** - one button asks the connected server to run its LiteBans, AdvancedBan, BanManager and vanilla `banned-players.json` importers in a single pass, skipping whichever it does not find. IP addresses are hashed on that server before anything reaches Heimdall. Imported rows are written straight into the punishment store: importing itself never immediately pushes an enforcement update, so it does not kick a player who happens to be online and never overrides a punishment that is already active for the same target, but a row that is imported still active and unexpired is picked up by the normal sync afterward like anything else.
-- **Public bans page** - publish toggle, required Discord roles, show-expired toggle, and reason/staff-name hide toggles. See below.
-- **Enforcement settings** - root command aliases, silent-by-default, and the blocked-command list a mute enforces are guild-level punishment settings saved here, gated by `minecraft.punishments.manage`, not on the general Minecraft configuration page.
-- **Browse punishments** - a filterable, paginated list. Filters are type, status, target (name or UUID), issuer (staff name or Discord ID), and source. Status defaults to Active and can be narrowed to Expired, Revoked, Inactive, or All: a punishment counts as Expired the moment its duration runs out, whether or not a connected server has synced since, Revoked means a person lifted it, and Inactive covers one-shot rows such as a kick or an imported row that arrived already ended. A Load more button pages through further results, and revoking a row here uses the same `minecraft.punishments.revoke` key as `/mc-punish unban` / `unmute`.
-- **Issue** - a quick form to ban a player without leaving the dashboard.
+There are nine segments:
+
+| Segment | Where it is shown |
+| --- | --- |
+| **Base** | A header block included at the start of each of the six screens below. Not used by the announcements |
+| **Ban screen** | On the disconnect screen when a banned player tries to join |
+| **Ban, permanent variant** | Optional. Replaces the ban screen when the ban never expires |
+| **Mute screen** | In chat when a muted player tries to talk |
+| **Mute, permanent variant** | Optional. Replaces the mute screen when the mute never expires |
+| **Kick screen** | In chat when a player is kicked |
+| **Warn screen** | In chat when a player is warned |
+| **Issue announcement** | The chat line posted when a punishment is issued |
+| **Revoke announcement** | The chat line posted when a punishment is lifted early |
+
+Each segment is capped at 4000 characters.
+
+#### Tokens
+
+Values are escaped before the template is parsed, so a reason cannot inject formatting.
+
+| Token | Is | Valid in |
+| --- | --- | --- |
+| `{base}` | The rendered base segment | The six screens, not the base itself and not the announcements |
+| `{server}` | Your Discord server's name | Every segment |
+| `{player}` | The punished player's username | Every segment |
+| `{staff}` | Who issued it (Console when unattributed) | Every segment |
+| `{id}` | The punishment id, for appeals and lookups | Every segment |
+| `{type}` | Temporary ban, Permanent ban, Temporary mute, Kick, Warning, and so on | Every segment |
+| `{reason}` | The reason, empty when none was given | Every segment |
+| `{duration}` | The original length (`1d`, `3d 4h`), empty when permanent | Every segment |
+| `{remaining}` | Time left (`23h 42m`), empty when permanent | Every segment |
+| `{date_start}` | When it was issued, `yyyy/MM/dd HH:mm` server time | Every segment |
+| `{date_end}` | When it expires, empty when permanent | Every segment |
+| `{appeal_url}` | The appeal form link, empty when no form is chosen | Every segment |
+| `{verb}` | banned, temporarily banned, muted, unbanned, and so on | The two announcements only |
+
+A token used where it means nothing is refused when you save, rather than accepted and rendered as nothing. `{base}` in an announcement and `{verb}` on a ban screen are both rejected with a message naming the tokens that are available there.
+
+#### Optional segments
+
+Text wrapped in `[ ... ]` is dropped whenever any token inside it resolves empty, and a line left blank by that is removed entirely. This is what keeps the defaults short: a permanent ban loses its Length line, a guild with no appeal form loses its Appeal line, and an announcement with no reason loses its "for" clause, without needing a separate template for every combination.
+
+To print a literal bracket, escape it as `\[` or `\]`.
+
+The ID line is wrapped this way too. A punishment issued while the bot was unreachable only has a local id that no appeal can be opened with, so the row disappears for the length of the outage and comes back with the real id once it syncs.
+
+#### Permanent variants
+
+The ban and mute screens each have an optional permanent variant, and both are blank by default. Blank means "reuse the temporary screen", which works because `{type}` already reads "Permanent ban" and the Length line drops itself.
+
+Write one only if a permanent ban wants a different layout, not just different wording. A variant you write **replaces** the temporary screen completely, so start it with `{base}` if you want the header back.
+
+#### Reset to default
+
+Each segment has its own **Reset to default** button, and the permanent variants have **Clear** instead, since blank is their normal state.
+
+Reset does not paste today's default text into your guild's settings; it clears the value, so the segment tracks the shipped default and picks up any future improvement to it. A segment you have written stays exactly as you wrote it.
+
+#### Legacy colour codes are refused
+
+Screens are MiniMessage. A section sign (`§`) is refused when you save, because the plugin hands the template to MiniMessage's parser, which does not know what a section sign is, and the player would get the codes printed at them as tag soup. Use tags instead: `<red>`, `<bold>`, `<gradient:#a:#b>`.
+
+#### Customising the base header
+
+The default base opens with your Discord server's name in the Bifrost gradient. To put your network's own wordmark there instead, edit just that first line and leave the rest:
+
+```text
+<b><red>Example Network</red></b> <gray>Moderation</gray>
+<gradient:#c278b0:#a292dc><st>                                          </st></gradient>
+[<gray>Staff</gray> <dark_gray>»</dark_gray> <yellow>{staff}</yellow>]
+<gray>You</gray> <dark_gray>»</dark_gray> <yellow>{player}</yellow>
+[<gray>ID</gray> <dark_gray>»</dark_gray> <yellow>{id}</yellow>]
+```
+
+Every screen that starts with `{base}` picks the change up, so this is the one place to edit for branding.
+
+<Note>
+Clients older than 1.16 cannot render a hex gradient. Adventure maps each colour to the nearest of the sixteen legacy colours, so the header becomes light purple and the dividers grey. Readable, less pretty, and nothing to configure.
+</Note>
+
+### Announcements
+
+The two announcement templates are the chat lines your server sees when a punishment is issued or lifted. They use the same tokens and the same optional-segment rule as the screens, plus `{verb}`.
+
+```text
+Issue:  {staff} {verb} {player}[ for {reason}][ ({duration})]
+Revoke: {staff} {verb} {player}[ for {reason}]
+```
+
+`{verb}` is chosen by the punishment type and by whether it has an expiry: "banned", "temporarily banned", "muted", "unbanned", and so on. Because the reason and duration clauses are optional segments, a permanent ban with no reason reads "Adam banned Steve" and nothing dangles.
+
+Three things are not configurable here, on purpose:
+
+- **The `(silent)` prefix.** A silent punishment produces the same sentence with `(silent)` in front, shown only to holders of `heimdall.punishments.notify`. It is prepended by the plugin and cannot be removed from a template, because a template that could drop it would be a way to announce a silent punishment loudly. Staff always learn that an action happened; what silence buys is that the server at large does not.
+- **What an announcement never contains.** No address, no digest, no UUID. An IP ban announces as "IP-banned". The line is always a single line: a newline in a reason is folded to a space.
+- **Which types announce at all.** Geo, subnet and freeze name no player, so they produce no line, and neither does a punishment whose target name is not known.
+
+**Clearing a template turns that announcement off.** An empty box is the switch, and it turns the line off for everybody, staff included. That is deliberate: a guild that has said it wants no broadcast has said so about the broadcast, not about who reads it. Silencing the server at large while still telling staff is what `-s` is for, and that is a per-punishment decision. An empty template can only come from you clearing the box, because the bot sends its default whenever the value is unset and the plugin falls back to the same default whenever the bot sends nothing at all.
 
 ### `/mc-punish`
 
-`/mc-punish` is Heimdall's Discord-side surface for punishments. It is only registered in servers where punishments mode is hook or replace, so an offenses-only server pays no command slot for it.
+`/mc-punish` is Heimdall's Discord-side surface for punishments. It is only registered in servers where punishments mode is Alongside your ban plugin or Heimdall runs bans, so an Offenses only server pays no command slot for it. Its `ban`, `ipban`, `mute` and `warn` subcommands each take an optional silent flag, gated the same way as the in-game `-s`/`-p` flags described under Silent punishments above.
 
 | Subcommand | Does | Permission key |
 | --- | --- | --- |
@@ -155,19 +397,28 @@ In-game permission nodes are `heimdall.punishments.<action>`, one per action: ba
 | `/mc-punish unmute` | Revoke an active mute | `minecraft.punishments.revoke` |
 | `/mc-punish history` | Show a player's punishment history | `minecraft.punishments.view` |
 
+The `duration` option appears on `ban`, `ipban` and `mute` only, and takes the [grammar above](#durations). Omit it for a permanent punishment, or say `perm`; both mean the same thing here.
+
 ### Public bans page
 
-Publishing the Punishments tab's public bans page gives you a URL at `/<nanoId>` on your bans site host, a random id for the server rather than its Discord id. Turning publishing off removes that id and the URL stops resolving; turning it back on mints a fresh id, so the link changes each time you republish.
+Publishing the public bans page gives you a URL at `/<nanoId>` on your bans site host, a random id for the server rather than its Discord id. That id is stable: unpublishing just hides the page and the URL stops resolving, but the same link works again the moment you republish. A separate **Reset link** action mints a brand-new id and kills the old one for good - use it if a link has leaked somewhere you do not want it, not for routine unpublish/republish.
 
-"Publish a public list" controls whether that URL needs a Discord sign-in at all. On, anyone with the link can view it, no sign-in required. Off, or with one or more required Discord roles set, a visitor signs in with Discord through the main dashboard to view it - the bans site itself never runs its own Discord sign-in - and if roles are set they need at least one of them.
+Visibility has four levels, each admitting fewer people than the one above it:
 
-A separate "Show expired punishments" toggle, off by default, decides whether punishments that ran out their own duration are listed, marked Expired. A punishment staff revoked early is never listed, whether or not this toggle is on.
+| Visibility | Who can read the page |
+| --- | --- |
+| Anyone with the link | No sign-in required. |
+| Anyone signed in with Discord | Keeps search engines out without restricting who can look. |
+| Members of this Discord server | Visitors sign in with Discord and must be in your server. |
+| Members with one of the chosen roles | The narrowest setting. A visitor needs at least one of the roles you pick. |
 
-The public page can hide reasons and staff names per your Public bans page settings. It never shows an IP address or a hashed digest, on the public view or the signed-in one.
+Three toggles decide what a visitor sees: **Show reasons**, **Show who issued it**, and **Include expired punishments** (marked Expired; a punishment staff revoked early is never listed regardless of this toggle). Player addresses are never shown, on the public page or the signed-in one.
+
+The bans site's sign-in screen matches the dashboard's look, and shows which Discord account is signed in with a control to sign out.
 
 ### Player page and alt list
 
-The Minecraft player page (**Minecraft \> Players**, then a player) shows a combined timeline of that player's punishments and offense-ladder infractions.
+The Minecraft player page (**Minecraft \> Players**, then a player) shows a combined timeline of that player's punishments and offense-ladder infractions, with the length and a temporary or permanent badge on each punishment.
 
 A "Shares an address with" card lists other accounts that connected from the same address as this player, without ever showing that address. It needs `minecraft.trace.view_trace`, not the punishments keys, because it exists to surface alt associations. It merges two sources: punishment records whose hashed address digest matches (labelled "From punishment records"), and a live query to the connected servers' own address history (labelled "Seen on your servers"). Only a gatekeeper proxy or a standalone server keeps that address history, so a backend server sitting behind a proxy cannot answer it, and the card names the gap rather than showing an empty list: it can say no proxy or standalone server could be asked, that no server which answered has ever seen this player, or, once both sources have genuinely come back empty, that no other account shares an address with this player. Each source is capped at 50 accounts, noted when a source is truncated. Names shown are whatever a server last saw for that account and can be stale, so every row links by the account's UUID, never by name.
 
@@ -178,6 +429,8 @@ Heimdall never displays an IP address, on the player page, the bans page, or any
 ### If Heimdall is unreachable
 
 Every connected server, proxy and backend alike, keeps its own local copy of active punishments and checks it directly, so a login or a chat message is never held up waiting on Heimdall. A banned player still cannot join and a muted player still cannot talk during an outage. A ban or mute issued while disconnected applies immediately to that server's own copy and queues to sync once the connection returns; other servers do not see it until then. A ban issued at the proxy still holds the whole network, since every login passes through the proxy, while a mute issued on one backend stays local to that backend until it reconnects.
+
+The screens keep working too, from the last configuration the server received, so a player banned during an outage still reads your wording rather than a blank screen.
 
 ## Required permissions
 
@@ -190,8 +443,13 @@ Every connected server, proxy and backend alike, keeps its own local copy of act
 | Viewing server status | `minecraft.server.view_status` |
 | Using RCON | `minecraft.server.use_rcon` |
 | Viewing offenses | `minecraft.offenses.view_infractions` |
-| Managing and pardoning offenses | `minecraft.offenses.manage_offenses` |
+| Managing offenses | `minecraft.offenses.manage_offenses` |
+| Pardoning an infraction | `minecraft.offenses.pardon_infractions` |
+| Recording an offense and triggering escalation | `minecraft.offenses.offend_players` |
 | Viewing punishments and the public bans page config | `minecraft.punishments.view` |
 | Issuing punishments (ban, mute, warn, kick) | `minecraft.punishments.issue` |
 | Revoking an active punishment | `minecraft.punishments.revoke` |
+| Overriding a silent punishment from Discord or the dashboard | `minecraft.punishments.silent` |
 | Managing punishment mode, aliases, screens and the appeal form | `minecraft.punishments.manage` |
+| Seeing which accounts share an address | `minecraft.trace.view_trace` |
+| Managing the chat bridge | `minecraft.bridge.manage_bridge` |
