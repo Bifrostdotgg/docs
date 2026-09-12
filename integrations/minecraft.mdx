@@ -200,11 +200,13 @@ Once punishments mode is Alongside your ban plugin or Heimdall runs bans, the pl
 /hd history   /hd banlist
 ```
 
-Every punishment verb takes the same shape:
+Most punishment verbs take the same shape:
 
 ```text
 /hd ban <player> [duration] [reason] [-s|-p]
 ```
+
+A kick and a warn have no length, so theirs is `<player> [reason]` and nothing else, while `tempban` and `tempmute` require a length. Get a shape wrong and the verb tells you its own, whether you typed the `hd` spelling or a root alias.
 
 **The duration can go anywhere after the player, and so can the flags.** The first whole token that is a duration becomes the length, and everything else in any order is the reason, so these are the same ban:
 
@@ -226,7 +228,7 @@ Tab completion follows the same rule the parser does, so it never suggests a nam
 | The target position | Player names. Everyone online first, then everyone this server has seen or punished |
 | The target of a revoke verb | Only players who actually have one of those to lift |
 | A word starting with `-` | The `-s` and `-p` flags, and only if you may use them |
-| After the target, before a duration is typed | A short list of common lengths: 30m, 1h, 6h, 1d, 7d, 30d, perm |
+| After the target, on a verb that has a length, before one is typed | A short list of common lengths: 30m, 1h, 6h, 1d, 7d, 30d, perm |
 | Inside the reason | Nothing |
 
 Suggestions are capped at 100. An enforcer backend has no address history of its own, so it completes from online players and the punishment store only.
@@ -256,13 +258,9 @@ A month is always 30 days and a year always 365, on purpose: a ban has to be the
 
 **A warn and a kick have no length.** Only a ban, an IP ban and a mute can be temporary; everything else is a moment rather than a state. A warning is a note on a record that does not expire, and a kick has already happened by the time it is recorded.
 
-How to say "permanent" differs slightly by surface, because each one has a different natural blank:
+In game, those two verbs complete no lengths, and a command that carries one anyway is refused with a message naming the word, rather than having it quietly taken out of the reason. Put the word in the reason or drop it. This catches `perm` too, which is a length token even though it resolves to no length.
 
-| Surface | Permanent is |
-| --- | --- |
-| In game | `perm`, `permanent`, or no duration at all |
-| Dashboard **Issue punishment** | Leaving **Length** blank. Typing `perm` also works |
-| `/mc-punish` | Leaving the `duration` option off. `perm` is refused here, with a message saying so |
+Permanent is spelled the same way everywhere: `perm` or `permanent`, or no length at all. In game that means omitting the token, in the dashboard's Issue punishment form it means leaving **Length** blank, and on `/mc-punish` it means omitting the `duration` option. All three accept the word and the blank interchangeably.
 
 ### Silent punishments
 
@@ -399,7 +397,7 @@ Three things are not configurable here, on purpose:
 | `/mc-punish unmute` | Revoke an active mute | `minecraft.punishments.revoke` |
 | `/mc-punish history` | Show a player's punishment history | `minecraft.punishments.view` |
 
-The `duration` option appears on `ban`, `ipban` and `mute` only, and takes the [grammar above](#durations). Leave it off for a permanent punishment.
+The `duration` option appears on `ban`, `ipban` and `mute` only, and takes the [grammar above](#durations). Omit it for a permanent punishment, or say `perm`; both mean the same thing here.
 
 ### Public bans page
 
