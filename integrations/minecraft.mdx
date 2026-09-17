@@ -89,11 +89,13 @@ The reply is visible only to whoever ran the command, unless they add `public:tr
 
 ### Vanished players
 
-Connected servers running Minecraft plugin `3.0.0-rc.12` or newer report which of their online players are vanished, recognising the `vanished` metadata key set by EssentialsX, SuperVanish, PremiumVanish, CMI and VanishNoPacket. Heimdall hides a vanished player from anyone who does not hold `minecraft.server.view_vanished`, everywhere an online name or a player count is shown: `/playerlist`, `/mcstatus get`, and the dashboard's Online Players panel and status counts.
+Connected servers running Minecraft plugin `3.0.0-rc.12` or newer report which of their online players are vanished, recognising the `vanished` metadata key set by EssentialsX, SuperVanish, PremiumVanish, CMI and VanishNoPacket. Heimdall hides a vanished player's name from anyone who does not hold `minecraft.server.view_vanished`, everywhere a name is shown: `/playerlist`, `/mcstatus get`, and the dashboard's Online Players panel.
+
+Player counts on the dashboard, the Players tile, its sparkline, and the overview, always show the visible count, for everyone, so they stay in step with the live updates. Someone who holds `minecraft.server.view_vanished` additionally sees a "+N vanished" chip beside the Players tile, and a Vanished badge on those rows in the Online Players panel. `/mcstatus get` works differently: a holder still gets the full list there, with `(vanished)` marks, and a count that includes them.
 
 Public surfaces always hide vanished players, no matter who is looking: a watched status card, `/mcstatus send`, and `/playerlist public:true` never show them, even to the person who ran the command. Someone who does hold the permission still sees them in their own private reply, each one marked `(vanished)` so it is clear who their colleagues in the channel cannot see.
 
-A backend running an older plugin build, or no plugin at all, cannot report vanish state, so its vanished players are listed like anyone else. There is nothing to configure for this: it is a limit of what that server can tell Heimdall, not a setting.
+A backend running an older plugin build, or no plugin at all, cannot report vanish state, so its vanished players are listed like anyone else. On a network, if a holder runs `/playerlist` and at least one backend cannot report vanish, a one-line footnote warns that someone hidden may still be listed. There is nothing to configure for this: it is a limit of what that server can tell Heimdall, not a setting.
 
 ## RCON
 
