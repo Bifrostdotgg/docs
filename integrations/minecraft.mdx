@@ -71,6 +71,30 @@ Displays the live status of your configured Minecraft server - online/offline, c
 
 The dashboard **Minecraft \> Networks** page shows the same information in a continuously updating format, per server.
 
+## Player list
+
+{/* UNRELEASED-MARKER: remove this comment and the callout below when /playerlist ships in a Heimdall release. */}
+
+<Note>
+`/playerlist` is not in a released build of Heimdall yet. This section describes what is coming, including the vanished-player visibility rules below.
+</Note>
+
+```text
+/playerlist [public]
+```
+
+`/playerlist` is opt-in and off by default: it registers no command, and costs no command slot, until an admin turns on **Player list command** in **Minecraft \> Settings**. The command itself has no server option. The dashboard fixes what it lists when you turn it on: one claimed server, or, for a guild running more than one network, a whole network, grouped by which server each player is on. Members never pick a target themselves; they only see the one the dashboard was set to.
+
+The reply is visible only to whoever ran the command, unless they add `public:true`, which posts the list in the channel instead. It is a one-shot reply and never updates itself. For a live card that keeps refreshing, use `/mcstatus watch` instead.
+
+### Vanished players
+
+Connected servers running Minecraft plugin `3.0.0-rc.12` or newer report which of their online players are vanished, recognising the `vanished` metadata key set by EssentialsX, SuperVanish, PremiumVanish, CMI and VanishNoPacket. Heimdall hides a vanished player from anyone who does not hold `minecraft.server.view_vanished`, everywhere an online name or a player count is shown: `/playerlist`, `/mcstatus get`, and the dashboard's Online Players panel and status counts.
+
+Public surfaces always hide vanished players, no matter who is looking: a watched status card, `/mcstatus send`, and `/playerlist public:true` never show them, even to the person who ran the command. Someone who does hold the permission still sees them in their own private reply, each one marked `(vanished)` so it is clear who their colleagues in the channel cannot see.
+
+A backend running an older plugin build, or no plugin at all, cannot report vanish state, so its vanished players are listed like anyone else. There is nothing to configure for this: it is a limit of what that server can tell Heimdall, not a setting.
+
 ## RCON
 
 RCON lets you run commands on the Minecraft server directly from Discord. Configure the RCON connection in **Minecraft \> Settings** with your server's RCON host, port, and password.
@@ -442,6 +466,9 @@ The screens keep working too, from the last configuration the server received, s
 | Approving whitelist requests | `minecraft.players.approve_whitelist` |
 | Viewing server status | `minecraft.server.view_status` |
 | Using RCON | `minecraft.server.use_rcon` |
+| Running `/playerlist` | `minecraft.server.use_playerlist` (default allow) |
+| Posting `/playerlist` publicly | `minecraft.server.post_playerlist` |
+| Seeing vanished players in online lists and counts | `minecraft.server.view_vanished` |
 | Viewing offenses | `minecraft.offenses.view_infractions` |
 | Managing offenses | `minecraft.offenses.manage_offenses` |
 | Pardoning an infraction | `minecraft.offenses.pardon_infractions` |
