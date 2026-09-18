@@ -8,6 +8,20 @@
 - Run `mint dev` to preview locally
 - Run `mint broken-links` to check links
 
+## Branches: work against `staging`, never `main`
+
+This repo has two branches with different jobs. **`staging`** is the default branch and the
+one every edit targets, including yours. **`main`** is the live site and only moves through
+the promotion workflow, automatically, when Heimdall ships a release, or by hand from this
+repo's `promote.yml` workflow (Run workflow button) as a fallback. Never open a pull request
+against `main` directly; it will not be reviewed there.
+
+Because of this split, CI checks the two branches against different Heimdall branches:
+`staging` (and pull requests into it) is checked against Heimdall's `main`, and `main` is
+checked against Heimdall's `release`. A page can pass CI on `staging` and still be a step
+ahead of what is actually deployed, that is expected, and is exactly why `main` is checked
+separately before it ever goes live.
+
 ## The split: generated reference, hand-written narrative
 
 **Reference material is generated and must not be hand-edited.** Commands, subcommands and

@@ -2,7 +2,7 @@ name: Docs
 
 on:
   push:
-    branches: [main]
+    branches: [main, staging]
   pull_request:
 
 jobs:
@@ -12,12 +12,26 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # docs `main` is the live site, so it must match what is actually deployed: Heimdall's
+      # `release` branch. docs `staging` (and any PR into it) checks against Heimdall `main`,
+      # the same branch staging tracks, so a page can go stale-checked before it ever reaches
+      # the live site.
+      - name: Pick the Heimdall branch to check against
+        id: heimdall-branch
+        run: |
+          ref="${{ github.base_ref || github.ref_name }}"
+          if [ "$ref" = "main" ]; then
+            echo "branch=release" >> "$GITHUB_OUTPUT"
+          else
+            echo "branch=main" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Fetch Heimdall's feature manifest
         # Generated from the bot source and committed there, so it needs no credentials and is
         # always the shipped truth rather than a copy kept in step by hand.
         run: |
           curl -fsSL \
-            https://raw.githubusercontent.com/Bifrostdotgg/Heimdall/main/docs/generated/heimdall-features.json \
+            https://raw.githubusercontent.com/Bifrostdotgg/Heimdall/${{ steps.heimdall-branch.outputs.branch }}/docs/generated/heimdall-features.json \
             -o heimdall-features.json
           python3 -c "import json;d=json.load(open('heimdall-features.json'));print(f\"manifest: {len(d['plugins'])} features\")"
 

@@ -1,0 +1,46 @@
+# This workflow lives on `staging` because it is `staging` that is this repo's default
+# branch, and GitHub only reads `repository_dispatch`-triggered workflow files from the
+# default branch. Heimdall's `.github/workflows/docs-promote.yml` sends the `heimdall-release`
+# dispatch event whenever Heimdall's `release` branch moves, which is what fires this job.
+name: Promote docs
+
+on:
+  repository_dispatch:
+    types: [heimdall-release]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency: promote-docs
+
+jobs:
+  promote:
+    name: Merge staging into main
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: main
+
+      - name: Configure git user
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Merge staging into main
+        run: |
+          if ! git merge --no-edit origin/staging; then
+            echo "::error::staging and main conflict; resolve by hand and re-run"
+            exit 1
+          fi
+
+      - name: Push main
+        run: git push origin main
+
+      - name: Fast-forward staging onto the merge commit
+        # HEAD is now the merge commit, and origin/staging is one of its ancestors, so pushing
+        # HEAD to the staging ref is a fast-forward. This keeps main and staging from drifting
+        # apart after every promotion.
+        run: git push origin HEAD:staging
