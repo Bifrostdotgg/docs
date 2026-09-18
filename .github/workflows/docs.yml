@@ -62,10 +62,15 @@ jobs:
       - uses: actions/checkout@v4
       - name: Scan every page
         # The same rule the bot repo enforces. Kept here as its own job because this repo has no
-        # build step that could carry it, and prose is exactly where one gets typed.
+        # build step that could carry it, and prose is exactly where one gets typed. Scanning
+        # *.yml now includes this workflow itself, whose pattern variable below literally
+        # contains the strings it's hunting for, so that one line carries an ignore marker and
+        # the scan filters out any hit tagged with it.
         run: |
-          if grep -rInP '\x{2014}|&mdash;|&#8212;|&#x2014;|\\u2014' \
-               --include='*.mdx' --include='*.md' --include='*.json' --include='*.yml' . ; then
+          PATTERN='\x{2014}|&mdash;|&#8212;|&#x2014;|\\u2014'  # em-dash-ignore -- documents the spellings this rule bans
+          if grep -rInP "$PATTERN" \
+               --include='*.mdx' --include='*.md' --include='*.json' --include='*.yml' . \
+               | grep -v 'em-dash-ignore' ; then
             echo "::error::em dash found. Use a plain hyphen."
             exit 1
           fi
