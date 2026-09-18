@@ -4,6 +4,9 @@ on:
   push:
     branches: [main, staging]
   pull_request:
+  # Lets promote.yml trigger this workflow explicitly on `main` after a promotion. A push made
+  # with GITHUB_TOKEN does not fire the `push` trigger above, so that path relies on this instead.
+  workflow_dispatch:
 
 jobs:
   manifest:
@@ -27,8 +30,9 @@ jobs:
           fi
 
       - name: Fetch Heimdall's feature manifest
-        # Generated from the bot source and committed there, so it needs no credentials and is
-        # always the shipped truth rather than a copy kept in step by hand.
+        # Generated from the bot source and committed there, so this always compares against the
+        # shipped truth rather than a copy kept in step by hand. Heimdall is a private repo, so
+        # this unauthenticated fetch currently 404s; that is a known, separate gap, not fixed here.
         run: |
           curl -fsSL \
             https://raw.githubusercontent.com/Bifrostdotgg/Heimdall/${{ steps.heimdall-branch.outputs.branch }}/docs/generated/heimdall-features.json \
@@ -61,7 +65,7 @@ jobs:
         # build step that could carry it, and prose is exactly where one gets typed.
         run: |
           if grep -rInP '\x{2014}|&mdash;|&#8212;|&#x2014;|\\u2014' \
-               --include='*.mdx' --include='*.md' --include='*.json' . ; then
+               --include='*.mdx' --include='*.md' --include='*.json' --include='*.yml' . ; then
             echo "::error::em dash found. Use a plain hyphen."
             exit 1
           fi

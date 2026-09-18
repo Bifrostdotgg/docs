@@ -11,6 +11,7 @@ on:
 
 permissions:
   contents: write
+  actions: write
 
 concurrency: promote-docs
 
@@ -38,6 +39,15 @@ jobs:
 
       - name: Push main
         run: git push origin main
+
+      - name: Trigger the manifest check on main
+        # A push made with the default GITHUB_TOKEN does not fire other workflows' `push`
+        # triggers, so docs.yml's `on.push.branches: [main]` never runs after this push and
+        # main would go unchecked against Heimdall `release`. An explicit workflow_dispatch
+        # call via the API is not subject to that restriction, so trigger it directly instead.
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh workflow run docs.yml --ref main
 
       - name: Fast-forward staging onto the merge commit
         # HEAD is now the merge commit, and origin/staging is one of its ancestors, so pushing
