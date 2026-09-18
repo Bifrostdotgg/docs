@@ -29,13 +29,31 @@ jobs:
             echo "branch=main" >> "$GITHUB_OUTPUT"
           fi
 
+      - name: The Heimdall read token is present
+        # Without it the fetch below 404s, and on a private repo a 404 reads like a missing
+        # file rather than a missing credential. Fail here, where the message can say which.
+        env:
+          HEIMDALL_READ_TOKEN: ${{ secrets.HEIMDALL_READ_TOKEN }}
+        run: |
+          if [ -z "$HEIMDALL_READ_TOKEN" ]; then
+            echo "::error::HEIMDALL_READ_TOKEN secret is missing; create a fine-grained PAT with Contents read on Bifrostdotgg/Heimdall and add it as a repository secret"
+            exit 1
+          fi
+          echo "token present"
+
       - name: Fetch Heimdall's feature manifest
         # Generated from the bot source and committed there, so this always compares against the
         # shipped truth rather than a copy kept in step by hand. Heimdall is a private repo, so
-        # this unauthenticated fetch currently 404s; that is a known, separate gap, not fixed here.
+        # this reads the file through the authenticated contents API: raw.githubusercontent.com
+        # carries no credentials, and every run of the old unauthenticated fetch returned 404.
+        env:
+          HEIMDALL_READ_TOKEN: ${{ secrets.HEIMDALL_READ_TOKEN }}
+          BRANCH: ${{ steps.heimdall-branch.outputs.branch }}
         run: |
           curl -fsSL \
-            https://raw.githubusercontent.com/Bifrostdotgg/Heimdall/${{ steps.heimdall-branch.outputs.branch }}/docs/generated/heimdall-features.json \
+            -H "Authorization: Bearer $HEIMDALL_READ_TOKEN" \
+            -H "Accept: application/vnd.github.raw+json" \
+            "https://api.github.com/repos/Bifrostdotgg/Heimdall/contents/docs/generated/heimdall-features.json?ref=${BRANCH}" \
             -o heimdall-features.json
           python3 -c "import json;d=json.load(open('heimdall-features.json'));print(f\"manifest: {len(d['plugins'])} features\")"
 

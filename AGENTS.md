@@ -99,6 +99,11 @@ page names a permission key or a slash command that no longer exists, and when a
 `docsPath` with no page behind it. It also fails if the two generated pages under `reference/` no
 longer match the manifest, which is what stops a rename from quietly leaving them behind.
 
+Heimdall is a private repo, so that fetch goes through the GitHub contents API using the
+`HEIMDALL_READ_TOKEN` repository secret, a fine-grained PAT with Contents read on
+`Bifrostdotgg/Heimdall`. Without the secret the job fails on its first step and says so, rather
+than 404ing on a file that looks missing.
+
 That closed the last gap in the arrangement described above. Before it, a renamed key failed the
 *bot* build, because the manifest moved, and nothing anywhere failed for the page still describing
 the old one.
