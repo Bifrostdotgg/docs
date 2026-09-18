@@ -1,10 +1,10 @@
 ---
 title: "Attachment Blocker"
-description: "Blocking specific file types and extensions from being uploaded, globally or per channel."
+description: "Controlling which media types members can post, server-wide, per channel, or per member."
 icon: "file-slash"
 ---
 
-The attachment blocker prevents members from uploading files that match a blocked extension or MIME type. When a member sends a message containing a blocked file, the bot deletes the message and optionally sends a warning.
+The attachment blocker decides which kinds of media members are allowed to post, and removes anything that breaks the rule. It works on four media types: **Images**, **Videos**, **GIFs** and **Audio**. You set a rule for the whole server, override it in the channels that need something different, and restrict individual members when one person is the problem.
 
 <Frame>
   ![Moderation Attachment Blocker](/images/Moderation_Attachment_Blocker.png)
@@ -12,48 +12,144 @@ The attachment blocker prevents members from uploading files that match a blocke
 
 ## How it works
 
-When a message with an attachment is posted in a channel covered by the attachment blocker, the bot checks the file's extension and MIME type against your configured blocklist. If a match is found, the message is deleted automatically. The member receives a brief notification explaining what was blocked and why.
+Every message in a covered channel is checked against the rule that applies there. The check looks at:
 
-## Global configuration
+- Files uploaded as attachments.
+- Media carried by a forwarded message.
+- Embeds Discord resolves for a link, which is how a Tenor GIF or an embedded video is caught.
+- Media links in the message text: Tenor, Giphy, Imgur and direct file links.
+- Unknown links, which are probed for OpenGraph media when **OG fallback** is on. A link that turns out to point at an image or a video is treated as that media type.
 
-Navigate to **Attachment Blocker \> Global Settings** in the dashboard to define the server-wide blocklist.
+It does not block by file extension. There is no list of `.exe` or `.zip` to fill in, and no MIME strings to type. You choose media types, and the mode you pick decides what happens to everything else.
+
+## Choosing a mode
+
+Each level of configuration uses one of two modes.
+
+| | Whitelist | Blacklist |
+| --- | --- | --- |
+| What the list means | Only the listed types are allowed | Only the listed types are removed |
+| A media type you did not list | Removed | Allowed |
+| A non-media file, such as a PDF or an archive | Removed | Allowed |
+| Presets | **All** (allow everything, effectively off) and **No attachments** (block everything) | No presets |
+| An empty list | Not a useful state, pick a type or use a preset | Blocks nothing |
+
+The non-media row is the one that catches people out. A whitelist is a statement about everything, so a channel whitelisted to **Images** also removes PDFs, text files and archives. A blacklist is a statement about the types it names, so a blacklist of **Videos** removes videos and leaves a PDF alone.
+
+An empty blacklist blocks nothing, deliberately. That is the honest state for "I have chosen the mode, I have not chosen the types yet".
+
+Configurations made before blacklist mode existed are whitelists, so nothing changed for a server that was already set up.
+
+## Server defaults
+
+The server default applies everywhere that has no override. Set it from **Attachment Blocker \> Global Settings** in the dashboard, or in Discord:
 
 ```text
-/attachment-blocker setup
+/attachment-blocker setup type: Images mode: Whitelist timeout: 60
 ```
 
-The command provides quick access to the configuration panel in Discord. From the panel you can add extensions (e.g. `.exe`, `.bat`, `.sh`) or MIME types (e.g. `application/x-msdownload`) to the blocklist.
+Each call adds **one** type to the list, so run it once per type you want on the list. Leave `mode` off and the server keeps the mode it already uses. **All** and **None** are whitelist ideas and are refused in blacklist mode, because a blacklist of everything is a whitelist of nothing and one spelling per outcome is enough.
 
-Common examples of what to block:
+`/attachment-blocker view` prints the rule currently in force, and `/attachment-blocker disable` turns the feature off server-wide.
 
-| Extension | Type |
-| --- | --- |
-| `.exe`, `.bat`, `.cmd`, `.sh` | Executable files |
-| `.dll`, `.so` | Library files |
-| `.scr`, `.pif` | Potentially malicious Windows files |
-| `.zip`, `.rar`, `.7z` | Archives (if you want to block compressed files) |
+## Channel overrides
 
-## Per-channel overrides
-
-You can override the global configuration for specific channels. Navigate to **Attachment Blocker \> Channels** in the dashboard or use the command:
+A channel override replaces the server default in that channel, mode and all. Add one from **Attachment Blocker \> Channel Overrides**, or:
 
 ```text
-/attachment-blocker channel add <channel> <extension>
-/attachment-blocker channel remove <channel> <extension>
+/attachment-blocker channel add channel: #media type: Videos mode: Blacklist
+/attachment-blocker channel remove channel: #media
 ```
 
-Use channel overrides to:
+Two things to know:
 
-- **Allow** something that is blocked globally (e.g. allow `.exe` uploads in a staff-only software distribution channel)
-- **Block** something additional that is not in the global blocklist (e.g. block `.mp4` in a channel meant only for images)
+- **Threads follow their parent.** A thread with no override of its own uses the override on the channel or forum it lives in.
+- **An override that lists no types inherits everything.** It takes both the mode and the list from the server default, so a half-filled override never quietly becomes a rule of its own.
 
-## Temporary voice channel override
+## Temporary voice channels
 
-Navigate to **Attachment Blocker \> Temp VC** to configure whether the attachment blocker applies inside temporary voice channels. By default it follows the global rules.
+Temporary voice channels are created on demand, so they cannot be given an override by hand. Instead you set the rule on the opener that spawns them, from **Attachment Blocker \> TempVC Openers**. Every temporary channel that opener creates gets that rule.
+
+## Bypass roles
+
+A bypass role skips the mode check, so holders can post whatever they like. You can grant a bypass server-wide, or only in one channel:
+
+```text
+/attachment-blocker bypass add role: @Moderator
+/attachment-blocker bypass channel-add channel: #media role: @Content Team
+```
+
+`/attachment-blocker bypass list` and `/attachment-blocker bypass channel-list` show who currently bypasses, and `/attachment-blocker bypass remove` and `/attachment-blocker bypass channel-remove` take the role back off.
+
+A bypass role does not protect a member from a restriction aimed at them personally. That is the point of restrictions.
+
+## Restricting a member
+
+When one member is the problem, restrict that member instead of tightening the channel for everybody. Open the restriction panel with either of these:
+
+```text
+/attachment-blocker user restrict user: @member
+/attachmentban user: @member
+```
+
+The context menu entry **Apps \> Restrict Attachments** on one of their messages opens the same panel, which is usually quicker.
+
+In the panel you choose the types to block, whether it applies across the server or only in chosen channels, how long it lasts, and a reason. A restriction:
+
+- **Overrides bypass roles.** A restricted member stays restricted even while holding one.
+- **Overrides the channel rule.** It applies whatever that channel allows.
+- **Tells the member when it ends.** They are DMed when it is lifted and when it expires.
+
+`/attachment-blocker user list` shows the active restrictions, `/attachment-blocker user unrestrict` and `/attachmentunban` lift one, and **Attachment Blocker \> User Restrictions** in the dashboard does all of it from the web.
+
+## Timeouts and DMs
+
+When a message breaks the rule:
+
+1. The message is deleted.
+2. The member is DMed an explanation of what was removed and why. That message is a template, so you can rewrite it under **Message Templates**.
+3. If the level that caught the message sets a timeout, the member is timed out for that many seconds.
+
+The timeout is applied through Heimdall's moderation system rather than as a raw Discord action, so it appears on the mod actions feed with the rest of your moderation history. Set it to `0` to delete without timing anybody out. Each level carries its own timeout, so a channel override can time out for longer than the server default, or not at all.
+
+## Commands
+
+```text
+/attachment-blocker setup type: [mode:] [timeout:]
+/attachment-blocker view
+/attachment-blocker disable
+```
+
+```text
+/attachment-blocker channel add channel: type: [mode:] [timeout:]
+/attachment-blocker channel remove channel:
+```
+
+```text
+/attachment-blocker bypass add role:
+/attachment-blocker bypass remove role:
+/attachment-blocker bypass list
+/attachment-blocker bypass channel-add channel: role:
+/attachment-blocker bypass channel-remove channel: role:
+/attachment-blocker bypass channel-list channel:
+```
+
+```text
+/attachment-blocker user restrict user:
+/attachment-blocker user unrestrict user:
+/attachment-blocker user list
+/attachmentban user:
+/attachmentunban user:
+```
 
 ## Required permissions
 
 | Action | Permission key |
 | --- | --- |
-| Viewing configuration | `attachmentBlocker.viewConfig` |
-| Changing configuration | `attachmentBlocker.manageConfig` |
+| Viewing the configuration and bypass lists | `attachment-blocker.view_config` |
+| Changing server defaults, channel overrides and opener overrides | `attachment-blocker.manage_config` |
+| Viewing per-member restrictions | `attachment-blocker.view_restrictions` |
+| Applying, editing and lifting per-member restrictions | `attachment-blocker.manage_restrictions` |
+| Restricting or unrestricting yourself, mainly for testing | `attachment-blocker.manage_own_restrictions` |
+
+**Manage Own Restrictions** only lifts the guard that stops you targeting yourself on the restriction panel. It does nothing on its own, so grant it alongside **Manage User Restrictions**.
