@@ -71,7 +71,7 @@ If your servers run ChatControl with channels turned on, each mapping has a **Ch
 - **Servers without channels are unaffected.** A server without ChatControl, or with its channels turned off, relays chat exactly as before, to mappings with no channels picked.
 
 <Note>
-Channel filtering needs a Heimdall plugin build with ChatControl support on each server. An older build cannot tell channels apart and relays every channel. Chat relayed from a proxy cannot be filtered by channel either, so leave chat relay off on the proxy and let your backend servers relay their own chat.
+Channel filtering needs a Heimdall plugin build with ChatControl support on each server. An older build cannot tell channels apart and relays every channel, and Discord messages for a channel mapping are not sent to it at all. A proxy cannot tell channels apart either, so while any server reports ChatControl channels, chat relayed by a proxy is dropped. Let your backend servers relay their own chat.
 </Note>
 
 ## RCON
