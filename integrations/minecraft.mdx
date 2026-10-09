@@ -55,6 +55,25 @@ Displays the live status of your configured Minecraft server - online/offline, c
 
 The dashboard **Minecraft \> Status** page shows the same information in a continuously updating format.
 
+## Chat bridge
+
+The chat bridge relays in-game chat into Discord channels, and Discord messages back into the game. Set it up on **Minecraft \> Chat Bridge** by adding a mapping: pick a Discord channel, which servers it talks to (one server, a network, or all servers), and which way messages travel. Each mapping also chooses whether chat, joins, leaves and deaths are relayed.
+
+Nothing is stored. Messages are relayed and then discarded, on both the bot and the Minecraft server.
+
+### ChatControl channels
+
+If your servers run ChatControl with channels turned on, each mapping has a **ChatControl channels** section listing the channels your servers report. Only chat said in the channels you tick is relayed to that Discord channel, so staff and admin channels stay out of Discord unless you pick them.
+
+- **Picking a channel is required.** ChatControl has no default channel, so a mapping with no channels picked relays no chat from a server where ChatControl channels are on. The mapping shows a warning until you pick one.
+- **One Discord channel per audience.** To relay a staff channel, add a separate mapping for a staff-only Discord channel and pick only the staff channel there.
+- **Discord to Minecraft goes into the first picked channel.** Messages sent in the Discord channel are shown only to players in that ChatControl channel, so replies in a staff Discord channel stay in the staff channel in game.
+- **Servers without channels are unaffected.** A server without ChatControl, or with its channels turned off, relays chat exactly as before, to mappings with no channels picked.
+
+<Note>
+Channel filtering needs a Heimdall plugin build with ChatControl support on each server. An older build cannot tell channels apart and relays every channel, and Discord messages for a channel mapping are not sent to it at all. A proxy cannot tell channels apart either, so while any server reports ChatControl channels, chat relayed by a proxy is dropped. Let your backend servers relay their own chat.
+</Note>
+
 ## RCON
 
 RCON lets you run commands on the Minecraft server directly from Discord. Configure the RCON connection in **Minecraft \> Configuration** with your server's RCON host, port, and password.
