@@ -32,6 +32,32 @@ Navigate to **Tickets \> Categories** in the dashboard and click **New Category*
 | **Opening message** | The first message posted by the bot inside the ticket thread |
 | **Auto-close** | Automatically close inactive tickets after a set period |
 
+### Inactivity reminders
+
+Each category can warn about, and then close, tickets that go quiet. Under **Inactivity Reminder** in the category editor you set how long a ticket can sit before the warning is posted, how long after the warning it closes, and who the warning pings:
+
+| Ping behavior | Who is pinged |
+| --- | --- |
+| **Ping ticket opener** | The member who opened the ticket |
+| **Ping all participants** | The opener and the staff member who claimed it |
+| **Smart (direction-aware)** | Whoever owes the next reply: the opener if staff spoke last, staff if the opener spoke last |
+| **No ping** | Nobody |
+
+With **Smart**, choose whether a ticket waiting on staff pings the category's staff roles or only the staff member who claimed it. An unclaimed ticket always pings the staff roles.
+
+#### Asking the opener when they look done
+
+A support conversation often ends with staff answering and the member replying "thanks". Smart would then treat the ticket as waiting on staff. To avoid pinging staff about a solved ticket, Smart can recognise a sign-off and ask the member instead: the warning becomes "Is your issue sorted?" with **Yes, close it** and **I still need help** buttons. "I still need help" pings staff straight away. If nobody answers, the ticket closes on the normal schedule.
+
+Two settings decide when a reply counts as a sign-off:
+
+| Setting | How it decides | Default |
+| --- | --- | --- |
+| **Ask the opener when they look done (AI)** | [Odin AI](/ai/odin) reads the end of the conversation. Only runs on servers with AI set up, and sends the recent ticket messages to the AI provider | On |
+| **Ask the opener when they look done (length)** | Everything the member said since staff last replied is under the character limit, with no question mark and no attachment. Also used when the AI check can't run | Off |
+
+The question's wording can be changed under **Tickets \> Configuration** as the **Resolution Check** message.
+
 ### Configuring openers
 
 Openers are the buttons or select menus members use to create tickets. Navigate to **Tickets \> Openers** and click **New Opener**. After configuring the opener, click **Post** to have the bot send the opener panel to a channel of your choice.
