@@ -86,6 +86,24 @@ White-Label is licensed per seat. One seat covers one white-labelled server. If 
   White-Label runs on your own bot application, so provisioning it means supplying the bot's token. Open a ticket in the [support server](https://discord.bifrost.gg) if you would like a hand setting it up.
 </Note>
 
+### Privileged intents
+
+Your bot application needs two privileged gateway intents switched on before Heimdall can run it. In the [Discord Developer Portal](https://discord.com/developers/applications), open your application, go to the **Bot** tab, and under **Privileged Gateway Intents** set:
+
+| Intent | Setting | Why |
+| --- | --- | --- |
+| Server Members Intent | On | Permissions, moderation, welcome messages, autoroles, and role sync all need member and role data |
+| Message Content Intent | On | Tickets, modmail, automod, message logging, and translation all read message content |
+| Presence Intent | Off | Heimdall never reads presence |
+
+If either required intent is off, Discord refuses the bot's login and it will not start. Turn it on, then provision again.
+
+Below 10,000 users, toggling the intents is all you need to do. Once your bot reaches 10,000 unique reachable users, Discord sends a DM to the account that owns the application asking you to apply for intent review, with a deadline 90 days out. The bot keeps working until then, but if you miss the deadline Discord switches the intents off.
+
+<Card title="Applying for privileged intents" icon="shield-check" href="https://bifrost.gg/heimdall/guides/privileged-intents">
+  Copy-paste answers for every question on Discord's intent review form, personalised with your bot's name, plus the screenshots to attach.
+</Card>
+
 ## Pricing
 
 | Plan | Monthly | Annual |
