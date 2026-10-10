@@ -104,6 +104,28 @@ Below 10,000 users, toggling the intents is all you need to do. Once your bot re
   Copy-paste answers for every question on Discord's intent review form, personalised with your bot's name, plus the screenshots to attach.
 </Card>
 
+### Custom status
+
+Your white-labelled bot can show a custom status in the member list, and rotate through several of them. To set it, open your profile menu on the dashboard, choose **Whitelabel Bot**, and find the **Custom status** card. Changes reach your live bot within a few moments of saving.
+
+- Add up to 10 statuses. With two or more, the bot cycles through them in order.
+- Choose how often it rotates, from every 15 seconds up to once a day. The default is every minute.
+- Each status has a type: **Playing**, **Watching**, **Listening to**, **Competing in**, or **Custom** (your text on its own, with no verb in front).
+- Each status can be up to 128 characters.
+
+Two placeholders fill in live numbers:
+
+| Placeholder | Shows |
+| --- | --- |
+| `{servers}` | How many servers your bot is in |
+| `{members}` | The total member count across those servers |
+
+For example, `Watching over {members} members` shows as "Watching over 1,234 members". The numbers refresh about every 10 minutes when a single status uses them, and each time the bot rotates when you have several.
+
+<Note>
+  Discord limits how often a bot can change its status, which is why the fastest rotation is 15 seconds.
+</Note>
+
 ## Pricing
 
 | Plan | Monthly | Annual |
