@@ -76,6 +76,21 @@ Configure which channels are monitored, what the AI looks for, and what action t
 
 When enabled, Odin analyses images attached to messages in monitored channels. Configure sensitivity thresholds and the action to take when a rule violation is detected in **AI \> Image Moderation**.
 
+### Choosing the moderation models
+
+If your server uses its own OpenRouter API key, you can choose which model runs each kind of moderation, separately from the model Odin uses for everything else. Find these settings on the **API Key** card under **AI \> Setup & Context**.
+
+| Setting | Choices |
+| --- | --- |
+| **Text moderation** | **Your preferred model**, **Jev** (TypeSafe's moderation decision model), or **A specific model** from your key |
+| **Image moderation** | **Your preferred model**, or **A specific model**. Only models that can read images are listed. |
+
+Each change saves as soon as you make it. If a specific model you chose stops working, for example because OpenRouter retires it, Odin checks the message with your preferred model instead and keeps moderating. Rate limits and billing problems on your key are not retried, because your preferred model would hit the same limit.
+
+<Note>
+  Servers on Bifröst Managed AI do not see these settings. Their moderation models are chosen for them.
+</Note>
+
 ### Ticket Auto-Reply
 
 When a ticket is opened, Odin reads the opening message against your knowledge base and posts a suggested answer in the thread for staff to review before sending. This reduces the number of tickets staff need to respond to manually and cuts response times for common questions.
