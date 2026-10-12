@@ -48,6 +48,7 @@
               "moderation/automod",
               "moderation/escalation",
               "moderation/infractions",
+              "moderation/cases",
               "moderation/channel-controls",
               "moderation/stickies",
               "moderation/auto-responses",

@@ -26,7 +26,7 @@ denied and records it in its log at info level. Nothing in the dashboard marks i
 so the only symptom is a role that appears configured and cannot use the feature. If a
 permission you granted seems to do nothing, check the key against this page first.
 
-Heimdall recognises **193 keys** across **39 features**.
+Heimdall recognises **201 keys** across **40 features**.
 
 ## Affiliate
 
@@ -112,6 +112,21 @@ Heimdall recognises **193 keys** across **39 features**.
 | `birthdays.config.view_config` | **View Birthdays**. View the birthdays configuration and registered birthdays. |
 | `birthdays.entries.manage_entries` | **Manage Birthday List**. Add, edit, or remove another member's registered birthday. |
 | `birthdays.entries.view_entries` | **View Birthday List**. View every birthday registered in this server. |
+
+## Cases
+
+[Feature documentation](/docs/moderation/cases)
+
+| Permission key | Grants |
+| --- | --- |
+| `cases.comment` | **Add Case Notes**. Add notes to the cases they can read, and remove their own. |
+| `cases.edit_reason` | **Edit Case Reasons**. Change the reason on the cases they can read. Earlier reasons are kept. |
+| `cases.manage` | **Manage Cases**. Link related cases, and remove anyone's notes. |
+| `cases.manage_bans_page` | **Manage Bans Page**. Publish the public bans page, choose who sees what on it, and reset its link. |
+| `cases.manage_evidence` | **Manage Case Evidence**. Add evidence to the cases they can read, and remove it. |
+| `cases.view_discord` | **View Discord Cases**. Read cases for Discord moderation actions. |
+| `cases.view_hidden` | **View Hidden Cases**. Read cases for punishments that were issued hidden. |
+| `cases.view_minecraft` | **View Minecraft Cases**. Read cases for Minecraft punishments and offenses. |
 
 ## Clock
 

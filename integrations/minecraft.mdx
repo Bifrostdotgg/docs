@@ -154,7 +154,7 @@ In-game permission nodes are `heimdall.punishments.<action>`, one per action: ba
 - **Screens** - the MiniMessage text a player sees on ban, mute, kick and warn, with `{reason}`, `{player}`, and `{appeal_url}` tokens.
 - **Minecraft appeal form** - pick a Minecraft-specific appeal form to fill in `{appeal_url}` on screens. Use a form separate from the Discord infraction appeal form.
 - **Import existing punishments** - one button asks the connected server to run its LiteBans, AdvancedBan, BanManager and vanilla `banned-players.json` importers in a single pass, skipping whichever it does not find. IP addresses are hashed on that server before anything reaches Heimdall. Imported rows are written straight into the punishment store: importing itself never immediately pushes an enforcement update, so it does not kick a player who happens to be online and never overrides a punishment that is already active for the same target, but a row that is imported still active and unexpired is picked up by the normal sync afterward like anything else.
-- **Public bans page** - publish toggle, required Discord roles, show-expired toggle, and reason/staff-name hide toggles. See below.
+- **Public bans page** - now under **Cases \> Bans page**; this card links there. See below.
 - **Enforcement settings** - root command aliases, silent-by-default, and the blocked-command list a mute enforces are guild-level punishment settings saved here, gated by `minecraft.punishments.manage`, not on the general Minecraft configuration page.
 - **Browse punishments** - a filterable, paginated list. Filters are type, status, target (name or UUID), issuer (staff name or Discord ID), and source. Status defaults to Active and can be narrowed to Expired, Revoked, Inactive, or All: a punishment counts as Expired the moment its duration runs out, whether or not a connected server has synced since, Revoked means a person lifted it, and Inactive covers one-shot rows such as a kick or an imported row that arrived already ended. A Load more button pages through further results, and revoking a row here uses the same `minecraft.punishments.revoke` key as `/mc-punish unban` / `unmute`.
 - **Issue** - a quick form to ban a player without leaving the dashboard.
@@ -176,13 +176,13 @@ In-game permission nodes are `heimdall.punishments.<action>`, one per action: ba
 
 ### Public bans page
 
-Publishing the Punishments tab's public bans page gives you a URL at `/<nanoId>` on your bans site host, a random id for the server rather than its Discord id. Turning publishing off removes that id and the URL stops resolving; turning it back on mints a fresh id, so the link changes each time you republish.
+The public bans page lives in [Cases](/moderation/cases#public-bans-page) now, at **Cases \> Bans page**, and can list Discord bans beside Minecraft ones. Your existing link and who could see what carried over unchanged when it moved. Who sees what is set in tiers (Public, Signed in, Members and role tiers), with Minecraft bans, IP bans and mutes, reasons, staff names and expired entries ticked per tier.
 
-"Publish a public list" controls whether that URL needs a Discord sign-in at all. On, anyone with the link can view it, no sign-in required. Off, or with one or more required Discord roles set, a visitor signs in with Discord through the main dashboard to view it - the bans site itself never runs its own Discord sign-in - and if roles are set they need at least one of them.
+The page lives at `/<nanoId>` on your bans site host, a random id for the server rather than its Discord id. A visitor who needs to sign in does so with Discord through the main dashboard; the bans site itself never runs its own Discord sign-in. A punishment staff revoked early is never listed.
 
-A separate "Show expired punishments" toggle, off by default, decides whether punishments that ran out their own duration are listed, marked Expired. A punishment staff revoked early is never listed, whether or not this toggle is on.
+Each active Minecraft row carries its case number and an **Appeal** link that names that case, so the appeal lands on the right one.
 
-The public page can hide reasons and staff names per your Public bans page settings. It never shows an IP address or a hashed digest, on the public view or the signed-in one.
+The page never shows an IP address or a hashed digest, on the public view or the signed-in one.
 
 ### Player page and alt list
 
@@ -210,7 +210,7 @@ Every connected server, proxy and backend alike, keeps its own local copy of act
 | Using RCON | `minecraft.server.use_rcon` |
 | Viewing offenses | `minecraft.offenses.view_infractions` |
 | Managing and pardoning offenses | `minecraft.offenses.manage_offenses` |
-| Viewing punishments and the public bans page config | `minecraft.punishments.view` |
+| Viewing punishments | `minecraft.punishments.view` |
 | Issuing punishments (ban, mute, warn, kick) | `minecraft.punishments.issue` |
 | Revoking an active punishment | `minecraft.punishments.revoke` |
 | Managing punishment mode, aliases, screens and the appeal form | `minecraft.punishments.manage` |

@@ -1,0 +1,91 @@
+---
+title: "Cases"
+description: "One numbered record for every moderation action, on Discord and Minecraft."
+icon: "folder-open"
+---
+
+Every ban, mute, kick, warning and channel ban in your server, and every punishment and offense on your Minecraft server, becomes a **case** with its own number, such as `#1482`. A case keeps what happened, who did it, why, and everything that happened to it since: the unban, the appeal, the notes staff added and the evidence they attached. A member's cases on Discord and on their linked Minecraft account sit on one page.
+
+Cases is a record, not a new way to punish. You still ban with `/ban`, `/mc-punish` or in game, exactly as before, and each case links back to the action it records.
+
+## What becomes a case
+
+- Bans, kicks, mutes, warnings and channel bans done through Heimdall, by staff or by automod.
+- Bans, kicks and timeouts done in Discord's own menus or by another bot. They are credited to whoever did them, which Heimdall reads from the audit log, so the bot needs the **View Audit Log** permission.
+- Minecraft bans, IP bans, mutes, warnings and kicks, from the dashboard, `/mc-punish` or in game, and every Minecraft offense.
+
+An unban, an unmute or a revoke is not a new case. It ends the case it lifts, which then reads as revoked. A ban that runs its length reads as expired, and one replaced by a newer ban reads as superseded.
+
+The case number appears in the moderation log, so `Case #1482` in a log line is what staff search for.
+
+## Finding a case
+
+### On the dashboard
+
+Open **Cases \> All cases**. Filter by platform, action, status or moderator, or search for a person. Open a case to see its timeline, and open the person to see every case they have on Discord and on any Minecraft account confirmed as linked to them. Heimdall never guesses a link: an unlinked Minecraft account is a separate person.
+
+The **Moderation \> Infractions** tab now opens Cases.
+
+### In Discord
+
+| Command | Does |
+| --- | --- |
+| `/case view` | Show one case by number, with buttons to add a note or evidence and to lift it |
+| `/case lookup` | Show every case for a Discord user or a Minecraft player |
+| `/case note` | Add a note to a case |
+| `/case evidence` | Attach a file or a link to a case |
+| `/case reason` | Change a case's reason. The earlier reason is kept on the case |
+
+Right-click a member and choose **Apps \> View cases** for the same list as `/case lookup`. Right-click a message and choose **Apps \> Add to case** to copy it into a case as a note, with a link back to the message. That is how a decision staff talked through in a channel ends up on the record.
+
+### In game
+
+Staff with `heimdall.admin` can add a note with `/hd case note <number> <text>`. In game, notes can only go on Minecraft cases, and on a hidden one only for staff who also hold `heimdall.punishments.hidden`.
+
+## Lifting a case
+
+The **Unban**, **Unmute** and **Revoke** buttons on a case lift it through the same path as the platform's own command, so they ask for the same permission: `moderation.enforcement.ban` to unban on Discord, `minecraft.punishments.revoke` to revoke on Minecraft. A warning has nothing to lift, so it is pardoned instead and its points stop counting.
+
+## Appeals
+
+When a banned or muted member appeals, the appeal is linked to their case. The link in an in-game ban screen and on each bans page row names the case, and an appeal without one is matched to the member's open ban or mute. An appeal is only ever linked to a case about the person appealing, or about an account linked to them, so a member cannot attach their appeal to somebody else's case.
+
+The case shows the appeal and its outcome, and the appeal in **Moderation \> Appeals** links to its case. Accepting it lifts the case on the platform it came from: a Discord unban or unmute, or a Minecraft revoke.
+
+## Public bans page
+
+**Cases \> Bans page** publishes a list of bans and mutes on your bans site, Discord and Minecraft together, each with its case number. You choose who sees what, in tiers:
+
+| Tier | Who it is |
+| --- | --- |
+| Public | Anyone with the link |
+| Signed in | Anyone signed in with Discord |
+| Members | Members of your server |
+| Role tiers | Members holding one of the roles you pick, up to five tiers |
+
+Each tier sees everything the tiers above it see, plus what you tick for it, so no tier can see less than the public. For each tier you can tick Minecraft bans, Minecraft IP bans, Minecraft mutes, Discord bans, reasons, who issued each entry, and expired entries. Hidden punishments are never listed, except to signed-in staff who can already see hidden cases.
+
+Discord bans are off for every tier until you turn them on, and the dashboard warns you when they would reach anyone outside your server. A Minecraft ban list is a community norm; a public list of Discord accounts with ban reasons is personal information about real people.
+
+**Reset link** gives the page a new address, and the old one stops working.
+
+## The gotcha
+
+Moderation from before cases existed is imported once for each bot. Until that import has run for your server, Cases and the bans page only list actions taken since cases arrived. New cases keep their numbers when the history comes in, because the older actions were given the first numbers.
+
+Evidence files need file storage set up for your server. Without it you can attach links but not files, because a Discord attachment link expires and evidence that quietly stops loading is worse than none.
+
+## Required permissions
+
+Reading is split by platform, because Minecraft staff are often not Discord moderators. Staff who could read the old Infractions tab or Minecraft punishment history keep reading the same cases without a new key.
+
+| Action | Permission key |
+| --- | --- |
+| Reading Discord cases | `cases.view_discord` |
+| Reading Minecraft cases | `cases.view_minecraft` |
+| Seeing hidden cases, on the platforms you can read | `cases.view_hidden` |
+| Adding notes | `cases.comment` |
+| Adding and removing evidence | `cases.manage_evidence` |
+| Changing a case's reason | `cases.edit_reason` |
+| Linking related cases and removing anyone's notes | `cases.manage` |
+| Managing the public bans page | `cases.manage_bans_page` |
