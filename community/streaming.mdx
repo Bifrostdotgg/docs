@@ -1,0 +1,60 @@
+---
+title: "Streaming"
+description: "A role for members while they are live on Twitch, YouTube or Kick, which Minecraft role sync can carry in game."
+icon: "tower-broadcast"
+---
+
+Members link their Twitch, YouTube or Kick account, and while any linked account is live they hold a role you choose. When the stream ends the role comes off. Any live stream counts, whatever the game or category.
+
+Because it is an ordinary Discord role, everything that already reacts to roles reacts to this one. The main reason to turn it on is Minecraft: map the role in role sync and streamers get an in-game rank, tag or prefix while they are live.
+
+## Before it works
+
+- Heimdall needs the **Manage Roles** permission, and the live role has to sit below Heimdall's highest role.
+- The live role cannot carry staff permissions. Anyone who links an account and goes live receives it, so Heimdall refuses a role with permissions such as Administrator, Manage Server, Manage Roles, Ban Members or Manage Messages, and a role that has any dashboard permission allowed.
+- Each Heimdall instance has to have the providers configured by whoever runs it. A provider that is not set up says so when a member tries to link it.
+
+## Setting it up
+
+Navigate to **Streaming** in the dashboard.
+
+| Setting | Description |
+| --- | --- |
+| **Enable streaming roles** | Turns the feature on, and adds the `/streaming` command to your server |
+| **Live role** | The role members hold while they are live |
+
+To carry the role into Minecraft, add it to your Minecraft **Role sync** mappings with the direction set to Discord to Minecraft. See [Minecraft](/integrations/minecraft).
+
+## How members link an account
+
+A member runs `/streaming link` and gets two buttons, visible only to them.
+
+- **Twitch or YouTube** signs them in with Discord and reads the Twitch and YouTube accounts already connected to their Discord profile (**User Settings \> Connections**). Only connections Discord has verified count, so a member can only link an account they actually own. Linking again replaces their Twitch and YouTube links with whatever their profile shows at that moment, which is also how a removed connection drops off.
+- **Kick** checks their Discord account first, then signs them in to Kick. Kick is not a Discord connection type, so it has its own sign-in.
+
+The buttons last 15 minutes. `/streaming status` shows a member's links and whether each is live, and `/streaming unlink` removes them all.
+
+Links belong to one server. A member who wants the role in two servers links in each.
+
+## The linked accounts list
+
+The dashboard lists every member with a linked account, live members first, with a link to each channel. Staff can unlink a member from there. There is no way to add a link on somebody's behalf, because a link only means something when the member proved they own the account.
+
+## The gotcha: how quickly the role changes
+
+Twitch tells Heimdall the moment a stream starts or stops, so the role follows within seconds. Kick and YouTube are checked on a timer, so the role can lag by a few minutes. YouTube is checked less often the more channels are linked across an instance, because Google limits how many lookups a day are allowed.
+
+In Minecraft, the role sync mode decides when the in-game change lands. **Straight away, over the bot connection** and **Straight away, over RCON** apply it immediately. **On the player's next join** waits until the player reconnects, so a streamer who is already online will not see their rank change until they rejoin.
+
+Heimdall only ever removes the live role from members it gave it to. A member who already had the role, for example because staff gave it to them, keeps it when their stream ends. If staff remove the role from someone mid-stream, Heimdall does not put it back until their next stream.
+
+## Required permissions
+
+| Action | Permission key |
+| --- | --- |
+| Viewing settings | `streaming.config.view_config` |
+| Changing settings | `streaming.config.manage_config` |
+| Viewing linked accounts | `streaming.links.view_links` |
+| Unlinking another member's accounts | `streaming.links.manage_links` |
+
+Linking, checking and unlinking your own accounts needs no permission.

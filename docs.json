@@ -75,7 +75,8 @@
               "community/auto-reactions",
               "community/afk",
               "community/confessions",
-              "community/invite-tracker"
+              "community/invite-tracker",
+              "community/streaming"
             ]
           },
           {
