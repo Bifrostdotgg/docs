@@ -18,6 +18,14 @@ Tags are reusable pieces of content - a block of text, an embed, or a formatted 
 
 Posts the tag's content to the current channel. Tag names support autocomplete - begin typing and the bot suggests matching tags.
 
+### Tags as their own slash commands
+
+A tag can also become a slash command of its own, so a tag named **rules** can be posted with **/rules**. On the dashboard **Tags** page, use the slash command toggle on the tag. A tag can't take the name of an existing Heimdall command.
+
+Each tag command gets its own permission key, `tags.commands.<name>`, so you can choose who may use it on the **Permissions** page.
+
+Discord allows a server at most 100 slash commands, shared by every feature. Heimdall keeps 20 of them free for tag commands, and the **Tags** page shows how many slots are left.
+
 ## Creating a tag
 
 ```text

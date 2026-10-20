@@ -36,19 +36,33 @@ Looks up a specific transaction by its Tebex transaction ID. Returns:
 
 Navigate to **Tebex \> Transactions** in the dashboard to browse transactions, search by buyer, and filter by date range or package.
 
+## Purchase history
+
+```text
+/tebex lookup <username>
+```
+
+Lists a player's 10 most recent purchases by their Tebex username, each with its transaction ID, amount, packages and date, plus their total number of purchases. This needs the store's **Game Server API secret**, set under **Tebex \> Configuration \> API Keys**.
+
 ## Gift cards
 
 ```text
-/tebex giftcard create <amount>
-/tebex giftcard lookup <code>
+/tebex giftcard list
+/tebex giftcard lookup <id>
+/tebex giftcard create <amount> [note]
+/tebex giftcard topup <id> <amount>
+/tebex giftcard void <id>
 ```
 
 | Subcommand | Description |
 | --- | --- |
+| `list` | Lists your store's gift cards with their ID, code and balance |
+| `lookup` | Shows one gift card's code, balance, status and note. It takes the gift card's numeric **ID**, not its code; `list` shows each card's ID |
 | `create` | Generates a new gift card for the specified value in your store's currency |
-| `lookup` | Checks the current balance and expiry of an existing gift card code |
+| `topup` | Adds value to an existing gift card |
+| `void` | Voids a gift card so it can no longer be used |
 
-Gift card codes are generated through the Tebex API and can be distributed to members directly.
+Gift card codes are generated through the Tebex API and can be distributed to members directly. Creating, topping up and voiding gift cards is part of Tebex store administration, which needs [Premium](/premium).
 
 ## Claims
 
