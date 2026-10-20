@@ -12,31 +12,58 @@ The Minecraft integration connects your Discord server to one or more Minecraft 
 
 ## Account linking
 
-Members link their Minecraft account to their Discord account through a two-step verification process.
+A link ties one Minecraft name to one Discord account. Members start one from Discord and prove it is theirs with a 6-digit code shown in game.
+
+### The account-linking panel
+
+The panel is a Discord message with **Link Account**, **Unlink Account** and **My Account** buttons. Post it in any of these ways:
+
+- The last step of Minecraft setup offers to post it.
+- **Settings \> Messages**, on the **Account linking panel**: **Post** sends it to a channel you pick. Posting into the channel it is already in updates that message; posting somewhere else moves it and removes the old one. You can also rewrite the panel's text there and keep its buttons.
+- `/minecraft-setup panel` from Discord.
+
+Members can also start from a slash command:
 
 ```text
-/link-minecraft <username>
+/link-minecraft
 ```
 
-The member provides their Minecraft username. The bot generates a unique verification code and instructs the member to join a specific Minecraft server and run a verification command in game. Once verified, the link is confirmed and stored.
+### Getting the code
+
+After a member enters their Minecraft name, the code reaches them in game:
+
+- **A server that requires a whitelist** refuses their join and shows the code on the disconnect screen.
+- **A network set to let anyone join** (see below) lets them in. With Heimdall plugin 3.0.0-rc.19 or newer, the code is shown as soon as they join, and straight away if they are already online. On Paper 1.21.7 or newer, with a 1.21.6 or newer client, it opens as a dialog with a **Copy code** button; everywhere else, including Bedrock players, it is a chat message you can click to copy. The prompt names the Discord account that asked, and warns the player never to give the code to anyone.
+- **Any server** also gives the code on request: the player runs **/linkdiscord** in game.
+
+The member then presses **Confirm Code** on their account panel in Discord and enters it.
+
+Players can start in game too: **/linkdiscord** gives them a code without having started from Discord.
+
+<Note>
+On a network that lets anyone join, **/linkdiscord** needs plugin 3.0.0-rc.13 or newer. Older builds treat it as the whitelist module's command and only echo it back. Update the plugin with **/hd update** in game or from its download page.
+</Note>
+
+### Letting anyone join
+
+Each network's policy, on its page under **Minecraft \> Networks**, has **Anyone can join, linking is optional**. With it on, nobody is turned away, the whitelist is switched off on that network's servers, and players who want their Discord roles in game link as above. The rest of the network policy takes effect again when you turn it off.
 
 Once linked, Heimdall can:
 
-- Automatically add the member to the Minecraft whitelist based on their Discord roles
-- Remove them from the whitelist if they lose the required role
+- Whitelist the member, automatically or after staff approval, depending on the network's policy
+- Remove them from the whitelist if they lose access
+- Sync their Discord roles to groups in game (**Minecraft \> Settings \> Role sync**)
 - Display their Minecraft username alongside their Discord profile in the customer portal
 
 ## Whitelist management
 
 Navigate to **Minecraft \> Players** in the dashboard to view the full whitelist status - who is linked, who is pending verification, and who has been manually approved or denied.
 
-### Automatic whitelist sync
+### Automatic whitelisting and approval
 
-Configure which Discord roles entitle a member to be on the whitelist in **Minecraft \> Configuration**. When a member gains or loses the configured role, the bot automatically updates the Minecraft server's whitelist through RCON.
+Each network's policy, under **Minecraft \> Networks**, decides what a link grants: **Auto-whitelist** whitelists a linked member on that network without review, and **Require staff approval** holds requests in a queue on the **Players** page for a decision. The whitelist is pushed to your servers by the Heimdall plugin, not through RCON.
 
-### Manual approval
-
-If you prefer manual review before adding members to the whitelist, enable the approval queue in **Minecraft \> Configuration**. Linked accounts enter a pending state and require staff approval before the whitelist entry is created.
+How members link, how many accounts each may hold, and how long a code stays valid are under **Minecraft \> Settings \> Who can link, and how**.
 
 ```text
 /import-whitelist
@@ -76,23 +103,22 @@ Channel filtering needs a Heimdall plugin build with ChatControl support on each
 
 ## RCON
 
-RCON lets you run commands on the Minecraft server directly from Discord. Configure the RCON connection in **Minecraft \> Configuration** with your server's RCON host, port, and password.
-
-Once configured, administrators can send commands through the dashboard status page or through dedicated bot commands. RCON access is limited to members with the appropriate Heimdall permission.
+RCON lets you run commands on the Minecraft server directly from Discord. Configure the connection in **Minecraft \> Settings \> RCON** with your server's RCON host, port, and password. RCON access is limited to members with the appropriate Heimdall permission.
 
 ## Minecraft server setup
 
-Navigate to **Minecraft \> Configuration** in the dashboard and enter:
+Servers are added under **Minecraft \> Networks**: add a server, install the Heimdall plugin on it, and claim it with the code the dashboard gives you. The setup walks through each step and ends by offering to post the account-linking panel.
 
-| Setting | Description |
+Guild-wide settings are under **Minecraft \> Settings**:
+
+| Card | What it holds |
 | --- | --- |
-| **Server address** | The Minecraft server's IP or hostname |
-| **Server port** | Default 25565 |
-| **RCON host** | RCON endpoint (often the same as the server address) |
-| **RCON port** | Default 25575 |
-| **RCON password** | The password set in your `server.properties` |
-| **Whitelist roles** | Discord roles that entitle a member to whitelist access |
-| **Require approval** | Whether linked accounts require manual approval |
+| **Server address** | The address shown to members when they are told to join |
+| **Who can link, and how** | Whether a link is required to join, self-unlinking, accounts per member, code lifetime, reminders |
+| **Role sync** | Discord roles mapped to groups in game |
+| **RCON** | Host, port and password for running commands |
+| **Player list command** | Which server or network `/playerlist` shows |
+| **Messages** | What players see in game, and a link to edit the account-linking panel |
 
 ## Offenses
 
