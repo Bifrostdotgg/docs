@@ -72,6 +72,24 @@ Odin can evaluate every message in configured channels and flag or remove conten
 
 Configure which channels are monitored, what the AI looks for, and what action to take (flag for review, delete, or warn) in **AI \> Text Moderation**.
 
+#### Recommended settings
+
+Text moderation starts from a set of recommended settings that we maintain and improve over time. Every setting you leave alone follows the recommendation, so when we publish a better version your server picks it up automatically.
+
+A setting you change becomes yours and is marked **Custom**. It keeps your value when the recommendations change. Press **Use recommended** next to it to go back to following the recommendation.
+
+When a new version changes a setting you have customised, the **New recommendations** card lists it. For each one you can **Use recommended** or **Keep mine**. Heimdall also posts a one-time notice in your escalation channel so the change does not go unnoticed.
+
+#### Feedback and improving the recommendations
+
+Every AI escalation in your log channel has 👍 and 👎 buttons, plus a comment button. Use them to tell Odin when a decision was right or wrong. That feedback is how the recommended settings get better.
+
+To improve the recommendations for every server, feedback is collected centrally together with the decision it is about. Before anything leaves your server, mentions, user IDs and the author's names are removed from the message, and the author is identified only by a one-way code that cannot be turned back into a Discord ID. Messages that raise a wellbeing or self-harm concern are never sent. Feedback is kept for up to 24 months.
+
+<Note>
+Servers using their own OpenRouter key can opt out under **Improving recommended settings** on the text moderation page. Opting out also deletes the feedback your server has already sent. Servers on Heimdall's managed AI cannot opt out, because the recommendations they rely on are built from this feedback.
+</Note>
+
 ### Image Moderation
 
 When enabled, Odin analyses images attached to messages in monitored channels. Configure sensitivity thresholds and the action to take when a rule violation is detected in **AI \> Image Moderation**.
