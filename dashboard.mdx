@@ -45,6 +45,26 @@ The left sidebar lists every available plugin. Each entry links to that plugin's
 
 The sidebar is split into groups matching the sections in this documentation: Moderation, Support, Community, Voice, Games, Integrations, AI, and Utilities.
 
+## Panels posted in more than one channel
+
+A panel is a message with buttons that members press, such as a ticket opener, a role button panel or the Minecraft account linking panel. You can post the same panel in as many channels as you like. Posting it in a new channel adds a copy there. It never moves or deletes the copies you already have.
+
+When you post a panel, the post dialog shows a **Posted in** list with every copy Heimdall knows about. Each row shows the channel, when the copy was posted and by whom, and its state:
+
+| State | Meaning | What you can do |
+| --- | --- | --- |
+| **Live** | The message is in the channel | **Refresh** updates it to the current wording. **Delete** removes it from the channel |
+| **Deleted** | Someone deleted the message in Discord | **Post again** puts it back in the same channel. **Remove from list** forgets it |
+| **Can't reach** | Heimdall cannot see the channel or read its history | **Remove from list** forgets it. Heimdall cannot tell whether the message is still there, so delete it by hand if it is |
+
+Changing a panel's wording updates every copy on the list.
+
+Heimdall only deletes messages it sent. If a listed copy turns out to be someone else's message, Delete leaves it in the channel and only takes it off the list.
+
+<Note>
+  Copies posted before Heimdall kept this list are not shown straight away. Each one is added the first time a member presses one of its buttons. Until then, Refresh and Delete cannot reach it, and you can delete it in Discord as usual.
+</Note>
+
 ## Permissions in the dashboard
 
 Your access to dashboard sections depends on what permissions your Discord roles have been granted. If you cannot see a section, you either do not have the relevant permission or the plugin has not been enabled. Administrators with the Discord **Administrator** permission always have full access.
