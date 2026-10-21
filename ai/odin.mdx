@@ -54,7 +54,8 @@ Odin re-checks every imported page once a week. If the page has not changed, not
 
 - **Your edits are kept.** Once you edit an entry's content by hand, Odin never copies the page over it. If the page changes afterwards, the entry is marked **Page changed since your edit**, and you choose **Replace with new version** or **Keep my version**.
 - **Removed pages are flagged, never deleted.** An entry whose page returns "not found" is marked **Page missing**. After two weekly checks in a row it is left out of answers, so Odin stops quoting a page the site took down. It comes back on its own if the page returns. To keep using it anyway, edit the entry and clear its source URL.
-- **Watch a site for new pages.** Every deep-crawled site is listed under **Crawled sites**. Turn on its watch toggle and Odin crawls it weekly and imports up to 25 pages that are not in the knowledge base yet. Finding pages costs no tokens; tidying up each new one does.
+- **Watch a site for new pages.** Every deep-crawled site is listed under **Crawled sites**. Turn on its watch toggle and Odin crawls it weekly and imports up to 25 pages that are not in the knowledge base yet. Finding pages costs no tokens; tidying up each new one does. A page the AI finds nothing worth keeping on, such as a login page, is remembered and not looked at again until its content changes.
+- **Pages that change on every visit are checked less often.** Some pages change every time they are loaded, for example because they show the current time. After three weekly checks in a row that found a change, the gap between checks doubles each time, up to every eight weeks, so such a page does not cost tokens every week.
 
 Use the **Needs attention** filter to see every entry with a missing page, a page that changed since your edit, or the same page imported twice.
 
