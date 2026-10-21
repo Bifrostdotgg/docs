@@ -50,7 +50,7 @@ Importing a page that is already in the knowledge base does not create a second 
 
 ### Keeping entries up to date
 
-Odin re-checks every imported page once a week. If the page has not changed, nothing happens and no tokens are used. If it has, the entry is updated from the page, using this server's AI tokens for the pages that need tidying. The usage page lists this separately as **Knowledgebase Upkeep**. Turn it off with **Keep imported pages up to date** at the bottom of the knowledge base page.
+Odin re-checks every imported page once a week. If the page has not changed, nothing happens and no tokens are used. If it has, the entry is updated from the page, using this server's AI tokens for the pages that need tidying. If the AI cannot tidy the new version, for example because the server is out of AI tokens, the entry is left exactly as it was and tried again later, rather than replaced with untidied page text. The usage page lists this separately as **Knowledgebase Upkeep**. Turn it off with **Keep imported pages up to date** at the bottom of the knowledge base page.
 
 - **Your edits are kept.** Once you edit an entry's content by hand, Odin never copies the page over it. If the page changes afterwards, the entry is marked **Page changed since your edit**, and you choose **Replace with new version** or **Keep my version**.
 - **Removed pages are flagged, never deleted.** An entry whose page returns "not found" is marked **Page missing**. After two weekly checks in a row it is left out of answers, so Odin stops quoting a page the site took down. It comes back on its own if the page returns. To keep using it anyway, edit the entry and clear its source URL.
