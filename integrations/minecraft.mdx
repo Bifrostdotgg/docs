@@ -4,6 +4,8 @@ description: "Linking Discord accounts to Minecraft profiles, managing the serve
 icon: "server"
 ---
 
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
 The Minecraft integration connects your Discord server to one or more Minecraft Java Edition servers. It provides account linking (tying a Discord user to their Minecraft username), whitelist management that syncs with Discord roles, RCON access for remote commands, and a live server status display.
 
 <Frame>
@@ -19,7 +21,7 @@ A link ties one Minecraft name to one Discord account. Members start one from Di
 The panel is a Discord message with **Link Account**, **Unlink Account** and **My Account** buttons. Post it in any of these ways:
 
 - The last step of Minecraft setup offers to post it.
-- **Settings \> Messages**, on the **Account linking panel**: **Post** sends it to a channel you pick. Posting into the channel it is already in updates that message; posting somewhere else moves it and removes the old one. You can also rewrite the panel's text there and keep its buttons.
+- <DashboardLink to="settings/messages">**Settings \> Messages**</DashboardLink>, on the **Account linking panel**: **Post** sends it to a channel you pick. Posting into the channel it is already in updates that message; posting somewhere else moves it and removes the old one. You can also rewrite the panel's text there and keep its buttons.
 - `/minecraft-setup panel` from Discord.
 
 Members can also start from a slash command:
@@ -46,13 +48,13 @@ On a network that lets anyone join, **/linkdiscord** needs plugin 3.0.0-rc.13 or
 
 ### Letting anyone join
 
-Each network's policy, on its page under **Minecraft \> Networks**, has **Anyone can join, linking is optional**. With it on, nobody is turned away, the whitelist is switched off on that network's servers, and players who want their Discord roles in game link as above. The rest of the network policy takes effect again when you turn it off.
+Each network's policy, on its page under <DashboardLink to="minecraft/networks">**Minecraft \> Networks**</DashboardLink>, has **Anyone can join, linking is optional**. With it on, nobody is turned away, the whitelist is switched off on that network's servers, and players who want their Discord roles in game link as above. The rest of the network policy takes effect again when you turn it off.
 
 Once linked, Heimdall can:
 
 - Whitelist the member, automatically or after staff approval, depending on the network's policy
 - Remove them from the whitelist if they lose access
-- Sync their Discord roles to groups in game (**Minecraft \> Settings \> Role sync**)
+- Sync their Discord roles to groups in game (<DashboardLink to="minecraft/settings">**Minecraft \> Settings \> Role sync**</DashboardLink>)
 - Display their Minecraft username alongside their Discord profile in the customer portal
 
 ### Linked role
@@ -69,7 +71,7 @@ The bot needs the **Manage Roles** permission and a role above the linked role. 
 
 ## Whitelist management
 
-Navigate to **Minecraft \> Players** in the dashboard to view the full whitelist status - who is linked, who is pending verification, and who has been manually approved or denied.
+Navigate to <DashboardLink to="minecraft/players">**Minecraft \> Players**</DashboardLink> in the dashboard to view the full whitelist status - who is linked, who is pending verification, and who has been manually approved or denied.
 
 ### Automatic whitelisting and approval
 
@@ -96,7 +98,7 @@ The dashboard **Minecraft \> Status** page shows the same information in a conti
 
 ## Chat bridge
 
-The chat bridge relays in-game chat into Discord channels, and Discord messages back into the game. Set it up on **Minecraft \> Chat Bridge** by adding a mapping: pick a Discord channel, which servers it talks to (one server, a network, or all servers), and which way messages travel. Each mapping also chooses whether chat, joins, leaves and deaths are relayed.
+The chat bridge relays in-game chat into Discord channels, and Discord messages back into the game. Set it up on <DashboardLink to="minecraft/bridge">**Minecraft \> Chat Bridge**</DashboardLink> by adding a mapping: pick a Discord channel, which servers it talks to (one server, a network, or all servers), and which way messages travel. Each mapping also chooses whether chat, joins, leaves and deaths are relayed.
 
 Nothing is stored. Messages are relayed and then discarded, on both the bot and the Minecraft server.
 
@@ -192,7 +194,7 @@ In-game permission nodes are `heimdall.punishments.<action>`, one per action: ba
 - **Screens** - the MiniMessage text a player sees on ban, mute, kick and warn, with `{reason}`, `{player}`, and `{appeal_url}` tokens.
 - **Minecraft appeal form** - pick a Minecraft-specific appeal form to fill in `{appeal_url}` on screens. Use a form separate from the Discord infraction appeal form.
 - **Import existing punishments** - one button asks the connected server to run its LiteBans, AdvancedBan, BanManager and vanilla `banned-players.json` importers in a single pass, skipping whichever it does not find. IP addresses are hashed on that server before anything reaches Heimdall. Imported rows are written straight into the punishment store: importing itself never immediately pushes an enforcement update, so it does not kick a player who happens to be online and never overrides a punishment that is already active for the same target, but a row that is imported still active and unexpired is picked up by the normal sync afterward like anything else.
-- **Public bans page** - now under **Cases \> Bans page**; this card links there. See below.
+- **Public bans page** - now under <DashboardLink to="cases/bans-page">**Cases \> Bans page**</DashboardLink>; this card links there. See below.
 - **Enforcement settings** - root command aliases, silent-by-default, and the blocked-command list a mute enforces are guild-level punishment settings saved here, gated by `minecraft.punishments.manage`, not on the general Minecraft configuration page.
 - **Browse punishments** - a filterable, paginated list. Filters are type, status, target (name or UUID), issuer (staff name or Discord ID), and source. Status defaults to Active and can be narrowed to Expired, Revoked, Inactive, or All: a punishment counts as Expired the moment its duration runs out, whether or not a connected server has synced since, Revoked means a person lifted it, and Inactive covers one-shot rows such as a kick or an imported row that arrived already ended. A Load more button pages through further results, and revoking a row here uses the same `minecraft.punishments.revoke` key as `/mc-punish unban` / `unmute`.
 - **Issue** - a quick form to ban a player without leaving the dashboard.

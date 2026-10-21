@@ -4,6 +4,8 @@ description: "Creating automated moderation rules that enforce server standards 
 icon: "robot"
 ---
 
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
 Automod lets you define rules that the bot evaluates against every message in your server. When a message matches a rule, the bot can delete it, warn the sender, apply a mute, or any combination of actions you configure. Rules run in the background with no staff involvement required.
 
 <Frame>
@@ -18,7 +20,7 @@ Rules are evaluated in order. A single message can match multiple rules, each ap
 
 ## Creating a rule
 
-Navigate to **Moderation \> Rules** in the dashboard and click **New Rule**.
+Navigate to <DashboardLink to="moderation/rules">**Moderation \> Rules**</DashboardLink> in the dashboard and click **New Rule**.
 
 ### Trigger types
 

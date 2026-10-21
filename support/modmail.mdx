@@ -4,6 +4,8 @@ description: "DM-based support threads that route member messages to your staff 
 icon: "envelope"
 ---
 
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
 Modmail gives members a private line to your staff team through Discord direct messages. When a member DMs the bot, a thread is created in a designated forum channel on your server. Staff respond in that thread and the bot relays their messages back to the member via DM. The member and staff never see each other's servers in the process - from the member's perspective they are having a private conversation with the bot.
 
 <Frame>
@@ -20,7 +22,7 @@ Members cannot tell which staff member is handling their case unless staff choos
 
 ### Basic configuration
 
-Navigate to **Modmail \> Configuration** in the dashboard. The key settings are:
+Navigate to <DashboardLink to="modmail/config">**Modmail \> Configuration**</DashboardLink> in the dashboard. The key settings are:
 
 | Setting | Description |
 | --- | --- |
@@ -32,11 +34,11 @@ Navigate to **Modmail \> Configuration** in the dashboard. The key settings are:
 
 ### Categories
 
-Modmail categories let you route different types of DMs to different forum channels or staff teams. Navigate to **Modmail \> Categories** and create categories for different support areas. When a member opens a modmail, they are asked to choose a category if more than one is configured.
+Modmail categories let you route different types of DMs to different forum channels or staff teams. Navigate to <DashboardLink to="modmail/categories">**Modmail \> Categories**</DashboardLink> and create categories for different support areas. When a member opens a modmail, they are asked to choose a category if more than one is configured.
 
 ### Auto-responses
 
-Auto-responses are pre-written messages the bot sends automatically based on keywords in the member's opening message. Navigate to **Modmail \> Auto-responses** to configure these. Auto-responses do not close the thread - they provide initial information while staff take over.
+Auto-responses are pre-written messages the bot sends automatically based on keywords in the member's opening message. Navigate to <DashboardLink to="modmail/auto-responses">**Modmail \> Auto-responses**</DashboardLink> to configure these. Auto-responses do not close the thread - they provide initial information while staff take over.
 
 ## Slash commands
 
@@ -68,11 +70,11 @@ Staff notes are messages posted in the modmail thread that are visible only to s
 
 Openers are buttons or panels posted in a channel that members click to start a modmail thread without DMing the bot directly. This is useful for servers where members may not know to DM Heimdall, or where you want to place a "Contact Staff" button in a specific channel.
 
-Navigate to **Modmail > Openers** and click **New Opener**. Configure the button label, the category it opens, and any opening message sent to the member. Once configured, click **Post** to have the bot place the opener panel in the channel of your choice.
+Navigate to <DashboardLink to="modmail/openers">**Modmail > Openers**</DashboardLink> and click **New Opener**. Configure the button label, the category it opens, and any opening message sent to the member. Once configured, click **Post** to have the bot place the opener panel in the channel of your choice.
 
 ## Quotas
 
-Staff quotas set limits on how many concurrent open threads a staff member can handle. When a staff member reaches their quota, new threads in categories assigned to them are either queued or routed to other available staff. Configure quotas in **Modmail > Quotas**.
+Staff quotas set limits on how many concurrent open threads a staff member can handle. When a staff member reaches their quota, new threads in categories assigned to them are either queued or routed to other available staff. Configure quotas in <DashboardLink to="modmail/quotas">**Modmail > Quotas**</DashboardLink>.
 
 ## Required permissions
 

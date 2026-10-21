@@ -4,12 +4,14 @@ description: "Response time metrics, ticket volume, staff performance tracking, 
 icon: "chart-line"
 ---
 
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
 Both the tickets and modmail plugins include an analytics layer that tracks volume, response times, and staff activity. Analytics give server administrators objective data on how well support is running and which staff members are contributing most.
 
 ## Accessing analytics
 
-- Ticket analytics: **Tickets \> Analytics**
-- Modmail analytics: **Modmail \> Analytics**
+- Ticket analytics: <DashboardLink to="tickets/analytics">**Tickets \> Analytics**</DashboardLink>
+- Modmail analytics: <DashboardLink to="modmail/analytics">**Modmail \> Analytics**</DashboardLink>
 
 Both sections have the same structure and metric types.
 
@@ -36,7 +38,7 @@ Both sections have the same structure and metric types.
 | **Average handle time** | Total duration from open to close |
 | **SLA compliance** | Percentage of tickets where first response occurred within your configured target |
 
-SLA targets are configured in **Tickets \> Configuration** or **Modmail \> Configuration** as a duration (e.g. 2 hours for first response).
+SLA targets are configured in <DashboardLink to="tickets/config">**Tickets \> Configuration**</DashboardLink> or <DashboardLink to="modmail/config">**Modmail \> Configuration**</DashboardLink> as a duration (e.g. 2 hours for first response).
 
 ### Staff performance
 
@@ -63,7 +65,7 @@ Navigate to **Tickets \> Configuration** or **Modmail \> Configuration** and ena
 
 ### Viewing reviews
 
-Reviews appear in **Tickets \> Reviews** and **Modmail \> Analytics**. The reviews page shows each rating, the associated ticket, and any comments left by the member.
+Reviews appear in <DashboardLink to="tickets/reviews">**Tickets \> Reviews**</DashboardLink> and **Modmail \> Analytics**. The reviews page shows each rating, the associated ticket, and any comments left by the member.
 
 ## Date range filtering
 
