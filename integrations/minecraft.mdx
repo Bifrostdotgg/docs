@@ -166,13 +166,23 @@ Every server has three modes, set on **Minecraft \> Punishments**:
 
 ### Cutover from LiteBans
 
-If you are running LiteBans today, move over in this order:
+If you are running LiteBans today, move over in this order. Every server needs Heimdall plugin 3.0.0-rc.22 or newer for the preview and for warns to be shown once.
 
-1. Switch the mode to **Hook**. Staff see history in the dashboard while LiteBans keeps enforcing.
-2. Run the import from the Punishments tab. The connected plugin reads LiteBans, AdvancedBan, BanManager and vanilla `banned-players.json` in one pass, whichever are present, and hashes IPs on the server before anything is uploaded.
-3. Switch the mode to **Replace**.
-4. Remove the `LiteBans.jar` (or whichever plugin you were running).
-5. Optionally turn on root command aliases so the network's own `ban`, `mute` and similar commands register as Heimdall's own commands, rather than only the `hd`-prefixed ones.
+1. **Hook mode.** Switch the mode to **Hook**. Staff see history in the dashboard while LiteBans keeps enforcing, and every ban, mute or lift LiteBans makes from now on is copied to Heimdall.
+2. **Permissions.** Grant the `heimdall.punishments.*` nodes to your staff ranks (see [In-game commands](#in-game-commands)), and `heimdall.admin` to whoever runs the import.
+3. **Back up** the LiteBans database. It is also your way back.
+4. **Preview the import.** Press **Preview import** on the Punishments tab, or run `hd import --dry-run` in the server console (or `/hd import --dry-run` in game). The preview reads everything a real import would and writes nothing. It reports:
+   - how many bans, IP bans and mutes would still be in force;
+   - how many rows match something Heimdall already copied in hook mode;
+   - how many Heimdall still enforces although LiteBans has lifted them. The import lifts those to match.
+   - how many Heimdall holds that LiteBans does not, such as ones issued from Discord. Check these before you switch, because Heimdall enforces them too in replace mode.
+5. **Run the import.** Use **Run import**, or run `hd import` in the server console (`hdp import` on the proxy). Run it on each server that has its own LiteBans database. A failed batch is named in the result, and running it again carries on from there.
+6. **Preview again.** It should find nothing new to import and nothing to lift. If it does, run the import again before you go further.
+7. **Switch the mode to Replace** during a quiet moment, with staff told to hold off on punishment commands.
+8. **Stop each server and take `LiteBans.jar` out.** Keep the jar and its database until you are sure, since putting it back and switching to hook mode is the rollback.
+9. Optionally turn on root command aliases, so `ban`, `mute` and similar register as Heimdall's own commands as well as the `hd`-prefixed ones.
+
+Imported warnings are history only. LiteBans already showed them to the player, so Heimdall does not show them again. A warning issued in Heimdall is shown to the player once: straight away if they are online, otherwise when they next join. The proxy shows it, or the server itself if it has no proxy in front of it.
 
 Servers that never want the native engine can stay on offenses-only indefinitely; that is a supported end state, not a step on the way to replace.
 
@@ -193,7 +203,7 @@ In-game permission nodes are `heimdall.punishments.<action>`, one per action: ba
 - **Mode** - the offenses-only / hook / replace switch above.
 - **Screens** - the MiniMessage text a player sees on ban, mute, kick and warn, with `{reason}`, `{player}`, and `{appeal_url}` tokens.
 - **Minecraft appeal form** - pick a Minecraft-specific appeal form to fill in `{appeal_url}` on screens. Use a form separate from the Discord infraction appeal form.
-- **Import existing punishments** - one button asks the connected server to run its LiteBans, AdvancedBan, BanManager and vanilla `banned-players.json` importers in a single pass, skipping whichever it does not find. IP addresses are hashed on that server before anything reaches Heimdall. Imported rows are written straight into the punishment store: importing itself never immediately pushes an enforcement update, so it does not kick a player who happens to be online and never overrides a punishment that is already active for the same target, but a row that is imported still active and unexpired is picked up by the normal sync afterward like anything else.
+- **Import existing punishments** - **Run import** asks the connected server to run its LiteBans, AdvancedBan, BanManager and vanilla `banned-players.json` importers in a single pass, skipping whichever it does not find. **Preview import** does the same reading and writes nothing, so you can see what a run would do first. IP addresses are hashed on that server before anything reaches Heimdall. Importing never pushes an enforcement update by itself, so it does not kick a player who happens to be online, but a row imported still active is enforced by the normal sync afterwards. The card for each run shows what came in, what is still in force, and anything lifted to match LiteBans.
 - **Public bans page** - now under <DashboardLink to="cases/bans-page">**Cases \> Bans page**</DashboardLink>; this card links there. See below.
 - **Enforcement settings** - root command aliases, silent-by-default, and the blocked-command list a mute enforces are guild-level punishment settings saved here, gated by `minecraft.punishments.manage`, not on the general Minecraft configuration page.
 - **Browse punishments** - a filterable, paginated list. Filters are type, status, target (name or UUID), issuer (staff name or Discord ID), and source. Status defaults to Active and can be narrowed to Expired, Revoked, Inactive, or All: a punishment counts as Expired the moment its duration runs out, whether or not a connected server has synced since, Revoked means a person lifted it, and Inactive covers one-shot rows such as a kick or an imported row that arrived already ended. A Load more button pages through further results, and revoking a row here uses the same `minecraft.punishments.revoke` key as `/mc-punish unban` / `unmute`.
