@@ -24,8 +24,8 @@ HeimdallBot only fetches a page because a Discord server admin pointed it there.
 ## How it behaves
 
 - **It honours robots.txt** ([RFC 9309](https://www.rfc-editor.org/rfc/rfc9309)) for every knowledge base fetch, redirects included. A `HeimdallBot` group applies if you have one, otherwise your `*` group does.
-  - If robots.txt returns a 4xx, there is no robots.txt and every page may be fetched.
-  - If it returns a 5xx or times out, HeimdallBot fetches nothing from your site that time.
+  - If robots.txt returns a 4xx, there is no robots.txt and every page may be fetched. The exception is `429 Too Many Requests`, which HeimdallBot takes as a reason to fetch nothing from your site that time.
+  - If it returns a 5xx or times out, HeimdallBot tries once more, then fetches nothing from your site that time.
 - **It spaces its requests out.** It sends at most two requests a second to one site, and fewer if your robots.txt sets a `Crawl-delay`. A delay longer than 10 seconds is treated as 10.
 - **It honours `noindex` and `nofollow` while crawling.** That covers `<meta name="robots">`, `<meta name="HeimdallBot">` and the `X-Robots-Tag` header. Links marked `rel="nofollow"`, `ugc` or `sponsored` are never followed.
 - **A deep crawl stays small.** It stays on the one site, visits at most 100 pages, and stops after 5 minutes.
