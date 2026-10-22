@@ -4,6 +4,8 @@ description: "Census API lookups, outfit management, and real-time population tr
 icon: "crosshairs"
 ---
 
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
 The PlanetSide 2 integration connects your Discord server to the Daybreak Census API, giving members access to character lookups, outfit management tools, and live server population data directly inside Discord.
 
 <Frame>
@@ -52,7 +54,7 @@ Displays information about an outfit - membership count, creation date, faction,
 /ps2-promote <member> <rank>
 ```
 
-Promotes a member within the outfit. Requires appropriate outfit officer rank and RCON-equivalent API permissions configured in **PlanetSide \> Configuration**.
+Promotes a member within the outfit. Requires appropriate outfit officer rank and RCON-equivalent API permissions configured in <DashboardLink to="planetside/config">**PlanetSide \> Configuration**</DashboardLink>.
 
 ## Server population
 
@@ -62,7 +64,7 @@ Promotes a member within the outfit. Requires appropriate outfit officer rank an
 
 Displays the current population breakdown across all three factions on the specified server (or your configured default server). Updated from the Census real-time stream.
 
-The dashboard **PlanetSide \> Status** page displays population data in a continuously updating format.
+The dashboard <DashboardLink to="planetside/status">**PlanetSide \> Status**</DashboardLink> page displays population data in a continuously updating format.
 
 ## Setup
 

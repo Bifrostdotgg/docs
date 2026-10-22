@@ -4,6 +4,8 @@ description: "Connecting your Tebex store to Discord - viewing transactions, iss
 icon: "store"
 ---
 
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
 The Tebex integration links your Tebex game store to Discord. Staff can look up transactions, issue gift cards, and process manual claims without leaving Discord. Members can check the status of their own purchases.
 
 <Frame>
@@ -12,7 +14,7 @@ The Tebex integration links your Tebex game store to Discord. Staff can look up 
 
 ## Setup
 
-Navigate to **Tebex \> Configuration** in the dashboard and enter your Tebex API key. The key is found in your Tebex store's **Settings \> API Keys** section.
+Navigate to <DashboardLink to="tebex/config">**Tebex \> Configuration**</DashboardLink> in the dashboard and enter your Tebex API key. The key is found in your Tebex store's **Settings \> API Keys** section.
 
 ```text
 /tebex
@@ -34,7 +36,7 @@ Looks up a specific transaction by its Tebex transaction ID. Returns:
 - Payment amount and currency
 - Current transaction status
 
-Navigate to **Tebex \> Transactions** in the dashboard to browse transactions, search by buyer, and filter by date range or package.
+Navigate to <DashboardLink to="tebex/transactions">**Tebex \> Transactions**</DashboardLink> in the dashboard to browse transactions, search by buyer, and filter by date range or package.
 
 ## Gift cards
 
@@ -52,11 +54,11 @@ Gift card codes are generated through the Tebex API and can be distributed to me
 
 ## Claims
 
-Claims allow you to manually grant packages to members. Navigate to **Tebex \> Claims** in the dashboard or use the Tebex slash command to manage pending claims.
+Claims allow you to manually grant packages to members. Navigate to <DashboardLink to="tebex/claims">**Tebex \> Claims**</DashboardLink> in the dashboard or use the Tebex slash command to manage pending claims.
 
 ## Role Mappings
 
-Role mappings automatically assign Discord roles when a member purchases a specific Tebex package. Navigate to **Tebex \> Role Mappings** to configure them.
+Role mappings automatically assign Discord roles when a member purchases a specific Tebex package. Navigate to <DashboardLink to="tebex/mappings">**Tebex \> Role Mappings**</DashboardLink> to configure them.
 
 Each mapping defines:
 

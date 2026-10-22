@@ -4,6 +4,8 @@ description: "Viewing and managing a member's complete moderation record."
 icon: "clock-rotate-left"
 ---
 
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
 Every moderation action in Heimdall - whether issued by a staff member or triggered by an automod rule - creates an infraction record. The infraction history gives staff a complete picture of any member's moderation record, including the current active point total.
 
 <Frame>
@@ -22,7 +24,7 @@ Displays the member's cases directly in Discord, on Discord and on any linked Mi
 
 ### Via the dashboard
 
-Every infraction is also a [case](/moderation/cases). Navigate to **Cases \> All cases** in the dashboard, or open **Moderation \> Infractions**, which now takes you there. Search for a member and open them to see every case they have, on Discord and on any linked Minecraft account, with their current active point total.
+Every infraction is also a [case](/moderation/cases). Navigate to <DashboardLink to="cases/list">**Cases \> All cases**</DashboardLink> in the dashboard, or open **Moderation \> Infractions**, which now takes you there. Search for a member and open them to see every case they have, on Discord and on any linked Minecraft account, with their current active point total.
 
 ## Managing infractions
 

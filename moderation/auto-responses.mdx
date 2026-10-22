@@ -4,6 +4,8 @@ description: "Configuring keyword and AI-triggered automatic replies to member m
 icon: "reply"
 ---
 
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
 Auto-responses are automated replies that Heimdall posts when a member sends a message matching a configured pattern. Unlike automod rules, which enforce and punish, auto-responses simply reply - they are informational. Common uses include answering frequently asked questions, directing members to the right channel, or acknowledging a keyword with a helpful resource link.
 
 ## How auto-responses work
@@ -17,7 +19,7 @@ Matching works in two phases:
 
 ## Creating an auto-response
 
-Navigate to **Moderation > Auto-Responses** in the dashboard and click **New Auto-Response**.
+Navigate to <DashboardLink to="moderation/auto-responses">**Moderation > Auto-Responses**</DashboardLink> in the dashboard and click **New Auto-Response**.
 
 | Setting | Description |
 |---|---|

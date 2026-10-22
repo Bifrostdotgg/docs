@@ -4,6 +4,8 @@ description: "Structured support ticket system with categories, staff assignment
 icon: "ticket"
 ---
 
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
 The ticket system creates private Discord threads for individual support requests. Members open a ticket, staff respond inside the thread, and the ticket is closed when the issue is resolved. Configuration in the dashboard defines which categories of support are available, who can open tickets, and how the system behaves automatically.
 
 <Frame>
@@ -20,7 +22,7 @@ When the issue is resolved, either the member or a staff member closes the ticke
 
 ### Creating categories
 
-Navigate to **Tickets \> Categories** in the dashboard and click **New Category**. Each category defines:
+Navigate to <DashboardLink to="tickets/categories">**Tickets \> Categories**</DashboardLink> in the dashboard and click **New Category**. Each category defines:
 
 | Setting | Description |
 | --- | --- |
@@ -56,11 +58,11 @@ Two settings decide when a reply counts as a sign-off:
 | **Ask the opener when they look done (AI)** | [Odin AI](/ai/odin) reads the end of the conversation. Only runs on servers with AI set up, and sends the recent ticket messages to the AI provider | On |
 | **Ask the opener when they look done (length)** | Everything the member said since staff last replied is under the character limit, with no question mark and no attachment. Also used when the AI check can't run | Off |
 
-The question's wording can be changed under **Tickets \> Configuration** as the **Resolution Check** message.
+The question's wording can be changed under <DashboardLink to="tickets/config">**Tickets \> Configuration**</DashboardLink> as the **Resolution Check** message.
 
 ### Configuring openers
 
-Openers are the buttons or select menus members use to create tickets. Navigate to **Tickets \> Openers** and click **New Opener**. After configuring the opener, click **Post** to have the bot send the opener panel to a channel of your choice.
+Openers are the buttons or select menus members use to create tickets. Navigate to <DashboardLink to="tickets/openers">**Tickets \> Openers**</DashboardLink> and click **New Opener**. After configuring the opener, click **Post** to have the bot send the opener panel to a channel of your choice.
 
 An opener can present a single "Open Ticket" button or a select menu listing multiple categories, depending on how you configure it.
 
@@ -90,13 +92,13 @@ If the AI plugin is enabled and connected to your ticket categories, Heimdall ca
 
 ## Reviews
 
-Members can optionally be prompted to leave a satisfaction review when a ticket is closed. The review prompt asks the member to rate their experience and optionally leave a comment. Scores and comments are aggregated in the analytics dashboard under **Tickets > Reviews** and can be filtered by category and date range.
+Members can optionally be prompted to leave a satisfaction review when a ticket is closed. The review prompt asks the member to rate their experience and optionally leave a comment. Scores and comments are aggregated in the analytics dashboard under <DashboardLink to="tickets/reviews">**Tickets > Reviews**</DashboardLink> and can be filtered by category and date range.
 
 Enable reviews in **Tickets > Configuration**. You can configure whether the review prompt is sent for all closures or only when closed by staff.
 
 ## Auto-Responses
 
-Ticket auto-responses are pre-written replies that fire automatically when a ticket is opened if the opening message matches a trigger. Navigate to **Tickets > Auto-Responses** to configure them.
+Ticket auto-responses are pre-written replies that fire automatically when a ticket is opened if the opening message matches a trigger. Navigate to <DashboardLink to="tickets/auto-responses">**Tickets > Auto-Responses**</DashboardLink> to configure them.
 
 Each auto-response has:
 
@@ -111,7 +113,7 @@ Auto-responses post as the bot inside the thread. They do not close the ticket -
 
 ## Quotas
 
-Quotas limit how many open tickets an individual staff member can be assigned to at once. Navigate to **Tickets > Quotas** to configure per-role or per-user limits.
+Quotas limit how many open tickets an individual staff member can be assigned to at once. Navigate to <DashboardLink to="tickets/quotas">**Tickets > Quotas**</DashboardLink> to configure per-role or per-user limits.
 
 When a staff member reaches their quota:
 

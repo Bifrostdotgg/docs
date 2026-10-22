@@ -4,6 +4,8 @@ description: "Locking channels, applying per-channel bans, and preventing ban ev
 icon: "lock"
 ---
 
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
 Heimdall provides three channel-level enforcement tools: channel locks, channel bans, and leave-ban tracking. These work alongside server-wide bans to handle situations where a full server ban is not warranted but access to specific channels or re-entry to the server needs to be controlled.
 
 ## Locking and unlocking channels
@@ -23,7 +25,7 @@ Locking a channel prevents members without explicit override roles from sending 
 
 When locked, a system message is optionally posted in the channel to inform members. When unlocked, another message indicates that the channel is open again.
 
-Locked channels are tracked in the dashboard under **Moderation > Locked Channels**, where staff can see all currently locked channels and unlock them from the interface.
+Locked channels are tracked in the dashboard under <DashboardLink to="moderation/locked-channels">**Moderation > Locked Channels**</DashboardLink>, where staff can see all currently locked channels and unlock them from the interface.
 
 ## Channel bans
 
@@ -40,7 +42,7 @@ Bans a specific member from one channel, removing their ability to read or write
 | `reason` | No | The reason for the ban |
 | `duration` | No | How long the channel ban lasts (e.g. `7d`). Defaults to permanent. |
 
-Channel bans work by modifying the channel's permission overwrites. When a duration expires, the overwrite is automatically removed. You can view and manage active channel bans in the dashboard under **Moderation > Channel Bans**.
+Channel bans work by modifying the channel's permission overwrites. When a duration expires, the overwrite is automatically removed. You can view and manage active channel bans in the dashboard under <DashboardLink to="moderation/channel-bans">**Moderation > Channel Bans**</DashboardLink>.
 
 ## Leave-bans
 
@@ -48,7 +50,7 @@ Leave-bans handle a specific evasion technique: a member receives a warning or m
 
 ### Configuring leave-bans
 
-Navigate to **Moderation > Settings** and enable **Leave-Ban**. Configure:
+Navigate to <DashboardLink to="moderation/settings">**Moderation > Settings**</DashboardLink> and enable **Leave-Ban**. Configure:
 
 - **Infraction window** - how recently a member must have received an infraction for the leave-ban rule to apply
 - **Ban duration** - how long the automatic re-join ban lasts
