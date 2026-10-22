@@ -37,6 +37,32 @@ Supported formats:
 
 Once uploaded, the document is processed and indexed. Odin begins referencing it in answers within a few minutes.
 
+### Importing from the web
+
+Instead of pasting content, you can bring pages in straight from a website:
+
+- **Import URLs** fetches the pages you list, one per line, and tidies each into its own entry.
+- **Deep Crawl** follows the links on a site, up to the page limit you set, and imports every page with real content.
+
+Both use AI tokens to tidy up each page. A site that publishes markdown versions of its pages (most documentation platforms do) is stored as written and costs nothing to tidy.
+
+Importing a page that is already in the knowledge base does not create a second copy. Pages are matched by address: an unchanged page is skipped without using any tokens, and a changed page updates its existing entry, keeping the title and tags you gave it. **Preview Pages** shows how many pages are new, changed and unchanged before you commit, so re-crawling a site you already imported only costs tokens for what changed.
+
+### Keeping entries up to date
+
+Odin re-checks every imported page once a week. If the page has not changed, nothing happens and no tokens are used. If it has, the entry is updated from the page, using this server's AI tokens for the pages that need tidying. If the AI cannot tidy the new version, for example because the server is out of AI tokens, the entry is left exactly as it was and tried again later, rather than replaced with untidied page text. The usage page lists this separately as **Knowledgebase Upkeep**. Turn it off with **Keep imported pages up to date** at the bottom of the knowledge base page.
+
+- **Your edits are kept.** Once you edit an entry's content by hand, Odin never copies the page over it. If the page changes afterwards, the entry is marked **Page changed since your edit**, and you choose **Replace with new version** or **Keep my version**.
+- **Removed pages are flagged, never deleted.** An entry whose page returns "not found" is marked **Page missing**. After two weekly checks in a row it is left out of answers, so Odin stops quoting a page the site took down. It comes back on its own if the page returns. To keep using it anyway, edit the entry and clear its source URL.
+- **Watch a site for new pages.** Every deep-crawled site is listed under **Crawled sites**. Turn on its watch toggle and Odin crawls it weekly and imports up to 25 pages that are not in the knowledge base yet. Finding pages costs no tokens; tidying up each new one does. A page the AI finds nothing worth keeping on, such as a login page, is remembered and not looked at again until its content changes.
+- **Pages that change on every visit are checked less often.** Some pages change every time they are loaded, for example because they show the current time. After three weekly checks in a row that found a change, the gap between checks doubles each time, up to every eight weeks, so such a page does not cost tokens every week.
+
+Use the **Needs attention** filter to see every entry with a missing page, a page that changed since your edit, or the same page imported twice.
+
+<Note>
+An entry the AI built out of several pages at once is marked **Not updated automatically**, because re-reading one of its pages would replace it with a fraction of itself. Re-crawl the site to update it.
+</Note>
+
 ### Managing documents
 
 The knowledge base page lists all documents with their creation date and status. You can:
