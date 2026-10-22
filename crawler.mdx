@@ -18,7 +18,7 @@ HeimdallBot only fetches a page because a Discord server admin pointed it there.
 
 - **Knowledge base imports.** A server admin imports a page or deep-crawls a site so that [Odin](/ai/odin), Heimdall's AI assistant, can answer their members' questions from it. Usually it is their own documentation, wiki or help centre.
 - **Weekly re-checks.** Each page imported that way is checked about once a week to keep the copy current. The check sends `If-None-Match` and `If-Modified-Since`, so an unchanged page usually costs you one bodiless `304`.
-- **Watched sites.** An admin can ask for a site they imported to be checked weekly for new pages. That is at most 25 new pages per site per week.
+- **Watched sites.** An admin can ask for a site they imported to be watched for new pages. A watched site is re-crawled about once a week, visiting up to 100 pages, and at most 25 new pages are added each time.
 - **Link checks.** When someone posts a link in a server that uses the [attachment blocker](/utilities/attachment-blocker), Heimdall may look at that one page to tell whether it is a GIF or a video. It reads at most the first 256 KB, and remembers the answer for up to a day.
 
 ## How it behaves
@@ -26,7 +26,7 @@ HeimdallBot only fetches a page because a Discord server admin pointed it there.
 - **It honours robots.txt** ([RFC 9309](https://www.rfc-editor.org/rfc/rfc9309)) for every knowledge base fetch, redirects included. A `HeimdallBot` group applies if you have one, otherwise your `*` group does.
   - If robots.txt returns a 4xx, there is no robots.txt and every page may be fetched. The exception is `429 Too Many Requests`, which HeimdallBot takes as a reason to fetch nothing from your site that time.
   - If it returns a 5xx or times out, HeimdallBot tries once more, then fetches nothing from your site that time.
-- **It spaces its requests out.** It sends at most two requests a second to one site, and fewer if your robots.txt sets a `Crawl-delay`. A delay longer than 10 seconds is treated as 10.
+- **It spaces its requests out.** Each crawl, import or weekly check sends at most two requests a second to one site, and fewer if your robots.txt sets a `Crawl-delay`. Two of them running at once, for example two Discord servers importing your site at the same moment, are paced separately. A delay longer than 10 seconds is treated as 10.
 - **It honours `noindex` and `nofollow` while crawling.** That covers `<meta name="robots">`, `<meta name="HeimdallBot">` and the `X-Robots-Tag` header. Links marked `rel="nofollow"`, `ugc` or `sponsored` are never followed.
 - **A deep crawl stays small.** It stays on the one site, visits at most 100 pages, and stops after 5 minutes.
 - **It may ask for a Markdown version.** On documentation sites that serve one, such as Mintlify, GitBook and Docusaurus, it asks for the page's `.md` version first. This is usually smaller than the HTML.
