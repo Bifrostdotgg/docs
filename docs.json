@@ -114,7 +114,8 @@
               "utilities/ping",
               "utilities/selfmute",
               "utilities/clock",
-              "utilities/affiliate"
+              "utilities/affiliate",
+              "crawler"
             ]
           }
         ]
