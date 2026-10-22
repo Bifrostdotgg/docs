@@ -171,12 +171,12 @@ If you are running LiteBans today, move over in this order. Every server needs H
 1. **Hook mode.** Switch the mode to **Hook**. Staff see history in the dashboard while LiteBans keeps enforcing, and every ban, mute or lift LiteBans makes from now on is copied to Heimdall.
 2. **Permissions.** Grant the `heimdall.punishments.*` nodes to your staff ranks (see [In-game commands](#in-game-commands)), and `heimdall.admin` to whoever runs the import.
 3. **Back up** the LiteBans database. It is also your way back.
-4. **Preview the import.** Press **Preview import** on the Punishments tab, or run `/hd import --dry-run` on the server. The preview reads everything a real import would and writes nothing. It reports:
+4. **Preview the import.** Press **Preview import** on the Punishments tab, or run `hd import --dry-run` in the server console (or `/hd import --dry-run` in game). The preview reads everything a real import would and writes nothing. It reports:
    - how many bans, IP bans and mutes would still be in force;
    - how many rows match something Heimdall already copied in hook mode;
    - how many Heimdall still enforces although LiteBans has lifted them. The import lifts those to match.
    - how many Heimdall holds that LiteBans does not, such as ones issued from Discord. Check these before you switch, because Heimdall enforces them too in replace mode.
-5. **Run the import.** Use **Run import**, or `/hd import` (`/hdp import` on the proxy). Run it on each server that has its own LiteBans database. A failed batch is named in the result, and running it again carries on from there.
+5. **Run the import.** Use **Run import**, or run `hd import` in the server console (`hdp import` on the proxy). Run it on each server that has its own LiteBans database. A failed batch is named in the result, and running it again carries on from there.
 6. **Preview again.** It should find nothing new to import and nothing to lift. If it does, run the import again before you go further.
 7. **Switch the mode to Replace** during a quiet moment, with staff told to hold off on punishment commands.
 8. **Stop each server and take `LiteBans.jar` out.** Keep the jar and its database until you are sure, since putting it back and switching to hook mode is the rollback.
