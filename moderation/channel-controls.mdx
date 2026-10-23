@@ -46,14 +46,15 @@ Channel bans work by modifying the channel's permission overwrites. When a durat
 
 ## Leave-bans
 
-Leave-bans handle a specific evasion technique: a member receives a warning or mute, then leaves the server and rejoins to avoid it. When leave-bans are enabled, every member who leaves the server is banned automatically, for the duration you set, so leaving cannot be used to dodge a sanction.
+Leave-bans stop a member dodging a warning or mute by leaving and rejoining. When they are enabled, any member who leaves the server is banned automatically for the duration you set, unless they hold an immune role. It applies to every leave, not only to members with a recent infraction, so set immune roles before turning it on.
 
 ### Configuring leave-bans
 
 Navigate to <DashboardLink to="moderation/leave-bans">**Moderation \> Leave Bans**</DashboardLink> and turn on **Enable Ban on Leave**. Configure:
 
-- **Default Ban Duration** - how long the automatic re-join ban lasts
+- **Default Ban Duration** - how long the automatic ban lasts, or permanent
 - **Ban Reason** - the reason recorded on the ban
+- **Immune Roles** - members with any of these roles are never leave-banned. Bots are always skipped
 
 Leave-bans are logged as infractions so the member's record reflects the reason for the ban.
 
