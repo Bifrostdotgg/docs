@@ -24,7 +24,7 @@ By default, `/ask` is available to all members. Access can be restricted in the 
 
 ## Knowledge base
 
-The knowledge base is the set of documents Odin uses to answer questions. Navigate to <DashboardLink to="ai/knowledgebase">**AI \> Knowledge Base**</DashboardLink> in the dashboard to manage it.
+The knowledge base is the set of documents Odin uses to answer questions. Navigate to <DashboardLink to="ai/knowledgebase">**AI \> Knowledgebase**</DashboardLink> in the dashboard to manage it.
 
 ### Adding documents
 
@@ -77,7 +77,7 @@ The knowledge base page lists all documents with their creation date and status.
 
 Odin maintains context within a conversation session. When a member asks a follow-up question, Odin uses the previous exchanges in the same session to understand the reference. Context is scoped to the individual member and expires after a period of inactivity.
 
-Staff can view and manage active contexts in <DashboardLink to="ai/conversations">**AI \> Conversations**</DashboardLink>. This is useful for debugging unexpected responses or clearing stale context for a member.
+Staff can read past conversations in <DashboardLink to="ai/conversations">**AI \> Conversations**</DashboardLink>, which is useful for debugging an unexpected response.
 
 ## Configuration
 
@@ -91,7 +91,7 @@ Navigate to <DashboardLink to="ai/setup">**AI \> Setup & Context**</DashboardLin
 | **Rules and guidelines** | Your server rules, do's and don'ts, forbidden topics and required disclosures |
 | **Branding** | The colour, logo and footer text on Odin's replies |
 
-To limit where members can use `/ask`, use <DashboardLink to="ai/restrictions">**AI \> Restrictions**</DashboardLink>, described below.
+To limit which channels `/ask` works in, or set its cooldowns, use <DashboardLink to="ai/feature-qa_bot">**AI \> Q&A Bot**</DashboardLink>.
 
 ## Features
 
@@ -153,17 +153,13 @@ Conversation modes let you configure how Odin behaves in specific channels - for
 
 ## Conversations
 
-<DashboardLink to="ai/conversations">**AI \> Conversations**</DashboardLink> shows active conversation contexts - members who have recently used `/ask` or interacted with Q&A Bot. Staff can view the conversation history for any context and clear it if needed, for example if a member's context has accumulated incorrect assumptions.
+<DashboardLink to="ai/conversations">**AI \> Conversations**</DashboardLink> is a log of members' conversations with Odin. Staff can open a conversation to read it, flag it or mark it reviewed, add a good answer to the knowledge base, or restrict the member from AI features.
 
 ## Restrictions
 
-<DashboardLink to="ai/restrictions">**AI \> Restrictions**</DashboardLink> lets you configure which channels and roles can access Odin's member-facing features:
+<DashboardLink to="ai/restrictions">**AI \> Restrictions**</DashboardLink> lists members who are banned or timed out from using AI features, and lets staff add or lift those restrictions.
 
-- Channels where `/ask` is permitted
-- Roles that can use `/ask`
-- Rate limits per user and per server
-
-Without restrictions, `/ask` is available to all members in all channels.
+Limiting `/ask` to specific channels, and its cooldowns, is on <DashboardLink to="ai/feature-qa_bot">**AI \> Q&A Bot**</DashboardLink> instead. Without a channel limit, `/ask` is available in every channel.
 
 ## Usage and billing
 
