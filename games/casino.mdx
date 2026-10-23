@@ -4,6 +4,8 @@ description: "Playing casino-style games in Discord - Blackjack, Coinflip, Dice,
 icon: "dice"
 ---
 
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
 Casino games are wagering games played using your server's virtual economy. You bet coins on each round; winning pays out based on the game's odds. Losing reduces your balance. No real money is involved.
 
 <Warning>
@@ -70,7 +72,7 @@ Bet on a number, a colour (red/black), or a range (odd/even, 1–18, 19–36). A
 
 ## Bet limits
 
-The minimum and maximum bet per game are configured in **Games > Configuration > Economy**. Members cannot bet more than their current balance.
+The minimum and maximum bet per game are configured in <DashboardLink to="games/config/economy">**Games > Configuration > Economy**</DashboardLink>. Members cannot bet more than their current balance.
 
 ## Required permissions
 

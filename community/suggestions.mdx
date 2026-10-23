@@ -4,6 +4,8 @@ description: "A structured suggestion system with voting, categories, AI-generat
 icon: "lightbulb"
 ---
 
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
 The suggestions plugin creates a dedicated workflow for member feedback. Members submit suggestions through a slash command, the bot posts them as formatted messages in a designated channel with upvote and downvote reactions, and staff review and action them through the dashboard or slash commands.
 
 <Frame>
@@ -20,7 +22,7 @@ The member writes their suggestion text. The bot posts it in the configured sugg
 
 ## Categories
 
-Suggestions can be routed to different channels based on categories. Navigate to **Suggestions \> Categories** in the dashboard to create them.
+Suggestions can be routed to different channels based on categories. Navigate to <DashboardLink to="suggestions/categories">**Suggestions \> Categories**</DashboardLink> in the dashboard to create them.
 
 Each category has:
 
@@ -42,7 +44,7 @@ When multiple categories exist, the member is prompted to pick one when running 
 /suggestion-categories delete <id>
 ```
 
-Staff manage individual suggestions through the dashboard under **Suggestions \> List**, or through context menu actions on the suggestion message.
+Staff manage individual suggestions through the dashboard under <DashboardLink to="suggestions/list">**Suggestions \> List**</DashboardLink>, or through context menu actions on the suggestion message.
 
 Available actions on a suggestion:
 
@@ -58,7 +60,7 @@ When a suggestion is actioned, the bot updates the original message to show the 
 
 ## Dashboard configuration
 
-Navigate to **Suggestions \> Configuration** to configure:
+Navigate to <DashboardLink to="suggestions/config">**Suggestions \> Configuration**</DashboardLink> to configure:
 
 | Setting | Description |
 | --- | --- |
@@ -70,7 +72,7 @@ Navigate to **Suggestions \> Configuration** to configure:
 
 ## Openers
 
-Openers are buttons posted in a channel that members click to submit a suggestion through a modal form, without needing to type the `/suggest` command. Navigate to **Suggestions \> Openers** and click **New Opener**. Configure the button label and optional prompt text, then click **Post** to place the opener panel in a channel.
+Openers are buttons posted in a channel that members click to submit a suggestion through a modal form, without needing to type the `/suggest` command. Navigate to <DashboardLink to="suggestions/openers">**Suggestions \> Openers**</DashboardLink> and click **New Opener**. Configure the button label and optional prompt text, then click **Post** to place the opener panel in a channel.
 
 Openers are useful for keeping the suggestion workflow visible in a dedicated suggestions channel, or for servers where slash commands are restricted.
 

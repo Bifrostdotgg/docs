@@ -4,6 +4,8 @@ description: "Enabling games, configuring economy settings, and controlling whic
 icon: "gamepad"
 ---
 
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
 The games plugin provides a full suite of interactive games - board games, casino games, and an economy system - all playable directly inside Discord. Each game is its own slash command. The economy layer gives members a virtual currency they earn through daily claims, game winnings, and tipping.
 
 <Frame>
@@ -28,20 +30,20 @@ The games plugin provides a full suite of interactive games - board games, casin
 
 ## Enabling games
 
-Navigate to **Games \> Configuration** in the dashboard. Games are enabled by default for all members once the plugin is active.
+Navigate to <DashboardLink to="games/config">**Games \> Configuration**</DashboardLink> in the dashboard. Games are enabled by default for all members once the plugin is active.
 
 ## Access control
 
 You can restrict which channels and roles have access to games:
 
-- **Channels** - Navigate to **Games \> Configuration \> Channels** and specify the channels where games are allowed. If no channels are configured, games work everywhere.
-- **Roles** - Navigate to **Games \> Configuration \> Openers** to restrict game commands to specific roles.
+- **Channels** - Navigate to <DashboardLink to="games/config/channels">**Games \> Configuration \> Channels**</DashboardLink> and specify the channels where games are allowed. If no channels are configured, games work everywhere.
+- **Roles** - Navigate to <DashboardLink to="games/config/openers">**Games \> Configuration \> Openers**</DashboardLink> to restrict game commands to specific roles.
 
 Restricting games to a dedicated channel keeps them from cluttering other parts of your server.
 
 ## Economy configuration
 
-Navigate to **Games \> Configuration \> Economy** to configure:
+Navigate to <DashboardLink to="games/config/economy">**Games \> Configuration \> Economy**</DashboardLink> to configure:
 
 | Setting | Description |
 | --- | --- |
@@ -53,17 +55,17 @@ Navigate to **Games \> Configuration \> Economy** to configure:
 
 ## Visibility settings
 
-Individual games can be hidden from the command list without being disabled. Navigate to **Games \> Configuration \> Visibility** to toggle which games appear to members.
+Individual games can be hidden from the command list without being disabled. Navigate to <DashboardLink to="games/config/visibility">**Games \> Configuration \> Visibility**</DashboardLink> to toggle which games appear to members.
 
 ## Player stats
 
-Navigate to **Games \> Players** in the dashboard to view all members who have interacted with the games system. For each player you can see their current balance, total games played, win/loss record across each game type, and the last time they were active.
+Navigate to <DashboardLink to="games/players">**Games \> Players**</DashboardLink> in the dashboard to view all members who have interacted with the games system. For each player you can see their current balance, total games played, win/loss record across each game type, and the last time they were active.
 
 Staff with the `games.manage` permission can adjust a player's balance, reset their statistics, or remove them from the leaderboard from this page.
 
 ## Transactions
 
-Navigate to **Games \> Transactions** to view the full ledger of economy transactions across your server. Each entry records:
+Navigate to <DashboardLink to="games/transactions">**Games \> Transactions**</DashboardLink> to view the full ledger of economy transactions across your server. Each entry records:
 
 | Field | Description |
 | --- | --- |
@@ -77,7 +79,7 @@ Filter by player, transaction type, or date range. The transaction log is read-o
 
 ## Analytics
 
-Navigate to **Games \> Analytics** for aggregate statistics across your server's games:
+Navigate to <DashboardLink to="games/analytics">**Games \> Analytics**</DashboardLink> for aggregate statistics across your server's games:
 
 - Most played games by session count
 - Total coins in circulation
@@ -86,7 +88,7 @@ Navigate to **Games \> Analytics** for aggregate statistics across your server's
 
 ## Trivia questions
 
-If the trivia game is enabled, navigate to **Games \> Trivia Questions** to manage the question bank. You can:
+If the trivia game is enabled, navigate to <DashboardLink to="games/trivia">**Games \> Trivia Questions**</DashboardLink> to manage the question bank. You can:
 
 - Add custom trivia questions with multiple-choice answers
 - Import a batch of questions from a CSV file
@@ -97,7 +99,7 @@ Custom questions appear in the trivia rotation alongside any built-in questions.
 
 ## Vote rewards
 
-Navigate to **Games \> Vote Rewards** to configure economy rewards for members who vote for your server on top.gg. When a member votes, Heimdall receives a webhook notification from top.gg and automatically credits the configured coin reward to their balance.
+Navigate to <DashboardLink to="games/topgg">**Games \> Vote Rewards**</DashboardLink> to configure economy rewards for members who vote for your server on top.gg. When a member votes, Heimdall receives a webhook notification from top.gg and automatically credits the configured coin reward to their balance.
 
 To set up vote rewards:
 

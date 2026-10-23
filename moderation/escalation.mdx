@@ -4,6 +4,8 @@ description: "Configuring automatic punishments that trigger as a member accumul
 icon: "arrow-up"
 ---
 
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
 Escalation automates the progression from minor warnings to serious punishments. You define thresholds - point totals - and the punishment the bot should apply when a member's active points reach each threshold. This removes the need for staff to manually escalate punishments and ensures consistent enforcement.
 
 <Frame>
@@ -18,7 +20,7 @@ Escalation fires again each time a new infraction pushes the member over a thres
 
 ## Configuring escalation thresholds
 
-Navigate to **Moderation \> Escalation** in the dashboard and click **New Threshold**.
+Navigate to <DashboardLink to="moderation/escalation">**Moderation \> Escalation**</DashboardLink> in the dashboard and click **New Threshold**.
 
 Each threshold has the following settings:
 
@@ -43,7 +45,7 @@ In this example, a member who receives five 1-point warnings within the expiry w
 
 ## Infraction point values
 
-Default point values for each action type are set in **Moderation \> Settings**. Individual infractions can override the default - for example, a serious automod rule can be configured to assign 10 points per violation rather than the default 1.
+Default point values for each action type are set in <DashboardLink to="moderation/settings">**Moderation \> Settings**</DashboardLink>. Individual infractions can override the default - for example, a serious automod rule can be configured to assign 10 points per violation rather than the default 1.
 
 ## Point expiry
 
