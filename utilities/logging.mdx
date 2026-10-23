@@ -4,6 +4,8 @@ description: "Routing server events - message edits and deletes, member joins an
 icon: "scroll"
 ---
 
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
 The logging plugin captures Discord server events and posts formatted notifications to channels of your choice. Each event category can be routed to a different channel, so you might send message events to one channel, member events to another, and moderation actions to a third.
 
 <Frame>
@@ -24,7 +26,7 @@ Configures a specific event category to log to the specified channel. Run the co
 
 Stops logging for a category without removing the rest of your configuration.
 
-Navigate to **Logging** in the dashboard for a visual overview of all configured categories and their target channels.
+Navigate to <DashboardLink to="logging">**Logging**</DashboardLink> in the dashboard for a visual overview of all configured categories and their target channels.
 
 ## Event categories
 

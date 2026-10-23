@@ -4,6 +4,8 @@ description: "Running timed giveaways with button entry, automatic draws, and re
 icon: "gift"
 ---
 
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
 Giveaways run on a timer with a button to enter. The entry count updates live, winners are drawn automatically when the timer ends, and you can reroll if a winner does not respond.
 
 ## Starting one
@@ -33,15 +35,15 @@ When the timer ends the bot draws winners and announces them. Draws are atomic, 
 
 ## Templates and series
 
-**Templates** save a giveaway setup so a recurring one does not have to be rebuilt each time. **Series** group repeating giveaways together so you can see them as one thing rather than a dozen unrelated entries.
+<DashboardLink to="giveaways/templates">**Giveaways \> Templates**</DashboardLink> save a giveaway setup so a recurring one does not have to be rebuilt each time. **Series** group repeating giveaways together so you can see them as one thing rather than a dozen unrelated entries.
 
 ## Fulfillment
 
-The fulfillment view tracks whether winners actually received their prize, which matters for anything handed over by a person rather than automatically. A giveaway with an undelivered prize stays visible instead of disappearing once the draw is done.
+The <DashboardLink to="giveaways/fulfillment">**Giveaways \> Fulfillment**</DashboardLink> page tracks whether winners actually received their prize, which matters for anything handed over by a person rather than automatically. A giveaway with an undelivered prize stays visible instead of disappearing once the draw is done.
 
 ## Partners and sharing
 
-Giveaways can be shared with partner servers, so a giveaway you run appears in theirs and vice versa. `/giveaway partners` manages those relationships, and `/giveaway share` offers a specific giveaway.
+Giveaways can be shared with partner servers, so a giveaway you run appears in theirs and vice versa. `/giveaway partners` manages those relationships, and `/giveaway share` offers a specific giveaway. The same is available in the dashboard under <DashboardLink to="giveaways/sharing">**Giveaways \> Partner servers**</DashboardLink>.
 
 ## Required permissions
 

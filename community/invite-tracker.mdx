@@ -4,6 +4,8 @@ description: "Recording which invite each member joined with and how many people
 icon: "user-plus"
 ---
 
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
 The invite tracker records which invite each new member used, credits the person who created it, and keeps a running total per member. It also adds placeholders you can use in your welcome message.
 
 ## Before you start
@@ -16,7 +18,7 @@ Tracking also only counts joins from the moment you enable it. Discord does not 
 
 ## Setting it up
 
-Navigate to **Invite Tracker** in the dashboard and turn on **Track invites**. That also adds `/invites` to your server. Optionally set a **join log channel**, which gets a line for each join saying who invited them.
+Navigate to <DashboardLink to="invites/config">**Invite Tracker**</DashboardLink> in the dashboard and turn on **Track invites**. That also adds `/invites` to your server. Optionally set a **join log channel**, which gets a line for each join saying who invited them.
 
 ## How the total is worked out
 

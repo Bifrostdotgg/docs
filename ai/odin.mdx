@@ -77,18 +77,21 @@ The knowledge base page lists all documents with their creation date and status.
 
 Odin maintains context within a conversation session. When a member asks a follow-up question, Odin uses the previous exchanges in the same session to understand the reference. Context is scoped to the individual member and expires after a period of inactivity.
 
-Staff can view and manage active contexts in **AI \> Context**. This is useful for debugging unexpected responses or clearing stale context for a member.
+Staff can view and manage active contexts in <DashboardLink to="ai/conversations">**AI \> Conversations**</DashboardLink>. This is useful for debugging unexpected responses or clearing stale context for a member.
 
 ## Configuration
 
-Navigate to **AI \> Configuration** in the dashboard to set:
+Navigate to <DashboardLink to="ai/setup">**AI \> Setup & Context**</DashboardLink> in the dashboard to set:
 
 | Setting | Description |
 | --- | --- |
-| **AI provider** | Which language model provider powers Odin (configured by your administrator) |
-| **System prompt** | Instructions prepended to every conversation that shape Odin's behaviour and tone |
-| **Context length** | How many previous exchanges Odin remembers in a session |
-| **Response channels** | Optionally restrict `/ask` to specific channels |
+| **Identity** | Odin's name, personality, brand voice and primary language |
+| **Server context** | A description of your server and its niche, so answers fit your community |
+| **Channel context** | What each channel is for, so Odin can point members to the right place |
+| **Rules and guidelines** | Your server rules, do's and don'ts, forbidden topics and required disclosures |
+| **Branding** | The colour, logo and footer text on Odin's replies |
+
+To limit where members can use `/ask`, use <DashboardLink to="ai/restrictions">**AI \> Restrictions**</DashboardLink>, described below.
 
 ## Features
 

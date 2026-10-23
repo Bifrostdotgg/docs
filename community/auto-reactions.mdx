@@ -4,11 +4,13 @@ description: "Reacting automatically to every message in chosen channels."
 icon: "thumbs-up"
 ---
 
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
 Pick a channel and a set of emoji, and the bot reacts to every message posted there. The common use is Reddit-style voting in a suggestions or showcase channel, where members should be able to vote without anyone adding the reactions first.
 
 ## Setting it up
 
-Navigate to **Auto Reactions** in the dashboard, add a channel, and choose the emoji.
+Navigate to <DashboardLink to="auto-reactions">**Auto Reactions**</DashboardLink> in the dashboard, add a channel, and choose the emoji.
 
 Order matters. The bot reacts in the order you list them, and reactions cannot be reordered afterwards on Discord's side, so an upvote you want on the left has to be first in the list.
 

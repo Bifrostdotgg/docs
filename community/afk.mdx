@@ -4,6 +4,8 @@ description: "Letting members set an away note that the bot gives out on their b
 icon: "moon"
 ---
 
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
 A member runs `/afk` with an optional reason. While they are away, anyone who mentions them gets a short reply saying they are AFK and how long ago they left. The note clears itself the moment that member sends any message in the server.
 
 The note is per server, not global. Setting one in one server does not affect any other.
@@ -41,4 +43,4 @@ If their DMs are closed the held messages cannot be delivered, which is why the 
 
 Everyone can use it out of the box. To restrict it, deny that key on `@everyone` and allow it on the roles that should have it.
 
-Switching AFK off, either as a module or by disabling the `/afk` command under **Settings, Commands**, stops the automatic replies as well as the command.
+Switching AFK off, either as a module or by disabling the `/afk` command under <DashboardLink to="settings/commands">**Settings \> Commands**</DashboardLink>, stops the automatic replies as well as the command.
