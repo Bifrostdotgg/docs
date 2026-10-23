@@ -4,6 +4,8 @@ description: "Saved text snippets and embed templates that staff can post with a
 icon: "tags"
 ---
 
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
 Tags are reusable pieces of content - a block of text, an embed, or a formatted message - that can be posted to any channel with a single command. They are particularly useful for staff who frequently answer the same questions, share the same resources, or post formatted announcements. Tags save the content once and let anyone with access deploy it instantly.
 
 <Frame>
@@ -26,7 +28,7 @@ Posts the tag's content to the current channel. Tag names support autocomplete -
 
 Opens a modal where you write the tag's content. The content supports Discord markdown. If you want to create a rich embed tag, use the dashboard instead, where you have a visual embed builder.
 
-To create a tag via the dashboard, navigate to **Tags** and click **New Tag**. The dashboard editor supports:
+To create a tag via the dashboard, navigate to <DashboardLink to="tags/tags">**Tags**</DashboardLink> and click **New Tag**. The dashboard editor supports:
 
 - Plain text content
 - Embed with title, description, fields, colour, and thumbnail
@@ -51,7 +53,7 @@ Lists all tags available on your server. The dashboard **Tags** page provides th
 
 ## Posts
 
-Posts are similar to tags but are intended for longer-form content pinned to specific channels. The `/post` command works alongside `/tag`:
+Posts are similar to tags but are intended for longer-form content pinned to specific channels. Scheduled posts are managed in the dashboard under <DashboardLink to="settings/messages">**Settings \> Messages**</DashboardLink>, in **Scheduled posts**. The `/post` command works alongside `/tag`:
 
 ```text
 /post send <name> [channel]
@@ -62,7 +64,7 @@ A post sends the content to a designated channel rather than the channel where t
 
 ## Templates
 
-Templates are skeleton embeds saved in the dashboard that staff can use as a starting point when creating new tags. Navigate to **Tags \> Templates** to manage them.
+Templates are skeleton embeds saved in the dashboard that staff can use as a starting point when creating new tags. They live under <DashboardLink to="settings/messages">**Settings \> Messages**</DashboardLink>, in **Reusable templates**.
 
 ## Required permissions
 

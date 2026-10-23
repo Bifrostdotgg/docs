@@ -4,6 +4,8 @@ description: "Sending a formatted message to new members when they join your ser
 icon: "door-open"
 ---
 
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
 The welcome plugin posts a message to a designated channel whenever a member joins your server. The message is fully customisable - you can write it as plain text or as a rich embed, and use variables to include the member's name, the server name, and the current member count.
 
 <Frame>
@@ -16,7 +18,7 @@ The welcome plugin posts a message to a designated channel whenever a member joi
 /welcome setup
 ```
 
-Running `/welcome setup` opens a configuration modal where you define the welcome channel and compose your message. Alternatively, configure everything through the dashboard at **Welcome**.
+Running `/welcome setup` opens a configuration modal where you define the welcome channel and compose your message. Alternatively, configure everything through the dashboard at <DashboardLink to="welcome">**Welcome**</DashboardLink>.
 
 ### Dashboard configuration
 

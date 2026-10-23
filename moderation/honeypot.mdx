@@ -4,6 +4,8 @@ description: "Catching spam bots by punishing anyone who posts in a channel nobo
 icon: "bug"
 ---
 
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
 A honeypot is a channel that no real member would ever post in. Anyone who does is almost certainly a bot that joined and started posting without reading anything, so the bot acts on them immediately.
 
 It works because spam bots do not read channel names, topics, or pinned messages before posting. A human sees a channel called "do-not-post-here" with a pinned warning and moves on.
@@ -20,7 +22,7 @@ It works because spam bots do not read channel names, topics, or pinned messages
 | **Kick** | Lets a genuine mistake rejoin |
 | **Mute** | Buys staff time to look before deciding |
 
-Everything is configurable from the **Honeypot** page in the dashboard as well.
+Everything is configurable from the <DashboardLink to="honeypot">**Honeypot**</DashboardLink> page in the dashboard as well.
 
 ## Making it work well
 

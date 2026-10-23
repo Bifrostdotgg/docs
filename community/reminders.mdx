@@ -4,6 +4,8 @@ description: "Setting personal reminders that the bot delivers via DM or in-chan
 icon: "bell"
 ---
 
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
 The reminders plugin lets members set reminders for themselves. At the scheduled time, the bot delivers the reminder by DM or posts it in the channel where the reminder was set. Reminders can optionally include context - for example, a link to a ticket or modmail thread - so the reminder arrives with enough information to be actionable.
 
 <Frame>
@@ -35,6 +37,8 @@ Opens a panel listing all of your active upcoming reminders. From this panel you
 - **View** the full content of each reminder
 - **Delete** reminders you no longer need
 - **Edit** the time or description of a pending reminder
+
+If you can open the dashboard, the <DashboardLink to="reminders">**Reminders**</DashboardLink> page shows the same list, only ever your own reminders, and lets you add, edit, or delete them there too.
 
 ## Ticket and modmail context
 

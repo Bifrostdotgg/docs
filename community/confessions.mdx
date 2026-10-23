@@ -4,11 +4,13 @@ description: "Letting members post anonymously, with a staff audit trail for han
 icon: "comment-dots"
 ---
 
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
 Members submit a confession and the bot posts it with its own number and no author. Confessions are anonymous to other members. They are not anonymous to staff holding the right permission, and that limit is stated to members on the submit panel so nobody is misled.
 
 ## Setting it up
 
-Navigate to **Confessions** in the dashboard.
+Navigate to <DashboardLink to="confessions/config">**Confessions**</DashboardLink> in the dashboard.
 
 | Setting | Description |
 | --- | --- |
@@ -25,7 +27,7 @@ Posting a panel gives members a **Submit a confession!** button, so they do not 
 
 Other members never find out. There is no name, no avatar, and nothing in the posted message that points back to the author.
 
-Staff are a different matter. Anyone holding `confessions.log.view_author` can look up who submitted a confession, and the bot records every lookup. That is deliberate: an untraceable way to post into your server is a harassment vector with no remedy except switching the feature off, and blocking somebody requires knowing who they are.
+Staff are a different matter. Anyone holding `confessions.log.view_author` can look up who submitted a confession in <DashboardLink to="confessions/log">**Confessions \> Confession Log**</DashboardLink>, and the bot records every lookup. That is deliberate: an untraceable way to post into your server is a harassment vector with no remedy except switching the feature off, and blocking somebody requires knowing who they are.
 
 **Forget who wrote a confession after (days)** decides how long that stays possible. Leave it at 0 to keep the information indefinitely. Any other number tells the bot to forget the author once a confession reaches that age. The confession itself stays, but from then on nobody can find out who posted it, including you.
 

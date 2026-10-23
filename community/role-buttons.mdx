@@ -4,6 +4,8 @@ description: "Self-assignable role panels with toggle buttons that members use t
 icon: "circle-check"
 ---
 
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
 Role buttons are persistent panels posted in a channel containing buttons that members click to assign or remove roles from themselves. Unlike Discord's built-in role selection feature, Heimdall's panels support toggle modes, role grouping, and custom button labels and styles.
 
 <Frame>
@@ -16,7 +18,7 @@ Role buttons are persistent panels posted in a channel containing buttons that m
 /rolebuttons create
 ```
 
-Running this command opens a configuration flow where you define the panel. You can also create and manage panels entirely through the dashboard at **Role Buttons**.
+Running this command opens a configuration flow where you define the panel. You can also create and manage panels entirely through the dashboard at <DashboardLink to="rolebuttons">**Role Buttons**</DashboardLink>.
 
 ### Panel settings
 
