@@ -34,9 +34,15 @@ Common questions include: "Why were you banned?", "Why should your ban be lifted
 
 ### Your appeal link
 
-There is nothing to set up. Every server gets its own link on the appeals site, shown as **Public Appeal URL** on <DashboardLink to="appeals/config">**Appeals \> Configuration**</DashboardLink> with a copy button. A white-label bot uses its own appeals address automatically.
+There is nothing to set up. Every server gets its own link on the appeals site, shown as **Public Appeal URL** on <DashboardLink to="appeals/config">**Appeals \> Configuration**</DashboardLink> with a copy button. A white-label bot uses its own appeals address once one is set up.
 
-While appeals are enabled, Heimdall sends a banned member that link by DM when they are banned. You can change the wording of that DM under <DashboardLink to="settings/messages">**Settings \> Messages**</DashboardLink>.
+How a banned member gets the link by DM depends on how they were banned:
+
+- **With Heimdall** (`/ban` or the dashboard): the link is in the punishment DM, which is only sent while **DM on Infraction** is on in <DashboardLink to="moderation/settings">**Moderation \> Settings**</DashboardLink>. Mutes include it too.
+- **Outside Heimdall** (Discord itself, or another bot): while appeals are enabled, Heimdall sends a separate ban notification DM with the link.
+- **Automatically** (leave-bans, escalation, automod): no DM is sent, so share the link yourself if you want them to appeal.
+
+Both DMs can be reworded under <DashboardLink to="settings/messages">**Settings \> Messages**</DashboardLink>, as **Punishment DM** and **Ban notification DM**.
 
 ## Reviewing appeals in the dashboard
 
