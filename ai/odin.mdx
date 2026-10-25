@@ -52,7 +52,7 @@ Importing a page that is already in the knowledge base does not create a second 
 
 ### Keeping entries up to date
 
-Odin re-checks every imported page once a week. If the page has not changed, nothing happens and no tokens are used. If it has, the entry is updated from the page, using this server's AI tokens for the pages that need tidying. If the AI cannot tidy the new version, for example because the server is out of AI tokens, the entry is left exactly as it was and tried again later, rather than replaced with untidied page text. The usage page lists this separately as **Knowledgebase Upkeep**. Turn it off with **Keep imported pages up to date** at the bottom of the knowledge base page.
+Odin re-checks every imported page once a week. If the page has not changed, nothing happens and no tokens are used. If it has, the entry is updated from the page, using this server's AI tokens for the pages that need tidying. If the AI cannot tidy the new version, for example because the server is out of AI tokens, the entry is left exactly as it was and tried again later, rather than replaced with untidied page text. The <DashboardLink to="ai/usage">**AI \> Usage**</DashboardLink> page lists this separately as **Knowledgebase Upkeep**. Turn it off with **Keep imported pages up to date** at the bottom of the <DashboardLink to="ai/knowledgebase">**AI \> Knowledgebase**</DashboardLink> page.
 
 - **Your edits are kept.** Once you edit an entry's content by hand, Odin never copies the page over it. If the page changes afterwards, the entry is marked **Page changed since your edit**, and you choose **Replace with new version** or **Keep my version**.
 - **Removed pages are flagged, never deleted.** An entry whose page returns "not found" is marked **Page missing**. After two weekly checks in a row it is left out of answers, so Odin stops quoting a page the site took down. It comes back on its own if the page returns. To keep using it anyway, edit the entry and clear its source URL.
@@ -67,7 +67,7 @@ An entry the AI built out of several pages at once is marked **Not updated autom
 
 ### Managing documents
 
-The knowledge base page lists all documents with their creation date and status. You can:
+The <DashboardLink to="ai/knowledgebase">**AI \> Knowledgebase**</DashboardLink> page lists all documents with their creation date and status. You can:
 
 - **Edit** a document's content if information changes
 - **Delete** a document to stop Odin referencing it
@@ -118,7 +118,7 @@ Every AI escalation in your log channel has 👍 and 👎 buttons, plus a commen
 To improve the recommendations for every server, feedback is collected centrally together with the decision it is about. Before anything leaves your server, mentions, user IDs and the author's names are removed from the message, and the author is identified only by a one-way code that cannot be turned back into a Discord ID. Messages that raise a wellbeing or self-harm concern are never sent. Feedback is kept for up to 24 months.
 
 <Note>
-Servers using their own OpenRouter key can opt out under **Improving recommended settings** on the text moderation page. Opting out also deletes the feedback your server has already sent. Servers on Heimdall's managed AI cannot opt out, because the recommendations they rely on are built from this feedback.
+Servers using their own OpenRouter key can opt out under **Improving recommended settings** on the <DashboardLink to="ai/feature-text_moderation">**AI \> Text Moderation**</DashboardLink> page. Opting out also deletes the feedback your server has already sent. Servers on Heimdall's managed AI cannot opt out, because the recommendations they rely on are built from this feedback.
 </Note>
 
 ### Image Moderation
@@ -177,7 +177,7 @@ Odin integrates with tickets, modmail, and suggestions:
 
 - <DashboardLink to="tickets/ai">**Tickets \> AI**</DashboardLink> - enable ticket auto-reply for specific ticket categories
 - <DashboardLink to="modmail/ai">**Modmail \> AI**</DashboardLink> - enable the modmail assistant for specific modmail categories
-- **Suggestions** - Odin automatically generates a concise title when a member submits a suggestion, if AI titles are enabled in the suggestions configuration
+- **Suggestions** - Odin automatically generates a concise title when a member submits a suggestion, if **AI Titles** is on for the suggestion's category in <DashboardLink to="suggestions/categories">**Suggestions \> Categories**</DashboardLink>. A suggestion with no category never gets one. On Heimdall's managed AI, **Suggestion Titles** must also be on in <DashboardLink to="ai/features">**AI \> Features**</DashboardLink>
 
 ## Required permissions
 

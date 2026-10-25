@@ -122,9 +122,9 @@ The reply is visible only to whoever ran the command, unless they add `public:tr
 
 ### Vanished players
 
-Connected servers running Minecraft plugin `3.0.0-rc.13` or newer report which of their online players are vanished, recognising the `vanished` metadata key set by EssentialsX, SuperVanish, PremiumVanish, CMI and VanishNoPacket. Heimdall hides a vanished player's name from anyone who does not hold `minecraft.server.view_vanished`, everywhere a name is shown: `/playerlist`, `/mcstatus get`, and the dashboard's Online Players panel.
+Connected servers running Minecraft plugin `3.0.0-rc.13` or newer report which of their online players are vanished, recognising the `vanished` metadata key set by EssentialsX, SuperVanish, PremiumVanish, CMI and VanishNoPacket. Heimdall hides a vanished player's name from anyone who does not hold `minecraft.server.view_vanished`, everywhere a name is shown: `/playerlist`, `/mcstatus get`, and the **Online players** panel on each server in <DashboardLink to="minecraft/networks">**Minecraft \> Networks**</DashboardLink>.
 
-Player counts on the dashboard, the Players tile, its sparkline, and the overview, always show the visible count, for everyone, so they stay in step with the live updates. Someone who holds `minecraft.server.view_vanished` additionally sees a "+N vanished" chip beside the Players tile, and a Vanished badge on those rows in the Online Players panel. `/mcstatus get` works differently: a holder still gets the full list there, with `(vanished)` marks, and a count that includes them.
+Player counts on the dashboard, the Players tile in <DashboardLink to="minecraft/networks">**Minecraft \> Networks**</DashboardLink>, its sparkline, and the overview, always show the visible count, for everyone, so they stay in step with the live updates. Someone who holds `minecraft.server.view_vanished` additionally sees a "+N vanished" chip beside the Players tile, and a Vanished badge on those rows in the Online Players panel. `/mcstatus get` works differently: a holder still gets the full list there, with `(vanished)` marks, and a count that includes them.
 
 Public surfaces always hide vanished players, no matter who is looking: a watched status card, `/mcstatus send`, and `/playerlist public:true` never show them, even to the person who ran the command. Someone who does hold the permission still sees them in their own private reply, each one marked `(vanished)` so it is clear who their colleagues in the channel cannot see.
 
@@ -314,7 +314,7 @@ Suggestions are capped at 100. An enforcer backend has no address history of its
 
 ### Durations
 
-One grammar, shared by the in-game commands, `/mc-punish`, and the dashboard's Issue punishment form, and pinned by a fixture table both the bot and the plugin test against. Lengths are kept in seconds, so `30s` is thirty seconds rather than rounding up to a minute.
+One grammar, shared by the in-game commands, `/mc-punish`, and the **Issue punishment** form on <DashboardLink to="minecraft/history">**Minecraft \> History**</DashboardLink>, and pinned by a fixture table both the bot and the plugin test against. Lengths are kept in seconds, so `30s` is thirty seconds rather than rounding up to a minute.
 
 | Unit | Spellings |
 | --- | --- |
@@ -339,7 +339,7 @@ A month is always 30 days and a year always 365, on purpose: a ban has to be the
 
 In game, those two verbs complete no lengths, and a command that carries one anyway is refused with a message naming the word, rather than having it quietly taken out of the reason. Put the word in the reason or drop it. This catches `perm` too, which is a length token even though it resolves to no length.
 
-Permanent is spelled the same way everywhere: `perm` or `permanent`, or no length at all. In game that means omitting the token, in the dashboard's Issue punishment form it means leaving **Length** blank, and on `/mc-punish` it means omitting the `duration` option. All three accept the word and the blank interchangeably.
+Permanent is spelled the same way everywhere: `perm` or `permanent`, or no length at all. In game that means omitting the token, in the **Issue punishment** form on <DashboardLink to="minecraft/history">**Minecraft \> History**</DashboardLink> it means leaving **Length** blank, and on `/mc-punish` it means omitting the `duration` option. All three accept the word and the blank interchangeably.
 
 ### Silent punishments
 
@@ -527,7 +527,7 @@ The Minecraft player page (<DashboardLink to="minecraft/players">**Minecraft \> 
 A "Shares an address with" card lists other accounts that connected from the same address as this player, without ever showing that address. It needs `minecraft.trace.view_trace`, not the punishments keys, because it exists to surface alt associations. It merges two sources: punishment records whose hashed address digest matches (labelled "From punishment records"), and a live query to the connected servers' own address history (labelled "Seen on your servers"). Only a gatekeeper proxy or a standalone server keeps that address history, so a backend server sitting behind a proxy cannot answer it, and the card names the gap rather than showing an empty list: it can say no proxy or standalone server could be asked, that no server which answered has ever seen this player, or, once both sources have genuinely come back empty, that no other account shares an address with this player. Each source is capped at 50 accounts, noted when a source is truncated. Names shown are whatever a server last saw for that account and can be stale, so every row links by the account's UUID, never by name.
 
 <Note>
-Heimdall never displays an IP address, on the player page, the bans page, or anywhere else in the dashboard. On its own database it stores an HMAC digest of each IP using a per-guild salt it holds, which is enough to match two connections to the same address but is not shown anywhere in the UI. That digest is not a cryptographic privacy boundary against someone with database and salt access, only against what the UI displays. A shared address is not proof of a shared owner.
+Heimdall never displays an IP address, on the player page in <DashboardLink to="minecraft/players">**Minecraft \> Players**</DashboardLink>, the bans page, or anywhere else in the dashboard. On its own database it stores an HMAC digest of each IP using a per-guild salt it holds, which is enough to match two connections to the same address but is not shown anywhere in the UI. That digest is not a cryptographic privacy boundary against someone with database and salt access, only against what the UI displays. A shared address is not proof of a shared owner.
 </Note>
 
 ### If Heimdall is unreachable
