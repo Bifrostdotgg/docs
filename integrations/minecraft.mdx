@@ -385,7 +385,7 @@ Matching subcommands needs plugin 3.0.0-rc.24 or later. Before that, only the co
 Both are opt-in. Nobody holds them by default, not even operators, and `heimdall.admin` does not include them. Grant them to the staff ranks that should see alerts.
 
 - **Where alerts appear:** only on the server that refused the message, so on a network with several backends, staff on one backend do not see attempts on another.
-- **Throttling:** each muted player raises at most one alert every 30 seconds. The next alert says how many attempts it covers, for example `(4 more since)`.
+- **Throttling:** each mute raises at most one alert every 30 seconds while the player stays online. The next alert says how many attempts it covers, for example `(4 more since)`. Rejoining, or a new mute, starts a fresh count.
 - **Hidden mutes:** an alert for a hidden mute also needs `heimdall.punishments.hidden`, and is prefixed `(hidden)`.
 - **Privacy:** what the player said is shown as plain text, so it cannot put formatting or links into staff chat. It is never stored, and never sent to Heimdall or to Discord.
 
