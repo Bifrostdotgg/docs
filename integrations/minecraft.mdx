@@ -26,8 +26,6 @@ The Minecraft feature has seven pages in the dashboard sidebar:
 | <DashboardLink to="minecraft/bridge">**Chat Bridge**</DashboardLink> | Relay in-game chat into Discord channels, and back |
 | <DashboardLink to="minecraft/settings">**Settings**</DashboardLink> | Guild-wide linking, RCON, role sync, alerts and messages |
 
-Older page names still resolve, so nothing you bookmarked breaks. **Configuration** and **Server Status** land on Networks, **Offenses** lands on History, and **Punishments** lands on Enforcement.
-
 ## Account linking
 
 A link ties one Minecraft name to one Discord account. Members start one from Discord and prove it is theirs with a 6-digit code shown in game.
@@ -239,20 +237,30 @@ Switching modes takes effect immediately, so the dashboard asks you to confirm f
 - **Enforcement settings** - root command aliases (one guild-wide toggle, no per-server override), silent-by-default, and the blocked-command list a mute enforces. All guild-level, all saved here, all gated by `minecraft.punishments.manage`.
 - **Screens** - the nine MiniMessage segments a punished player reads, plus the two announcement templates. See [Screens](#screens) below.
 - **Minecraft appeal form** - pick a Minecraft-specific appeal form to fill in `{appeal_url}` on the screens. Use a form separate from the Discord infraction appeal form.
-- **Import existing punishments** - one button asks the connected server to run its LiteBans, AdvancedBan, BanManager and vanilla `banned-players.json` importers in a single pass, skipping whichever it does not find. IP addresses are hashed on that server before anything reaches Heimdall. Imported rows are written straight into the punishment store: importing itself never immediately pushes an enforcement update, so it does not kick a player who happens to be online and never overrides a punishment that is already active for the same target, but a row that is imported still active and unexpired is picked up by the normal sync afterward like anything else.
+- **Import existing punishments** - **Run import** asks the connected server to run its LiteBans, AdvancedBan, BanManager and vanilla `banned-players.json` importers in a single pass, skipping whichever it does not find. **Preview import** does the same reading and writes nothing, so you can see what a run would do first. IP addresses are hashed on that server before anything reaches Heimdall. Importing never pushes an enforcement update by itself, so it does not kick a player who happens to be online and never overrides a punishment that is already active for the same target, but a row imported still active is enforced by the normal sync afterward. The card for each run shows what came in, what is still in force, and anything lifted to match LiteBans.
 - **Public bans page** - now under <DashboardLink to="cases/bans-page">**Cases \> Bans page**</DashboardLink>; this card links there. See below.
 
 The punishment browser and the issue form are no longer here. They moved to [History](#history), which merges them with the offense log. An old `/minecraft/punishments` link still works: it lands on Enforcement, unless it carries one of the old browser's filters, in which case it lands on History with those filters translated.
 
 ### Cutover from LiteBans
 
-If you are running LiteBans today, move over in this order:
+If you are running LiteBans today, move over in this order. Every server needs Heimdall plugin 3.0.0-rc.22 or newer for the preview and for warns to be shown once.
 
-1. Switch to **Alongside your ban plugin**. Staff see history in the dashboard while LiteBans keeps enforcing.
-2. Run the import from the Enforcement page. The connected plugin reads LiteBans, AdvancedBan, BanManager and vanilla `banned-players.json` in one pass, whichever are present, and hashes IPs on the server before anything is uploaded.
-3. Switch to **Heimdall runs bans**.
-4. Remove the `LiteBans.jar` (or whichever plugin you were running).
-5. Optionally turn on **Register root command aliases**, so the network's own `ban`, `mute` and similar commands register as Heimdall's own commands, rather than only the `hd`-prefixed ones. This is one guild-wide setting - there is no separate per-server toggle - and the aliases are only registered in **Heimdall runs bans** mode.
+1. **Alongside your ban plugin.** Switch to **Alongside your ban plugin**. Staff see history in the dashboard while LiteBans keeps enforcing, and every ban, mute or lift LiteBans makes from now on is copied to Heimdall.
+2. **Permissions.** Grant the `heimdall.punishments.*` nodes to your staff ranks (see [In-game commands](#in-game-commands)), and `heimdall.admin` to whoever runs the import.
+3. **Back up** the LiteBans database. It is also your way back.
+4. **Preview the import.** Press **Preview import** on the Enforcement page, or run `hd import --dry-run` in the server console (or `/hd import --dry-run` in game). The preview reads everything a real import would and writes nothing. It reports:
+   - how many bans, IP bans and mutes would still be in force;
+   - how many rows match something Heimdall already copied while running alongside LiteBans;
+   - how many Heimdall still enforces although LiteBans has lifted them. The import lifts those to match.
+   - how many Heimdall holds that LiteBans does not, such as ones issued from Discord. Check these before you switch, because Heimdall enforces them too once it runs bans.
+5. **Run the import.** Use **Run import**, or run `hd import` in the server console (`hdp import` on the proxy). Run it on each server that has its own LiteBans database. A failed batch is named in the result, and running it again carries on from there.
+6. **Preview again.** It should find nothing new to import and nothing to lift. If it does, run the import again before you go further.
+7. **Switch to Heimdall runs bans** during a quiet moment, with staff told to hold off on punishment commands.
+8. **Stop each server and take `LiteBans.jar` out.** Keep the jar and its database until you are sure, since putting it back and switching to **Alongside your ban plugin** is the rollback.
+9. Optionally turn on **Register root command aliases**, so the network's own `ban`, `mute` and similar commands register as Heimdall's own commands, rather than only the `hd`-prefixed ones. This is one guild-wide setting - there is no separate per-server toggle - and the aliases are only registered in **Heimdall runs bans** mode.
+
+Imported warnings are history only. LiteBans already showed them to the player, so Heimdall does not show them again. A warning issued in Heimdall is shown to the player once: straight away if they are online, otherwise when they next join. The proxy shows it, or the server itself if it has no proxy in front of it.
 
 Servers that never want the native engine can stay on Offenses only indefinitely; that is a supported end state, not a step on the way to Heimdall runs bans.
 
@@ -350,19 +358,51 @@ On Bukkit, `heimdall.punishments.notify` and `heimdall.punishments.silent` are d
 
 In-game permission nodes are `heimdall.punishments.<action>`, one per action: ban, ipban, mute, warn, kick, unban, unmute, history, and dupeip. These do not inherit from `litebans.*` or any other plugin's nodes, so grant them to your staff ranks before you remove the old plugin, not after, or staff lose access the moment it comes out.
 
+### Muted players
+
+A mute is enforced by the backend a player is on. What the muted player sees:
+
+- **The mute screen once.** They see the full mute screen when the mute lands while they are online, or at their first message if they were muted while away. It shows once per mute, on each server, each session.
+- **A reminder after that.** Every message after the first gets one line, by default "You are muted for another 9m 59s." It is the **Mute reminder** segment under [Screens](#screens).
+
+**Blocked commands.** The Enforcement page lists the commands a muted player cannot run (`/msg`, `/tell`, `/me`, `/r`, `/whisper` and `/w` by default). {/* docs-manifest-ignore -- Minecraft commands, not Heimdall's */}
+
+- An entry blocks that command and anything typed after it, a whole word at a time. `ch send` blocks `/ch send hi` but not `/ch join`, and `me` blocks `/me waves` but not `/menu`. {/* docs-manifest-ignore -- Minecraft commands, not Heimdall's */}
+- An entry also blocks a plugin's namespaced form of the command, so `me` blocks `/minecraft:me` too.
+- A trailing `*` is ignored, so `tpa*` means `tpa`: it blocks `/tpa` but not `/tpaccept`.
+
+Matching subcommands needs plugin 3.0.0-rc.24 or later. Before that, only the command's first word was matched, so an entry like `ch send` blocked nothing.
+
+**Staff alerts.** Staff can be told when a muted player tries to talk. The alert reads `[Heimdall] Steve tried to speak while muted`, or `tried to use a blocked command while muted`. Two in-game permission nodes control it:
+
+| Node | What it adds |
+| --- | --- |
+| `heimdall.punishments.notify.muted` | The alert itself |
+| `heimdall.punishments.notify.muted.content` | A second line with what the player tried to say, or the command as typed |
+
+Both are opt-in. Nobody holds them by default, not even operators, and `heimdall.admin` does not include them. Grant them to the staff ranks that should see alerts.
+
+- **Where alerts appear:** only on the server that refused the message, so on a network with several backends, staff on one backend do not see attempts on another.
+- **Throttling:** each mute raises at most one alert every 30 seconds while the player stays online. The next alert says how many attempts it covers, for example `(4 more since)`. Rejoining, or a new mute, starts a fresh count.
+- **Hidden mutes:** an alert for a hidden mute also needs `heimdall.punishments.hidden`, and is prefixed `(hidden)`.
+- **Privacy:** what the player said is shown as plain text, so it cannot put formatting or links into staff chat. It is never stored, and never sent to Heimdall or to Discord.
+
+Staff alerts and the editable reminder need plugin 3.0.0-rc.25 or later.
+
 ### Screens
 
 Screens are what a punished player reads. They are [MiniMessage](https://docs.advntr.dev/minimessage/format.html) templates edited on the Enforcement page, not in any file on the server, and they ship with a Bifrost-branded default rather than a blank box.
 
-There are nine segments:
+There are ten segments:
 
 | Segment | Where it is shown |
 | --- | --- |
-| **Base** | A header block included at the start of each of the six screens below. Not used by the announcements |
+| **Base** | A header block included at the start of the ban, mute, kick and warn screens and their permanent variants. Not used by the mute reminder or the announcements |
 | **Ban screen** | On the disconnect screen when a banned player tries to join |
 | **Ban, permanent variant** | Optional. Replaces the ban screen when the ban never expires |
-| **Mute screen** | In chat when a muted player tries to talk |
+| **Mute screen** | In chat, once per mute: when it lands while the player is online, or at their first message |
 | **Mute, permanent variant** | Optional. Replaces the mute screen when the mute never expires |
+| **Mute reminder** | In chat, for every message a muted player tries to send after the first. Left empty, the default is used |
 | **Kick screen** | In chat when a player is kicked |
 | **Warn screen** | In chat when a player is warned |
 | **Issue announcement** | The chat line posted when a punishment is issued |
@@ -376,7 +416,7 @@ Values are escaped before the template is parsed, so a reason cannot inject form
 
 | Token | Is | Valid in |
 | --- | --- | --- |
-| `{base}` | The rendered base segment | The six screens, not the base itself and not the announcements |
+| `{base}` | The rendered base segment | The six screens, not the base itself, the mute reminder or the announcements |
 | `{server}` | Your Discord server's name | Every segment |
 | `{player}` | The punished player's username | Every segment |
 | `{staff}` | Who issued it (Console when unattributed) | Every segment |
