@@ -351,19 +351,19 @@ Issue one with `/hd freeze <player> [reason]` in game, `/mc-punish freeze` in Di
 What a frozen player gets:
 
 - **The freeze message**, when the freeze lands, when they join while frozen, and every 15 seconds after that. It is the **Freeze message** segment under [Screens](#screens), and tells them not to log out.
-- **No moving, building, breaking, item use, dropping or picking up items, and no fighting.** That includes ender pearls, chorus fruit, eating and drinking, throwing things, and getting into or riding a boat, minecart or mount. They cannot be hurt either. Staff can still teleport them.
-- **Chat goes to staff only.** What they type is shown to them and to staff as `[Frozen] Steve: ...`, as plain text, and to nobody else. It is not stored, and never sent to Heimdall or to Discord.
+- **No moving, building, breaking, item use, dropping or picking up items, and no fighting.** That includes ender pearls, chorus fruit, eating and drinking, throwing things, and getting into a boat, minecart or mount. They cannot be hurt either. Staff can still teleport them.
+- **Chat goes to staff only.** What they type is shown to them and to staff on the same server as `[Frozen] Steve: ...`, as plain text, and to nobody else. It is not stored, and never sent to Heimdall or to Discord.
 - **Commands are blocked.** Every command, not just the blocked-command list a mute uses.
 
 **Who hears them.** Staff holding `heimdall.punishments.freeze` or `heimdall.admin`. A hidden freeze narrows that to holders of `heimdall.punishments.hidden`, and its lines are prefixed `(hidden)`.
 
-**The permission.** `heimdall.punishments.freeze` alone lets someone freeze and unfreeze; it does not also need `heimdall.admin`. On Bukkit it defaults to operators. On Velocity and BungeeCord grant it through your permission plugin.
+**The permission.** `heimdall.punishments.freeze` alone lets someone freeze and unfreeze; it does not also need `heimdall.admin`. `/hd rollback <player>`, which needs `heimdall.punishments.unban`, lifts the player's latest active punishment, and that can be a freeze. On Bukkit it defaults to operators. On Velocity and BungeeCord grant it through your permission plugin.
 
 **Announcements.** A freeze is never announced to the server. Staff holding `heimdall.punishments.notify` see it, the same way they see a silent punishment.
 
-**Logging out while frozen.** Staff who can freeze are told straight away: `[Heimdall] Steve logged out while frozen.` On the <DashboardLink to="minecraft/enforcement">**Enforcement**</DashboardLink> page, **Ban frozen players who log out** goes one step further: if the player is not back within 30 seconds, they are banned for the length you pick (permanent by default), with the reason "Logged out while frozen". The 30 seconds absorb a dropped connection and a proxy restart, so a reconnect or a restart never bans anyone. Nothing fires if staff unfreeze them first, or if they are already banned. The ban is always silent, so the server never hears about it.
+**Logging out while frozen.** Staff who can freeze are told straight away: `[Heimdall] Steve logged out while frozen.` On the <DashboardLink to="minecraft/enforcement">**Enforcement**</DashboardLink> page, **Ban frozen players who log out** goes one step further: if the player is not back within 30 seconds, they are banned for the length you pick (permanent by default), with the reason "Logged out while frozen". The 30 seconds absorb a dropped connection and a proxy restart, so a quick reconnect or a proxy restart never bans anyone. If their server crashed or is restarting with no fallback server to send them to, the proxy checks whether it still answers before the ban fires, and staff are told instead of anyone being banned. Nothing fires if staff unfreeze them first, or if they are already banned or IP banned. The ban is always silent, so the server never hears about it.
 
-**Kicked while frozen.** The alert says they were kicked instead of logged out. A kick issued through Heimdall (`/hd kick`, `/mc-punish kick` or the dashboard) never leads to a logout ban: staff chose to remove them. Any other kick still does, because a player can get themselves kicked on purpose to escape a check.
+**Kicked while frozen.** The alert says they were kicked instead of logged out. A kick, ban or IP ban issued through Heimdall (`/hd kick`, `/mc-punish kick`, the dashboard and so on) never leads to a logout ban: staff chose to remove them. Any other kick still does, because a player can get themselves kicked on purpose to escape a check.
 
 - On a network, the proxy decides this, since a backend sees a server switch as a logout.
 - In **Heimdall runs bans** mode, Heimdall issues the ban and it shows in History as issued by Heimdall.
