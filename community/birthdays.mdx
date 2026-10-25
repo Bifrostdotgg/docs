@@ -4,11 +4,13 @@ description: "Announcing member birthdays on the day, with an optional temporary
 icon: "cake-candles"
 ---
 
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
 Members register their birthday, and on the day the bot posts an announcement and can hand them a temporary role. Members register themselves, so you never have to collect the dates.
 
 ## Setting it up
 
-Navigate to **Birthdays** in the dashboard.
+Navigate to <DashboardLink to="birthdays/config">**Birthdays**</DashboardLink> in the dashboard.
 
 | Setting | Description |
 | --- | --- |
@@ -32,7 +34,7 @@ Only the day and month are stored. Members are not asked for a year, so no age i
 
 ## The birthday list
 
-The dashboard's **Birthday List** tab shows every registered birthday, upcoming first, with search and the ability to add, edit, or remove an entry on somebody's behalf.
+The dashboard's <DashboardLink to="birthdays/entries">**Birthday List**</DashboardLink> tab shows every registered birthday, upcoming first, with search and the ability to add, edit, or remove an entry on somebody's behalf.
 
 Ordering is by how soon the next celebration is, not by calendar date, so December birthdays do not sit at the bottom for eleven months of the year.
 

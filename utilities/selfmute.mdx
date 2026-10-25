@@ -4,6 +4,8 @@ description: "Letting members lock themselves out of the server for a while."
 icon: "lock"
 ---
 
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
 Focus mode is self-service. A member runs `/selfmute start` with a duration, and the bot strips their roles and isolates them to a single focus channel until it expires. It is for people who want to revise, work, or sleep and know they will not manage it otherwise.
 
 Nobody else can put a member into focus mode, and it is not a moderation tool. Muting somebody is a moderation action with an infraction record behind it. This is a member choosing, and the two should not be confused.
@@ -16,7 +18,7 @@ The focus channel carries a panel with an opt-out button. Whether that button wo
 
 ## The one decision to make
 
-Navigate to **Focus Mode** in the dashboard and decide whether members may end it early.
+Navigate to <DashboardLink to="selfmute/config">**Self-Mute**</DashboardLink> in the dashboard and decide whether members may end it early.
 
 Allowing early exit makes it a gentle reminder. Refusing it makes it a genuine commitment, which is what some people are asking for. There is no correct answer, but do pick deliberately: a member who expected a commitment and found an escape hatch, or expected an escape hatch and found none, will come to staff either way.
 

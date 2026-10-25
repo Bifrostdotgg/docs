@@ -20,11 +20,11 @@ The submitted appeal appears in the dashboard for staff review.
 
 ## Setting up the appeals system
 
-Navigate to <DashboardLink to="appeals">**Moderation \> Appeals**</DashboardLink> in the dashboard.
+Navigate to <DashboardLink to="appeals/config">**Appeals \> Configuration**</DashboardLink> in the dashboard.
 
 ### Configure the appeal form
 
-Click **Edit Form** to define the questions your appeal form includes. Each question has:
+Open <DashboardLink to="appeals/forms">**Appeals \> Forms**</DashboardLink> to define the questions your appeal form includes. Each question has:
 
 - **Label** - the question text shown to the submitter
 - **Type** - short text, long text, or multiple choice
@@ -32,13 +32,21 @@ Click **Edit Form** to define the questions your appeal form includes. Each ques
 
 Common questions include: "Why were you banned?", "Why should your ban be lifted?", and "What will you do differently?"
 
-### Set the appeals site URL
+### Your appeal link
 
-The appeals site is deployed separately from the main dashboard. Enter its URL in the Appeals settings so the bot knows where to direct banned members if you choose to include it in ban notification DMs.
+There is nothing to set up. Every server gets its own link on the appeals site, shown as **Public Appeal URL** on <DashboardLink to="appeals/config">**Appeals \> Configuration**</DashboardLink> with a copy button. A white-label bot uses its own appeals address once one is set up.
+
+How a banned member gets the link by DM depends on how they were banned:
+
+- **With Heimdall** (`/ban` or the dashboard): the link is in the punishment DM, which is only sent while **DM on Infraction** is on in <DashboardLink to="moderation/settings">**Moderation \> Settings**</DashboardLink>. Mutes include it too.
+- **Outside Heimdall** (Discord itself, or another bot): while appeals are enabled, Heimdall sends a separate ban notification DM with the link.
+- **Automatically** (leave-bans, escalation, automod): no DM is sent, so share the link yourself if you want them to appeal.
+
+Both DMs can be reworded under <DashboardLink to="settings/messages">**Settings \> Messages**</DashboardLink>, as **Punishment DM** and **Ban notification DM**.
 
 ## Reviewing appeals in the dashboard
 
-Navigate to **Moderation \> Appeals** and open the **Submissions** tab. Each appeal shows:
+Navigate to <DashboardLink to="appeals/submissions">**Appeals \> Submissions**</DashboardLink>. Each appeal shows:
 
 - The submitter's stated Discord username and ID
 - Submission date

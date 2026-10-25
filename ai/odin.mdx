@@ -24,7 +24,7 @@ By default, `/ask` is available to all members. Access can be restricted in the 
 
 ## Knowledge base
 
-The knowledge base is the set of documents Odin uses to answer questions. Navigate to <DashboardLink to="ai/knowledgebase">**AI \> Knowledge Base**</DashboardLink> in the dashboard to manage it.
+The knowledge base is the set of documents Odin uses to answer questions. Navigate to <DashboardLink to="ai/knowledgebase">**AI \> Knowledgebase**</DashboardLink> in the dashboard to manage it.
 
 ### Adding documents
 
@@ -77,18 +77,21 @@ The knowledge base page lists all documents with their creation date and status.
 
 Odin maintains context within a conversation session. When a member asks a follow-up question, Odin uses the previous exchanges in the same session to understand the reference. Context is scoped to the individual member and expires after a period of inactivity.
 
-Staff can view and manage active contexts in **AI \> Context**. This is useful for debugging unexpected responses or clearing stale context for a member.
+Staff can read past conversations in <DashboardLink to="ai/conversations">**AI \> Conversations**</DashboardLink>, which is useful for debugging an unexpected response.
 
 ## Configuration
 
-Navigate to **AI \> Configuration** in the dashboard to set:
+Navigate to <DashboardLink to="ai/setup">**AI \> Setup & Context**</DashboardLink> in the dashboard to set:
 
 | Setting | Description |
 | --- | --- |
-| **AI provider** | Which language model provider powers Odin (configured by your administrator) |
-| **System prompt** | Instructions prepended to every conversation that shape Odin's behaviour and tone |
-| **Context length** | How many previous exchanges Odin remembers in a session |
-| **Response channels** | Optionally restrict `/ask` to specific channels |
+| **Identity** | Odin's name, personality, brand voice and primary language |
+| **Server context** | A description of your server and its niche, so answers fit your community |
+| **Channel context** | What each channel is for, so Odin can point members to the right place |
+| **Rules and guidelines** | Your server rules, do's and don'ts, forbidden topics and required disclosures |
+| **Branding** | The colour, logo and footer text on Odin's replies |
+
+To limit which channels `/ask` works in, or set its cooldowns, use <DashboardLink to="ai/feature-qa_bot">**AI \> Q&A Bot**</DashboardLink>.
 
 ## Features
 
@@ -150,17 +153,13 @@ Conversation modes let you configure how Odin behaves in specific channels - for
 
 ## Conversations
 
-<DashboardLink to="ai/conversations">**AI \> Conversations**</DashboardLink> shows active conversation contexts - members who have recently used `/ask` or interacted with Q&A Bot. Staff can view the conversation history for any context and clear it if needed, for example if a member's context has accumulated incorrect assumptions.
+<DashboardLink to="ai/conversations">**AI \> Conversations**</DashboardLink> is a log of members' conversations with Odin. Staff can open a conversation to read it, flag it or mark it reviewed, add a good answer to the knowledge base, or restrict the member from AI features.
 
 ## Restrictions
 
-<DashboardLink to="ai/restrictions">**AI \> Restrictions**</DashboardLink> lets you configure which channels and roles can access Odin's member-facing features:
+<DashboardLink to="ai/restrictions">**AI \> Restrictions**</DashboardLink> lists members who are banned or timed out from using AI features, and lets staff add or lift those restrictions.
 
-- Channels where `/ask` is permitted
-- Roles that can use `/ask`
-- Rate limits per user and per server
-
-Without restrictions, `/ask` is available to all members in all channels.
+Limiting `/ask` to specific channels, and its cooldowns, is on <DashboardLink to="ai/feature-qa_bot">**AI \> Q&A Bot**</DashboardLink> instead. Without a channel limit, `/ask` is available in every channel.
 
 ## Usage and billing
 
@@ -176,8 +175,8 @@ Without restrictions, `/ask` is available to all members in all channels.
 
 Odin integrates with tickets, modmail, and suggestions:
 
-- **Tickets \> AI** - enable ticket auto-reply for specific ticket categories
-- **Modmail \> AI** - enable the modmail assistant for specific modmail categories
+- <DashboardLink to="tickets/ai">**Tickets \> AI**</DashboardLink> - enable ticket auto-reply for specific ticket categories
+- <DashboardLink to="modmail/ai">**Modmail \> AI**</DashboardLink> - enable the modmail assistant for specific modmail categories
 - **Suggestions** - Odin automatically generates a concise title when a member submits a suggestion, if AI titles are enabled in the suggestions configuration
 
 ## Required permissions

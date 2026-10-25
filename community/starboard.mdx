@@ -4,6 +4,8 @@ description: "Automatically reposting highly-reacted messages to a dedicated hig
 icon: "star"
 ---
 
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
 The starboard collects messages that receive enough reactions and reposts them to a dedicated channel. It is a community-driven curation tool - members vote with reactions and the most popular content surfaces automatically.
 
 <Frame>
@@ -18,7 +20,7 @@ If the reaction count drops below the threshold (because members remove their re
 
 ## Setup
 
-Navigate to **Starboard** in the dashboard and configure:
+Navigate to <DashboardLink to="starboard">**Starboard**</DashboardLink> in the dashboard and configure:
 
 | Setting | Description |
 | --- | --- |
@@ -33,7 +35,7 @@ Navigate to **Starboard** in the dashboard and configure:
 
 The starboard has an optional moderation queue. When enabled, messages are not posted to the starboard immediately upon reaching the threshold. Instead, they enter a pending queue in the dashboard where staff can approve or reject them before they appear.
 
-Navigate to **Starboard** in the dashboard and enable **Require approval**. Pending entries appear in the **Queue** tab.
+Navigate to <DashboardLink to="starboard">**Starboard**</DashboardLink> in the dashboard and enable **Require moderation approval**. Pending entries appear in the **Moderation Queue** on the same page.
 
 Staff with the `starboard.moderate` permission can approve or reject pending entries. Approved entries are posted; rejected entries are discarded.
 

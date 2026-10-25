@@ -16,7 +16,7 @@ The ticket system creates private Discord threads for individual support request
 
 A member runs `/ticket open` or clicks an opener button you have placed in a channel. They select a category, optionally fill in an opening form, and a private thread is created. The thread is visible only to the member and staff roles configured for that category. The member and staff exchange messages inside the thread as a normal conversation.
 
-When the issue is resolved, either the member or a staff member closes the ticket. Closed tickets can be reviewed in the dashboard.
+When the issue is resolved, either the member or a staff member closes the ticket. Closed tickets can be reviewed in the dashboard under <DashboardLink to="tickets/list">**Tickets \> Tickets**</DashboardLink>.
 
 ## Setting up
 
@@ -94,7 +94,7 @@ If the AI plugin is enabled and connected to your ticket categories, Heimdall ca
 
 Members can optionally be prompted to leave a satisfaction review when a ticket is closed. The review prompt asks the member to rate their experience and optionally leave a comment. Scores and comments are aggregated in the analytics dashboard under <DashboardLink to="tickets/reviews">**Tickets > Reviews**</DashboardLink> and can be filtered by category and date range.
 
-Enable reviews in **Tickets > Configuration**. You can configure whether the review prompt is sent for all closures or only when closed by staff.
+Enable reviews in <DashboardLink to="tickets/config">**Tickets > Configuration**</DashboardLink>. You can configure whether the review prompt is sent for all closures or only when closed by staff.
 
 ## Auto-Responses
 
@@ -120,7 +120,7 @@ When a staff member reaches their quota:
 - Auto-assignment skips them when distributing new tickets
 - Manual assignment is still possible if a manager overrides the quota
 
-Quota usage is visible in the analytics dashboard alongside response time and closure metrics.
+Quota usage is visible in <DashboardLink to="tickets/analytics">**Tickets \> Analytics**</DashboardLink> alongside response time and closure metrics.
 
 ## Required permissions
 

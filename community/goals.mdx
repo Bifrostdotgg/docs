@@ -4,6 +4,8 @@ description: "Posting auto-updating progress bars for member count, boosts, role
 icon: "bullseye"
 ---
 
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
 A goal is a progress bar posted to a channel that updates itself. Use it for a member milestone, a boost target, a recruitment drive, or anything else you can put a number on.
 
 ## What a goal can track
@@ -19,7 +21,7 @@ The first three update on their own. Manual goals are for anything the bot canno
 
 ## Setting one up
 
-Navigate to **Goals** in the dashboard, choose the source, the target, and the channel. The bot posts the bar and keeps it current on a poller, so it stays accurate without anyone touching it.
+Navigate to <DashboardLink to="goals">**Goals**</DashboardLink> in the dashboard, choose the source, the target, and the channel. The bot posts the bar and keeps it current on a poller, so it stays accurate without anyone touching it.
 
 Goals are presentational, so they need no member permissions. Nobody can interact with a goal by accident.
 

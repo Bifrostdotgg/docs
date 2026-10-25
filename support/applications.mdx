@@ -4,6 +4,8 @@ description: "Configurable application forms for staff positions, events, and ot
 icon: "file-lines"
 ---
 
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
 The applications plugin lets you create forms that members fill in and submit for staff review. Use it for staff applications, event sign-ups, allowlist requests, or any situation where you need structured information from members.
 
 <Frame>
@@ -16,7 +18,7 @@ You create a form in the dashboard with as many questions as needed. Members acc
 
 ## Creating a form
 
-Navigate to **Applications** in the dashboard and click **New Form**.
+Navigate to <DashboardLink to="applications">**Applications**</DashboardLink> in the dashboard and click **New Form**.
 
 | Setting | Description |
 | --- | --- |
@@ -47,7 +49,7 @@ Navigate to **Applications** in the dashboard and click **New Form**.
 
 ## Reviewing submissions
 
-Navigate to **Applications** in the dashboard. Each submission shows all question responses, the applicant's Discord username, and the submission timestamp. From the review panel:
+Navigate to <DashboardLink to="applications">**Applications**</DashboardLink> in the dashboard. Each submission shows all question responses, the applicant's Discord username, and the submission timestamp. From the review panel:
 
 - **Approve** - marks the submission approved and sends the acceptance DM to the applicant
 - **Decline** - marks the submission declined and sends the rejection DM
