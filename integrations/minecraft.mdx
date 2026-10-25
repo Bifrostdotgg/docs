@@ -360,19 +360,51 @@ On Bukkit, `heimdall.punishments.notify` and `heimdall.punishments.silent` are d
 
 In-game permission nodes are `heimdall.punishments.<action>`, one per action: ban, ipban, mute, warn, kick, unban, unmute, history, and dupeip. These do not inherit from `litebans.*` or any other plugin's nodes, so grant them to your staff ranks before you remove the old plugin, not after, or staff lose access the moment it comes out.
 
+### Muted players
+
+A mute is enforced by the backend a player is on. What the muted player sees:
+
+- **The mute screen once.** They see the full mute screen when the mute lands while they are online, or at their first message if they were muted while away. It shows once per mute, on each server, each session.
+- **A reminder after that.** Every message after the first gets one line, by default "You are muted for another 9m 59s." It is the **Mute reminder** segment under [Screens](#screens).
+
+**Blocked commands.** The Enforcement page lists the commands a muted player cannot run (`/msg`, `/tell`, `/me`, `/r`, `/whisper` and `/w` by default). {/* docs-manifest-ignore -- Minecraft commands, not Heimdall's */}
+
+- An entry blocks that command and anything typed after it, a whole word at a time. `ch send` blocks `/ch send hi` but not `/ch join`, and `me` blocks `/me waves` but not `/menu`. {/* docs-manifest-ignore -- Minecraft commands, not Heimdall's */}
+- An entry also blocks a plugin's namespaced form of the command, so `me` blocks `/minecraft:me` too.
+- A trailing `*` is ignored, so `tpa*` means `tpa`: it blocks `/tpa` but not `/tpaccept`.
+
+Matching subcommands needs plugin 3.0.0-rc.24 or later. Before that, only the command's first word was matched, so an entry like `ch send` blocked nothing.
+
+**Staff alerts.** Staff can be told when a muted player tries to talk. The alert reads `[Heimdall] Steve tried to speak while muted`, or `tried to use a blocked command while muted`. Two in-game permission nodes control it:
+
+| Node | What it adds |
+| --- | --- |
+| `heimdall.punishments.notify.muted` | The alert itself |
+| `heimdall.punishments.notify.muted.content` | A second line with what the player tried to say, or the command as typed |
+
+Both are opt-in. Nobody holds them by default, not even operators, and `heimdall.admin` does not include them. Grant them to the staff ranks that should see alerts.
+
+- **Where alerts appear:** only on the server that refused the message, so on a network with several backends, staff on one backend do not see attempts on another.
+- **Throttling:** each mute raises at most one alert every 30 seconds while the player stays online. The next alert says how many attempts it covers, for example `(4 more since)`. Rejoining, or a new mute, starts a fresh count.
+- **Hidden mutes:** an alert for a hidden mute also needs `heimdall.punishments.hidden`, and is prefixed `(hidden)`.
+- **Privacy:** what the player said is shown as plain text, so it cannot put formatting or links into staff chat. It is never stored, and never sent to Heimdall or to Discord.
+
+Staff alerts and the editable reminder need plugin 3.0.0-rc.25 or later.
+
 ### Screens
 
 Screens are what a punished player reads. They are [MiniMessage](https://docs.advntr.dev/minimessage/format.html) templates edited on the Enforcement page, not in any file on the server, and they ship with a Bifrost-branded default rather than a blank box.
 
-There are nine segments:
+There are ten segments:
 
 | Segment | Where it is shown |
 | --- | --- |
-| **Base** | A header block included at the start of each of the six screens below. Not used by the announcements |
+| **Base** | A header block included at the start of the ban, mute, kick and warn screens and their permanent variants. Not used by the mute reminder or the announcements |
 | **Ban screen** | On the disconnect screen when a banned player tries to join |
 | **Ban, permanent variant** | Optional. Replaces the ban screen when the ban never expires |
-| **Mute screen** | In chat when a muted player tries to talk |
+| **Mute screen** | In chat, once per mute: when it lands while the player is online, or at their first message |
 | **Mute, permanent variant** | Optional. Replaces the mute screen when the mute never expires |
+| **Mute reminder** | In chat, for every message a muted player tries to send after the first. Left empty, the default is used |
 | **Kick screen** | In chat when a player is kicked |
 | **Warn screen** | In chat when a player is warned |
 | **Issue announcement** | The chat line posted when a punishment is issued |
@@ -386,7 +418,7 @@ Values are escaped before the template is parsed, so a reason cannot inject form
 
 | Token | Is | Valid in |
 | --- | --- | --- |
-| `{base}` | The rendered base segment | The six screens, not the base itself and not the announcements |
+| `{base}` | The rendered base segment | The six screens, not the base itself, the mute reminder or the announcements |
 | `{server}` | Your Discord server's name | Every segment |
 | `{player}` | The punished player's username | Every segment |
 | `{staff}` | Who issued it (Console when unattributed) | Every segment |
