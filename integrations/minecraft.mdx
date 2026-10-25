@@ -367,9 +367,9 @@ A mute is enforced by the backend a player is on. What the muted player sees:
 - **The mute screen once.** They see the full mute screen when the mute lands while they are online, or at their first message if they were muted while away. It shows once per mute, on each server, each session.
 - **A reminder after that.** Every message after the first gets one line, by default "You are muted for another 9m 59s." It is the **Mute reminder** segment under [Screens](#screens).
 
-**Blocked commands.** The Enforcement page lists the commands a muted player cannot run (`/msg`, `/tell`, `/me`, `/r`, `/whisper` and `/w` by default).
+**Blocked commands.** The Enforcement page lists the commands a muted player cannot run (`/msg`, `/tell`, `/me`, `/r`, `/whisper` and `/w` by default). {/* docs-manifest-ignore -- Minecraft commands, not Heimdall's */}
 
-- An entry blocks that command and anything typed after it, a whole word at a time. `ch send` blocks `/ch send hi` but not `/ch join`, and `me` blocks `/me waves` but not `/menu`.
+- An entry blocks that command and anything typed after it, a whole word at a time. `ch send` blocks `/ch send hi` but not `/ch join`, and `me` blocks `/me waves` but not `/menu`. {/* docs-manifest-ignore -- Minecraft commands, not Heimdall's */}
 - An entry also blocks a plugin's namespaced form of the command, so `me` blocks `/minecraft:me` too.
 - A trailing `*` is ignored, so `tpa*` means `tpa`: it blocks `/tpa` but not `/tpaccept`.
 
