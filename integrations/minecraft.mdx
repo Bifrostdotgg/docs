@@ -367,9 +367,7 @@ What a frozen player gets:
 - In **Heimdall runs bans** mode, Heimdall issues the ban and it shows in History as issued by Heimdall.
 - In **Alongside your ban plugin** mode, the ban goes through LiteBans, so LiteBans has to be installed on the proxy (or on the server, if there is no proxy). Without it, staff still get the alert but nobody is banned.
 
-<Note>
-A freeze is enforced on the server the player is on. On a proxied network, a command handled by the proxy itself, such as Velocity's `/server`, is not blocked. Staff should deal with a frozen player before they have a reason to leave.
-</Note>
+On a network, the proxy's own commands are blocked too, so a frozen player cannot use `/server` or a hub command to walk off to another server. Staff can still move them, and if their server goes down the proxy still sends them to a fallback server as usual.
 
 ### Silent punishments
 
