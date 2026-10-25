@@ -346,7 +346,9 @@ Permanent is spelled the same way everywhere: `perm` or `permanent`, or no lengt
 
 A freeze holds a player in place while staff check them, for example to look over their screen for a hacked client. Freezes need plugin 3.0.0-rc.26 or later on every server, and work in both **Alongside your ban plugin** and **Heimdall runs bans** mode. LiteBans has no freeze, so in hook mode Heimdall enforces freezes itself and leaves everything else to LiteBans. In **Offenses only** the plugin enforces no freeze, so the dashboard and `/mc-punish` refuse to issue one.
 
-Issue one with `/hd freeze <player> [reason]` in game, `/mc-punish freeze` in Discord, or **Freeze** in the [Issue punishment](#issue-punishment) form. Lift it with `/hd unfreeze <player>`, `/mc-punish unfreeze`, or **Revoke** on the row in History. With root aliases on in **Heimdall runs bans** mode, `/freeze` and `/unfreeze` work too. A freeze has no length: it lasts until someone lifts it. Nobody can freeze themselves.
+Issue one with `/hd freeze <player> [reason]` in game, `/mc-punish freeze` in Discord, or **Freeze** in the [Issue punishment](#issue-punishment) form. Lift it with `/hd unfreeze <player>`, `/mc-punish unfreeze`, or **Revoke** on the row in History. A freeze has no length: it lasts until someone lifts it. Nobody can freeze themselves.
+
+With root aliases on in **Heimdall runs bans** mode, `/freeze` and `/unfreeze` work in game too. {/* docs-manifest-ignore -- Minecraft commands, not Heimdall's */}
 
 What a frozen player gets:
 
@@ -363,14 +365,14 @@ What a frozen player gets:
 
 **Logging out while frozen.** Staff who can freeze are told straight away: `[Heimdall] Steve logged out while frozen.` On the <DashboardLink to="minecraft/enforcement">**Enforcement**</DashboardLink> page, **Ban frozen players who log out** goes one step further: if the player is not back within 30 seconds, they are banned for the length you pick (permanent by default), with the reason "Logged out while frozen". The 30 seconds absorb a dropped connection and a proxy restart, so a quick reconnect or a proxy restart never bans anyone. If a kick came from a server that crashed or was shutting down, with no fallback server to send them to, the proxy pings that server a few seconds after the kick and again before the ban fires. If either ping goes unanswered, staff are told instead of anyone being banned. Nothing fires if staff unfreeze them first, or if they are already banned or IP banned. The ban is always silent, so the server never hears about it.
 
-**Kicked while frozen.** The alert says they were kicked instead of logged out. A kick, ban or IP ban issued through Heimdall (`/hd kick`, `/mc-punish kick`, the dashboard and so on) does not lead to a logout ban: staff chose to remove them. On a network, if Heimdall takes more than 10 seconds to pass that kick on to the proxy, the ban can still go ahead; unfreezing them stops it. Any other kick still does, because a player can get themselves kicked on purpose to escape a check.
+**Kicked while frozen.** The alert says they were kicked instead of logged out. A kick, ban or IP ban issued through Heimdall (`/hd kick <player>`, `/mc-punish kick`, the dashboard and so on) does not lead to a logout ban: staff chose to remove them. On a network, if Heimdall takes more than 10 seconds to pass that kick on to the proxy, the ban can still go ahead; unfreezing them stops it. Any other kick still does, because a player can get themselves kicked on purpose to escape a check.
 
 - On a network, the proxy decides this, since a backend sees a server switch as a logout.
 - In **Heimdall runs bans** mode, Heimdall issues the ban and it shows in History as issued by Heimdall.
 - In **Alongside your ban plugin** mode, the ban goes through LiteBans, so LiteBans has to be installed on the proxy (or on the server, if there is no proxy). Without it, staff still get the alert but nobody is banned. If LiteBans cannot be asked whether it already bans them, nobody is banned either, and staff are told to do it by hand. A hidden freeze is never turned into a LiteBans ban, since that ban and its reason would be visible to everyone LiteBans shows bans to.
 - On a network with more than one proxy, each proxy only knows about players who log out from it. A player who drops from one proxy and reconnects through another within the 30 seconds is still banned.
 
-On a network, the proxy's own commands are blocked too, so a frozen player cannot use `/server` or a hub command to walk off to another server. Staff can still move them, and if their server goes down the proxy still sends them to a fallback server as usual.
+On a network, the proxy's own commands are blocked too, so a frozen player cannot use `/server` or a hub command to walk off to another server. Staff can still move them, and if their server goes down the proxy still sends them to a fallback server as usual. {/* docs-manifest-ignore -- a proxy command, not Heimdall's */}
 
 ### Silent punishments
 
