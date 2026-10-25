@@ -344,14 +344,14 @@ Permanent is spelled the same way everywhere: `perm` or `permanent`, or no lengt
 
 ### Freezes
 
-A freeze holds a player in place while staff check them, for example to look over their screen for a hacked client. Freezes need plugin 3.0.0-rc.26 or later on every server, and work in both **Alongside your ban plugin** and **Heimdall runs bans** mode. LiteBans has no freeze, so in hook mode Heimdall enforces freezes itself and leaves everything else to LiteBans. Offenses only refuses them.
+A freeze holds a player in place while staff check them, for example to look over their screen for a hacked client. Freezes need plugin 3.0.0-rc.26 or later on every server, and work in both **Alongside your ban plugin** and **Heimdall runs bans** mode. LiteBans has no freeze, so in hook mode Heimdall enforces freezes itself and leaves everything else to LiteBans. In **Offenses only** the plugin enforces no freeze, so the dashboard and `/mc-punish` refuse to issue one.
 
-Issue one with `/hd freeze <player> [reason]` in game, `/mc-punish freeze` in Discord, or **Freeze** in the [Issue punishment](#issue-punishment) form. Lift it with `/hd unfreeze <player>`, `/mc-punish unfreeze`, or **Revoke** on the row in History. With root aliases on in **Heimdall runs bans** mode, `/freeze` and `/unfreeze` work too. A freeze has no length: it lasts until someone lifts it.
+Issue one with `/hd freeze <player> [reason]` in game, `/mc-punish freeze` in Discord, or **Freeze** in the [Issue punishment](#issue-punishment) form. Lift it with `/hd unfreeze <player>`, `/mc-punish unfreeze`, or **Revoke** on the row in History. With root aliases on in **Heimdall runs bans** mode, `/freeze` and `/unfreeze` work too. A freeze has no length: it lasts until someone lifts it. Nobody can freeze themselves.
 
 What a frozen player gets:
 
 - **The freeze message**, when the freeze lands, when they join while frozen, and every 15 seconds after that. It is the **Freeze message** segment under [Screens](#screens), and tells them not to log out.
-- **No moving, building, breaking, item use, dropping or picking up items, and no fighting.** They cannot be hurt either. Staff can still teleport them.
+- **No moving, building, breaking, item use, dropping or picking up items, and no fighting.** That includes ender pearls, chorus fruit, eating and drinking, throwing things, and getting into or riding a boat, minecart or mount. They cannot be hurt either. Staff can still teleport them.
 - **Chat goes to staff only.** What they type is shown to them and to staff as `[Frozen] Steve: ...`, as plain text, and to nobody else. It is not stored, and never sent to Heimdall or to Discord.
 - **Commands are blocked.** Every command, not just the blocked-command list a mute uses.
 
@@ -361,11 +361,14 @@ What a frozen player gets:
 
 **Announcements.** A freeze is never announced to the server. Staff holding `heimdall.punishments.notify` see it, the same way they see a silent punishment.
 
-**Logging out while frozen.** Staff who can freeze are told straight away: `[Heimdall] Steve logged out while frozen.` On the <DashboardLink to="minecraft/enforcement">**Enforcement**</DashboardLink> page, **Ban frozen players who log out** goes one step further: if the player is not back within 30 seconds, they are banned for the length you pick (permanent by default), with the reason "Logged out while frozen". The 30 seconds absorb a dropped connection and a proxy restart, so a reconnect or a restart never bans anyone. Nothing fires if staff unfreeze them first, or if they are already banned.
+**Logging out while frozen.** Staff who can freeze are told straight away: `[Heimdall] Steve logged out while frozen.` On the <DashboardLink to="minecraft/enforcement">**Enforcement**</DashboardLink> page, **Ban frozen players who log out** goes one step further: if the player is not back within 30 seconds, they are banned for the length you pick (permanent by default), with the reason "Logged out while frozen". The 30 seconds absorb a dropped connection and a proxy restart, so a reconnect or a restart never bans anyone. Nothing fires if staff unfreeze them first, or if they are already banned. The ban is always silent, so the server never hears about it.
+
+**Kicked while frozen.** The alert says they were kicked instead of logged out. A kick issued through Heimdall (`/hd kick`, `/mc-punish kick` or the dashboard) never leads to a logout ban: staff chose to remove them. Any other kick still does, because a player can get themselves kicked on purpose to escape a check.
 
 - On a network, the proxy decides this, since a backend sees a server switch as a logout.
 - In **Heimdall runs bans** mode, Heimdall issues the ban and it shows in History as issued by Heimdall.
-- In **Alongside your ban plugin** mode, the ban goes through LiteBans, so LiteBans has to be installed on the proxy (or on the server, if there is no proxy). Without it, staff still get the alert but nobody is banned.
+- In **Alongside your ban plugin** mode, the ban goes through LiteBans, so LiteBans has to be installed on the proxy (or on the server, if there is no proxy). Without it, staff still get the alert but nobody is banned. A hidden freeze is never turned into a LiteBans ban, since that ban and its reason would be visible to everyone LiteBans shows bans to.
+- On a network with more than one proxy, each proxy only knows about players who log out from it. A player who drops from one proxy and reconnects through another within the 30 seconds is still banned.
 
 On a network, the proxy's own commands are blocked too, so a frozen player cannot use `/server` or a hub command to walk off to another server. Staff can still move them, and if their server goes down the proxy still sends them to a fallback server as usual.
 
