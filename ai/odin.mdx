@@ -18,7 +18,9 @@ Odin is Heimdall's AI assistant. Members ask questions and receive answers infor
 /ask <question>
 ```
 
-Members ask any question in plain language. Odin processes the question against your knowledge base and provides an answer. If the knowledge base contains relevant content, the answer draws from it. If not, Odin falls back to its underlying language model's general knowledge.
+Members ask any question in plain language. Odin answers from your knowledge base and cites the entries it used. By default `/ask` answers only from the knowledge base: if the knowledge base does not cover the question, Odin says so instead of guessing and offers the member a way to reach staff (a ticket or modmail button, depending on how your server takes support requests).
+
+To let `/ask` also answer general questions from Odin's own knowledge, turn on **Allow general knowledge** in <DashboardLink to="ai/feature-qa_bot">**AI \> Q&A Bot**</DashboardLink>. Facts about your server (links, rates, commands, staff) still only come from the knowledge base.
 
 By default, `/ask` is available to all members. Access can be restricted in the permissions configuration.
 
@@ -146,6 +148,16 @@ This is distinct from auto-responses - the Q&A Bot uses full AI reasoning rather
 ### Conversation Modes
 
 Conversation modes let you configure how Odin behaves in specific channels - for example, setting up a channel where Odin maintains ongoing conversation context and acts as a persistent assistant. Configure available modes and the channels they apply to in <DashboardLink to="ai/feature-conversation_modes">**AI \> Conversation Modes**</DashboardLink>.
+
+Each mode has two settings that decide how it answers:
+
+- **Allow general knowledge** (on by default). Odin answers general questions, such as the game or topic your community is about, from its own knowledge, and uses your knowledge base for anything about your server. It says when it is unsure, and points out where your server may differ from the general case. Facts about your server itself, such as links, rates, commands and staff, still only come from the knowledge base. Turn this off to make the mode answer only from the knowledge base, like `/ask` does by default.
+- **Handoff action**. What happens when a member asks for a human or needs something only staff can do. Ordinary questions are always answered, never handed off.
+  - **No hand-off** (default): Odin says it cannot help and stops there.
+  - **Open a ticket**: Odin shows your server's ticket button, or modmail's if you use modmail instead.
+  - **Ping a staff role**: Odin mentions the role you choose. Each member can ping it at most once every 10 minutes, and the role is pinged at most once a minute; later hand-offs name the role without notifying it. The role must be mentionable, or Heimdall needs the **Mention @everyone, @here, and All Roles** permission. Otherwise the mode behaves as **No hand-off**.
+
+Odin replies in the language the member writes in. The fixed hand-off line and button labels follow the **Primary Language** set on <DashboardLink to="ai/setup">**AI \> Setup & Context**</DashboardLink>.
 
 ## Moderation Logs
 
