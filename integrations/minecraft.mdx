@@ -79,6 +79,7 @@ Heimdall can give every member who has linked a Minecraft account a Discord role
 - It comes off when the member unlinks their last Minecraft account, or when staff delete the player for good.
 - **Take it away from blocked players** (on by default) also removes the role while a player is blocked, revoked or removed by staff, and gives it back when they are unblocked.
 - Members who linked before you turned it on get the role when you save. Changing the role moves everyone from the old role to the new one.
+- Changing the role, or the **Take it away from blocked players** option, runs a [background job](/community/levels#background-jobs) across every linked member. Its progress shows under the setting after you save, and in <DashboardLink to="settings/background-jobs">**Settings \> Background Jobs**</DashboardLink>, where you can also cancel it. Seeing it needs `minecraft.server.manage_config`.
 - Heimdall only takes the role back from members it gave it to, so anyone you gave it to by hand keeps it.
 
 The bot needs the **Manage Roles** permission and a role above the linked role. A role with moderation or admin permissions, in Discord or in Heimdall, is refused, and so is a role that a Minecraft to Discord role sync mapping already gives.
