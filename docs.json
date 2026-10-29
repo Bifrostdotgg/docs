@@ -63,6 +63,7 @@
             "group": "Community",
             "pages": [
               "community/welcome",
+              "community/levels",
               "community/suggestions",
               "community/starboard",
               "community/role-buttons",

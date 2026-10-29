@@ -1,0 +1,333 @@
+---
+title: "Levels and XP"
+description: "XP from messages and voice, levels and level curves, reward roles, and importing XP from Amari or another bot."
+icon: "chart-line"
+---
+
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+Levels are part of the Games feature's engagement system. Members earn XP for chatting and for time in voice, XP adds up to a level, and you can give a role at any level you like. If your server is moving from another levelling bot, you can bring everyone's XP with them, so nobody starts again from zero.
+
+Everything on this page is set up in <DashboardLink to="games/config/engagement">**Games \> Configuration \> Engagement**</DashboardLink>.
+
+## Turning it on
+
+Switch on **Enable engagement** and save. Nothing is tracked before that, and XP only counts from the moment it is on: past messages are not counted retroactively. The import below is the way to bring history in.
+
+| Setting | What it does |
+| --- | --- |
+| **XP per message** | XP a member gets for a message. Default 15 |
+| **Message XP cooldown (s)** | Seconds before the same member can earn message XP again, so spamming earns nothing extra. Default 60 |
+| **XP per voice minute** | XP for each full minute in a voice channel, credited every few minutes during a call. Default 10 |
+| **Announcement channel** | Where level-ups and achievement unlocks are posted. Optional |
+| **Announce level-ups** | Post a message when a member reaches a new level |
+
+Members check their level with `/economy level`, and `/economy leaderboard` has a **Level** category. Staff can set a member's level or XP from `/economy engagement-admin` or from <DashboardLink to="games/member-admin">**Games \> Member Admin**</DashboardLink>; an admin change never posts a level-up message.
+
+## Level reward roles
+
+Under **Level role rewards**, map a level to a role. A member who reaches that level gets the role. Rewards stack: a member at level 20 keeps the level 5 and level 10 roles as well.
+
+The bot needs **Manage Roles** and a role above every reward role. Heimdall refuses to hand out a role that could be used to take over the server, so a reward role is skipped if it:
+
+- has a moderation or admin permission on Discord (Administrator, Manage Server, Manage Roles, Ban Members and similar), or
+- is allowed anything in Heimdall's own [permission system](/permissions), or
+- is above the bot's highest role, is managed by an integration, or is `@everyone`.
+
+A refused role is never given. A [background job](#background-jobs) lists it under its failures with the reason, and a level or XP change made in **Member Admin** shows it after saving.
+
+## Level curves
+
+The level curve decides how much XP each level needs. Your server has one curve, and every member's level is worked out from their XP on it. Pick it in the **Level curve** card. The card shows a preview of levels 1 to 50 for the curve you have selected, next to the current one.
+
+| Curve | XP needed | Level 1 | Level 5 | Level 10 |
+| --- | --- | --- | --- | --- |
+| **MEE6** (default) | Going from level L to L + 1 takes 5L² + 50L + 100 XP | 100 | 1,150 | 4,675 |
+| **Amari** | Reaching level L takes 20(L - 1)² + 35 XP in total: 35 XP for level 1, then 40L - 20 more to go from level L to L + 1 | 35 | 355 | 1,655 |
+| **Custom** | Going from level L to L + 1 takes aL² + bL + c XP | c | | |
+
+The table shows total XP to reach each level. MEE6 is the curve every server used before curves could be changed, so a server that never touches this setting sees no difference.
+
+For a custom curve, each number has a range:
+
+| Coefficient | Allowed values |
+| --- | --- |
+| `a` | 0 to 100 |
+| `b` | 0 to 10,000 |
+| `c` | 1 to 100,000 |
+
+Setting `a` and `b` to 0 gives a flat curve where every level costs `c` XP. Levels stop at 10,000 whatever the curve.
+
+### What happens when you change it
+
+Click **Change level curve** and confirm. Every member keeps their XP, and their level is recalculated from it on the new curve, so some levels go up and some go down.
+
+- The recalculation runs in the background. On a large server it can take a few minutes, and levels shown in the meantime may be out of date. The card says **Recalculating levels** until it finishes, and the curve cannot be changed again until then.
+- No level-up messages are posted for the change, however many members move up.
+- Once levels are recalculated, members get any reward roles their new level has earned. This runs as a [background job](#background-jobs).
+- By default no role is taken away, even from a member whose level went down. Tick **Also remove reward roles above each member's new level** to also remove reward roles for levels a member no longer has. Only roles in your reward list are touched; a role a member has for any other reason is left alone.
+
+<Warning>
+  Moving to a curve that needs more XP per level lowers levels. If you tick the remove option, members lose reward roles they have held, possibly for a long time. Look at the preview first.
+</Warning>
+
+## Importing from Amari
+
+Amari has closed its public API, so there is no official way to export a server's XP from it. The Amari website still shows the leaderboard to anyone logged in, though, and Heimdall can read the file the website gives you. The import itself is in the **Import XP** card, with **Amari** as the source.
+
+<Tip>
+  Switch your server to the **Amari** curve before importing, or leave **Switch this server to Amari's level curve first** ticked during the import (it is ticked by default). On Amari's curve every member keeps exactly the XP and level they had on Amari. On any other curve, members keep their Amari level and their XP is set to the start of that level here, so progress towards the next level is lost.
+</Tip>
+
+### Exporting with the script
+
+The exporter is a short script you paste into your own browser while you are logged in to Amari. It reads your server's leaderboard page by page and saves it as a file.
+
+<Steps>
+  <Step title="Open Amari and log in">
+    Go to [amaribot.com](https://amaribot.com) and log in with Discord. Open your server's leaderboard to check you can see it. If you cannot see the leaderboard on the website, the exporter cannot either.
+  </Step>
+  <Step title="Open the browser console">
+    Press **F12** (or right click the page and choose **Inspect**) and open the **Console** tab. Make sure the console belongs to the amaribot.com tab.
+  </Step>
+  <Step title="Allow pasting if the browser asks">
+    Firefox blocks pasting into the console until you type `allow pasting` and press Enter. Chrome and Edge may show the same warning; type what they ask for. This is the browser protecting you from scripts you do not understand, which is why the readable version is below.
+  </Step>
+  <Step title="Paste the exporter and press Enter">
+    Copy it from **Copy exporter** in the Import XP card, or from the box below. It asks for your server ID (the Import XP card shows it), then a start page: leave that at 1.
+  </Step>
+  <Step title="Wait for the download">
+    The console shows each page as it is read. Large servers take a while, because Amari limits how fast pages can be read and the script waits whenever it is told to. When it finishes, your browser downloads a file named like `amari-<server id>-p1-<last page>.json`.
+  </Step>
+</Steps>
+
+```js Amari exporter
+(async()=>{let guildId=prompt("Server (guild) ID to export:")?.trim();if(!/^\d{17,20}$/.test(guildId??""))return console.error("Not a server ID");let startPage=Math.max(1,Number(prompt("Start page (1 unless resuming):","1"))||1),sleep=(ms)=>new Promise((r)=>setTimeout(r,ms)),header=(res,...names)=>{for(let n of names){let v=res.headers.get(n);if(v!==null&&v!=="")return Number(v)}return NaN},pages=[],gapMs=1500,stopReason=null,lastPage=1/0,pageSize=null,save=()=>{let file={source:"amari",guildId,exportedAt:new Date().toISOString(),startPage,pages},a=document.createElement("a");return a.href=URL.createObjectURL(new Blob([JSON.stringify(file)],{type:"application/json"})),a.download=`amari-${guildId}-p${startPage}-${startPage+pages.length-1}.json`,a.click(),a.download};for(let page=startPage;page<=lastPage&&page<=1e4;page++){let res=null,backoff=3;for(let attempt=1;;attempt++){try{res=await fetch(`/api/leaderboard?guildId=${guildId}&page=${page}`,{headers:{"x-user-agent":"Amari-bot-v1"},credentials:"include"})}catch{res=null}if(res&&res.ok)break;if(res&&res.status===429){let wait=(header(res,"retry-after")||30)+2;console.log(`Page ${page}: rate limited, waiting ${Math.ceil(wait)}s (this is normal)`),gapMs=Math.min(gapMs*2,1e4),await sleep(wait*1000);continue}if(attempt>=10){let why=res?`HTTP ${res.status}`:"network error";stopReason=res&&(res.status===401||res.status===403)?`Page ${page} kept returning ${why}. Check you are still logged in on amaribot.com, then re-run with start page ${page}.`:`Page ${page} kept failing (${why}). Re-run later with start page ${page}.`;break}console.log(`Page ${page}: ${res?`HTTP ${res.status}`:"network error"}, retrying in ${backoff}s`),gapMs=Math.min(gapMs*2,1e4),await sleep(backoff*1000),backoff=Math.min(backoff*2,120)}if(stopReason)break;if(!(res.headers.get("content-type")??"").includes("json")){stopReason=`Page ${page} was not JSON (a browser check page?). Reload amaribot.com, then re-run with start page ${page}.`;break}let body=await res.json(),rows=Array.isArray(body?.data)?body.data:[];if(rows.length===0)break;if(pages.push(body),pageSize??=rows.length,Number.isFinite(body.total_count)&&pageSize>0)lastPage=Math.ceil(body.total_count/pageSize);if(console.log(`Page ${page}/${Number.isFinite(lastPage)?lastPage:"?"}: ${rows.length} rows`),rows.length<pageSize)break;await sleep(gapMs)}if(pages.length===0)return console.error(stopReason??"No rows found. Check the server ID and that you can see its leaderboard.");let name=save();if(stopReason)console.warn(`Stopped early. Saved ${pages.length} pages to ${name}. ${stopReason}`);else console.log(`Done: ${pages.length} pages saved to ${name}`)})();
+```
+
+<Accordion title="The exporter, readable, and what each part does">
+  This is the same script before it was squeezed onto one line. Read it, or paste this version instead if you prefer: it behaves identically.
+
+  ```js
+  // Amari leaderboard exporter. Paste into the devtools console on https://amaribot.com while
+  // logged in. It only calls amaribot.com's own API with your own session, the same way the
+  // leaderboard page does, and downloads JSON; nothing is sent anywhere else. If it stops early
+  // it still saves what it has and tells you which page to resume from; the Heimdall importer
+  // merges several files.
+  (async () => {
+    const guildId = prompt("Server (guild) ID to export:")?.trim();
+    if (!/^\d{17,20}$/.test(guildId ?? "")) return console.error("Not a server ID");
+    const startPage = Math.max(1, Number(prompt("Start page (1 unless resuming):", "1")) || 1);
+
+    const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+    const header = (res, ...names) => {
+      for (const n of names) {
+        const v = res.headers.get(n);
+        if (v !== null && v !== "") return Number(v);
+      }
+      return NaN;
+    };
+
+    const pages = [];
+    let gapMs = 1500;
+    let stopReason = null;
+    let lastPage = Infinity;
+    let pageSize = null;
+
+    const save = () => {
+      const file = { source: "amari", guildId, exportedAt: new Date().toISOString(), startPage, pages };
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(new Blob([JSON.stringify(file)], { type: "application/json" }));
+      a.download = `amari-${guildId}-p${startPage}-${startPage + pages.length - 1}.json`;
+      a.click();
+      return a.download;
+    };
+
+    for (let page = startPage; page <= lastPage && page <= 10000; page++) {
+      let res = null;
+      let backoff = 3;
+      for (let attempt = 1; ; attempt++) {
+        try {
+          // The leaderboard page sends this header on every API call; without it Amari answers 403.
+          res = await fetch(`/api/leaderboard?guildId=${guildId}&page=${page}`, {
+            headers: { "x-user-agent": "Amari-bot-v1" },
+            credentials: "include",
+          });
+        } catch {
+          res = null;
+        }
+        if (res && res.ok) break;
+        if (res && res.status === 429) {
+          const wait = (header(res, "retry-after") || 30) + 2;
+          console.log(`Page ${page}: rate limited, waiting ${Math.ceil(wait)}s (this is normal)`);
+          gapMs = Math.min(gapMs * 2, 10000);
+          await sleep(wait * 1000);
+          continue;
+        }
+        // Amari answers a throttle with 403 "Forbidden. Please try again.", so a 403 is retried
+        // with backoff like a 5xx; only a persistent one means the session is really gone.
+        if (attempt >= 10) {
+          const why = res ? `HTTP ${res.status}` : "network error";
+          stopReason =
+            res && (res.status === 401 || res.status === 403)
+              ? `Page ${page} kept returning ${why}. Check you are still logged in on amaribot.com, then re-run with start page ${page}.`
+              : `Page ${page} kept failing (${why}). Re-run later with start page ${page}.`;
+          break;
+        }
+        console.log(`Page ${page}: ${res ? `HTTP ${res.status}` : "network error"}, retrying in ${backoff}s`);
+        gapMs = Math.min(gapMs * 2, 10000);
+        await sleep(backoff * 1000);
+        backoff = Math.min(backoff * 2, 120);
+      }
+      if (stopReason) break;
+
+      if (!(res.headers.get("content-type") ?? "").includes("json")) {
+        stopReason = `Page ${page} was not JSON (a browser check page?). Reload amaribot.com, then re-run with start page ${page}.`;
+        break;
+      }
+      const body = await res.json();
+      const rows = Array.isArray(body?.data) ? body.data : [];
+      if (rows.length === 0) break; // past the last page
+      pages.push(body);
+      // Size the run from the first full page: the last page's `count` is short, and Amari
+      // answers a page past the end with a 500, not an empty page.
+      pageSize ??= rows.length;
+      if (Number.isFinite(body.total_count) && pageSize > 0) {
+        lastPage = Math.ceil(body.total_count / pageSize);
+      }
+      console.log(`Page ${page}/${Number.isFinite(lastPage) ? lastPage : "?"}: ${rows.length} rows`);
+      if (rows.length < pageSize) break; // a short page is the last one
+      await sleep(gapMs);
+    }
+
+    if (pages.length === 0) {
+      return console.error(stopReason ?? "No rows found. Check the server ID and that you can see its leaderboard.");
+    }
+    const name = save();
+    if (stopReason) console.warn(`Stopped early. Saved ${pages.length} pages to ${name}. ${stopReason}`);
+    else console.log(`Done: ${pages.length} pages saved to ${name}`);
+  })();
+  ```
+
+  In plain English, from top to bottom:
+
+  1. **It asks for your server ID** and stops if what you typed is not a Discord server ID. Then it asks which page to start from, 1 unless you are resuming.
+  2. **It reads one leaderboard page at a time** from amaribot.com's own address (`/api/leaderboard`), the same request the leaderboard page makes when you scroll it. Because it runs on amaribot.com, the browser sends your existing Amari login with it. The script never sees or asks for your password.
+  3. **It sends the `x-user-agent` header Amari's own page sends.** Amari refuses leaderboard requests without it, which is also why opening the page address directly in a tab does not work.
+  4. **When Amari says to slow down** (a rate limit), it waits as long as Amari asks, plus two seconds, and slows down for the rest of the run. Seeing "rate limited, waiting" in the console is normal.
+  5. **When a page fails**, it tries that page up to ten times, waiting longer each time. Amari sometimes answers a busy moment with "Forbidden", so that is retried too; only a page that keeps failing stops the run, and the message tells you whether to check you are still logged in. If Amari answers with something that is not leaderboard data (a browser check page, for example), it stops and asks you to reload amaribot.com first.
+  6. **It stops at the end** of the leaderboard: when a page comes back empty or shorter than the first, or when it has read as many pages as the total Amari reports. It never reads more than 10,000 pages.
+  7. **It pauses between pages**, 1.5 seconds to start with, more after a rate limit.
+  8. **It saves everything as a file** in your browser's downloads. Nothing is sent to Heimdall or anywhere else; the only requests it makes are to amaribot.com.
+  9. **If it stops early**, it still saves the pages it has and prints the page to resume from. Run it again with that start page, and add both files to the importer.
+</Accordion>
+
+<Note>
+  The exporter is a convenience, provided as is. It runs only in your own browser and only uses your own Amari session, so Heimdall never sees your Amari login. Amari can change its website at any time, and if it does, the script may stop working until it is updated.
+</Note>
+
+### Exporting without the script
+
+If you would rather not run a script, you can save the same data by hand. Amari refuses plain page addresses (it requires the header the website sends), so you cannot simply open each page in a tab. Save what the website itself loads instead:
+
+1. Open your server's leaderboard on amaribot.com, logged in.
+2. Open the developer tools (**F12**) and go to the **Network** tab.
+3. Page through the leaderboard. Each page appears as a request named `leaderboard?guildId=...&page=N`.
+4. For each one, open its **Response** and save it as a `.json` file (in most browsers, right click the request and copy the response, then paste it into a file).
+5. Add all the files to the importer at once.
+
+It is slow for a large server, but it uses nothing except the website.
+
+### Importing the file
+
+<Steps>
+  <Step title="Open Import XP">
+    Go to <DashboardLink to="games/config/engagement">**Games \> Configuration \> Engagement**</DashboardLink>, find the **Import XP** card and choose **Amari** as the source. Engagement must be turned on and saved first.
+  </Step>
+  <Step title="Add your files">
+    Click **Choose files** and pick the exporter's file, or all the pages you saved by hand. You can add several files: they are merged into one list. Amari's leaderboard moves while it is being read, so the same member often appears twice; the importer keeps the copy with the higher XP and tells you how many repeats it merged. If a file came from a different server than the one you are importing into, you are asked to confirm.
+  </Step>
+  <Step title="Choose a mode">
+    **Keep higher** gives each member whichever is higher, the XP they have here now or the imported XP. It never lowers anyone and is safe to run more than once. **Overwrite** replaces each imported member's XP with the imported XP, which can lower levels for members who have already earned XP here. Either way, members who are not in the files are not changed.
+  </Step>
+  <Step title="Preview">
+    Click **Preview**. Nothing is written yet. You see how many members are new, how many change, how many stay the same, how levels will be spread afterwards and, in Overwrite mode, how many members would go down a level.
+  </Step>
+  <Step title="Import">
+    Click **Import** and confirm. Large imports are sent in parts of 1,000 members; keep the page open until it finishes. You can stop after the current part and resume later, and running a part again is safe in both modes. If **Switch this server to Amari's level curve first** is ticked, the curve is changed and levels recalculated before any XP is imported.
+  </Step>
+</Steps>
+
+Imported levels do not post level-up messages. Reward roles for the new levels are given afterwards by a [background job](#background-jobs) that appears under the import.
+
+If the preview says some members' level in the export does not match their XP, that is usually Amari not having updated a level yet. On Amari's curve the XP is used; on any other curve, the level is.
+
+## Importing from other bots
+
+Choose **CSV or JSON file** as the source to import from MEE6 or any other bot that can give you a list of members and their XP or level. Members are matched by Discord user ID, so the list must use IDs, not usernames.
+
+**CSV** needs a header row naming the columns. The header is not case sensitive:
+
+```csv
+userId,xp
+123456789012345678,15400
+234567890123456789,820
+```
+
+Use `userId,level` if you only have levels, or `userId,xp,level` for both.
+
+**JSON** must be a list of objects with the same fields:
+
+```json
+[
+  { "userId": "123456789012345678", "xp": 15400 },
+  { "userId": "234567890123456789", "level": 12 }
+]
+```
+
+Write user IDs in JSON as text in quotes. A Discord ID is too long to survive as a JSON number, so an unquoted one is rejected rather than imported for the wrong person.
+
+| Field | Rule |
+| --- | --- |
+| **userId** | A Discord user ID, 17 to 20 digits |
+| **xp** | A whole number from 0 to 1,000,000,000,000 |
+| **level** | A whole number from 0 to 10,000 |
+
+Each row needs XP, a level, or both. When a row has a level, the member is placed at the start of that level on your server's curve, because the level is what members recognise; XP is used when there is no level, or when your server is on the Amari curve. Rows that break a rule are listed with the file and line and skipped, and the rest still import. Each file can be up to 50 MB; split a bigger one into several files. There is no limit on how many members a file holds: the importer sends them in parts of 1,000. Modes, preview and the background job work the same as for Amari.
+
+## Background jobs
+
+Some changes touch every member of a server, which can take minutes on a large one. Heimdall runs these as background jobs so the dashboard does not have to wait. Right now that means:
+
+- **Level reward roles**, after a level curve change or an XP import.
+- **Minecraft linked role**, after the linked role setting changes (see [Minecraft](/integrations/minecraft#linked-role)).
+
+A job shows its progress where you started it, and every recent job is listed in <DashboardLink to="settings/background-jobs">**Settings \> Background Jobs**</DashboardLink>. Each job shows how many members it has reached and what happened to them:
+
+| Count | Meaning |
+| --- | --- |
+| **Changed** | The member gained (or lost) a role |
+| **Already right** | The member already had the roles their level earns |
+| **Left the server** | The member is no longer in the server |
+| **Failed** | The role could not be changed. **Show failures** lists who and why, including any refused role |
+
+A job carries on after a bot restart from where it got to. If another change needs a pass while one is running, it waits behind it (**Another pass queued**). Finished jobs stay in the list for seven days.
+
+You can **Cancel** a running job. Members it has already reached keep the roles it gave or removed; members it has not reached yet are left as they are until the next pass.
+
+A reward job never removes a role, unless you chose **Also remove reward roles above each member's new level** on a curve change. Each person only sees the jobs of features they have permission for.
+
+## The gotcha
+
+An import or curve change that crosses many levels at once does not announce them, so members will not see a flood of level-up messages, but they also will not be told. If you want people to know their XP came across, say so in an announcement.
+
+## Required permissions
+
+| Action | Permission key |
+| --- | --- |
+| Opening the engagement settings, editing XP rates and reward roles | `games.manage` |
+| Importing XP, changing the level curve, and seeing or cancelling level reward jobs | `games.engagement_import` |
+| Setting a member's level or XP | `games.manage` |
+| Checking your own level | `games.use` |
+
+Importing and changing the curve need both `games.manage` (to open the page) and `games.engagement_import`. Grant the import key deliberately: one wrong import can change every member's level.
