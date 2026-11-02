@@ -17,7 +17,8 @@ Commands, run from the repo root:
 
     python3 scripts/i18n-pages.py status            # per language: missing, stale, current
     python3 scripts/i18n-pages.py nav               # rewrite the language menus in docs.json
-    python3 scripts/i18n-pages.py links             # point links in translations at translated pages
+    python3 scripts/i18n-pages.py links             # point links in translations at translated pages,
+                                                    # and keep the English anchors those links use
     python3 scripts/i18n-pages.py stamp <locale> <page>...   # record a finished translation
     python3 scripts/i18n-pages.py check             # CI: menus current, every listed page exists,
                                                     # no link to the English of a translated page;
@@ -142,19 +143,84 @@ def cmd_nav(check):
     return 0
 
 
+HEADING = re.compile(r"^(#{1,6})\s+(.+?)\s*$", re.M)
+ANCHOR_LINK = re.compile(r'(?:\]\(|href=")(/[a-zA-Z0-9/_-]+)?#([a-z0-9_-]+)')
+
+
+def slugify(text):
+    """The anchor Mintlify gives a heading (GitHub style), for the English headings we match."""
+    text = re.sub(r"`|\*\*|\*|_|\[|\]\([^)]*\)", "", text).strip().lower()
+    return re.sub(r"\s+", "-", re.sub(r"[^\w\s-]", "", text))
+
+
+def headings(text):
+    out, fence = [], False
+    for line in text.split("\n"):
+        if line.lstrip().startswith("```"):
+            fence = not fence
+        elif not fence:
+            m = HEADING.match(line)
+            if m:
+                out.append(m.group(2))
+    return out
+
+
+def with_anchors(text, english, wanted):
+    """Keep the English anchors a link points at: a translated heading gets a slug from the
+    translated words, so put `<span id="english-slug"></span>` on the line above it."""
+    en_slugs = [slugify(h) for h in headings(english)]
+    lines, fence, index, out = text.split("\n"), False, -1, []
+    for line in lines:
+        if line.lstrip().startswith("```"):
+            fence = not fence
+        elif not fence and HEADING.match(line):
+            index += 1
+            slug = en_slugs[index] if index < len(en_slugs) else None
+            tag = f'<span id="{slug}"></span>'
+            if slug in wanted and slugify(HEADING.match(line).group(2)) != slug and (not out or out[-1] != tag):
+                out.append(tag)
+        out.append(line)
+    return "\n".join(out)
+
+
+def anchors_wanted(locale):
+    """Per translated page, the anchors that links in this language point at."""
+    wanted = {}
+    for page in PAGES:
+        path = f"{locale}/{page}.mdx"
+        if not os.path.exists(path):
+            continue
+        for m in ANCHOR_LINK.finditer(read(path)):
+            target = (m.group(1) or f"/{locale}/{page}").strip("/")
+            if target.startswith(f"{locale}/"):
+                wanted.setdefault(target[len(locale) + 1:], set()).add(m.group(2))
+    return wanted
+
+
 def cmd_links(check):
     bad = 0
     for locale in LOCALES:
+        # Anchors are collected after links are localized, so a cross-page link counts.
+        if not check:
+            for page in PAGES:
+                path = f"{locale}/{page}.mdx"
+                if os.path.exists(path):
+                    text = read(path)
+                    fixed = localize_links(text, locale)
+                    if fixed != text:
+                        write(path, fixed)
+        wanted = anchors_wanted(locale)
         for page in PAGES:
             path = f"{locale}/{page}.mdx"
             if not os.path.exists(path):
                 continue
             text = read(path)
             fixed = localize_links(text, locale)
+            fixed = with_anchors(fixed, read(f"{page}.mdx"), wanted.get(page, set()))
             if fixed == text:
                 continue
             if check:
-                print(f"::error file={path}::links to the English of a page that has a {locale} translation. Run python3 scripts/i18n-pages.py links.")
+                print(f"::error file={path}::links to the English of a translated page, or misses an anchor a link needs. Run python3 scripts/i18n-pages.py links.")
                 bad += 1
             else:
                 write(path, fixed)
