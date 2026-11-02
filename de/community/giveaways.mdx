@@ -1,0 +1,64 @@
+---
+title: "Gewinnspiele"
+description: "Zeitgesteuerte Gewinnspiele mit Teilnahme per Button, automatischer Auslosung und Neuauslosung."
+icon: "gift"
+---
+
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+Gewinnspiele laufen mit einem Timer und einem Button zum Mitmachen. Die Zahl der Teilnehmer aktualisiert sich live, die Gewinner werden automatisch ausgelost, wenn der Timer abläuft, und du kannst neu auslosen, wenn ein Gewinner sich nicht meldet.
+
+## Eins starten
+
+`/giveaway start` ist der schnelle Weg: ein Preis, eine Dauer und wie viele Gewinner. `/giveaway create` öffnet den ausführlicheren Ablauf für alles, was mehr braucht, und <DashboardLink to="giveaways/create">**Giveaways \> Create giveaway**</DashboardLink> macht dasselbe im Dashboard.
+
+| Einstellung | Beschreibung |
+| --- | --- |
+| **Prize** (Preis) | Was verlost wird |
+| **Duration** (Dauer) | Wie lange die Teilnahme offen bleibt |
+| **Winners** (Gewinner) | Wie viele ausgelost werden |
+| **Requirements** (Voraussetzungen) | Optionale Bedingungen zu Rolle oder Accountalter dafür, wer mitmachen darf |
+
+Mitglieder machen über den Button an der Gewinnspiel-Nachricht mit. Der Zähler aktualisiert sich, wenn Leute dazukommen, die Nachricht bleibt also aussagekräftig, ohne dass jemand etwas neu laden muss.
+
+## Auslosen und neu auslosen
+
+Wenn der Timer abläuft, lost der Bot die Gewinner aus und verkündet sie. Die Auslosung ist atomar, zwei Personen können also nicht für denselben Platz gezogen werden, selbst wenn das Gewinnspiel endet, während noch Teilnahmen eingehen.
+
+| Befehl | Was er tut |
+| --- | --- |
+| `/giveaway end` | Beendet es vorzeitig und lost sofort aus |
+| `/giveaway cancel` | Beendet es ohne Gewinner |
+| `/giveaway reroll` | Lost einen Ersatz aus, wenn ein Gewinner seinen Preis nie abholt |
+| `/giveaway entrants` | Listet, wer mitgemacht hat |
+| `/giveaway list` | Zeigt die laufenden Gewinnspiele |
+
+## Vorlagen und Serien
+
+<DashboardLink to="giveaways/templates">**Giveaways \> Templates**</DashboardLink> speichern die Einrichtung eines Gewinnspiels, damit ein wiederkehrendes nicht jedes Mal neu gebaut werden muss. **Series** (Serien) fassen wiederkehrende Gewinnspiele zusammen, sodass du sie als eine Sache siehst statt als ein Dutzend unzusammenhängender Einträge.
+
+## Preisübergabe
+
+Die Seite <DashboardLink to="giveaways/fulfillment">**Giveaways \> Fulfillment**</DashboardLink> hält fest, ob Gewinner ihren Preis wirklich bekommen haben. Das ist wichtig für alles, was eine Person übergibt statt eines Automatismus. Ein Gewinnspiel mit nicht übergebenem Preis bleibt sichtbar, statt nach der Auslosung zu verschwinden.
+
+## Partner und Teilen
+
+Gewinnspiele lassen sich mit Partnerservern teilen, sodass ein Gewinnspiel von dir auf deren Server erscheint und umgekehrt. `/giveaway partners` verwaltet diese Partnerschaften, und `/giveaway share` bietet ein bestimmtes Gewinnspiel an. Im Dashboard lädst du einen Partner im Formular zum Erstellen oder Bearbeiten eines Gewinnspiels ein, und unter <DashboardLink to="giveaways/sharing">**Giveaways \> Partner servers**</DashboardLink> trittst du mit einem Code einem Gewinnspiel eines Partners bei, siehst, an welchen du teilnimmst, und steigst wieder aus.
+
+## Erforderliche Berechtigungen
+
+| Aktion | Berechtigungsschlüssel |
+| --- | --- |
+| An einem Gewinnspiel teilnehmen | `giveaways.enter` (standardmäßig für alle freigegeben) |
+| Eins erstellen | `giveaways.create` |
+| Gewinnspiele ansehen | `giveaways.giveaways.view` |
+| Beenden, abbrechen, neu auslosen | `giveaways.giveaways.manage` |
+| Sehen, wer mitgemacht hat | `giveaways.giveaways.view_entrants` |
+| Preisübergaben ansehen | `giveaways.fulfillment.view` |
+| Preise als übergeben markieren | `giveaways.fulfillment.manage` |
+| Vorlagen ansehen und verwalten | `giveaways.templates.view`, `giveaways.templates.manage` |
+| Serien ansehen und verwalten | `giveaways.series.view`, `giveaways.series.manage` |
+| Einstellungen ansehen und ändern | `giveaways.config.view`, `giveaways.config.manage` |
+| Teilen mit Partnern ansehen und verwalten | `giveaways.sharing.view`, `giveaways.sharing.manage` |
+
+Zu sehen, wer mitgemacht hat, ist absichtlich vom Durchführen des Gewinnspiels getrennt: Die Teilnehmerliste ist eine Liste deiner Mitglieder, und für eine Auslosung muss man sie nicht lesen.

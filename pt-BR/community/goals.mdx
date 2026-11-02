@@ -1,0 +1,35 @@
+---
+title: "Metas"
+description: "Como publicar barras de progresso que se atualizam sozinhas para número de membros, impulsos, cargos ou qualquer número que você definir."
+icon: "bullseye"
+---
+
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+Uma meta é uma barra de progresso publicada em um canal que se atualiza sozinha. Use para um marco de membros, um objetivo de impulsos, uma campanha de recrutamento ou qualquer outra coisa que dê para medir com um número.
+
+## O que uma meta pode acompanhar
+
+| Fonte | De onde vem o progresso |
+| --- | --- |
+| **Member count** (número de membros) | Quantos membros o servidor tem |
+| **Boosts** (impulsos) | A quantidade atual de impulsos do servidor |
+| **Role members** (membros do cargo) | Quantos membros têm um cargo escolhido |
+| **Manual** | Um número que você mesmo define com `/goal set` |
+
+As três primeiras se atualizam sozinhas. As metas manuais servem para qualquer coisa que o bot não consegue ver, como dinheiro arrecadado ou inscrições em outro site, e você as move com `/goal set` ou dá um empurrãozinho com `/goal add`.
+
+## Como configurar uma
+
+Acesse <DashboardLink to="goals">**Goals**</DashboardLink> (Metas) no painel e escolha a fonte, o objetivo e o canal. O bot publica a barra e a mantém atualizada com um verificador periódico, então ela continua certa sem ninguém precisar mexer.
+
+As metas são só de exibição, então não precisam de nenhuma permissão dos membros. Ninguém consegue interagir com uma meta sem querer.
+
+## Permissões necessárias
+
+| Ação | Chave de permissão |
+| --- | --- |
+| Ver as configurações | `goals.config.view_config` |
+| Criar e editar metas | `goals.config.manage_config` |
+
+`/goal set` e `/goal add` também exigem a chave de gerenciamento, já que mover uma meta manual é editá-la.

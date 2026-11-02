@@ -147,95 +147,95 @@
               {
                 "group": "Primeros pasos",
                 "pages": [
-                  "index",
-                  "adding-to-server",
-                  "dashboard",
-                  "permissions",
-                  "settings",
-                  "premium"
+                  "es/index",
+                  "es/adding-to-server",
+                  "es/dashboard",
+                  "es/permissions",
+                  "es/settings",
+                  "es/premium"
                 ]
               },
               {
                 "group": "IA",
                 "pages": [
-                  "ai/odin",
-                  "ai/translate"
+                  "es/ai/odin",
+                  "es/ai/translate"
                 ]
               },
               {
                 "group": "Conversaciones",
                 "pages": [
-                  "support/tickets",
-                  "support/modmail",
-                  "support/applications",
-                  "support/analytics"
+                  "es/support/tickets",
+                  "es/support/modmail",
+                  "es/support/applications",
+                  "es/support/analytics"
                 ]
               },
               {
                 "group": "Moderación",
                 "pages": [
-                  "moderation/overview",
-                  "moderation/manual-actions",
-                  "moderation/automod",
-                  "moderation/escalation",
-                  "moderation/infractions",
-                  "moderation/cases",
-                  "moderation/channel-controls",
-                  "moderation/stickies",
-                  "moderation/auto-responses",
-                  "moderation/appeals",
-                  "utilities/logging",
-                  "utilities/attachment-blocker",
-                  "utilities/dont-at-me",
-                  "moderation/honeypot"
+                  "es/moderation/overview",
+                  "es/moderation/manual-actions",
+                  "es/moderation/automod",
+                  "es/moderation/escalation",
+                  "es/moderation/infractions",
+                  "es/moderation/cases",
+                  "es/moderation/channel-controls",
+                  "es/moderation/stickies",
+                  "es/moderation/auto-responses",
+                  "es/moderation/appeals",
+                  "es/utilities/logging",
+                  "es/utilities/attachment-blocker",
+                  "es/utilities/dont-at-me",
+                  "es/moderation/honeypot"
                 ]
               },
               {
                 "group": "Comunidad",
                 "pages": [
-                  "community/welcome",
-                  "community/levels",
-                  "community/suggestions",
-                  "community/starboard",
-                  "community/role-buttons",
-                  "community/tags",
-                  "community/reminders",
-                  "community/birthdays",
-                  "community/giveaways",
-                  "community/polls",
-                  "community/goals",
-                  "community/auto-reactions",
-                  "community/afk",
-                  "community/confessions",
-                  "community/invite-tracker",
-                  "community/streaming"
+                  "es/community/welcome",
+                  "es/community/levels",
+                  "es/community/suggestions",
+                  "es/community/starboard",
+                  "es/community/role-buttons",
+                  "es/community/tags",
+                  "es/community/reminders",
+                  "es/community/birthdays",
+                  "es/community/giveaways",
+                  "es/community/polls",
+                  "es/community/goals",
+                  "es/community/auto-reactions",
+                  "es/community/afk",
+                  "es/community/confessions",
+                  "es/community/invite-tracker",
+                  "es/community/streaming"
                 ]
               },
               {
                 "group": "Voz",
                 "pages": [
-                  "voice/temp-channels",
-                  "voice/transcription",
-                  "voice/waiting-room"
+                  "es/voice/temp-channels",
+                  "es/voice/transcription",
+                  "es/voice/waiting-room"
                 ]
               },
               {
                 "group": "Juegos",
                 "pages": [
-                  "games/overview",
-                  "games/board-games",
-                  "games/casino",
-                  "games/economy"
+                  "es/games/overview",
+                  "es/games/board-games",
+                  "es/games/casino",
+                  "es/games/economy"
                 ]
               },
               {
                 "group": "Integraciones",
                 "pages": [
-                  "integrations/minecraft",
-                  "integrations/planetside",
-                  "integrations/tebex",
-                  "integrations/namelessmc",
-                  "utilities/customer-portal"
+                  "es/integrations/minecraft",
+                  "es/integrations/planetside",
+                  "es/integrations/tebex",
+                  "es/integrations/namelessmc",
+                  "es/utilities/customer-portal"
                 ]
               },
               {
@@ -243,11 +243,11 @@
                 "pages": [
                   "reference/commands",
                   "reference/permission-keys",
-                  "utilities/ping",
-                  "utilities/selfmute",
-                  "utilities/clock",
-                  "utilities/affiliate",
-                  "crawler"
+                  "es/utilities/ping",
+                  "es/utilities/selfmute",
+                  "es/utilities/clock",
+                  "es/utilities/affiliate",
+                  "es/crawler"
                 ]
               }
             ]
@@ -274,95 +274,95 @@
               {
                 "group": "Primeiros passos",
                 "pages": [
-                  "index",
-                  "adding-to-server",
-                  "dashboard",
-                  "permissions",
-                  "settings",
-                  "premium"
+                  "pt-BR/index",
+                  "pt-BR/adding-to-server",
+                  "pt-BR/dashboard",
+                  "pt-BR/permissions",
+                  "pt-BR/settings",
+                  "pt-BR/premium"
                 ]
               },
               {
                 "group": "IA",
                 "pages": [
-                  "ai/odin",
-                  "ai/translate"
+                  "pt-BR/ai/odin",
+                  "pt-BR/ai/translate"
                 ]
               },
               {
                 "group": "Conversas",
                 "pages": [
-                  "support/tickets",
-                  "support/modmail",
-                  "support/applications",
-                  "support/analytics"
+                  "pt-BR/support/tickets",
+                  "pt-BR/support/modmail",
+                  "pt-BR/support/applications",
+                  "pt-BR/support/analytics"
                 ]
               },
               {
                 "group": "Moderação",
                 "pages": [
-                  "moderation/overview",
-                  "moderation/manual-actions",
-                  "moderation/automod",
-                  "moderation/escalation",
-                  "moderation/infractions",
-                  "moderation/cases",
-                  "moderation/channel-controls",
-                  "moderation/stickies",
-                  "moderation/auto-responses",
-                  "moderation/appeals",
-                  "utilities/logging",
-                  "utilities/attachment-blocker",
-                  "utilities/dont-at-me",
-                  "moderation/honeypot"
+                  "pt-BR/moderation/overview",
+                  "pt-BR/moderation/manual-actions",
+                  "pt-BR/moderation/automod",
+                  "pt-BR/moderation/escalation",
+                  "pt-BR/moderation/infractions",
+                  "pt-BR/moderation/cases",
+                  "pt-BR/moderation/channel-controls",
+                  "pt-BR/moderation/stickies",
+                  "pt-BR/moderation/auto-responses",
+                  "pt-BR/moderation/appeals",
+                  "pt-BR/utilities/logging",
+                  "pt-BR/utilities/attachment-blocker",
+                  "pt-BR/utilities/dont-at-me",
+                  "pt-BR/moderation/honeypot"
                 ]
               },
               {
                 "group": "Comunidade",
                 "pages": [
-                  "community/welcome",
-                  "community/levels",
-                  "community/suggestions",
-                  "community/starboard",
-                  "community/role-buttons",
-                  "community/tags",
-                  "community/reminders",
-                  "community/birthdays",
-                  "community/giveaways",
-                  "community/polls",
-                  "community/goals",
-                  "community/auto-reactions",
-                  "community/afk",
-                  "community/confessions",
-                  "community/invite-tracker",
-                  "community/streaming"
+                  "pt-BR/community/welcome",
+                  "pt-BR/community/levels",
+                  "pt-BR/community/suggestions",
+                  "pt-BR/community/starboard",
+                  "pt-BR/community/role-buttons",
+                  "pt-BR/community/tags",
+                  "pt-BR/community/reminders",
+                  "pt-BR/community/birthdays",
+                  "pt-BR/community/giveaways",
+                  "pt-BR/community/polls",
+                  "pt-BR/community/goals",
+                  "pt-BR/community/auto-reactions",
+                  "pt-BR/community/afk",
+                  "pt-BR/community/confessions",
+                  "pt-BR/community/invite-tracker",
+                  "pt-BR/community/streaming"
                 ]
               },
               {
                 "group": "Voz",
                 "pages": [
-                  "voice/temp-channels",
-                  "voice/transcription",
-                  "voice/waiting-room"
+                  "pt-BR/voice/temp-channels",
+                  "pt-BR/voice/transcription",
+                  "pt-BR/voice/waiting-room"
                 ]
               },
               {
                 "group": "Jogos",
                 "pages": [
-                  "games/overview",
-                  "games/board-games",
-                  "games/casino",
-                  "games/economy"
+                  "pt-BR/games/overview",
+                  "pt-BR/games/board-games",
+                  "pt-BR/games/casino",
+                  "pt-BR/games/economy"
                 ]
               },
               {
                 "group": "Integrações",
                 "pages": [
-                  "integrations/minecraft",
-                  "integrations/planetside",
-                  "integrations/tebex",
-                  "integrations/namelessmc",
-                  "utilities/customer-portal"
+                  "pt-BR/integrations/minecraft",
+                  "pt-BR/integrations/planetside",
+                  "pt-BR/integrations/tebex",
+                  "pt-BR/integrations/namelessmc",
+                  "pt-BR/utilities/customer-portal"
                 ]
               },
               {
@@ -370,11 +370,11 @@
                 "pages": [
                   "reference/commands",
                   "reference/permission-keys",
-                  "utilities/ping",
-                  "utilities/selfmute",
-                  "utilities/clock",
-                  "utilities/affiliate",
-                  "crawler"
+                  "pt-BR/utilities/ping",
+                  "pt-BR/utilities/selfmute",
+                  "pt-BR/utilities/clock",
+                  "pt-BR/utilities/affiliate",
+                  "pt-BR/crawler"
                 ]
               }
             ]
@@ -401,95 +401,95 @@
               {
                 "group": "Premiers pas",
                 "pages": [
-                  "index",
-                  "adding-to-server",
-                  "dashboard",
-                  "permissions",
-                  "settings",
-                  "premium"
+                  "fr/index",
+                  "fr/adding-to-server",
+                  "fr/dashboard",
+                  "fr/permissions",
+                  "fr/settings",
+                  "fr/premium"
                 ]
               },
               {
                 "group": "IA",
                 "pages": [
-                  "ai/odin",
-                  "ai/translate"
+                  "fr/ai/odin",
+                  "fr/ai/translate"
                 ]
               },
               {
                 "group": "Conversations",
                 "pages": [
-                  "support/tickets",
-                  "support/modmail",
-                  "support/applications",
-                  "support/analytics"
+                  "fr/support/tickets",
+                  "fr/support/modmail",
+                  "fr/support/applications",
+                  "fr/support/analytics"
                 ]
               },
               {
                 "group": "Modération",
                 "pages": [
-                  "moderation/overview",
-                  "moderation/manual-actions",
-                  "moderation/automod",
-                  "moderation/escalation",
-                  "moderation/infractions",
-                  "moderation/cases",
-                  "moderation/channel-controls",
-                  "moderation/stickies",
-                  "moderation/auto-responses",
-                  "moderation/appeals",
-                  "utilities/logging",
-                  "utilities/attachment-blocker",
-                  "utilities/dont-at-me",
-                  "moderation/honeypot"
+                  "fr/moderation/overview",
+                  "fr/moderation/manual-actions",
+                  "fr/moderation/automod",
+                  "fr/moderation/escalation",
+                  "fr/moderation/infractions",
+                  "fr/moderation/cases",
+                  "fr/moderation/channel-controls",
+                  "fr/moderation/stickies",
+                  "fr/moderation/auto-responses",
+                  "fr/moderation/appeals",
+                  "fr/utilities/logging",
+                  "fr/utilities/attachment-blocker",
+                  "fr/utilities/dont-at-me",
+                  "fr/moderation/honeypot"
                 ]
               },
               {
                 "group": "Communauté",
                 "pages": [
-                  "community/welcome",
-                  "community/levels",
-                  "community/suggestions",
-                  "community/starboard",
-                  "community/role-buttons",
-                  "community/tags",
-                  "community/reminders",
-                  "community/birthdays",
-                  "community/giveaways",
-                  "community/polls",
-                  "community/goals",
-                  "community/auto-reactions",
-                  "community/afk",
-                  "community/confessions",
-                  "community/invite-tracker",
-                  "community/streaming"
+                  "fr/community/welcome",
+                  "fr/community/levels",
+                  "fr/community/suggestions",
+                  "fr/community/starboard",
+                  "fr/community/role-buttons",
+                  "fr/community/tags",
+                  "fr/community/reminders",
+                  "fr/community/birthdays",
+                  "fr/community/giveaways",
+                  "fr/community/polls",
+                  "fr/community/goals",
+                  "fr/community/auto-reactions",
+                  "fr/community/afk",
+                  "fr/community/confessions",
+                  "fr/community/invite-tracker",
+                  "fr/community/streaming"
                 ]
               },
               {
                 "group": "Vocal",
                 "pages": [
-                  "voice/temp-channels",
-                  "voice/transcription",
-                  "voice/waiting-room"
+                  "fr/voice/temp-channels",
+                  "fr/voice/transcription",
+                  "fr/voice/waiting-room"
                 ]
               },
               {
                 "group": "Jeux",
                 "pages": [
-                  "games/overview",
-                  "games/board-games",
-                  "games/casino",
-                  "games/economy"
+                  "fr/games/overview",
+                  "fr/games/board-games",
+                  "fr/games/casino",
+                  "fr/games/economy"
                 ]
               },
               {
                 "group": "Intégrations",
                 "pages": [
-                  "integrations/minecraft",
-                  "integrations/planetside",
-                  "integrations/tebex",
-                  "integrations/namelessmc",
-                  "utilities/customer-portal"
+                  "fr/integrations/minecraft",
+                  "fr/integrations/planetside",
+                  "fr/integrations/tebex",
+                  "fr/integrations/namelessmc",
+                  "fr/utilities/customer-portal"
                 ]
               },
               {
@@ -497,11 +497,11 @@
                 "pages": [
                   "reference/commands",
                   "reference/permission-keys",
-                  "utilities/ping",
-                  "utilities/selfmute",
-                  "utilities/clock",
-                  "utilities/affiliate",
-                  "crawler"
+                  "fr/utilities/ping",
+                  "fr/utilities/selfmute",
+                  "fr/utilities/clock",
+                  "fr/utilities/affiliate",
+                  "fr/crawler"
                 ]
               }
             ]
@@ -528,95 +528,95 @@
               {
                 "group": "Erste Schritte",
                 "pages": [
-                  "index",
-                  "adding-to-server",
-                  "dashboard",
-                  "permissions",
-                  "settings",
-                  "premium"
+                  "de/index",
+                  "de/adding-to-server",
+                  "de/dashboard",
+                  "de/permissions",
+                  "de/settings",
+                  "de/premium"
                 ]
               },
               {
                 "group": "KI",
                 "pages": [
-                  "ai/odin",
-                  "ai/translate"
+                  "de/ai/odin",
+                  "de/ai/translate"
                 ]
               },
               {
                 "group": "Unterhaltungen",
                 "pages": [
-                  "support/tickets",
-                  "support/modmail",
-                  "support/applications",
-                  "support/analytics"
+                  "de/support/tickets",
+                  "de/support/modmail",
+                  "de/support/applications",
+                  "de/support/analytics"
                 ]
               },
               {
                 "group": "Moderation",
                 "pages": [
-                  "moderation/overview",
-                  "moderation/manual-actions",
-                  "moderation/automod",
-                  "moderation/escalation",
-                  "moderation/infractions",
-                  "moderation/cases",
-                  "moderation/channel-controls",
-                  "moderation/stickies",
-                  "moderation/auto-responses",
-                  "moderation/appeals",
-                  "utilities/logging",
-                  "utilities/attachment-blocker",
-                  "utilities/dont-at-me",
-                  "moderation/honeypot"
+                  "de/moderation/overview",
+                  "de/moderation/manual-actions",
+                  "de/moderation/automod",
+                  "de/moderation/escalation",
+                  "de/moderation/infractions",
+                  "de/moderation/cases",
+                  "de/moderation/channel-controls",
+                  "de/moderation/stickies",
+                  "de/moderation/auto-responses",
+                  "de/moderation/appeals",
+                  "de/utilities/logging",
+                  "de/utilities/attachment-blocker",
+                  "de/utilities/dont-at-me",
+                  "de/moderation/honeypot"
                 ]
               },
               {
                 "group": "Community",
                 "pages": [
-                  "community/welcome",
-                  "community/levels",
-                  "community/suggestions",
-                  "community/starboard",
-                  "community/role-buttons",
-                  "community/tags",
-                  "community/reminders",
-                  "community/birthdays",
-                  "community/giveaways",
-                  "community/polls",
-                  "community/goals",
-                  "community/auto-reactions",
-                  "community/afk",
-                  "community/confessions",
-                  "community/invite-tracker",
-                  "community/streaming"
+                  "de/community/welcome",
+                  "de/community/levels",
+                  "de/community/suggestions",
+                  "de/community/starboard",
+                  "de/community/role-buttons",
+                  "de/community/tags",
+                  "de/community/reminders",
+                  "de/community/birthdays",
+                  "de/community/giveaways",
+                  "de/community/polls",
+                  "de/community/goals",
+                  "de/community/auto-reactions",
+                  "de/community/afk",
+                  "de/community/confessions",
+                  "de/community/invite-tracker",
+                  "de/community/streaming"
                 ]
               },
               {
                 "group": "Sprache",
                 "pages": [
-                  "voice/temp-channels",
-                  "voice/transcription",
-                  "voice/waiting-room"
+                  "de/voice/temp-channels",
+                  "de/voice/transcription",
+                  "de/voice/waiting-room"
                 ]
               },
               {
                 "group": "Spiele",
                 "pages": [
-                  "games/overview",
-                  "games/board-games",
-                  "games/casino",
-                  "games/economy"
+                  "de/games/overview",
+                  "de/games/board-games",
+                  "de/games/casino",
+                  "de/games/economy"
                 ]
               },
               {
                 "group": "Integrationen",
                 "pages": [
-                  "integrations/minecraft",
-                  "integrations/planetside",
-                  "integrations/tebex",
-                  "integrations/namelessmc",
-                  "utilities/customer-portal"
+                  "de/integrations/minecraft",
+                  "de/integrations/planetside",
+                  "de/integrations/tebex",
+                  "de/integrations/namelessmc",
+                  "de/utilities/customer-portal"
                 ]
               },
               {
@@ -624,11 +624,11 @@
                 "pages": [
                   "reference/commands",
                   "reference/permission-keys",
-                  "utilities/ping",
-                  "utilities/selfmute",
-                  "utilities/clock",
-                  "utilities/affiliate",
-                  "crawler"
+                  "de/utilities/ping",
+                  "de/utilities/selfmute",
+                  "de/utilities/clock",
+                  "de/utilities/affiliate",
+                  "de/crawler"
                 ]
               }
             ]
@@ -655,95 +655,95 @@
               {
                 "group": "はじめに",
                 "pages": [
-                  "index",
-                  "adding-to-server",
-                  "dashboard",
-                  "permissions",
-                  "settings",
-                  "premium"
+                  "ja/index",
+                  "ja/adding-to-server",
+                  "ja/dashboard",
+                  "ja/permissions",
+                  "ja/settings",
+                  "ja/premium"
                 ]
               },
               {
                 "group": "AI",
                 "pages": [
-                  "ai/odin",
-                  "ai/translate"
+                  "ja/ai/odin",
+                  "ja/ai/translate"
                 ]
               },
               {
                 "group": "会話",
                 "pages": [
-                  "support/tickets",
-                  "support/modmail",
-                  "support/applications",
-                  "support/analytics"
+                  "ja/support/tickets",
+                  "ja/support/modmail",
+                  "ja/support/applications",
+                  "ja/support/analytics"
                 ]
               },
               {
                 "group": "モデレーション",
                 "pages": [
-                  "moderation/overview",
-                  "moderation/manual-actions",
-                  "moderation/automod",
-                  "moderation/escalation",
-                  "moderation/infractions",
-                  "moderation/cases",
-                  "moderation/channel-controls",
-                  "moderation/stickies",
-                  "moderation/auto-responses",
-                  "moderation/appeals",
-                  "utilities/logging",
-                  "utilities/attachment-blocker",
-                  "utilities/dont-at-me",
-                  "moderation/honeypot"
+                  "ja/moderation/overview",
+                  "ja/moderation/manual-actions",
+                  "ja/moderation/automod",
+                  "ja/moderation/escalation",
+                  "ja/moderation/infractions",
+                  "ja/moderation/cases",
+                  "ja/moderation/channel-controls",
+                  "ja/moderation/stickies",
+                  "ja/moderation/auto-responses",
+                  "ja/moderation/appeals",
+                  "ja/utilities/logging",
+                  "ja/utilities/attachment-blocker",
+                  "ja/utilities/dont-at-me",
+                  "ja/moderation/honeypot"
                 ]
               },
               {
                 "group": "コミュニティ",
                 "pages": [
-                  "community/welcome",
-                  "community/levels",
-                  "community/suggestions",
-                  "community/starboard",
-                  "community/role-buttons",
-                  "community/tags",
-                  "community/reminders",
-                  "community/birthdays",
-                  "community/giveaways",
-                  "community/polls",
-                  "community/goals",
-                  "community/auto-reactions",
-                  "community/afk",
-                  "community/confessions",
-                  "community/invite-tracker",
-                  "community/streaming"
+                  "ja/community/welcome",
+                  "ja/community/levels",
+                  "ja/community/suggestions",
+                  "ja/community/starboard",
+                  "ja/community/role-buttons",
+                  "ja/community/tags",
+                  "ja/community/reminders",
+                  "ja/community/birthdays",
+                  "ja/community/giveaways",
+                  "ja/community/polls",
+                  "ja/community/goals",
+                  "ja/community/auto-reactions",
+                  "ja/community/afk",
+                  "ja/community/confessions",
+                  "ja/community/invite-tracker",
+                  "ja/community/streaming"
                 ]
               },
               {
                 "group": "ボイス",
                 "pages": [
-                  "voice/temp-channels",
-                  "voice/transcription",
-                  "voice/waiting-room"
+                  "ja/voice/temp-channels",
+                  "ja/voice/transcription",
+                  "ja/voice/waiting-room"
                 ]
               },
               {
                 "group": "ゲーム",
                 "pages": [
-                  "games/overview",
-                  "games/board-games",
-                  "games/casino",
-                  "games/economy"
+                  "ja/games/overview",
+                  "ja/games/board-games",
+                  "ja/games/casino",
+                  "ja/games/economy"
                 ]
               },
               {
                 "group": "連携",
                 "pages": [
-                  "integrations/minecraft",
-                  "integrations/planetside",
-                  "integrations/tebex",
-                  "integrations/namelessmc",
-                  "utilities/customer-portal"
+                  "ja/integrations/minecraft",
+                  "ja/integrations/planetside",
+                  "ja/integrations/tebex",
+                  "ja/integrations/namelessmc",
+                  "ja/utilities/customer-portal"
                 ]
               },
               {
@@ -751,11 +751,11 @@
                 "pages": [
                   "reference/commands",
                   "reference/permission-keys",
-                  "utilities/ping",
-                  "utilities/selfmute",
-                  "utilities/clock",
-                  "utilities/affiliate",
-                  "crawler"
+                  "ja/utilities/ping",
+                  "ja/utilities/selfmute",
+                  "ja/utilities/clock",
+                  "ja/utilities/affiliate",
+                  "ja/crawler"
                 ]
               }
             ]

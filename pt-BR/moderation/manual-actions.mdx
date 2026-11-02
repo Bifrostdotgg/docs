@@ -1,0 +1,102 @@
+---
+title: "Ações de moderação manual"
+description: "Como usar comandos de barra para advertir, banir, expulsar, silenciar, desbanir e apagar mensagens em massa."
+icon: "gavel"
+---
+
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+O Heimdall oferece comandos de barra para todas as ações de moderação padrão. Cada ação cria um registro de infração e avisa o membro afetado por mensagem direta, quando possível.
+
+## Advertir
+
+```
+/warn <user> <reason> [points] [expiry] [silent]
+```
+
+Dá uma advertência a um membro. A advertência é registrada como uma infração com um valor de pontos opcional. Se o valor de pontos não for informado, o padrão é 1.
+
+| Opção | Obrigatória | Descrição |
+|---|---|---|
+| `user` | Sim | O membro a advertir |
+| `reason` | Sim | O motivo da advertência, mostrado ao membro |
+| `points` | Não | Substitui o valor de pontos padrão desta advertência |
+| `expiry` | Não | Quanto tempo até os pontos desta infração expirarem (por exemplo, `7d`, `30d`) |
+| `silent` | Não | Se marcado, o membro não é avisado por DM |
+
+O membro advertido recebe uma DM com o nome do seu servidor, o motivo e o valor de pontos atribuído.
+
+## Banir
+
+```
+/ban <user> <reason> [delete_days] [duration] [silent]
+```
+
+Bane um membro do servidor. Funciona também com membros que já saíram do servidor.
+
+| Opção | Obrigatória | Descrição |
+|---|---|---|
+| `user` | Sim | O membro ou ID de usuário a banir |
+| `reason` | Sim | O motivo do banimento |
+| `delete_days` | Não | Quantos dias do histórico de mensagens apagar (de 0 a 7) |
+| `duration` | Não | Para um banimento temporário, quanto tempo até o membro ser desbanido automaticamente (por exemplo, `7d`) |
+| `silent` | Não | Se marcado, o membro não é avisado por DM antes de ser banido |
+
+## Desbanir
+
+```
+/unban <user> [reason]
+```
+
+Remove o banimento de um usuário.
+
+## Expulsar
+
+```
+/kick <user> <reason> [silent]
+```
+
+Remove um membro do servidor. Ele pode voltar com um link de convite. A expulsão registra uma infração.
+
+## Silenciar
+
+```
+/mute <user> <duration> <reason> [silent]
+```
+
+Aplica um castigo do Discord a um membro, impedindo que ele envie mensagens ou entre em canais de voz pelo tempo informado.
+
+| Opção | Obrigatória | Descrição |
+|---|---|---|
+| `user` | Sim | O membro a silenciar |
+| `duration` | Sim | Quanto tempo o silenciamento dura (por exemplo, `1h`, `12h`, `7d`). Máximo de 28 dias. |
+| `reason` | Sim | O motivo do silenciamento |
+| `silent` | Não | Se marcado, o membro não é avisado por DM |
+
+## Apagar em massa
+
+```
+/purge count <count> [user]
+/purge time <duration> [user]
+```
+
+Apaga mensagens em massa do canal atual. Há dois modos:
+
+- **count**: apaga as `count` mensagens mais recentes (até 100).
+- **time**: apaga todas as mensagens enviadas dentro do último `duration` (por exemplo, `1h`).
+
+O filtro opcional `user` limita a exclusão às mensagens de um membro específico. O Discord só permite apagar em massa mensagens com menos de 14 dias.
+
+## DMs de aviso de infração
+
+Quando o Heimdall pune um membro, ele tenta mandar uma DM explicando a ação, o servidor onde ela aconteceu e o motivo. Se o membro estiver com as DMs desativadas, o bot simplesmente pula o aviso. Usar a opção `silent` suprime a DM em qualquer caso.
+
+## Permissões necessárias
+
+| Comando | Chave de permissão |
+|---|---|
+| `/warn` | `moderation.enforcement.warn` |
+| `/ban`, `/unban` | `moderation.enforcement.ban` |
+| `/kick` | `moderation.enforcement.kick` |
+| `/mute` | `moderation.enforcement.mute` |
+| `/purge` | `moderation.enforcement.purge` |

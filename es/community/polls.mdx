@@ -1,0 +1,50 @@
+---
+title: "Encuestas"
+description: "Cómo hacer encuestas con respuesta única, selección múltiple, voto por orden de preferencia o texto libre."
+icon: "square-poll-vertical"
+---
+
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+Las encuestas van más allá de un puñado de reacciones. Hay cuatro tipos de respuesta, los resultados se actualizan en directo y todo se puede exportar.
+
+## Crear una
+
+`/poll create` abre un asistente que te guía por la pregunta, el tipo de respuesta, las opciones y la hora de cierre. `/poll from-template` se salta el asistente para una encuesta que haces a menudo. En el panel, usa <DashboardLink to="polls/create">**Polls \> Create poll**</DashboardLink> (Encuestas > Crear encuesta).
+
+| Tipo de respuesta | Para qué usarlo |
+| --- | --- |
+| **Respuesta única** | Una opción por miembro, el caso habitual |
+| **Selección múltiple** | Los miembros eligen varias, útil para preguntas como "¿a cuáles de estos irías?" |
+| **Orden de preferencia** | Los miembros ordenan las opciones y se cuentan por segunda vuelta instantánea, así que la opción ganadora tiene un apoyo mayoritario real y no solo la minoría más grande |
+| **Texto libre o numérica** | Respuestas abiertas, cuando no se conocen las opciones de antemano |
+
+Merece la pena usar el orden de preferencia cuando un voto normal dividiría opciones parecidas y permitiría que ganara una impopular por mayoría simple.
+
+## Mientras está abierta
+
+Los resultados se actualizan a medida que llegan los votos. `/poll list` muestra las que están abiertas y `/poll close` cierra una antes de tiempo.
+
+Que se vea quién ha votado es un permiso aparte, así que una encuesta puede tener resultados públicos y reservar quién votó qué para el staff, o para nadie.
+
+## Cuando se cierra
+
+Al cerrarse se publican los resultados. Quien haya pedido que se le avise recibe un MD. Todos los resultados se pueden exportar en CSV para lo que quieras hacer fuera de Discord, y un registro de auditoría guarda quién creó, editó y cerró cada encuesta. Lo encontrarás en <DashboardLink to="polls/audit">**Polls \> Audit log**</DashboardLink> (Encuestas > Registro de auditoría) en el panel.
+
+## Plantillas
+
+Las plantillas guardan la configuración entera de una encuesta. Si haces una votación semanal con las mismas opciones, créala una vez, guárdala con **Save as template** (guardar como plantilla) en <DashboardLink to="polls/create">**Polls \> Create poll**</DashboardLink> y, a partir de ahí, usa `/poll from-template`. <DashboardLink to="polls/templates">**Polls \> Templates**</DashboardLink> (Encuestas > Plantillas) muestra las plantillas que tienes guardadas.
+
+## Permisos necesarios
+
+| Acción | Clave de permiso |
+| --- | --- |
+| Votar | `polls.vote` (concedido a todos por defecto) |
+| Crear una encuesta | `polls.create_poll` |
+| Ver las encuestas | `polls.polls.view_polls` |
+| Ver quién votó qué | `polls.polls.view_voters` |
+| Cerrar y editar encuestas | `polls.polls.manage` |
+| Ver las plantillas | `polls.templates.view_templates` |
+| Crear y editar plantillas | `polls.templates.manage_templates` |
+
+`view_voters` está separado a propósito de ver la encuesta. Ver los totales y ver cómo ha votado cada miembro son cosas distintas, y un voto secreto deja de serlo en el momento en que se conceden juntas.

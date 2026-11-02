@@ -1,0 +1,58 @@
+---
+title: "Heimdall zu deinem Server hinzufügen"
+description: "Wie du Heimdall einlädst, ihm die nötigen Berechtigungen gibst und die erste Einrichtung abschließt."
+icon: "robot"
+---
+
+## Voraussetzungen
+
+Du brauchst die Berechtigung **Server verwalten** (Manage Server) auf dem Discord-Server, zu dem du Heimdall hinzufügen willst.
+
+## Den Bot einladen
+
+Geh auf **[bot.bifrost.gg](https://bot.bifrost.gg)** und klick auf **Add to Server**. Das ist die von Bifröst gehostete Version von Heimdall, du musst also nichts selbst hosten. Der Einladungslink fragt genau die Berechtigungen an, die der Bot braucht. Discord bittet dich, einen Server aus der Liste der Server zu wählen, die du verwaltest, und dann die angefragten Berechtigungen zu bestätigen.
+
+<Note>
+Wenn du Heimdall erst einmal prüfen willst, bevor du ihn hinzufügst, sieh dir die verfügbaren Pläne unter **[bifrost.gg/heimdall/pricing](https://bifrost.gg/heimdall/pricing)** an. Manche Features gibt es in allen Plänen, andere brauchen einen bezahlten Tarif.
+</Note>
+
+<Info>
+Du kannst Heimdall Berechtigungen wieder entziehen, nachdem er beigetreten ist. Discord erlaubt das über **Servereinstellungen > Rollen** oder über Berechtigungen auf Kanalebene. Jedes Feature, das eine entzogene Berechtigung braucht, funktioniert dann aber nicht mehr. Versucht ein Mitglied, ein betroffenes Feature zu nutzen, antwortet Heimdall mit einer Fehlermeldung, die genau nennt, welche Discord-Berechtigung fehlt, statt still zu scheitern. So findest und behebst du fehlende Berechtigungen leicht, wenn etwas nicht mehr funktioniert.
+</Info>
+
+## Erforderliche Berechtigungen
+
+Diese Discord-Berechtigungen braucht Heimdall, damit alle Plugins richtig funktionieren:
+
+| Berechtigung | Wofür sie gebraucht wird |
+|---|---|
+| Rollen verwalten (Manage Roles) | Rollen über Rollen-Buttons vergeben und Minecraft-Rollen synchronisieren |
+| Kanäle verwalten (Manage Channels) | Temporäre Sprachkanäle erstellen und löschen |
+| Mitglieder kicken (Kick Members) | Kicks aus Moderationsbefehlen ausführen |
+| Mitglieder bannen (Ban Members) | Banns ausführen und Leave-Banns verwalten |
+| Nachrichten verwalten (Manage Messages) | Nachrichten beim Purge löschen und Sticky-Nachrichten verwalten |
+| Nachrichtenverlauf anzeigen (Read Message History) | Nachrichten nach Anzahl purgen und Kontext für Modmail lesen |
+| Nachrichten senden (Send Messages) | Auf Befehle antworten und Benachrichtigungen senden |
+| Links einbetten (Embed Links) | Rich Embeds für alle formatierten Ausgaben senden |
+| Dateien anhängen (Attach Files) | Anhänge in Ticket- und Modmail-Threads senden |
+| Anwendungsbefehle verwenden (Use Slash Commands) | Slash-Befehle registrieren und auf sie antworten |
+| Threads verwalten (Manage Threads) | Ticket- und Modmail-Threads erstellen und archivieren |
+| „Moderate Members“ | Timeouts für Stummschaltungen verhängen |
+
+## Was passiert, wenn der Bot beitritt
+
+Tritt Heimdall deinem Server zum ersten Mal bei, registriert er alle Slash-Befehle bei Discord und legt in seiner Datenbank einen Konfigurationseintrag für den Server an. Es werden keine Kanäle oder Rollen automatisch erstellt: Alles wird über das Dashboard eingerichtet.
+
+## Nächste Schritte
+
+<Steps>
+  <Step title="Im Dashboard anmelden">
+    Geh auf **[bot.bifrost.gg](https://bot.bifrost.gg)** und melde dich mit deinem Discord-Account an. Dein Server erscheint in der Serverauswahl. Eine Einführung findest du unter [Das Dashboard nutzen](/de/dashboard).
+  </Step>
+  <Step title="Berechtigungen einrichten">
+    Standardmäßig sind alle Moderationsbefehle auf Mitglieder mit der Berechtigung Administrator beschränkt. Richte das Berechtigungssystem ein, damit die richtigen Rollen Zugriff auf jedes Feature bekommen. Siehe [Berechtigungen](/de/permissions).
+  </Step>
+  <Step title="Plugins aktivieren und einrichten">
+    Jedes Feature muss eingerichtet werden, bevor es aktiv wird. Geh über die Seitenleiste des Dashboards zur Konfigurationsseite jedes Plugins und richte es ein.
+  </Step>
+</Steps>

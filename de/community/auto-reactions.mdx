@@ -1,0 +1,32 @@
+---
+title: "Auto-Reaktionen"
+description: "Automatisch auf jede Nachricht in ausgewählten Kanälen reagieren."
+icon: "thumbs-up"
+---
+
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+Wähl einen Kanal und ein paar Emojis aus, und der Bot reagiert auf jede Nachricht, die dort gepostet wird. Der häufigste Einsatz ist eine Abstimmung im Reddit-Stil in einem Vorschlags- oder Showcase-Kanal, in dem Mitglieder abstimmen können sollen, ohne dass vorher jemand die Reaktionen hinzufügt.
+
+## Einrichtung
+
+Geh im Dashboard zu <DashboardLink to="auto-reactions">**Auto Reactions**</DashboardLink>, füge einen Kanal hinzu und wähl die Emojis aus.
+
+Die Reihenfolge zählt. Der Bot reagiert in der Reihenfolge deiner Liste, und Reaktionen lassen sich auf Discords Seite nachträglich nicht umsortieren. Ein Upvote, das links stehen soll, muss also als Erstes in der Liste stehen.
+
+## Welche Emojis du nutzen kannst
+
+Die eigenen Custom-Emojis deines Servers und normale Unicode-Emojis funktionieren beide.
+
+**Heimdalls eigene Emojis lassen sich hier nicht nutzen.** Sie gehören zur Anwendung des Bots statt zu deinem Server, und Discord erlaubt solche Emojis überhaupt nicht als Reaktionen. Die Auswahl auf dieser Seite bietet sie gar nicht erst an, und wenn eine ältere Regel eines enthält, wird es markiert, damit du siehst, warum diese Reaktion nie erscheint.
+
+Ein Emoji, das inzwischen von deinem Server gelöscht wurde, wird genauso markiert, weil ein veraltetes Emoji und eines der falschen Art anhand der ID allein gleich aussehen und unterschiedlich behoben werden müssen.
+
+## Erforderliche Berechtigungen
+
+| Aktion | Berechtigungsschlüssel |
+| --- | --- |
+| Einstellungen ansehen | `auto-reactions.view_config` |
+| Kanäle und Emojis ändern | `auto-reactions.manage_config` |
+
+Auto-Reaktionen laufen komplett automatisch, Mitglieder brauchen also keine Berechtigung. Der Bot braucht in jedem eingerichteten Kanal **Reaktionen hinzufügen** und **Nachrichtenverlauf anzeigen**.

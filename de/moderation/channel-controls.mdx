@@ -1,0 +1,67 @@
+---
+title: "Kanal-Steuerung"
+description: "Kanäle sperren, Banns für einzelne Kanäle verhängen und das Umgehen von Banns durch Verlassen und Wiederbeitreten verhindern."
+icon: "lock"
+---
+
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+Heimdall bietet drei Werkzeuge zur Durchsetzung auf Kanalebene: Kanalsperren, Kanal-Banns und das Erfassen von Leave-Banns. Sie ergänzen serverweite Banns für Fälle, in denen ein kompletter Server-Bann nicht angebracht ist, aber der Zugang zu bestimmten Kanälen oder der Wiedereintritt in den Server kontrolliert werden muss.
+
+## Kanäle sperren und entsperren
+
+```
+/lock [channel] [reason] [duration]
+/unlock [channel]
+```
+
+Ein gesperrter Kanal verhindert, dass Mitglieder ohne ausdrückliche Override-Rollen Nachrichten senden. Der Kanal bleibt sichtbar, ist für die betroffenen Mitglieder aber nur noch lesbar.
+
+| Option | Erforderlich | Beschreibung |
+|---|---|---|
+| `channel` | Nein | Der Kanal, der gesperrt werden soll. Standard ist der aktuelle Kanal. |
+| `reason` | Nein | Ein Grund, der beim Sperren im Kanal gepostet wird. |
+| `duration` | Nein | Nach dieser Zeit automatisch entsperren (z. B. `2h`, `1d`). |
+
+Beim Sperren wird optional eine Systemnachricht im Kanal gepostet, um die Mitglieder zu informieren. Beim Entsperren zeigt eine weitere Nachricht an, dass der Kanal wieder offen ist.
+
+Gesperrte Kanäle werden im Dashboard unter <DashboardLink to="moderation/locked-channels">**Moderation > Locked Channels**</DashboardLink> erfasst. Dort sieht das Team alle aktuell gesperrten Kanäle und kann sie direkt entsperren.
+
+## Kanal-Banns
+
+```
+/channelban <user> [channel] [reason] [duration]
+```
+
+Bannt ein bestimmtes Mitglied aus einem einzelnen Kanal, sodass es dort weder lesen noch schreiben kann. Das ist ein gezieltes Werkzeug: Das Mitglied bleibt auf dem Server und kann alle anderen Kanäle ganz normal nutzen.
+
+| Option | Erforderlich | Beschreibung |
+|---|---|---|
+| `user` | Ja | Das Mitglied, das aus dem Kanal gebannt werden soll |
+| `channel` | Nein | Der Kanal, aus dem gebannt wird. Standard ist der aktuelle Kanal. |
+| `reason` | Nein | Der Grund für den Bann |
+| `duration` | Nein | Wie lange der Kanal-Bann gilt (z. B. `7d`). Standard ist dauerhaft. |
+
+Kanal-Banns funktionieren über die Berechtigungsüberschreibungen des Kanals. Läuft eine Dauer ab, wird die Überschreibung automatisch entfernt. Aktive Kanal-Banns kannst du im Dashboard unter <DashboardLink to="moderation/channel-bans">**Moderation > Channel Bans**</DashboardLink> ansehen und verwalten.
+
+## Leave-Banns
+
+Leave-Banns verhindern, dass ein Mitglied einer Verwarnung oder einem Mute ausweicht, indem es den Server verlässt und wieder beitritt. Sind sie aktiviert, wird jedes Mitglied, das den Server verlässt, automatisch für die von dir festgelegte Dauer gebannt, es sei denn, es hat eine immune Rolle. Das gilt für jedes Verlassen, nicht nur für Mitglieder mit einem kürzlichen Verstoß. Lege also die immunen Rollen fest, bevor du es einschaltest.
+
+### Leave-Banns einrichten
+
+Öffne <DashboardLink to="moderation/leave-bans">**Moderation \> Leave Bans**</DashboardLink> und schalte **Enable Ban on Leave** ein. Lege fest:
+
+- **Default Ban Duration**: wie lange der automatische Bann dauert, oder dauerhaft
+- **Ban Reason**: der Grund, der beim Bann eingetragen wird
+- **Immune Roles**: Mitglieder mit einer dieser Rollen werden nie per Leave-Bann gebannt. Bots werden immer übersprungen
+
+Leave-Banns werden als Verstöße erfasst, damit die Akte des Mitglieds den Grund für den Bann zeigt.
+
+## Erforderliche Berechtigungen
+
+| Aktion | Berechtigungsschlüssel |
+|---|---|
+| `/lock`, `/unlock` | `moderation.enforcement.lock_channels` |
+| `/channelban` | `moderation.enforcement.ban` |
+| Leave-Bann-Einstellungen verwalten | `moderation.enforcement.manage_rules` |

@@ -1,0 +1,92 @@
+---
+title: "Dossiers"
+description: "Un dossier numéroté pour chaque action de modération, sur Discord et sur Minecraft."
+icon: "folder-open"
+---
+
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+Chaque ban, mute, expulsion, avertissement et ban de salon sur ton serveur, et chaque sanction et infraction sur ton serveur Minecraft, devient un **dossier** (case) avec son propre numéro, comme `#1482`. Un dossier garde ce qui s’est passé, qui l’a fait, pourquoi, et tout ce qui lui est arrivé depuis : le déban, l’appel, les notes ajoutées par le staff et les preuves jointes. Les dossiers d’un membre sur Discord et sur son compte Minecraft lié se trouvent sur une seule page.
+
+Les dossiers sont un registre, pas une nouvelle façon de sanctionner. Tu bannis toujours avec `/ban`, `/mc-punish` ou en jeu, exactement comme avant, et chaque dossier renvoie vers l’action qu’il enregistre.
+
+## Ce qui devient un dossier
+
+- Les bans, expulsions, mutes, avertissements et bans de salon effectués via Heimdall, par le staff ou par l’automod.
+- Les bans, expulsions et exclusions temporaires effectués depuis les menus de Discord ou par un autre bot. Ils sont attribués à la personne qui les a faits, ce que Heimdall lit dans le journal d’audit, donc le bot a besoin de la permission **Voir les logs du serveur**.
+- Les bans, bans d’IP, mutes, avertissements et expulsions Minecraft, depuis le tableau de bord, `/mc-punish` ou en jeu, ainsi que chaque infraction Minecraft.
+
+Un déban, un démute ou une révocation n’est pas un nouveau dossier. Cela clôt le dossier qu’il lève, qui apparaît alors comme révoqué. Un ban qui arrive à son terme apparaît comme expiré, et un ban remplacé par un ban plus récent apparaît comme remplacé.
+
+Le numéro de dossier apparaît dans le journal de modération, donc `Case #1482` dans une ligne de journal est ce que le staff recherche.
+
+## Trouver un dossier
+
+### Sur le tableau de bord
+
+Ouvre <DashboardLink to="cases/list">**Cases \> All cases**</DashboardLink>. Filtre par plateforme, action, statut ou modérateur, ou cherche une personne. Ouvre un dossier pour voir sa chronologie, et ouvre la personne pour voir tous ses dossiers sur Discord et sur tout compte Minecraft dont le lien avec elle est confirmé. Heimdall ne devine jamais un lien : un compte Minecraft non lié est une personne distincte.
+
+### Sur Discord
+
+| Commande | Ce qu’elle fait |
+| --- | --- |
+| `/case view` | Affiche un dossier par son numéro, avec des boutons pour ajouter une note ou une preuve et pour le lever |
+| `/case lookup` | Affiche tous les dossiers d’un utilisateur Discord ou d’un joueur Minecraft |
+| `/case note` | Ajoute une note à un dossier |
+| `/case evidence` | Joint un fichier ou un lien à un dossier |
+| `/case reason` | Change la raison d’un dossier. L’ancienne raison est conservée dans le dossier |
+
+Fais un clic droit sur un membre et choisis **Applications \> View cases** pour obtenir la même liste que `/case lookup`. Fais un clic droit sur un message et choisis **Applications \> Add to case** pour le copier dans un dossier sous forme de note, avec un lien vers le message. C’est ainsi qu’une décision dont le staff a discuté dans un salon finit dans le registre.
+
+### En jeu
+
+Le staff qui a `heimdall.admin` peut ajouter une note avec `/hd case note <number> <text>`. En jeu, les notes ne peuvent être ajoutées qu’aux dossiers Minecraft, et à un dossier masqué seulement par le staff qui a aussi `heimdall.punishments.hidden`.
+
+## Lever un dossier
+
+Les boutons **Unban**, **Unmute** et **Revoke** d’un dossier le lèvent par le même chemin que la commande de la plateforme, donc ils demandent la même permission : `moderation.enforcement.ban` pour débannir sur Discord, `minecraft.punishments.revoke` pour révoquer sur Minecraft. Un avertissement n’a rien à lever, donc il est plutôt gracié et ses points cessent de compter.
+
+## Appels
+
+Quand un membre banni ou mute fait appel, l’appel est lié à son dossier. Le lien affiché sur un écran de ban en jeu et sur chaque ligne de la page des bans indique le dossier, et un appel sans dossier est associé au ban ou au mute en cours du membre. Un appel n’est jamais lié qu’à un dossier qui concerne la personne qui fait appel, ou un compte qui lui est lié, donc un membre ne peut pas rattacher son appel au dossier de quelqu’un d’autre.
+
+Le dossier affiche l’appel et son issue, et l’appel dans <DashboardLink to="appeals/submissions">**Appeals \> Submissions**</DashboardLink> renvoie vers son dossier. L’accepter lève le dossier sur la plateforme d’origine : un déban ou un démute sur Discord, ou une révocation sur Minecraft.
+
+<span id="public-bans-page"></span>
+## Page publique des bans
+
+<DashboardLink to="cases/bans-page">**Cases \> Bans page**</DashboardLink> publie une liste des bans et mutes sur ton site des bans, Discord et Minecraft ensemble, chacun avec son numéro de dossier. Tu choisis qui voit quoi, par niveaux :
+
+| Niveau | Qui c’est |
+| --- | --- |
+| Public | Toute personne qui a le lien |
+| Signed in | Toute personne connectée avec Discord |
+| Members | Les membres de ton serveur |
+| Niveaux de rôles | Les membres qui ont l’un des rôles que tu choisis, jusqu’à cinq niveaux |
+
+Chaque niveau voit tout ce que voient les niveaux au-dessus de lui, plus ce que tu coches pour lui, donc aucun niveau ne peut voir moins que le public. Pour chaque niveau, tu peux cocher les bans Minecraft, les bans d’IP Minecraft, les mutes Minecraft, les bans Discord, les raisons, qui a émis chaque entrée et les entrées expirées. Les sanctions masquées ne sont jamais listées, sauf pour le staff connecté qui peut déjà voir les dossiers masqués.
+
+Les bans Discord sont désactivés pour tous les niveaux tant que tu ne les actives pas, et <DashboardLink to="cases/bans-page">**Cases \> Bans page**</DashboardLink> te prévient quand ils seraient visibles par quelqu’un d’extérieur à ton serveur. Une liste de bans Minecraft est une norme dans les communautés ; une liste publique de comptes Discord avec les raisons de leur ban est une information personnelle sur de vraies personnes.
+
+**Reset link** donne une nouvelle adresse à la page, et l’ancienne cesse de fonctionner.
+
+## Le piège
+
+La modération antérieure aux dossiers est importée automatiquement la première fois que le bot démarre avec les dossiers. Un serveur avec des années d’historique peut mettre quelques minutes à tout récupérer, et en attendant, <DashboardLink to="cases/list">**Cases**</DashboardLink> et la page des bans ne listent que les actions effectuées depuis l’arrivée des dossiers. Les nouveaux dossiers gardent leur numéro quand l’historique arrive, car les actions plus anciennes ont reçu les premiers numéros.
+
+Les fichiers de preuve nécessitent un stockage de fichiers configuré pour ton serveur. Sans lui, tu peux joindre des liens mais pas de fichiers, car un lien de pièce jointe Discord expire, et une preuve qui cesse de se charger sans prévenir est pire que pas de preuve du tout.
+
+## Permissions requises
+
+La lecture est séparée par plateforme, car le staff Minecraft n’est souvent pas modérateur sur Discord. Le staff qui pouvait lire l’ancien onglet Infractions ou l’historique des sanctions Minecraft continue de lire les mêmes dossiers sans nouvelle clé.
+
+| Action | Clé de permission |
+| --- | --- |
+| Lire les dossiers Discord | `cases.view_discord` |
+| Lire les dossiers Minecraft | `cases.view_minecraft` |
+| Voir les dossiers masqués, sur les plateformes que tu peux lire | `cases.view_hidden` |
+| Ajouter des notes | `cases.comment` |
+| Ajouter et retirer des preuves | `cases.manage_evidence` |
+| Changer la raison d’un dossier | `cases.edit_reason` |
+| Lier des dossiers associés et retirer les notes de n’importe qui | `cases.manage` |
+| Gérer la page publique des bans | `cases.manage_bans_page` |

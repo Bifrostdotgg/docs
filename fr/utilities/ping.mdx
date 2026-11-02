@@ -1,0 +1,57 @@
+---
+title: "Commandes de statut et d’infos"
+description: "Vérifier la latence et le temps de fonctionnement du bot, et voir les informations d’un utilisateur Discord."
+icon: "circle-info"
+---
+
+Ces commandes générales donnent aux membres et aux administrateurs des informations de base sur le fonctionnement du bot et sur les utilisateurs Discord.
+
+## Vérifier la latence du bot
+
+```
+/ping
+```
+
+Mesure la latence aller-retour actuelle entre le bot et l’API de Discord. La réponse affiche :
+
+- **API latency** : le temps qu’il faut au bot pour recevoir un événement de Discord
+- **Gateway latency** : l’aller-retour du heartbeat WebSocket
+- **Database latency** : le temps nécessaire pour exécuter une requête simple sur la base de données
+
+Cette commande est utile pour vérifier que le bot répond et pour savoir si une lenteur vient du bot, de l’API de Discord ou de la base de données.
+
+## Vérifier le temps de fonctionnement du bot
+
+```
+/uptime
+```
+
+Affiche depuis combien de temps le bot tourne depuis son dernier redémarrage. Montre une durée lisible (par exemple « 3 jours, 14 heures, 22 minutes ») et la date et l’heure exactes du démarrage du bot.
+
+## Voir les informations d’un utilisateur
+
+```
+/userinfo [user]
+```
+
+Affiche une fiche de profil pour le membre indiqué (ou ton propre profil si aucun utilisateur n’est indiqué). La fiche affiche :
+
+| Champ | Description |
+|---|---|
+| **Username** | Le nom d’utilisateur et le nom d’affichage Discord |
+| **User ID** | L’ID snowflake Discord |
+| **Account created** | La date de création du compte Discord |
+| **Joined server** | La date à laquelle le membre a rejoint ce serveur |
+| **Roles** | Tous les rôles que le membre a actuellement |
+| **Nickname** | Le pseudo propre au serveur, s’il est défini |
+| **Bot** | Si le compte est un bot |
+
+`/userinfo` fonctionne sur n’importe quel membre visible, bots compris. Tu peux rechercher des membres qui ont quitté le serveur en indiquant leur ID d’utilisateur.
+
+## Permissions requises
+
+Ces commandes sont disponibles pour tous les membres par défaut :
+
+| Commande | Clé de permission |
+|---|---|
+| `/ping`, `/uptime`, `/userinfo` | `ping.use` (autorisé par défaut) |

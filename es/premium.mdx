@@ -1,0 +1,186 @@
+---
+title: "Premium y White-Label"
+description: "Qué desbloquean Heimdall Premium y White-Label, qué límites quitan, cuánto cuestan y cómo mejorar tu plan."
+icon: "crown"
+---
+
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+Heimdall es gratis para servidores de Discord de cualquier tamaño, sin límite de miembros. Todos los plugins principales están incluidos en el plan gratuito, con límites lo bastante generosos como para llevar una comunidad entera. Premium quita esos límites y desbloquea un conjunto de funciones avanzadas. White-Label añade tu propia marca por encima.
+
+Si estás comparando planes, la [página de precios](https://bifrost.gg/heimdall/pricing) tiene una comparativa completa, uno al lado del otro.
+
+## Qué desbloquea Premium
+
+Premium hace dos cosas: sube todos los límites de uso del plan gratuito y activa funciones que no están disponibles gratis.
+
+<Columns cols={2}>
+  <Card title="Límites más altos" icon="arrow-up-right-dots">
+    Plazas de staff, etiquetas, starboards y formularios de solicitud ilimitados, además de límites mucho más altos en tickets, automod y más.
+  </Card>
+
+  <Card title="Suite de soporte" icon="headset">
+    Horarios de SLA, cuotas del staff, calificación de tickets, estadísticas y valoraciones de clientes.
+  </Card>
+
+  <Card title="Marca personalizada" icon="palette">
+    Define colores de embed y textos de pie personalizados para que los mensajes del bot encajen con tu servidor, en <DashboardLink to="settings/branding">**Settings \> Branding**</DashboardLink> (Ajustes > Marca).
+  </Card>
+
+  <Card title="Funciones avanzadas" icon="bolt">
+    Portal de clientes, administración de la tienda Tebex, transcripción de voz alojada, exportación de encuestas a CSV y soporte prioritario.
+  </Card>
+</Columns>
+
+## Límites que se quitan
+
+Todos los límites de abajo son por servidor. Los valores de Free son generosos a propósito; Premium sube cada uno de ellos. White-Label tiene los mismos que Premium.
+
+| Función | Free | Premium |
+| --- | --- | --- |
+| Plazas de staff en el panel | 3 | Ilimitadas |
+| Paneles de tickets | 1 | 25 |
+| Categorías de tickets | 5 | 25 |
+| Preguntas del formulario por categoría de tickets | 5 | Al máximo |
+| Reglas de automod | 5 | 50 |
+| Niveles de escalada | 3 | Ilimitados |
+| Respuestas automáticas | 5 | 50 |
+| Mensajes fijos | 5 | 25 |
+| Categorías de modmail | 2 | 25 |
+| Campos del formulario de modmail por categoría | 3 | 10 |
+| Formularios de solicitud | 3 | Ilimitados |
+| Formularios de apelación | 1 | 10 |
+| Paneles de botones de roles | 5 | 25 |
+| Starboards | 1 | Ilimitados |
+| Etiquetas | 15 | Ilimitadas |
+| Publicaciones programadas pendientes | 1 | Ilimitadas |
+| Encuestas activas | 1 | 50 |
+| Canales de sugerencias | 1 | 10 |
+| Conservación del archivo de la consola | 7 días | 365 días |
+
+## Funciones solo de Premium
+
+Están desactivadas en el plan gratuito y pasan a estar disponibles con Premium.
+
+| Función | Qué hace |
+| --- | --- |
+| Suite de soporte | Horarios de SLA, cuotas del staff, calificación de tickets, estadísticas y valoraciones de clientes en tickets y modmail |
+| Preguntas con adjuntos en los formularios | Permite que los miembros suban archivos como respuesta en los formularios de tickets, solicitudes y modmail |
+| Envío de registros por subcategoría | Envía los registros de distintas subcategorías a canales distintos |
+| Colores y pie de embed personalizados | Pon tu marca en los embeds del bot con tu propio color de acento y tu texto de pie |
+| Portal de clientes | Un panel de autoservicio alojado donde los miembros siguen sus propios tickets y sus cuentas vinculadas |
+| Administración de la tienda Tebex | Gestiona los paquetes, las ventas y las búsquedas de clientes de tu tienda Tebex desde Discord |
+| Exportación de encuestas a CSV | Exporta los resultados de las encuestas a un archivo CSV |
+| Transcripción de voz alojada | Transcripción automática de los tickets de voz y las grabaciones |
+| Soporte prioritario | Ayuda más rápida del equipo de Bifröst |
+
+## White-Label
+
+White-Label es el plan más alto. Incluye todo lo de Premium y, además, hace que el bot sea tuyo:
+
+- Quita toda la marca de Heimdall y de Bifröst de los mensajes y los embeds del bot
+- Funciona con la identidad de tu propio bot, con su nombre, su avatar y su token
+- Pensado para redes, agencias y comunidades con marca propia
+
+White-Label se licencia por plazas. Una plaza cubre un servidor con marca blanca. Si tienes bots con marca blanca en tres servidores, son tres plazas, y puedes añadir o quitar plazas cuando quieras.
+
+<Note>
+  White-Label funciona con tu propia aplicación de bot, así que para ponerlo en marcha hay que facilitar el token del bot. Abre un ticket en el [servidor de soporte](https://discord.bifrost.gg) si quieres que te echemos una mano con la configuración.
+</Note>
+
+### Intents privilegiados
+
+Tu aplicación de bot necesita tener activados dos intents privilegiados del gateway antes de que Heimdall pueda ponerla en marcha. En el [Discord Developer Portal](https://discord.com/developers/applications), abre tu aplicación, ve a la pestaña **Bot** y, en **Privileged Gateway Intents**, configura:
+
+| Intent | Ajuste | Por qué |
+| --- | --- | --- |
+| Server Members Intent | Activado | Los permisos, la moderación, los mensajes de bienvenida, los roles automáticos y la sincronización de roles necesitan los datos de miembros y roles |
+| Message Content Intent | Activado | Los tickets, el modmail, el automod, el registro de mensajes y la traducción leen el contenido de los mensajes |
+| Presence Intent | Desactivado | Heimdall nunca lee la presencia |
+
+Si alguno de los intents necesarios está desactivado, Discord rechaza el inicio de sesión del bot y no arrancará. Actívalo y vuelve a ponerlo en marcha.
+
+Por debajo de 10.000 usuarios, basta con activar los intents. Cuando tu bot llega a 10.000 usuarios únicos alcanzables, Discord envía un MD a la cuenta propietaria de la aplicación pidiéndote que solicites la revisión de los intents, con un plazo de 90 días. El bot sigue funcionando hasta entonces, pero si se te pasa el plazo, Discord desactiva los intents.
+
+<Card title="Solicitar los intents privilegiados" icon="shield-check" href="https://bifrost.gg/heimdall/guides/privileged-intents">
+  Respuestas para copiar y pegar en cada pregunta del formulario de revisión de intents de Discord, personalizadas con el nombre de tu bot, además de las capturas que hay que adjuntar.
+</Card>
+
+### Estado personalizado
+
+Tu bot con marca blanca puede mostrar un estado personalizado en la lista de miembros, e ir rotando entre varios. Para configurarlo, abre el menú de tu perfil en el panel, elige **Whitelabel Bot** y busca la tarjeta **Custom status** (estado personalizado). Los cambios llegan a tu bot en directo a los pocos momentos de guardarlos.
+
+- Añade hasta 10 estados. Con dos o más, el bot los va mostrando por orden.
+- Elige cada cuánto rota, desde cada 15 segundos hasta una vez al día. Por defecto, cada minuto.
+- Cada estado tiene un tipo: **Playing** (Jugando a), **Watching** (Viendo), **Listening to** (Escuchando), **Competing in** (Compitiendo en) o **Custom** (personalizado: solo tu texto, sin verbo delante).
+- Cada estado puede tener hasta 128 caracteres.
+
+Dos marcadores muestran cifras en directo:
+
+| Marcador | Muestra |
+| --- | --- |
+| `{servers}` | En cuántos servidores está tu bot |
+| `{members}` | El número total de miembros de esos servidores |
+
+Por ejemplo, `Watching over {members} members` se muestra como "Watching over 1,234 members". Las cifras se actualizan más o menos cada 10 minutos cuando las usa un único estado, y cada vez que el bot rota cuando tienes varios.
+
+<Note>
+  Discord limita la frecuencia con la que un bot puede cambiar de estado, y por eso la rotación más rápida es de 15 segundos.
+</Note>
+
+## Precios
+
+| Plan | Mensual | Anual |
+| --- | --- | --- |
+| Premium | £5.99/mes | £57.99/año |
+| White-Label | £9.99/mes por plaza | £95.99/año por plaza |
+
+El pago anual ahorra aproximadamente un 20 % respecto al mensual, y todos los precios incluyen el IVA. Odin AI es un complemento opcional aparte que se factura por separado. Consulta [Odin AI](/es/ai/odin) para ver sus precios.
+
+<Note>
+  ¿Ya estabas suscrito antes del lanzamiento de los precios fijos? Tu plan y tu precio actuales no cambian. Los planes antiguos siguen funcionando exactamente igual que antes, y no se migra ni se vuelve a cobrar nada.
+</Note>
+
+## Cómo se aplican los límites
+
+Los límites se comprueban cuando creas o editas la configuración, nunca mientras el bot está funcionando. Solo te encuentras con un límite en el momento de añadir algo nuevo, así que los tickets en curso, el automod y todo lo demás siguen funcionando sea cual sea tu plan.
+
+Si bajas de un plan de pago, no se borra nada.
+
+<Steps>
+  <Step title="Termina el periodo de facturación">
+    Mantienes el acceso completo hasta el final del periodo que ya has pagado.
+  </Step>
+
+  <Step title="Periodo de gracia de 14 días">
+    Todo sigue funcionando durante 14 días más, para que tengas tiempo de decidir o de volver a suscribirte.
+  </Step>
+
+  <Step title="Lo que supera el límite se pausa">
+    Todo lo que supere los límites gratuitos se desactiva, no se borra. Por defecto se quedan activos tus elementos más recientes, y puedes volver a elegir cuáles conservar.
+  </Step>
+
+  <Step title="Restauración al instante">
+    Vuelve a suscribirte cuando quieras y todos los elementos pausados se reactivan exactamente como estaban.
+  </Step>
+</Steps>
+
+Las funciones de seguridad, como la moderación, el automod y las apelaciones, tienen un periodo de gracia más largo y avisos cada vez más serios antes, para que tu servidor nunca se quede sin protección.
+
+## Cómo mejorar tu plan
+
+<Steps>
+  <Step title="Abre el panel">
+    Inicia sesión en [bot.bifrost.gg](https://bot.bifrost.gg) y elige tu servidor.
+  </Step>
+
+  <Step title="Ve a Billing">
+    Abre la zona **Billing** (facturación) y elige **Premium** o **White-Label**, con pago mensual o anual.
+  </Step>
+
+  <Step title="Completa el pago">
+    Termina el pago y tus nuevos límites y funciones se desbloquean al momento. No hace falta volver a invitar al bot.
+  </Step>
+</Steps>
+
+También puedes empezar desde la [página de precios](https://bifrost.gg/heimdall/pricing).

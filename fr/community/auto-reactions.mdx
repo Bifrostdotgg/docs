@@ -1,0 +1,32 @@
+---
+title: "Réactions automatiques"
+description: "Réagir automatiquement à chaque message dans les salons choisis."
+icon: "thumbs-up"
+---
+
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+Choisis un salon et un ensemble d’emojis, et le bot réagit à chaque message publié dans ce salon. L’usage le plus courant est un vote à la Reddit dans un salon de suggestions ou de présentation, où les membres doivent pouvoir voter sans que quelqu’un ait d’abord ajouté les réactions.
+
+## Configuration
+
+Va dans <DashboardLink to="auto-reactions">**Auto Reactions**</DashboardLink> sur le tableau de bord, ajoute un salon et choisis les emojis.
+
+L’ordre compte. Le bot réagit dans l’ordre de ta liste, et les réactions ne peuvent pas être réordonnées ensuite côté Discord, donc un vote positif que tu veux à gauche doit être en premier dans la liste.
+
+## Les emojis que tu peux utiliser
+
+Les emojis personnalisés de ton serveur et les emojis Unicode standard fonctionnent tous les deux.
+
+**Les emojis propres à Heimdall ne peuvent pas être utilisés ici.** Ils appartiennent à l’application du bot et non à ton serveur, et Discord ne les autorise pas du tout comme réactions. Le sélecteur de cette page ne les propose tout simplement pas, et si une ancienne règle en contient un, il est signalé pour que tu comprennes pourquoi cette réaction n’apparaît jamais.
+
+Un emoji qui a depuis été supprimé de ton serveur est signalé de la même façon, car un emoji obsolète et un emoji du mauvais type se ressemblent parfaitement à partir de leur seul ID et demandent des corrections différentes.
+
+## Permissions requises
+
+| Action | Clé de permission |
+| --- | --- |
+| Voir les paramètres | `auto-reactions.view_config` |
+| Modifier les salons et les emojis | `auto-reactions.manage_config` |
+
+Les réactions automatiques sont entièrement automatiques, donc les membres n’ont besoin d’aucune permission. Le bot a besoin des permissions **Ajouter des réactions** et **Voir les anciens messages** dans chaque salon configuré.

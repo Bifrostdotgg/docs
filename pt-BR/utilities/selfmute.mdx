@@ -1,0 +1,40 @@
+---
+title: "Modo foco"
+description: "Como deixar os membros se trancarem fora do servidor por um tempo."
+icon: "lock"
+---
+
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+O modo foco é autoatendimento. Um membro roda `/selfmute start` com uma duração, e o bot tira os cargos dele e o isola em um único canal de foco até o tempo acabar. É para quem quer estudar, trabalhar ou dormir e sabe que não vai conseguir de outro jeito.
+
+Ninguém mais pode colocar um membro no modo foco, e ele não é uma ferramenta de moderação. Silenciar alguém é uma ação de moderação com um registro de infração por trás. Aqui é o membro que escolhe, e as duas coisas não devem ser confundidas.
+
+## Como funciona
+
+`/selfmute start` recebe uma duração. Os cargos do membro são removidos e guardados, e ele ganha acesso a um canal de foco e a mais nada. Quando o tempo acaba, o bot devolve exatamente os cargos que tirou.
+
+O canal de foco tem um painel com um botão para sair. Se esse botão funciona ou não, é você quem decide.
+
+## A única decisão a tomar
+
+Acesse <DashboardLink to="selfmute/config">**Self-Mute**</DashboardLink> no painel e decida se os membros podem encerrar antes da hora.
+
+Permitir a saída antecipada transforma o modo foco em um lembrete gentil. Recusar transforma em um compromisso de verdade, que é o que algumas pessoas estão pedindo. Não existe resposta certa, mas escolha de propósito: um membro que esperava um compromisso e encontrou uma saída de emergência, ou que esperava uma saída e não encontrou nenhuma, vai procurar a staff de qualquer jeito.
+
+`/selfmute cancel` encerra antes da hora, quando isso é permitido.
+
+## Bom saber
+
+- Os cargos são devolvidos a partir do que foi guardado, então um cargo dado ao membro enquanto ele estava no modo foco não se perde.
+- Se o bot não consegue gerenciar um dos cargos do membro, porque ele fica acima do bot na hierarquia, esse cargo não pode ser removido. Mantenha o cargo do bot alto o suficiente ou conte com um modo foco parcial para a sua staff.
+- Um membro que sai e volta para o servidor durante o modo foco volta sem nenhum cargo, já que o Discord não mantém cargos depois de uma saída. Os cargos guardados ainda são devolvidos quando o tempo acaba.
+
+## Permissões necessárias
+
+| Ação | Chave de permissão |
+| --- | --- |
+| Ver as configurações | `selfmute.config.view_config` |
+| Alterar as configurações | `selfmute.config.manage_config` |
+
+Iniciar o modo foco não exige permissão, já que o membro só age sobre si mesmo.

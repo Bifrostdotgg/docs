@@ -1,0 +1,46 @@
+---
+title: "AFK"
+description: "Mitglieder eine Abwesenheitsnotiz setzen lassen, die der Bot für sie ausgibt."
+icon: "moon"
+---
+
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+Ein Mitglied führt `/afk` aus, optional mit einem Grund. Solange es weg ist, bekommt jeder, der es erwähnt, eine kurze Antwort, dass es AFK ist und seit wann. Die Notiz verschwindet von selbst, sobald dieses Mitglied irgendeine Nachricht auf dem Server schreibt.
+
+Die Notiz gilt pro Server, nicht global. Eine Notiz auf einem Server hat keinen Einfluss auf andere.
+
+## Wie die Hinweise im Rahmen bleiben
+
+Drei Regeln verhindern, dass ein belebter Kanal zu einer Wand aus Bot-Antworten wird:
+
+- Nur Erwähnungen, die direkt in die Nachricht getippt wurden, zählen. Eine Antwort auf eine ältere Nachricht eines abwesenden Mitglieds löst keinen Hinweis aus, und ein Rollen-Ping, der es zufällig mit einschließt, auch nicht.
+- Ein Hinweis pro abwesendem Mitglied pro Kanal alle zehn Minuten. Zehn Leute, die nach derselben Person rufen, erzeugen eine Antwort, nicht zehn.
+- Der Hinweis zeigt den Anzeigenamen des abwesenden Mitglieds, statt es zu pingen. Dass jemand erfährt, dass es weg ist, weckt es also nie auf.
+
+## Was die Person tun kann, die nach ihm ruft
+
+Jeder Hinweis hat zwei Buttons:
+
+| Button | Was er tut |
+| --- | --- |
+| **Leave a message** (Nachricht hinterlassen) | Öffnet ein Eingabefeld. Die Nachricht wird aufbewahrt und per DM zugestellt, wenn das abwesende Mitglied zurück ist. |
+| **Tell me when they are back** (Sag mir, wenn es zurück ist) | Schickt dir eine DM, sobald dieses Mitglied wieder etwas schreibt. |
+
+Aufbewahrte Nachrichten und Beobachter gehören zu dieser einen Abwesenheit. Eine neue AFK-Notiz startet eine neue, es wird also nichts aus einer früheren Abwesenheit übernommen.
+
+## Zurückkommen
+
+Jede Nachricht auf dem Server entfernt die Notiz. Der Bot antwortet mit einer kurzen Bestätigung, die sich nach zehn Sekunden selbst löscht, und schickt dem Mitglied per DM alles, was für es aufbewahrt wurde.
+
+Sind seine DMs geschlossen, können die aufbewahrten Nachrichten nicht zugestellt werden. Deshalb steht in der Bestätigung im Kanal, wie viele es waren.
+
+## Erforderliche Berechtigungen
+
+| Aktion | Berechtigungsschlüssel |
+| --- | --- |
+| Eine AFK-Notiz setzen | `afk.set_afk` (standardmäßig für alle freigegeben) |
+
+Von Anfang an kann jeder es nutzen. Um es einzuschränken, verweigere diesen Schlüssel für `@everyone` und erlaube ihn für die Rollen, die es haben sollen.
+
+Wenn du AFK abschaltest, entweder als Modul oder indem du den Befehl `/afk` unter <DashboardLink to="settings/commands">**Settings \> Commands**</DashboardLink> deaktivierst, hören neben dem Befehl auch die automatischen Antworten auf.

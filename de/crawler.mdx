@@ -1,0 +1,60 @@
+---
+title: "HeimdallBot"
+description: "Was HeimdallBot von deiner Website abruft, warum, und wie du ihn einschränken oder blockieren kannst."
+icon: "robot"
+---
+
+Wenn du eine Website betreibst und **HeimdallBot** in deinen Logs gefunden hast, ist diese Seite für dich.
+
+```
+Mozilla/5.0 (compatible; HeimdallBot/2.0; +https://heimdall.gg/docs/crawler)
+```
+
+Heimdall ist ein Discord-Bot. Jede Heimdall-Instanz sendet denselben User-Agent, auch Server, die ihre eigene gebrandete Version betreiben. Eine einzige Regel deckt also alle ab.
+
+## Warum er vorbeikommt
+
+HeimdallBot ruft eine Seite nur ab, weil ein Admin eines Discord-Servers ihn dorthin geschickt hat. Er streift nicht auf der Suche nach Inhalten durchs Web.
+
+- **Importe in die Wissensdatenbank.** Ein Server-Admin importiert eine Seite oder crawlt eine Website in die Tiefe, damit [Odin](/de/ai/odin), der KI-Assistent von Heimdall, die Fragen seiner Mitglieder daraus beantworten kann. Meist ist das die eigene Dokumentation, das eigene Wiki oder Hilfe-Center.
+- **Wöchentliche Prüfungen.** Jede so importierte Seite wird etwa einmal pro Woche geprüft, damit die Kopie aktuell bleibt. Die Prüfung sendet `If-None-Match` und `If-Modified-Since`, eine unveränderte Seite kostet dich also meist nur ein `304` ohne Inhalt.
+- **Beobachtete Websites.** Ein Admin kann verlangen, dass eine importierte Website auf neue Seiten beobachtet wird. Eine beobachtete Website wird etwa einmal pro Woche erneut gecrawlt, mit bis zu 100 besuchten Seiten, und jedes Mal kommen höchstens 25 neue Seiten dazu.
+- **Linkprüfungen.** Postet jemand einen Link auf einem Server, der den [Anhang-Blocker](/de/utilities/attachment-blocker) nutzt, schaut Heimdall sich unter Umständen genau diese eine Seite an, um festzustellen, ob es ein GIF oder ein Video ist. Er liest höchstens die ersten 256 KB und merkt sich das Ergebnis für bis zu einen Tag.
+
+## Wie er sich verhält
+
+- **Er respektiert robots.txt** ([RFC 9309](https://www.rfc-editor.org/rfc/rfc9309)) bei jedem Abruf für die Wissensdatenbank, Weiterleitungen eingeschlossen. Hast du eine `HeimdallBot`-Gruppe, gilt diese, sonst deine `*`-Gruppe.
+  - Liefert robots.txt einen 4xx-Status, gibt es keine robots.txt, und jede Seite darf abgerufen werden. Die Ausnahme ist `429 Too Many Requests`: Das wertet HeimdallBot als Grund, dieses Mal nichts von deiner Website abzurufen.
+  - Liefert sie einen 5xx-Status oder läuft in ein Timeout, versucht es HeimdallBot noch einmal und ruft dann dieses Mal nichts von deiner Website ab.
+- **Er verteilt seine Anfragen.** Jeder Crawl, Import oder jede wöchentliche Prüfung sendet höchstens zwei Anfragen pro Sekunde an eine Website, und weniger, wenn deine robots.txt ein `Crawl-delay` festlegt. Laufen zwei davon gleichzeitig, zum Beispiel weil zwei Discord-Server deine Website im selben Moment importieren, werden sie getrennt getaktet. Eine Verzögerung über 10 Sekunden wird als 10 behandelt.
+- **Er respektiert `noindex` und `nofollow` beim Crawlen.** Das gilt für `<meta name="robots">`, `<meta name="HeimdallBot">` und den Header `X-Robots-Tag`. Links mit `rel="nofollow"`, `ugc` oder `sponsored` folgt er nie.
+- **Ein Tiefen-Crawl bleibt klein.** Er bleibt auf der einen Website, besucht höchstens 100 Seiten und hört nach 5 Minuten auf.
+- **Er fragt eventuell nach einer Markdown-Version.** Auf Dokumentations-Websites, die eine anbieten, etwa Mintlify, GitBook und Docusaurus, fragt er zuerst nach der `.md`-Version der Seite. Die ist meist kleiner als das HTML.
+- **Er führt kein JavaScript aus und loggt sich nirgends ein.**
+
+Die Linkprüfung des Anhang-Blockers liest robots.txt nicht. Wie eine Linkvorschau ruft sie eine Seite ab, weil ein Mensch sie geteilt hat. Um sie zu stoppen, blockiere den User-Agent.
+
+## Ihn blockieren oder einschränken
+
+Um HeimdallBot von deiner ganzen Website fernzuhalten, ergänze deine robots.txt um:
+
+```
+User-agent: HeimdallBot
+Disallow: /
+```
+
+Um ihn von einem Teil deiner Website fernzuhalten oder ihn zu bremsen:
+
+```
+User-agent: HeimdallBot
+Disallow: /private/
+Crawl-delay: 5
+```
+
+robots.txt wird einmal pro Auftrag gelesen: pro Crawl, pro Stapel von Importen oder pro wöchentlicher Prüfung. Ein neuer Crawl befolgt eine Änderung sofort, die wöchentlichen Prüfungen innerhalb einer Woche. Bereits importierte Seiten bleiben in der Wissensdatenbank des jeweiligen Servers, werden aber nicht mehr von deiner Website aktualisiert.
+
+Du kannst den User-Agent auch auf deinem Server oder in deiner Firewall blockieren, indem du auf `HeimdallBot` filterst.
+
+## Kontakt
+
+Wenn sich HeimdallBot auf deiner Website danebenbenimmt oder du etwas brauchst, das sich mit robots.txt nicht ausdrücken lässt, schreib eine E-Mail an [hello@bifrost.gg](mailto:hello@bifrost.gg).

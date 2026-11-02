@@ -1,0 +1,55 @@
+---
+title: "Confissões"
+description: "Como deixar os membros postarem anonimamente, com um registro para a staff lidar com abusos."
+icon: "comment-dots"
+---
+
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+Os membros enviam uma confissão e o bot a posta com um número próprio e sem autor. As confissões são anônimas para os outros membros. Elas não são anônimas para a staff com a permissão certa, e esse limite é informado aos membros no painel de envio, para que ninguém seja enganado.
+
+## Configurando
+
+Vá até <DashboardLink to="confessions/config">**Confessions**</DashboardLink> (Confissões) no painel.
+
+| Configuração | Descrição |
+| --- | --- |
+| **Ativar confissões** | Adiciona `/confess` ao seu servidor. Enquanto estiver desligado, o comando é removido e o botão do painel recusa os envios. |
+| **Canal de confissões** | Onde as confissões são postadas. Quem consegue ler o canal consegue lê-las. |
+| **Mínimo e máximo** | Limites de tamanho, aplicados enquanto o membro digita. Espaços em branco e caracteres ocultos não contam, então ninguém consegue encher um envio para chegar ao mínimo. |
+| **Intervalo** | Quanto tempo um membro espera entre uma confissão e outra. Um envio recusado por ser curto ou longo demais não gasta a espera. |
+
+## O painel de envio
+
+Postar um painel dá aos membros um botão **Submit a confession!** (Enviar uma confissão!), para que não precisem conhecer o comando. Postá-lo de novo no mesmo canal atualiza aquela mensagem em vez de adicionar uma segunda. Postá-lo em outro canal adiciona uma cópia lá, e todas as cópias aparecem listadas quando você posta o painel (veja [Painéis postados em mais de um canal](/pt-BR/dashboard#panels-posted-in-more-than-one-channel)). Os dois caminhos abrem a mesma caixa e funcionam do mesmo jeito.
+
+## Quem pode ver quem escreveu uma confissão
+
+Os outros membros nunca descobrem. Não há nome, nem avatar, nem nada na mensagem postada que leve ao autor.
+
+Com a staff é diferente. Quem tem `confessions.log.view_author` pode consultar quem enviou uma confissão em <DashboardLink to="confessions/log">**Confessions \> Confession Log**</DashboardLink> (Confissões > Registro de confissões), e o bot registra cada consulta. Isso é proposital: um jeito impossível de rastrear de postar no seu servidor é um meio de assédio sem outra solução além de desligar o recurso, e para bloquear alguém é preciso saber quem é.
+
+**Forget who wrote a confession after (days)** (Esquecer quem escreveu uma confissão depois de (dias)) define por quanto tempo isso continua possível. Deixe em 0 para guardar a informação por tempo indeterminado. Qualquer outro número diz ao bot para esquecer o autor quando a confissão chega a essa idade. A confissão em si continua, mas a partir daí ninguém consegue descobrir quem a postou, nem você.
+
+## Lidando com abusos
+
+| Ferramenta | O que faz |
+| --- | --- |
+| **Lista de bloqueio** | Os membros bloqueados recebem um aviso claro de que não podem enviar, em vez de ver suas confissões sumirem em silêncio, então não ficam tentando sem entender por quê. |
+| **Apagar** | Remove a mensagem do canal, mas mantém o texto no registro, porque esse texto é a prova usada numa denúncia. |
+| **Limites de tamanho** | Barram tanto confissões de uma palavra quanto paredes de texto. |
+
+`@everyone` e `@here` dentro de uma confissão são desarmados, então aparecem como foram escritos mas não mencionam ninguém. A formatação também é neutralizada, então uma confissão não consegue postar um título gigante ou um link disfarçado de algo que o bot disse.
+
+## Permissões necessárias
+
+| Ação | Chave de permissão |
+| --- | --- |
+| Enviar uma confissão | `confessions.submit` (concedida a todos por padrão) |
+| Ver as configurações | `confessions.config.view_config` |
+| Alterar as configurações e a lista de bloqueio | `confessions.config.manage_config` |
+| Ler o registro de confissões | `confessions.log.view_log` |
+| Revelar quem escreveu uma confissão | `confessions.log.view_author` |
+| Apagar uma confissão postada | `confessions.log.delete_confession` |
+
+As chaves de configuração não dão acesso ao registro, de propósito. Definir um canal e um intervalo é trabalho administrativo; ler o que seus membros confessaram é a parte privada, e ter confiança para uma coisa não é o mesmo que ter confiança para a outra.

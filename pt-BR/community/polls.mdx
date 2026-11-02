@@ -1,0 +1,50 @@
+---
+title: "Enquetes"
+description: "Como fazer enquetes com resposta única, múltipla escolha, voto por ordem de preferência ou texto livre."
+icon: "square-poll-vertical"
+---
+
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+As enquetes vão além de um punhado de reações. Há quatro tipos de resposta, os resultados atualizam ao vivo e tudo pode ser exportado.
+
+## Criando uma
+
+`/poll create` abre um assistente que passa pela pergunta, pelo tipo de resposta, pelas opções e pelo horário de encerramento. `/poll from-template` pula o assistente para uma enquete que você faz com frequência. No painel, use <DashboardLink to="polls/create">**Polls \> Create poll**</DashboardLink> (Enquetes > Criar enquete).
+
+| Tipo de resposta | Use para |
+| --- | --- |
+| **Resposta única** | Uma opção por membro, o caso mais comum |
+| **Múltipla escolha** | Os membros escolhem várias, útil para "de quais destes você participaria" |
+| **Ordem de preferência** | Os membros ordenam as opções, com contagem por segundo turno instantâneo, para que a vencedora tenha apoio de maioria de verdade, e não só da maior minoria |
+| **Texto livre ou número** | Respostas abertas, quando as opções não são conhecidas de antemão |
+
+Vale a pena usar a ordem de preferência quando um voto simples dividiria opções parecidas e deixaria uma impopular vencer por maioria simples.
+
+## Enquanto ela está aberta
+
+Os resultados atualizam conforme os votos chegam. `/poll list` mostra o que está aberto, e `/poll close` encerra uma antes do prazo.
+
+A visibilidade de quem votou é uma permissão própria, então uma enquete pode ter resultados públicos e ainda deixar quem votou em quê visível só para a staff, ou para ninguém.
+
+## Depois que ela fecha
+
+O encerramento posta os resultados. Quem pediu para ser avisado recebe uma DM. O conjunto completo de resultados pode ser exportado em CSV para o que você quiser fazer fora do Discord, e um registro de auditoria guarda quem criou, editou e encerrou cada enquete. Ele fica em <DashboardLink to="polls/audit">**Polls \> Audit log**</DashboardLink> (Enquetes > Registro de auditoria) no painel.
+
+## Modelos
+
+Os modelos guardam toda a configuração de uma enquete. Se você faz uma votação semanal com as mesmas opções, monte uma vez, salve com **Save as template** (Salvar como modelo) em <DashboardLink to="polls/create">**Polls \> Create poll**</DashboardLink> e use `/poll from-template` dali em diante. <DashboardLink to="polls/templates">**Polls \> Templates**</DashboardLink> (Enquetes > Modelos) lista os seus modelos salvos.
+
+## Permissões necessárias
+
+| Ação | Chave de permissão |
+| --- | --- |
+| Votar | `polls.vote` (concedida a todos por padrão) |
+| Criar uma enquete | `polls.create_poll` |
+| Ver enquetes | `polls.polls.view_polls` |
+| Ver quem votou em quê | `polls.polls.view_voters` |
+| Encerrar e editar enquetes | `polls.polls.manage` |
+| Ver modelos | `polls.templates.view_templates` |
+| Criar e editar modelos | `polls.templates.manage_templates` |
+
+`view_voters` fica separada de propósito da permissão de ver a enquete. Ver os totais e ver como cada membro votou são coisas diferentes, e um voto secreto deixa de ser secreto no momento em que as duas são concedidas juntas.

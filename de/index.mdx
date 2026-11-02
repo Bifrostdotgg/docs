@@ -1,0 +1,204 @@
+---
+title: "Heimdall-Dokumentation"
+description: "Die umfassende Dokumentation zu Heimdall, einem pluginbasierten Discord-Bot und einer Plattform zur Community-Verwaltung."
+---
+
+Heimdall ist ein Discord-Bot von Bifröst, der auf einem Plugin-System aufbaut. Jedes Feature ist ein Plugin, das sich unabhängig aktivieren oder deaktivieren lässt. Eingerichtet wird alles im Web-Dashboard unter [bot.bifrost.gg](https://bot.bifrost.gg), wo Server-Admins alles steuern, von Moderationsregeln über Ticket-Kategorien bis zu den Einstellungen der Spiel-Economy.
+
+Diese Dokumentation deckt jedes Feature ab, das Server-Admins und normalen Mitgliedern zur Verfügung steht. Wenn du Heimdall gerade prüfst, findest du auf der [Preisseite](https://bifrost.gg/heimdall/pricing) einen Vergleich der verfügbaren Pläne.
+
+## Erste Schritte
+
+<Columns cols={2}>
+  <Card title="Heimdall zu deinem Server hinzufügen" icon="robot" href="/de/adding-to-server">
+    Lade den Bot ein und führ die erste Einrichtung durch.
+  </Card>
+
+  <Card title="Das Dashboard nutzen" icon="gauge" href="/de/dashboard">
+    Melde dich an, finde dich in der Oberfläche zurecht und richte deinen Server ein.
+  </Card>
+
+  <Card title="Berechtigungen verstehen" icon="shield-halved" href="/de/permissions">
+    Wie das Berechtigungssystem von Heimdall funktioniert und wie du es einrichtest.
+  </Card>
+
+  <Card title="Befehlsreferenz" icon="terminal" href="/reference/commands">
+    Die vollständige Liste aller Slash-Befehle aus allen Plugins.
+  </Card>
+
+  <Card title="Premium und White-Label" icon="crown" href="/de/premium">
+    Was die bezahlten Pläne freischalten, welche Limits sie aufheben und wie du upgradest.
+  </Card>
+
+  <Card title="Preise" icon="tag" href="https://bifrost.gg/heimdall/pricing">
+    Vergleich die Pläne und sieh, welche Features in welchem Tarif enthalten sind.
+  </Card>
+</Columns>
+
+## Moderation
+
+<Columns cols={2}>
+  <Card title="Manuelle Aktionen" icon="gavel" href="/de/moderation/manual-actions">
+    Befehle zum Verwarnen, Bannen, Kicken, Stummschalten und Purgen.
+  </Card>
+
+  <Card title="Automod-Regeln" icon="robot" href="/de/moderation/automod">
+    Automatische Durchsetzung von Regeln mit Schlüsselwörtern und Mustern.
+  </Card>
+
+  <Card title="Eskalation" icon="arrow-up" href="/de/moderation/escalation">
+    Stufenweise Durchsetzung: automatische Stummschaltungen, Kicks und Banns anhand gesammelter Punkte.
+  </Card>
+
+  <Card title="Verstöße verfolgen" icon="clock-rotate-left" href="/de/moderation/infractions">
+    Den Verlauf von Verwarnungen und Banns eines Mitglieds ansehen und verwalten.
+  </Card>
+
+  <Card title="Kanalsteuerung" icon="lock" href="/de/moderation/channel-controls">
+    Kanäle sperren, kanalbezogene Banns verhängen und Versuche blockieren, sich durch Verlassen des Servers zu entziehen.
+  </Card>
+
+  <Card title="Einsprüche" icon="scale-balanced" href="/de/moderation/appeals">
+    Gebannte Mitglieder über ein eigenes Formular Einspruch einlegen lassen.
+  </Card>
+</Columns>
+
+## Support
+
+<Columns cols={2}>
+  <Card title="Tickets" icon="ticket" href="/de/support/tickets">
+    Ein strukturiertes Ticket-System mit Kategorien, Zuweisung an das Team und Statistiken.
+  </Card>
+
+  <Card title="Modmail" icon="envelope" href="/de/support/modmail">
+    Support-Threads per DM, die Nachrichten von Mitgliedern an dein Team weiterleiten.
+  </Card>
+
+  <Card title="Bewerbungen" icon="file-lines" href="/de/support/applications">
+    Anpassbare Bewerbungsformulare mit Prüfung durch das Team.
+  </Card>
+
+  <Card title="Statistiken" icon="chart-line" href="/de/support/analytics">
+    Antwortzeiten, Ticket-Aufkommen, Leistung des Teams und Zufriedenheitsbewertungen.
+  </Card>
+</Columns>
+
+## Community
+
+<Columns cols={2}>
+  <Card title="Willkommensnachrichten" icon="door-open" href="/de/community/welcome">
+    Neuen Mitgliedern beim Beitritt eine formatierte Nachricht schicken.
+  </Card>
+
+  <Card title="Vorschläge" icon="lightbulb" href="/de/community/suggestions">
+    Ein strukturiertes Vorschlagssystem mit Abstimmung und Prüfung durch das Team.
+  </Card>
+
+  <Card title="Starboard" icon="star" href="/de/community/starboard">
+    Beliebte Nachrichten automatisch in einem Highlight-Kanal neu posten.
+  </Card>
+
+  <Card title="Rollen-Buttons" icon="circle-check" href="/de/community/role-buttons">
+    Rollen-Panels zum Selbstvergeben, mit Buttons zum Umschalten.
+  </Card>
+
+  <Card title="Tags" icon="tags" href="/de/community/tags">
+    Gespeicherte Textbausteine und Embed-Vorlagen, abrufbar per Slash-Befehl.
+  </Card>
+
+  <Card title="Erinnerungen" icon="bell" href="/de/community/reminders">
+    Persönliche Erinnerungen direkt in Discord setzen.
+  </Card>
+</Columns>
+
+## Sprache
+
+<Columns cols={2}>
+  <Card title="Temporäre Kanäle" icon="microphone" href="/de/voice/temp-channels">
+    Sprachkanäle, die beim Beitreten entstehen und sich selbst löschen, wenn sie leer sind.
+  </Card>
+
+  <Card title="Sprach-Transkription" icon="closed-captioning" href="/de/voice/transcription">
+    Sprachnachrichten automatisch in Text umwandeln.
+  </Card>
+
+  <Card title="Warteraum" icon="hourglass" href="/de/voice/waiting-room">
+    Das Team benachrichtigen, wenn ein Mitglied einen Warteraum-Sprachkanal betritt.
+  </Card>
+</Columns>
+
+## Spiele und Economy
+
+<Columns cols={2}>
+  <Card title="Überblick" icon="gamepad" href="/de/games/overview">
+    Spiele aktivieren und den Zugriff nach Kanal und Rolle einstellen.
+  </Card>
+
+  <Card title="Brettspiele" icon="chess-board" href="/de/games/board-games">
+    2048, Vier gewinnt, Memory, Tic-Tac-Toe, Schiffe versenken und Solitaire.
+  </Card>
+
+  <Card title="Casinospiele" icon="dice" href="/de/games/casino">
+    Blackjack, Coinflip, Dice, Higher-Lower, Pferderennen, Mines und Roulette.
+  </Card>
+
+  <Card title="Economy" icon="coins" href="/de/games/economy">
+    Serverwährung, tägliche Belohnungen, Trinkgeld und Bestenlisten.
+  </Card>
+</Columns>
+
+## Integrationen
+
+<Columns cols={2}>
+  <Card title="Minecraft" icon="server" href="/de/integrations/minecraft">
+    Whitelist-Verwaltung, Account-Verknüpfung, RCON und Live-Serverstatus.
+  </Card>
+
+  <Card title="PlanetSide 2" icon="crosshairs" href="/de/integrations/planetside">
+    Abfragen über die Census-API, Outfit-Verwaltung und Bevölkerungs-Tracking.
+  </Card>
+
+  <Card title="Tebex" icon="store" href="/de/integrations/tebex">
+    Verbinde deinen Tebex-Shop, um Transaktionen zu sehen und Geschenkkarten auszustellen.
+  </Card>
+
+  <Card title="NamelessMC" icon="link" href="/de/integrations/namelessmc">
+    Discord-Accounts mit NamelessMC-Forenprofilen verknüpfen.
+  </Card>
+</Columns>
+
+## KI und Sprachen
+
+<Columns cols={2}>
+  <Card title="Odin AI" icon="brain" href="/de/ai/odin">
+    KI-Assistent mit einstellbarem Kontext und einer Wissensdatenbank.
+  </Card>
+
+  <Card title="Übersetzung" icon="language" href="/de/ai/translate">
+    Übersetzung von Nachrichten mit DeepL, mit automatischer Übersetzung pro Kanal.
+  </Card>
+</Columns>
+
+## Werkzeuge
+
+<Columns cols={2}>
+  <Card title="Logging" icon="scroll" href="/de/utilities/logging">
+    Server-Events wie Bearbeitungen, Löschungen, Beitritte und Banns in festgelegte Kanäle leiten.
+  </Card>
+
+  <Card title="Anhang-Blocker" icon="file-slash" href="/de/utilities/attachment-blocker">
+    Bestimmte Dateitypen global oder pro Kanal blockieren.
+  </Card>
+
+  <Card title="Don't @ me" icon="bell-slash" href="/de/utilities/dont-at-me">
+    Nutzer verwarnen, die geschützte Rollen erwähnen.
+  </Card>
+
+  <Card title="Kundenportal" icon="user-gear" href="/de/utilities/customer-portal">
+    Ein Self-Service-Panel, über das Mitglieder ihre verknüpften Accounts und Integrationen erreichen.
+  </Card>
+
+  <Card title="Status und Info" icon="circle-info" href="/de/utilities/ping">
+    Befehle für Latenz und Laufzeit des Bots sowie Nutzerinformationen.
+  </Card>
+</Columns>

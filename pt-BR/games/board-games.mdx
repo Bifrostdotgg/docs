@@ -1,0 +1,77 @@
+---
+title: "Jogos de tabuleiro"
+description: "Como jogar jogos de tabuleiro interativos no Discord: 2048, Lig 4, Jogo da memória, Jogo da velha, Batalha naval e Paciência."
+icon: "chess-board"
+---
+
+O Heimdall inclui seis jogos de tabuleiro que dá para jogar inteiramente no Discord com controles de botão interativos. Todos os jogos têm modo para um ou dois jogadores, dependendo do tipo de jogo.
+
+## Jogos disponíveis
+
+### 2048
+
+```
+/2048
+```
+
+O clássico quebra-cabeça de deslizar números. Uma grade 4x4 de peças numeradas: deslize as peças em uma direção e os números iguais se juntam. Chegue à peça 2048 para vencer. Jogado inteiramente com botões de direção. Um jogador.
+
+### Lig 4
+
+```
+/connect4 [opponent]
+```
+
+Solte discos coloridos em uma grade de 7 colunas e 6 linhas. Quem fizer quatro em linha primeiro (na horizontal, vertical ou diagonal) vence. Dá para jogar sozinho contra o bot ou com dois jogadores.
+
+### Jogo da memória
+
+```
+/memory
+```
+
+Um jogo de encontrar pares de cartas. O tabuleiro mostra cartas viradas para baixo; vire duas por vez e encontre os pares. Encontre todos os pares com o menor número de viradas. Um jogador.
+
+### Jogo da velha
+
+```
+/tictactoe [opponent]
+```
+
+O clássico três em linha em uma grade 3x3. Dá para jogar sozinho contra o bot ou com dois jogadores.
+
+### Batalha naval
+
+```
+/battleship [opponent]
+```
+
+O jogo de estratégia naval. Posicione seus navios em uma grade 10x10 e tente afundar a frota do adversário antes que ele afunde a sua. Dá para jogar com dois jogadores ou sozinho contra o bot.
+
+### Paciência
+
+```
+/solitaire
+```
+
+Paciência Klondike padrão. Organize as cartas nas pilhas de fundação por naipe, em ordem crescente do Ás ao Rei. Um jogador.
+
+## Jogos para dois jogadores
+
+Nos jogos que aceitam um adversário, indique o outro membro com a opção `opponent`:
+
+```
+/connect4 opponent:@Username
+```
+
+O adversário recebe um convite que precisa aceitar antes de o jogo começar. Se o adversário não responder em 60 segundos, o convite expira.
+
+## Tempo limite do jogo
+
+Jogos ativos expiram se nenhuma jogada for feita dentro de um certo período (normalmente de 5 a 10 minutos, dependendo do jogo). O bot posta uma mensagem avisando que o jogo terminou por inatividade.
+
+## Permissões necessárias
+
+| Ação | Chave de permissão |
+|---|---|
+| Jogar jogos de tabuleiro | `games.use` (permitido por padrão) |

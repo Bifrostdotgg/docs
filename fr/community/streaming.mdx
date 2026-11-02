@@ -1,0 +1,62 @@
+---
+title: "Streaming"
+description: "Un rôle pour les membres pendant qu’ils sont en live sur Twitch, YouTube ou Kick, que la synchronisation des rôles Minecraft peut reporter en jeu."
+icon: "tower-broadcast"
+---
+
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+Les membres lient leur compte Twitch, YouTube ou Kick, et tant que l’un de leurs comptes liés est en live, ils ont un rôle que tu choisis. Quand le stream se termine, le rôle est retiré. N’importe quel live compte, quels que soient le jeu ou la catégorie.
+
+Comme c’est un rôle Discord ordinaire, tout ce qui réagit déjà aux rôles réagit à celui-ci. La raison principale de l’activer, c’est Minecraft : associe le rôle dans la synchronisation des rôles et les streamers obtiennent un rang, un tag ou un préfixe en jeu pendant leur live.
+
+## Avant que ça marche
+
+- Heimdall a besoin de la permission **Gérer les rôles**, et le rôle de live doit se trouver sous le rôle le plus haut de Heimdall.
+- Le rôle de live ne peut pas avoir de permissions de staff. Toute personne qui lie un compte et lance un live le reçoit, donc Heimdall refuse un rôle avec des permissions comme Administrateur, Gérer le serveur, Gérer les rôles, Bannir des membres ou Gérer les messages, ainsi qu’un rôle qui a la moindre permission du tableau de bord autorisée.
+- Sur chaque instance de Heimdall, les fournisseurs doivent être configurés par la personne qui la gère. Un fournisseur qui n’est pas configuré le signale quand un membre essaie de le lier.
+
+## Le mettre en place
+
+Ouvre <DashboardLink to="streaming">**Streaming**</DashboardLink> dans le tableau de bord.
+
+| Paramètre | Description |
+| --- | --- |
+| **Activer les rôles de streaming** | Active la fonctionnalité et ajoute la commande `/streaming` à ton serveur |
+| **Rôle de live** | Le rôle que les membres ont pendant leur live |
+
+Pour reporter le rôle dans Minecraft, ajoute-le à tes correspondances de **Role sync** Minecraft, avec le sens réglé de Discord vers Minecraft. Voir [Minecraft](/fr/integrations/minecraft).
+
+## Comment les membres lient un compte
+
+Un membre lance `/streaming link` et reçoit deux boutons, visibles par lui seul.
+
+- **Twitch ou YouTube** le connecte avec Discord et lit les comptes Twitch et YouTube déjà connectés à son profil Discord (**Paramètres utilisateur \> Connexions**). Seules les connexions vérifiées par Discord comptent, donc un membre ne peut lier qu’un compte qui lui appartient vraiment. Lier à nouveau remplace ses liens Twitch et YouTube par ce que son profil affiche à ce moment-là, et c’est aussi comme ça qu’une connexion supprimée disparaît.
+- **Kick** vérifie d’abord son compte Discord, puis le connecte à Kick. Kick n’est pas un type de connexion Discord, il a donc sa propre connexion.
+
+Les boutons restent valables 15 minutes. `/streaming status` affiche les liens d’un membre et indique si chacun est en live, et `/streaming unlink` les supprime tous.
+
+Les liens appartiennent à un seul serveur. Un membre qui veut le rôle sur deux serveurs doit lier son compte sur chacun.
+
+## La liste des comptes liés
+
+La page <DashboardLink to="streaming">**Streaming**</DashboardLink> liste tous les membres qui ont un compte lié, les membres en live d’abord, avec un lien vers chaque chaîne. Le staff peut délier un membre depuis cette page. Il n’existe aucun moyen d’ajouter un lien à la place de quelqu’un, parce qu’un lien n’a de valeur que si le membre a prouvé que le compte est à lui.
+
+## Le piège : la vitesse à laquelle le rôle change
+
+Twitch prévient Heimdall dès qu’un stream commence ou s’arrête, donc le rôle suit en quelques secondes. Kick et YouTube sont vérifiés à intervalles réguliers, donc le rôle peut avoir quelques minutes de retard. YouTube est vérifié d’autant moins souvent qu’il y a de chaînes liées sur une instance, parce que Google limite le nombre de requêtes autorisées par jour.
+
+Dans Minecraft, le mode de synchronisation des rôles décide quand le changement arrive en jeu. **Straight away, over the bot connection** et **Straight away, over RCON** l’appliquent immédiatement. **On the player's next join** attend que le joueur se reconnecte, donc un streamer déjà en ligne ne verra son rang changer qu’à sa prochaine connexion.
+
+Heimdall ne retire le rôle de live qu’aux membres à qui il l’a donné. Un membre qui avait déjà le rôle, par exemple parce que le staff le lui a donné, le garde quand son stream se termine. Si le staff retire le rôle à quelqu’un en plein stream, Heimdall ne le lui rend pas avant son prochain stream.
+
+## Permissions requises
+
+| Action | Clé de permission |
+| --- | --- |
+| Voir les paramètres | `streaming.config.view_config` |
+| Modifier les paramètres | `streaming.config.manage_config` |
+| Voir les comptes liés | `streaming.links.view_links` |
+| Délier les comptes d’un autre membre | `streaming.links.manage_links` |
+
+Lier, vérifier et délier tes propres comptes ne demande aucune permission.

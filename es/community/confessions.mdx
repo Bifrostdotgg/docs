@@ -1,0 +1,55 @@
+---
+title: "Confesiones"
+description: "Cómo dejar que los miembros publiquen de forma anónima, con un registro para el staff que permite actuar ante los abusos."
+icon: "comment-dots"
+---
+
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+Los miembros envían una confesión y el bot la publica con su propio número y sin autor. Las confesiones son anónimas para los demás miembros. No lo son para el staff que tenga el permiso adecuado, y ese límite se explica a los miembros en el panel de envío para que nadie se lleve a engaño.
+
+## Configurarlas
+
+Ve a <DashboardLink to="confessions/config">**Confessions**</DashboardLink> (Confesiones) en el panel.
+
+| Ajuste | Descripción |
+| --- | --- |
+| **Activar las confesiones** | Añade `/confess` a tu servidor. Mientras está desactivado, el comando desaparece y el botón del panel no acepta envíos. |
+| **Canal de confesiones** | Dónde se publican las confesiones. Cualquiera que pueda leer el canal puede leerlas. |
+| **Mínimo y máximo** | Límites de longitud, que se aplican mientras el miembro escribe. Los espacios en blanco y los caracteres ocultos no cuentan, así que nadie puede rellenar un envío para llegar al mínimo. |
+| **Tiempo de espera** | Cuánto tiene que esperar un miembro entre confesiones. Un envío rechazado por ser demasiado corto o demasiado largo no gasta la espera. |
+
+## El panel de envío
+
+Al publicar un panel, los miembros tienen un botón **Submit a confession!** (¡Envía una confesión!), así que no necesitan conocer el comando. Si lo vuelves a publicar en el mismo canal, se actualiza ese mensaje en lugar de añadir un segundo. Si lo publicas en otro canal, se añade allí una copia, y todas las copias aparecen en la lista al publicar el panel (consulta [Paneles publicados en más de un canal](/es/dashboard#panels-posted-in-more-than-one-channel)). Las dos vías abren el mismo cuadro y funcionan exactamente igual.
+
+## Quién puede ver quién escribió una confesión
+
+Los demás miembros nunca lo sabrán. No hay nombre, ni avatar, ni nada en el mensaje publicado que lleve hasta el autor.
+
+Con el staff es distinto. Cualquiera que tenga `confessions.log.view_author` puede consultar quién envió una confesión en <DashboardLink to="confessions/log">**Confessions \> Confession Log**</DashboardLink> (Confesiones > Registro de confesiones), y el bot registra cada consulta. Es así a propósito: una forma imposible de rastrear de publicar en tu servidor es una vía de acoso sin más remedio que desactivar la función, y para bloquear a alguien hay que saber quién es.
+
+**Forget who wrote a confession after (days)** (olvidar quién escribió una confesión pasados X días) decide durante cuánto tiempo es posible. Déjalo en 0 para conservar la información indefinidamente. Cualquier otro número le dice al bot que olvide al autor cuando una confesión llegue a esa antigüedad. La confesión se queda, pero a partir de ese momento nadie puede saber quién la publicó, ni siquiera tú.
+
+## Actuar ante los abusos
+
+| Herramienta | Qué hace |
+| --- | --- |
+| **Lista de bloqueados** | A los miembros bloqueados se les dice claramente que no pueden enviar confesiones, en lugar de hacer que desaparezcan sin más, para que no sigan intentándolo sin entender por qué. |
+| **Borrar** | Quita el mensaje del canal pero conserva el texto en el registro, porque ese texto es la prueba en la que se basa una denuncia. |
+| **Límites de longitud** | Frenan tanto las confesiones de una palabra como los muros de texto. |
+
+`@everyone` y `@here` dentro de una confesión se desactivan, así que se leen tal cual pero no mencionan a nadie. El formato también se neutraliza, así que una confesión no puede publicar un encabezado a todo lo ancho ni un enlace disfrazado de algo que ha dicho el bot.
+
+## Permisos necesarios
+
+| Acción | Clave de permiso |
+| --- | --- |
+| Enviar una confesión | `confessions.submit` (concedido a todos por defecto) |
+| Ver la configuración | `confessions.config.view_config` |
+| Cambiar la configuración y la lista de bloqueados | `confessions.config.manage_config` |
+| Leer el registro de confesiones | `confessions.log.view_log` |
+| Revelar quién escribió una | `confessions.log.view_author` |
+| Borrar una confesión publicada | `confessions.log.delete_confession` |
+
+Las claves de configuración no dan acceso al registro, a propósito. Elegir un canal y un tiempo de espera es trabajo de administración; leer lo que han confesado tus miembros es la parte privada, y que alguien sea de confianza para una cosa no significa que lo sea para la otra.

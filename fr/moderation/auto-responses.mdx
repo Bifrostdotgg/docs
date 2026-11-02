@@ -1,0 +1,81 @@
+---
+title: "Réponses auto"
+description: "Configurer des réponses automatiques aux messages des membres, déclenchées par mots-clés ou par IA."
+icon: "reply"
+---
+
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+Les réponses auto sont des réponses automatiques que Heimdall publie quand un membre envoie un message qui correspond à un motif configuré. Contrairement aux règles d’automod, qui font respecter les règles et sanctionnent, les réponses auto se contentent de répondre : elles sont informatives. On s’en sert souvent pour répondre aux questions fréquentes, orienter les membres vers le bon salon, ou réagir à un mot-clé avec un lien utile.
+
+## Comment fonctionnent les réponses auto
+
+Chaque message envoyé dans un salon couvert est comparé à tes réponses auto configurées. Quand une correspondance est trouvée, le bot répond directement au message déclencheur. Chaque réponse auto a un délai d’attente par salon pour éviter que le bot répète la même réponse en boucle.
+
+La correspondance se fait en deux phases :
+
+1. **Correspondance regex** : les motifs sont évalués par ordre de priorité. Le premier motif qui correspond au message se déclenche immédiatement et aucun autre motif n’est vérifié.
+2. **Correspondance IA** : si aucun motif regex n’a correspondu et que tu as configuré des réponses auto avec IA, tous ces candidats sont envoyés au classificateur IA en un seul appel. Le classificateur choisit la meilleure correspondance à partir de tes descriptions en langage courant, ou ne renvoie rien si aucune description ne convient.
+
+## Créer une réponse auto
+
+Va dans <DashboardLink to="moderation/auto-responses">**Moderation > Auto-Responses**</DashboardLink> sur le tableau de bord et clique sur **New Auto-Response**.
+
+| Paramètre | Description |
+|---|---|
+| **Name** | Un libellé interne pour cette réponse auto |
+| **Trigger type** | **Regex** (correspondance de motif) ou **AI** (description en langage courant) |
+| **Pattern** (regex) | Une expression régulière comparée au contenu du message, insensible à la casse par défaut |
+| **Description** (AI) | Une description en langage courant du sujet du message, utilisée par le classificateur IA |
+| **Priority** | Les nombres les plus bas passent en premier quand il y a plusieurs règles regex |
+| **Response type** | **Text** : une simple réponse texte, ou **Embed** : un embed enrichi avec titre, description, couleur, image et pied de page |
+| **Response content** | Le texte ou le contenu de l’embed à envoyer en réponse |
+| **Scope** | **Global** : se déclenche dans tous les salons, ou **Channel** : se déclenche uniquement dans les salons sélectionnés |
+| **Cooldown** | Combien de temps (en secondes) avant que la même réponse puisse se déclencher à nouveau dans le même salon |
+| **Immune roles** | Les rôles qui ne déclenchent pas cette réponse auto |
+
+## Déclencheurs regex
+
+Les motifs regex sont comparés à l’intégralité du contenu du message. La correspondance est insensible à la casse par défaut. Tu n’as pas besoin d’ancrer le motif : un motif `how.*join` correspondra à « how do I join », « how can I join the server » et à des phrases similaires.
+
+Si tu as besoin d’une correspondance sensible à la casse ou d’autres options, tu peux configurer les flags du motif dans la réponse auto.
+
+## Déclencheurs IA
+
+Les réponses auto déclenchées par IA utilisent une description en langage courant plutôt qu’un motif. Par exemple, une réponse auto IA avec la description « un membre demande où trouver les règles du serveur » se déclenchera quand le classificateur IA estime qu’un message porte sur les règles, même si la formulation est complètement différente à chaque fois.
+
+La classification IA se fait en un seul appel groupé pour toutes les réponses auto avec IA, donc le coût en performances reste faible, quel que soit le nombre que tu en configures.
+
+<Note>
+Les réponses auto IA nécessitent que le plugin IA soit activé et configuré sur ton serveur. Les réponses auto regex fonctionnent de façon indépendante.
+</Note>
+
+## Portée par salon
+
+Par défaut, une nouvelle réponse auto est globale : elle s’applique à tous les salons. Régler la portée sur **Channel** te permet de choisir les salons (ou catégories) où la règle s’applique. Les messages dans les fils vérifient aussi les réponses auto du salon parent, donc une règle limitée à un salon couvre aussi les fils de ce salon.
+
+## Délais d’attente
+
+Chaque réponse auto a un délai d’attente par salon. Si le bot a déjà envoyé une réponse auto donnée dans un salon pendant le délai, il ignore la correspondance pour éviter les répétitions. Le délai est compté séparément pour chaque salon, donc une réponse dans un salon n’empêche pas la réponse auto de se déclencher dans un autre.
+
+## Formats de réponse
+
+**Réponses texte** : la réponse est envoyée en texte brut. Les réponses longues sont automatiquement découpées au niveau des blocs de code ou des paragraphes pour rester sous la limite de 2000 caractères par message de Discord.
+
+**Réponses embed** : la réponse est envoyée sous forme d’embed Discord enrichi. Tu peux configurer :
+
+| Champ | Description |
+|---|---|
+| **Title** | Le texte d’en-tête en gras en haut de l’embed |
+| **Description** | Le texte principal |
+| **Colour** | Une couleur hexadécimale pour la bordure gauche |
+| **Image** | Une image pleine largeur sous le texte |
+| **Thumbnail** | Une petite image dans le coin supérieur droit |
+| **Footer** | Un petit texte en bas de l’embed |
+
+## Permissions requises
+
+| Action | Clé de permission |
+|---|---|
+| Voir les réponses auto | `moderation.enforcement.manage_auto_responses` |
+| Créer et modifier des réponses auto | `moderation.enforcement.manage_auto_responses` |

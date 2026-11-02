@@ -1,0 +1,35 @@
+---
+title: "Objetivos"
+description: "Publica barras de progreso que se actualizan solas para el número de miembros, las mejoras, los roles o cualquier cifra que fijes."
+icon: "bullseye"
+---
+
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+Un objetivo es una barra de progreso publicada en un canal que se actualiza sola. Úsalo para un hito de miembros, una meta de mejoras, una campaña de reclutamiento o cualquier otra cosa a la que puedas ponerle una cifra.
+
+## Qué puede seguir un objetivo
+
+| Origen | El progreso sale de |
+| --- | --- |
+| **Member count** (número de miembros) | Cuántos miembros tiene el servidor |
+| **Boosts** (mejoras) | El número actual de mejoras del servidor |
+| **Role members** (miembros con un rol) | Cuántos miembros tienen un rol elegido |
+| **Manual** | Una cifra que fijas tú con `/goal set` |
+
+Los tres primeros se actualizan solos. Los objetivos manuales son para todo lo que el bot no puede ver, como el dinero recaudado o las inscripciones en otra web, y los mueves con `/goal set` o les das un empujón con `/goal add`.
+
+## Cómo crear uno
+
+Ve a <DashboardLink to="goals">**Goals**</DashboardLink> en el panel y elige el origen, la meta y el canal. El bot publica la barra y la mantiene al día con un sondeo periódico, así que sigue siendo exacta sin que nadie la toque.
+
+Los objetivos son solo de presentación, así que no necesitan permisos de miembros. Nadie puede interactuar con un objetivo por accidente.
+
+## Permisos necesarios
+
+| Acción | Clave de permiso |
+| --- | --- |
+| Ver la configuración | `goals.config.view_config` |
+| Crear y editar objetivos | `goals.config.manage_config` |
+
+`/goal set` y `/goal add` también requieren la clave de gestión, ya que mover un objetivo manual es editarlo.

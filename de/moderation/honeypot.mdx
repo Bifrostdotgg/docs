@@ -1,0 +1,42 @@
+---
+title: "Honeypot"
+description: "Spam-Bots erwischen, indem jeder bestraft wird, der in einem Kanal postet, in dem niemand posten sollte."
+icon: "bug"
+---
+
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+Ein Honeypot ist ein Kanal, in dem kein echtes Mitglied je posten würde. Wer es doch tut, ist fast sicher ein Bot, der beigetreten ist und losgepostet hat, ohne irgendetwas zu lesen. Deshalb greift der Bot sofort durch.
+
+Das funktioniert, weil Spam-Bots vor dem Posten weder Kanalnamen noch Themen oder angepinnte Nachrichten lesen. Ein Mensch sieht einen Kanal namens "do-not-post-here" mit angepinnter Warnung und geht weiter.
+
+## Einrichtung
+
+`/honeypot channel add` legt einen Kanal als Falle fest, `/honeypot channel remove` nimmt ihn wieder heraus. `/honeypot status` zeigt die aktuelle Einrichtung, und `/honeypot toggle` schaltet die Durchsetzung ein und aus, ohne dass deine Kanalliste verloren geht.
+
+`/honeypot action` legt fest, was mit jemandem passiert, der dort postet:
+
+| Aktion | Wann sie sinnvoll ist |
+| --- | --- |
+| **Ban** | Die härteste Option, für einen Kanal, der unverkennbar eine Falle ist |
+| **Kick** | Wer sich wirklich nur vertan hat, kann wieder beitreten |
+| **Mute** | Verschafft dem Team Zeit, sich die Sache anzusehen, bevor es entscheidet |
+
+Alles lässt sich auch im Dashboard auf der Seite <DashboardLink to="honeypot">**Honeypot**</DashboardLink> einstellen.
+
+## Damit es gut funktioniert
+
+- **Mach den Kanal für Menschen eindeutig tabu.** Ein klarer Name, ein Thema und eine angepinnte Nachricht. Es geht darum, dass Menschen gewarnt werden und Bots nicht.
+- **Leg ihn dorthin, wo ein Bot ihn findet.** Ein Kanal, der so versteckt ist, dass neue Mitglieder ihn nicht sehen, fängt nichts.
+- **Fang am besten mit Mute an.** Ein Bann ist am wirksamsten und am wenigsten nachsichtig. Mit Mute siehst du erst, was die Falle auf deinem Server tatsächlich fängt, bevor du es endgültig machst.
+
+Die Aktionen laufen durch dieselbe Moderations-Pipeline wie manuelle Aktionen. Sie erscheinen also in deinem Verstoß-Verlauf und im Moderationslog, mit dem Honeypot als Quelle.
+
+## Erforderliche Berechtigungen
+
+| Aktion | Berechtigungsschlüssel |
+| --- | --- |
+| Einstellungen ansehen | `honeypot.view_config` |
+| Kanäle und die Aktion ändern | `honeypot.manage_config` |
+
+Der Bot braucht die Berechtigung für die Aktion, die du auswählst, und seine Rolle muss über den Mitgliedern stehen, gegen die er vorgehen soll.

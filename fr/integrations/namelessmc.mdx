@@ -1,0 +1,29 @@
+---
+title: "NamelessMC"
+description: "Lier des comptes Discord à des profils de forum NamelessMC."
+icon: "link"
+---
+
+L’intégration NamelessMC relie des comptes Discord à des profils sur un forum propulsé par NamelessMC. Une fois les comptes liés, Heimdall peut vérifier l’appartenance au forum et synchroniser les rôles entre le forum et Discord.
+
+## Liaison de compte
+
+Les membres lient leur compte du forum à leur compte Discord avec une commande de vérification :
+
+```
+/forumlink
+```
+
+Cette commande demande au membre son nom d’utilisateur ou son adresse e-mail sur le forum NamelessMC. Le bot lance une vérification via l’API NamelessMC (le membre confirme la liaison depuis la page des paramètres de son compte sur le forum), et une fois la confirmation faite, les comptes sont associés.
+
+Après la liaison, Heimdall peut attribuer automatiquement des rôles Discord selon les groupes du forum, et le portail client peut afficher le profil de forum du membre.
+
+## Synchronisation des rôles
+
+Quand la synchronisation des rôles est configurée, Heimdall vérifie régulièrement les groupes de forum de chaque membre lié et met à jour ses rôles Discord en conséquence. Tes niveaux d’accès sur Discord restent ainsi alignés automatiquement sur la structure de ton forum.
+
+## Permissions requises
+
+| Action | Clé de permission |
+|---|---|
+| Lier un compte du forum | `namelessmc.use` (autorisé par défaut) |

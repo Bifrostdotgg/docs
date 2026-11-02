@@ -1,0 +1,52 @@
+---
+title: "Anniversaires"
+description: "Annoncer les anniversaires des membres le jour J, avec un rôle temporaire en option."
+icon: "cake-candles"
+---
+
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+Les membres enregistrent leur date d’anniversaire, et le jour venu, le bot publie une annonce et peut leur donner un rôle temporaire. Les membres s’enregistrent eux-mêmes, donc tu n’as jamais à collecter les dates.
+
+## Configuration
+
+Va dans <DashboardLink to="birthdays/config">**Birthdays**</DashboardLink> sur le tableau de bord.
+
+| Paramètre | Description |
+| --- | --- |
+| **Announcement channel** | L’endroit où le message d’anniversaire est publié |
+| **Timezone** | Le fuseau horaire qui décide quand « aujourd’hui » commence |
+| **Announcement hour** | L’heure de la journée à laquelle les annonces sont envoyées |
+| **Ping role** | Un rôle facultatif à mentionner avec l’annonce |
+| **Announcement message** | Prend en charge `{mention}` pour une mention et `{user}` pour le nom sans mention |
+| **Birthday role** | Un rôle facultatif donné pour la journée, avec une durée configurable en heures |
+
+## Comment les membres s’enregistrent
+
+Deux moyens, qui écrivent tous les deux la même entrée :
+
+- `/birthday set` avec un jour et un mois
+- Le **bouton d’ouverture** (opener), un message avec un bouton que tu publies dans un salon. Les membres qui ne lanceraient jamais une commande slash cliqueront sur un bouton.
+
+`/birthday remove` supprime leur entrée. `/birthday view` affiche celle d’un membre, et `/birthday list` affiche les prochains anniversaires.
+
+Seuls le jour et le mois sont enregistrés. On ne demande pas l’année aux membres, donc aucun âge n’est enregistré.
+
+## La liste des anniversaires
+
+L’onglet <DashboardLink to="birthdays/entries">**Birthday List**</DashboardLink> du tableau de bord affiche tous les anniversaires enregistrés, les plus proches en premier, avec une recherche et la possibilité d’ajouter, de modifier ou de supprimer une entrée à la place de quelqu’un.
+
+L’ordre dépend de la proximité de la prochaine fête, pas de la date du calendrier, donc les anniversaires de décembre ne restent pas en bas de la liste onze mois sur douze.
+
+Un anniversaire le 29 février est fêté le 28 février les années qui n’en ont pas, au lieu d’être sauté trois années de suite.
+
+## Permissions requises
+
+| Action | Clé de permission |
+| --- | --- |
+| Voir les paramètres | `birthdays.config.view_config` |
+| Modifier les paramètres et le bouton d’ouverture | `birthdays.config.manage_config` |
+| Voir la liste des anniversaires | `birthdays.entries.view_entries` |
+| Modifier l’entrée de quelqu’un d’autre | `birthdays.entries.manage_entries` |
+
+Enregistrer ton propre anniversaire ne demande aucune permission. Chacune des clés de configuration donne aussi accès à la liste, donc le staff qui gère déjà les anniversaires n’a pas besoin d’une deuxième autorisation pour continuer à la voir.

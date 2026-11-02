@@ -1,0 +1,40 @@
+---
+title: "Fokusmodus"
+description: "Mitglieder sperren sich selbst für eine Weile vom Server aus."
+icon: "lock"
+---
+
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+Der Fokusmodus ist Selbstbedienung. Ein Mitglied führt `/selfmute start` mit einer Dauer aus, und der Bot nimmt ihm seine Rollen und beschränkt es auf einen einzigen Fokus-Kanal, bis die Zeit abläuft. Er ist für Leute gedacht, die lernen, arbeiten oder schlafen wollen und wissen, dass sie es sonst nicht schaffen.
+
+Niemand sonst kann ein Mitglied in den Fokusmodus versetzen, und es ist kein Moderationswerkzeug. Jemanden zu muten ist eine Moderationsaktion mit einem Verstoß-Eintrag dahinter. Hier entscheidet sich ein Mitglied selbst, und beides sollte man nicht verwechseln.
+
+## So funktioniert es
+
+`/selfmute start` nimmt eine Dauer entgegen. Die Rollen des Mitglieds werden entfernt und gespeichert, und es bekommt Zugriff auf einen Fokus-Kanal und sonst nichts. Wenn der Timer abläuft, stellt der Bot genau die Rollen wieder her, die er entfernt hat.
+
+Im Fokus-Kanal gibt es ein Panel mit einem Button zum Abbrechen. Ob dieser Button funktioniert, entscheidest du.
+
+## Die eine Entscheidung, die du treffen musst
+
+Öffne im Dashboard <DashboardLink to="selfmute/config">**Self-Mute**</DashboardLink> und entscheide, ob Mitglieder den Fokusmodus vorzeitig beenden dürfen.
+
+Mit vorzeitigem Ausstieg ist er eine sanfte Erinnerung. Ohne ihn ist er eine echte Verpflichtung, und genau die wollen manche. Es gibt keine richtige Antwort, aber entscheide bewusst: Ein Mitglied, das eine Verpflichtung erwartet hat und einen Notausgang findet, oder einen Notausgang erwartet hat und keinen findet, landet so oder so beim Team.
+
+`/selfmute cancel` beendet den Fokusmodus vorzeitig, wo das erlaubt ist.
+
+## Gut zu wissen
+
+- Die Rollen werden aus dem Gespeicherten wiederhergestellt, eine Rolle, die das Mitglied während des Fokusmodus bekommen hat, geht also nicht verloren.
+- Kann der Bot eine der Rollen nicht verwalten, weil sie in der Hierarchie über dem Bot steht, lässt sich diese Rolle nicht entfernen. Halte die Rolle des Bots hoch genug, oder rechne damit, dass der Fokusmodus für dein Team nur teilweise greift.
+- Ein Mitglied, das den Server im Fokusmodus verlässt und wieder beitritt, kommt ohne Rollen zurück, da Discord Rollen beim Verlassen nicht behält. Die gespeicherten Rollen werden trotzdem wiederhergestellt, wenn der Timer abläuft.
+
+## Erforderliche Berechtigungen
+
+| Aktion | Berechtigungsschlüssel |
+| --- | --- |
+| Einstellungen ansehen | `selfmute.config.view_config` |
+| Einstellungen ändern | `selfmute.config.manage_config` |
+
+Den Fokusmodus zu starten braucht keine Berechtigung, da ein Mitglied immer nur sich selbst betrifft.

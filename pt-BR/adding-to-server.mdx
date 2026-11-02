@@ -1,0 +1,58 @@
+---
+title: "Adicionando o Heimdall ao seu servidor"
+description: "Como convidar o Heimdall, dar a ele as permissões de que precisa e concluir a configuração inicial."
+icon: "robot"
+---
+
+## Pré-requisitos
+
+Você precisa da permissão **Gerenciar servidor** no servidor do Discord em que quer adicionar o Heimdall.
+
+## Convidando o bot
+
+Acesse **[bot.bifrost.gg](https://bot.bifrost.gg)** e clique em **Add to Server** (Adicionar ao servidor). Esta é a versão do Heimdall hospedada pela Bifröst: não é preciso hospedar por conta própria. O link de convite pede exatamente o conjunto de permissões de que o bot precisa. O Discord vai pedir que você escolha um servidor na lista dos servidores que você gerencia e depois confirme as permissões pedidas.
+
+<Note>
+Se você está avaliando o Heimdall antes de adicioná-lo, confira os planos disponíveis em **[bifrost.gg/heimdall/pricing](https://bifrost.gg/heimdall/pricing)**. Alguns recursos estão disponíveis em todos os planos; outros exigem um plano pago.
+</Note>
+
+<Info>
+Você pode tirar permissões do Heimdall depois que ele entrar: o Discord permite isso em **Configurações do servidor > Cargos** ou por permissões substitutas no nível do canal. Mas qualquer recurso que exija uma permissão que você revogou vai parar de funcionar. Quando um membro tentar usar um recurso afetado, o Heimdall responde com uma mensagem de erro que identifica exatamente qual permissão do Discord está faltando, em vez de falhar em silêncio. Isso facilita diagnosticar e corrigir permissões faltando se algo parar de funcionar.
+</Info>
+
+## Permissões necessárias
+
+As seguintes permissões do Discord são necessárias para o Heimdall funcionar corretamente em todos os plugins:
+
+| Permissão | Por que é necessária |
+|---|---|
+| Gerenciar cargos | Dar cargos pelos botões de cargo e sincronizar cargos do Minecraft |
+| Gerenciar canais | Criar e apagar canais de voz temporários |
+| Expulsar membros | Executar expulsões a partir dos comandos de moderação |
+| Banir membros | Executar bans e gerenciar bans por saída |
+| Gerenciar mensagens | Apagar mensagens em limpezas e gerenciar mensagens fixas |
+| Ver histórico de mensagens | Limpar mensagens por quantidade e ler o contexto no modmail |
+| Enviar mensagens | Responder a comandos e enviar notificações |
+| Inserir links | Enviar embeds em todas as saídas formatadas |
+| Anexar arquivos | Enviar anexos em tópicos de ticket e de modmail |
+| Usar comandos de aplicativos | Registrar comandos de barra e responder a eles |
+| Gerenciar tópicos | Criar e arquivar tópicos de ticket e de modmail |
+| Castigar membros | Aplicar castigos nas ações de mute |
+
+## O que acontece quando o bot entra
+
+Quando o Heimdall entra no seu servidor pela primeira vez, ele registra todos os comandos de barra no Discord e cria uma entrada de configuração do servidor no banco de dados dele. Nenhum canal ou cargo é criado automaticamente: tudo é configurado pelo painel.
+
+## Próximos passos
+
+<Steps>
+  <Step title="Entre no painel">
+    Acesse **[bot.bifrost.gg](https://bot.bifrost.gg)** e entre com sua conta do Discord. Seu servidor vai aparecer no seletor de servidores. Veja [Usando o painel](/pt-BR/dashboard) para um passo a passo.
+  </Step>
+  <Step title="Configure as permissões">
+    Por padrão, todos os comandos de moderação ficam restritos a membros com a permissão Administrador. Configure o sistema de permissões para dar aos cargos certos acesso a cada recurso. Veja [Permissões](/pt-BR/permissions).
+  </Step>
+  <Step title="Ative e configure os plugins">
+    Cada recurso precisa ser configurado antes de ficar ativo. Use a barra lateral do painel para ir até a página de configuração de cada plugin e configurá-lo.
+  </Step>
+</Steps>

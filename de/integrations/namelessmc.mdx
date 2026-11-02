@@ -1,0 +1,29 @@
+---
+title: "NamelessMC"
+description: "Discord-Accounts mit NamelessMC-Forenprofilen verknüpfen."
+icon: "link"
+---
+
+Die NamelessMC-Integration verbindet Discord-Accounts mit Profilen in einem Forum, das auf NamelessMC läuft. Nach der Verknüpfung kann Heimdall die Forenmitgliedschaft prüfen und Rollen zwischen Forum und Discord synchronisieren.
+
+## Accounts verknüpfen
+
+Mitglieder verknüpfen ihren Forenaccount mit ihrem Discord-Account über einen Verifizierungsbefehl:
+
+```
+/forumlink
+```
+
+Mit diesem Befehl wird das Mitglied nach seinem NamelessMC-Benutzernamen oder seiner E-Mail-Adresse gefragt. Der Bot startet über die NamelessMC-API eine Verifizierung (das Mitglied bestätigt die Verknüpfung in den Kontoeinstellungen seines Forenaccounts), und sobald sie bestätigt ist, sind die Accounts gekoppelt.
+
+Nach der Verknüpfung kann Heimdall Discord-Rollen automatisch anhand der Gruppenmitgliedschaft im Forum vergeben, und das Kundenportal kann das Forenprofil des Mitglieds anzeigen.
+
+## Rollen-Synchronisierung
+
+Wenn der Rollen-Sync eingerichtet ist, prüft Heimdall regelmäßig die Forengruppen jedes verknüpften Mitglieds und passt seine Discord-Rollen entsprechend an. So bleiben deine Zugriffsstufen in Discord automatisch auf deine Forenstruktur abgestimmt.
+
+## Erforderliche Berechtigungen
+
+| Aktion | Berechtigungsschlüssel |
+|---|---|
+| Einen Forenaccount verknüpfen | `namelessmc.use` (standardmäßig erlaubt) |

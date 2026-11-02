@@ -1,0 +1,42 @@
+---
+title: "Honeypot"
+description: "Atrapa bots de spam sancionando a cualquiera que publique en un canal en el que nadie debería publicar."
+icon: "bug"
+---
+
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+Un honeypot es un canal en el que ningún miembro real publicaría nunca. Quien lo hace es casi seguro un bot que ha entrado y se ha puesto a publicar sin leer nada, así que el bot actúa contra él de inmediato.
+
+Funciona porque los bots de spam no leen los nombres de los canales, los temas ni los mensajes fijados antes de publicar. Una persona ve un canal llamado "no-publiques-aqui" con un aviso fijado y pasa de largo.
+
+## Cómo configurarlo
+
+`/honeypot channel add` designa un canal y `/honeypot channel remove` lo vuelve a quitar. `/honeypot status` muestra la configuración actual y `/honeypot toggle` activa y desactiva la aplicación sin perder tu lista de canales.
+
+`/honeypot action` elige qué le pasa a quien publique:
+
+| Acción | Cuándo usarla |
+| --- | --- |
+| **Ban** (banear) | La opción más dura, para un canal que es inequívocamente una trampa |
+| **Kick** (expulsar) | Permite volver a entrar a quien se haya equivocado de verdad |
+| **Mute** (silenciar) | Le da tiempo al staff para mirarlo antes de decidir |
+
+También puedes configurarlo todo desde la página <DashboardLink to="honeypot">**Honeypot**</DashboardLink> del panel.
+
+## Cómo sacarle partido
+
+- **Deja claro que el canal está prohibido para una persona.** Un nombre claro, un tema y un mensaje fijado. La idea es que las personas reciban el aviso y los bots no.
+- **Ponlo donde un bot lo vaya a encontrar.** Un canal escondido donde los miembros nuevos no lo ven no atrapa nada.
+- **Plantéate empezar con silenciar.** Banear es lo más eficaz y lo menos indulgente. Empezar silenciando te permite ver qué atrapa realmente la trampa en tu servidor antes de hacerlo definitivo.
+
+Las acciones pasan por el mismo circuito de moderación que las manuales, así que aparecen en tu historial de sanciones y en el registro de moderación con el honeypot como origen.
+
+## Permisos necesarios
+
+| Acción | Clave de permiso |
+| --- | --- |
+| Ver la configuración | `honeypot.view_config` |
+| Cambiar los canales y la acción | `honeypot.manage_config` |
+
+El bot necesita permiso para llevar a cabo la acción que elijas, y su rol tiene que estar por encima de los miembros sobre los que se espera que actúe.

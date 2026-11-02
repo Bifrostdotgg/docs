@@ -1,0 +1,81 @@
+---
+title: "Autoantworten"
+description: "Automatische Antworten auf Nachrichten von Mitgliedern einrichten, ausgelöst durch Schlüsselwörter oder KI."
+icon: "reply"
+---
+
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+Autoantworten sind automatische Antworten, die Heimdall postet, wenn ein Mitglied eine Nachricht schickt, die auf ein eingerichtetes Muster passt. Anders als Automod-Regeln, die durchsetzen und bestrafen, antworten Autoantworten nur: Sie sind zur Information da. Typische Einsätze sind das Beantworten häufiger Fragen, das Verweisen von Mitgliedern in den richtigen Kanal oder eine Reaktion auf ein Schlüsselwort mit einem hilfreichen Link.
+
+## So funktionieren Autoantworten
+
+Jede Nachricht in einem abgedeckten Kanal wird mit deinen eingerichteten Autoantworten abgeglichen. Gibt es einen Treffer, antwortet der Bot direkt auf die auslösende Nachricht. Jede Autoantwort hat eine Wartezeit pro Kanal, damit der Bot nicht immer wieder dieselbe Antwort spammt.
+
+Der Abgleich läuft in zwei Phasen:
+
+1. **Regex-Abgleich**: Die Muster werden nach Priorität geprüft. Das erste Muster, das auf die Nachricht passt, greift sofort, und weitere Muster werden nicht geprüft.
+2. **KI-Abgleich**: Hat kein Regex-Muster gepasst und du hast Autoantworten mit KI eingerichtet, werden alle diese Kandidaten in einem einzigen Aufruf an den KI-Klassifikator geschickt. Der Klassifikator wählt anhand deiner Beschreibungen in normaler Sprache den besten Treffer oder gibt nichts zurück, wenn keine Beschreibung passt.
+
+## Eine Autoantwort erstellen
+
+Geh im Dashboard zu <DashboardLink to="moderation/auto-responses">**Moderation > Auto-Responses**</DashboardLink> und klick auf **New Auto-Response**.
+
+| Einstellung | Beschreibung |
+|---|---|
+| **Name** | Interne Bezeichnung für diese Autoantwort |
+| **Trigger type** (Auslösertyp) | **Regex** (Musterabgleich) oder **AI** (Beschreibung in normaler Sprache) |
+| **Pattern** (Muster, bei Regex) | Ein regulärer Ausdruck, der mit dem Nachrichteninhalt abgeglichen wird, standardmäßig ohne Unterscheidung von Groß- und Kleinschreibung |
+| **Description** (Beschreibung, bei KI) | Eine Beschreibung in normaler Sprache, worum es in der Nachricht gehen soll, für den KI-Klassifikator |
+| **Priority** (Priorität) | Kleinere Zahlen laufen zuerst, wenn es mehrere Regex-Regeln gibt |
+| **Response type** (Antworttyp) | **Text**: eine einfache Textantwort, oder **Embed**: ein Rich Embed mit Titel, Beschreibung, Farbe, Bild und Footer |
+| **Response content** (Antwortinhalt) | Der Text oder Embed-Inhalt der Antwort |
+| **Scope** (Geltungsbereich) | **Global**: greift in allen Kanälen, oder **Channel**: greift nur in ausgewählten Kanälen |
+| **Cooldown** (Wartezeit) | Wie lange (in Sekunden), bis dieselbe Antwort im selben Kanal erneut greifen kann |
+| **Immune roles** (Ausgenommene Rollen) | Rollen, die diese Autoantwort nicht auslösen |
+
+## Regex-Auslöser
+
+Regex-Muster werden mit dem gesamten Nachrichteninhalt abgeglichen. Groß- und Kleinschreibung wird standardmäßig nicht unterschieden. Du musst das Muster nicht verankern: Das Muster `how.*join` passt auf „how do I join“, „how can I join the server“ und ähnliche Formulierungen.
+
+Brauchst du einen Abgleich mit Groß- und Kleinschreibung oder andere Flags, kannst du bei der Autoantwort Muster-Flags einstellen.
+
+## KI-Auslöser
+
+Autoantworten mit KI-Auslöser nutzen statt eines Musters eine Beschreibung in normaler Sprache. Eine KI-Autoantwort mit der Beschreibung „Mitglied fragt, wo die Serverregeln stehen“ greift zum Beispiel, wenn der KI-Klassifikator feststellt, dass eine Nachricht nach den Regeln fragt, auch wenn die Formulierung jedes Mal ganz anders ist.
+
+Die KI-Klassifizierung läuft in einem einzigen gebündelten Aufruf über alle Autoantworten mit KI, die Kosten für die Leistung bleiben also gering, egal wie viele du einrichtest.
+
+<Note>
+Autoantworten mit KI setzen voraus, dass das KI-Plugin auf deinem Server aktiviert und eingerichtet ist. Regex-Autoantworten funktionieren unabhängig davon.
+</Note>
+
+## Auf Kanäle beschränken
+
+Standardmäßig ist eine neue Autoantwort global: Sie gilt in jedem Kanal. Setzt du den Geltungsbereich auf **Channel**, kannst du bestimmte Kanäle (oder Kategorien) wählen, in denen die Regel gilt. Nachrichten in Threads prüfen auch die Autoantworten des übergeordneten Kanals, eine auf einen Kanal beschränkte Regel deckt also auch dessen Threads ab.
+
+## Wartezeiten
+
+Jede Autoantwort hat eine Wartezeit pro Kanal. Hat der Bot in einem Kanal innerhalb der Wartezeit schon mit einer bestimmten Autoantwort geantwortet, überspringt er den Treffer, um Wiederholungen zu vermeiden. Die Wartezeit läuft für jeden Kanal getrennt, eine Antwort in einem Kanal hindert die Autoantwort also nicht daran, in einem anderen zu greifen.
+
+## Antwortformate
+
+**Textantworten**: Die Antwort wird als einfacher Text geschickt. Lange Antworten werden automatisch an Codeblöcken oder Absatzgrenzen aufgeteilt, damit sie unter dem Limit von 2000 Zeichen pro Nachricht bei Discord bleiben.
+
+**Embed-Antworten**: Die Antwort wird als Rich Embed von Discord geschickt. Du kannst einstellen:
+
+| Feld | Beschreibung |
+|---|---|
+| **Title** (Titel) | Fetter Überschriftstext oben im Embed |
+| **Description** (Beschreibung) | Der Haupttext |
+| **Colour** (Farbe) | Eine Hex-Farbe für den linken Rand |
+| **Image** (Bild) | Ein Bild in voller Breite unter dem Text |
+| **Thumbnail** (Vorschaubild) | Ein kleines Bild in der oberen rechten Ecke |
+| **Footer** | Kleiner Text unten im Embed |
+
+## Erforderliche Berechtigungen
+
+| Aktion | Berechtigungsschlüssel |
+|---|---|
+| Autoantworten ansehen | `moderation.enforcement.manage_auto_responses` |
+| Autoantworten erstellen und bearbeiten | `moderation.enforcement.manage_auto_responses` |

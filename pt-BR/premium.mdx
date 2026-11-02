@@ -1,0 +1,186 @@
+---
+title: "Premium e White-Label"
+description: "O que o Heimdall Premium e o White-Label liberam, os limites que eles removem, os preços e como fazer upgrade."
+icon: "crown"
+---
+
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+O Heimdall é grátis para servidores do Discord de qualquer tamanho, sem limite de membros. Todos os plugins principais estão incluídos no plano Free, com limites generosos o bastante para tocar uma comunidade inteira. O Premium remove esses limites e libera um conjunto de recursos avançados. O White-Label acrescenta a sua própria marca por cima.
+
+Se você está comparando planos, a [página de preços](https://bifrost.gg/heimdall/pricing) tem uma comparação lado a lado completa.
+
+## O que o Premium libera
+
+O Premium faz duas coisas: aumenta todos os limites de uso do plano Free e ativa recursos que não estão disponíveis de graça.
+
+<Columns cols={2}>
+  <Card title="Limites maiores" icon="arrow-up-right-dots">
+    Vagas de staff, tags, starboards e formulários de candidatura ilimitados, além de limites bem maiores para tickets, automod e mais.
+  </Card>
+
+  <Card title="Suíte de suporte" icon="headset">
+    Agendas de SLA, cotas da staff, avaliação de tickets, análises e avaliações dos clientes.
+  </Card>
+
+  <Card title="Marca personalizada" icon="palette">
+    Defina cores de embed e texto de rodapé personalizados para que as mensagens do bot combinem com o seu servidor, em <DashboardLink to="settings/branding">**Settings \> Branding**</DashboardLink> (Configurações > Marca).
+  </Card>
+
+  <Card title="Recursos avançados" icon="bolt">
+    Portal do cliente, administração da loja Tebex, transcrição de voz hospedada, exportação de enquetes em CSV e suporte prioritário.
+  </Card>
+</Columns>
+
+## Limites removidos
+
+Todos os limites abaixo valem por servidor. Os valores do Free são generosos de propósito; o Premium aumenta cada um deles. O White-Label tem os mesmos limites do Premium.
+
+| Recurso | Free | Premium |
+| --- | --- | --- |
+| Vagas de staff no painel | 3 | Ilimitado |
+| Painéis de tickets | 1 | 25 |
+| Categorias de tickets | 5 | 25 |
+| Perguntas de formulário por categoria de ticket | 5 | No máximo |
+| Regras de automod | 5 | 50 |
+| Níveis de punição | 3 | Ilimitado |
+| Respostas automáticas | 5 | 50 |
+| Mensagens fixas | 5 | 25 |
+| Categorias de modmail | 2 | 25 |
+| Campos de formulário de modmail por categoria | 3 | 10 |
+| Formulários de candidatura | 3 | Ilimitado |
+| Formulários de recurso | 1 | 10 |
+| Painéis de botões de cargo | 5 | 25 |
+| Starboards | 1 | Ilimitado |
+| Tags | 15 | Ilimitado |
+| Posts agendados pendentes | 1 | Ilimitado |
+| Enquetes ativas | 1 | 50 |
+| Canais de sugestão | 1 | 10 |
+| Retenção do arquivo de console | 7 dias | 365 dias |
+
+## Recursos exclusivos do Premium
+
+Estes ficam desligados no plano Free e passam a estar disponíveis no Premium.
+
+| Recurso | O que faz |
+| --- | --- |
+| Suíte de suporte | Agendas de SLA, cotas da staff, avaliação de tickets, análises e avaliações dos clientes em tickets e modmail |
+| Perguntas com anexo nos formulários | Permite que os membros enviem arquivos como resposta em formulários de ticket, de candidatura e de modmail |
+| Roteamento de logs por subcategoria | Envia os logs de subcategorias diferentes para canais diferentes |
+| Cores de embed e rodapé personalizados | Coloque a sua marca nos embeds do bot, com sua própria cor de destaque e texto de rodapé |
+| Portal do cliente | Um painel de autoatendimento hospedado em que os membros acompanham os próprios tickets e contas vinculadas |
+| Administração da loja Tebex | Gerencie pacotes, vendas e consultas de clientes da sua loja Tebex pelo Discord |
+| Exportação de enquetes em CSV | Exporta os resultados das enquetes para um arquivo CSV |
+| Transcrição de voz hospedada | Transcrição automática de tickets de voz e gravações |
+| Suporte prioritário | Ajuda mais rápida da equipe da Bifröst |
+
+## White-Label
+
+O White-Label é o plano mais alto. Ele inclui tudo o que o Premium tem e ainda deixa o bot com a sua cara:
+
+- Remove todas as marcas Heimdall e Bifröst das mensagens e embeds do bot
+- Roda com a identidade do seu próprio bot, usando o nome, o avatar e o token dele
+- Feito para redes, agências e comunidades com marca própria
+
+O White-Label é licenciado por vaga. Uma vaga cobre um servidor white-label. Se você roda bots white-label em três servidores, são três vagas, e você pode adicionar ou remover vagas a qualquer momento.
+
+<Note>
+  O White-Label roda na sua própria aplicação de bot, então configurá-lo significa fornecer o token do bot. Abra um ticket no [servidor de suporte](https://discord.bifrost.gg) se quiser uma ajuda para configurar.
+</Note>
+
+### Intents privilegiadas
+
+A sua aplicação de bot precisa de duas intents privilegiadas do gateway ligadas antes que o Heimdall possa rodá-la. No [Discord Developer Portal](https://discord.com/developers/applications), abra a sua aplicação, vá até a aba **Bot** e, em **Privileged Gateway Intents**, defina:
+
+| Intent | Configuração | Por quê |
+| --- | --- | --- |
+| Server Members Intent | Ligada | Permissões, moderação, mensagens de boas-vindas, cargos automáticos e sincronização de cargos precisam dos dados de membros e cargos |
+| Message Content Intent | Ligada | Tickets, modmail, automod, logs de mensagens e tradução leem o conteúdo das mensagens |
+| Presence Intent | Desligada | O Heimdall nunca lê a presença |
+
+Se alguma das intents necessárias estiver desligada, o Discord recusa o login do bot e ele não inicia. Ligue a intent e configure de novo.
+
+Abaixo de 10.000 usuários, ligar as intents é tudo o que você precisa fazer. Quando o seu bot chega a 10.000 usuários únicos alcançáveis, o Discord envia uma DM para a conta dona da aplicação pedindo que você solicite a revisão das intents, com um prazo de 90 dias. O bot continua funcionando até lá, mas se você perder o prazo, o Discord desliga as intents.
+
+<Card title="Solicitando intents privilegiadas" icon="shield-check" href="https://bifrost.gg/heimdall/guides/privileged-intents">
+  Respostas prontas para copiar e colar em todas as perguntas do formulário de revisão de intents do Discord, personalizadas com o nome do seu bot, além das capturas de tela para anexar.
+</Card>
+
+### Status personalizado
+
+O seu bot white-label pode mostrar um status personalizado na lista de membros e alternar entre vários deles. Para definir, abra o menu do seu perfil no painel, escolha **Whitelabel Bot** (Bot white-label) e encontre o cartão **Custom status** (Status personalizado). As mudanças chegam ao seu bot em funcionamento poucos instantes depois de salvar.
+
+- Adicione até 10 status. Com dois ou mais, o bot passa por eles em ordem.
+- Escolha com que frequência ele alterna, de a cada 15 segundos até uma vez por dia. O padrão é a cada minuto.
+- Cada status tem um tipo: **Playing** (Jogando), **Watching** (Assistindo), **Listening to** (Ouvindo), **Competing in** (Competindo em) ou **Custom** (Personalizado: só o seu texto, sem verbo na frente).
+- Cada status pode ter até 128 caracteres.
+
+Dois marcadores preenchem números ao vivo:
+
+| Marcador | Mostra |
+| --- | --- |
+| `{servers}` | Em quantos servidores o seu bot está |
+| `{members}` | O total de membros somando esses servidores |
+
+Por exemplo, `Watching over {members} members` aparece como "Watching over 1,234 members". Os números são atualizados mais ou menos a cada 10 minutos quando um único status os usa, e a cada alternância quando você tem vários.
+
+<Note>
+  O Discord limita com que frequência um bot pode mudar de status, e é por isso que a alternância mais rápida é de 15 segundos.
+</Note>
+
+## Preços
+
+| Plano | Mensal | Anual |
+| --- | --- | --- |
+| Premium | £5.99 por mês | £57.99 por ano |
+| White-Label | £9.99 por mês por vaga | £95.99 por ano por vaga |
+
+A cobrança anual economiza cerca de 20% em relação à mensal, e todos os preços já incluem impostos (VAT). A Odin AI é um complemento opcional separado, cobrado à parte. Veja [Odin AI](/pt-BR/ai/odin) para os preços dela.
+
+<Note>
+  Já assinava antes do lançamento dos preços únicos? O seu plano e o seu preço atuais não mudam. Os planos antigos continuam funcionando exatamente como antes, e nada é migrado ou cobrado de novo.
+</Note>
+
+## Como os limites são aplicados
+
+Os limites são verificados quando você cria ou edita uma configuração, nunca enquanto o bot está rodando. Você só esbarra num limite no momento de adicionar algo novo, então tickets em andamento, o automod e todo o resto continuam funcionando, seja qual for o seu plano.
+
+Se você sair de um plano pago para um mais baixo, nada é apagado.
+
+<Steps>
+  <Step title="O período de cobrança termina">
+    Você mantém acesso total até o fim do período que já pagou.
+  </Step>
+
+  <Step title="Período de carência de 14 dias">
+    Tudo continua funcionando por mais 14 dias depois disso, para você ter tempo de decidir ou assinar de novo.
+  </Step>
+
+  <Step title="Os itens acima do limite são pausados">
+    Tudo o que passa dos limites do Free é desativado, não apagado. Os seus itens mais recentes ficam ativos por padrão, e você pode escolher de novo quais manter.
+  </Step>
+
+  <Step title="Restauração imediata">
+    Assine de novo quando quiser e cada item pausado volta a funcionar exatamente como estava.
+  </Step>
+</Steps>
+
+Recursos de segurança, como moderação, automod e recursos de ban, recebem um período de carência maior e avisos cada vez mais fortes antes, para que o seu servidor nunca fique desprotegido.
+
+## Como fazer upgrade
+
+<Steps>
+  <Step title="Abra o painel">
+    Entre em [bot.bifrost.gg](https://bot.bifrost.gg) e escolha o seu servidor.
+  </Step>
+
+  <Step title="Vá até Billing">
+    Abra a área **Billing** (Cobrança) e escolha **Premium** ou **White-Label**, com cobrança mensal ou anual.
+  </Step>
+
+  <Step title="Conclua o pagamento">
+    Termine o pagamento e os novos limites e recursos são liberados na hora. Não é preciso convidar o bot de novo.
+  </Step>
+</Steps>
+
+Você também pode começar pela [página de preços](https://bifrost.gg/heimdall/pricing).

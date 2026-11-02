@@ -1,0 +1,52 @@
+---
+title: "Cumpleaños"
+description: "Cómo anunciar los cumpleaños de los miembros el mismo día, con un rol temporal opcional."
+icon: "cake-candles"
+---
+
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+Los miembros registran su cumpleaños y, ese día, el bot publica un anuncio y puede darles un rol temporal. Son los propios miembros quienes se registran, así que nunca tienes que ir recogiendo fechas.
+
+## Configurarlo
+
+Ve a <DashboardLink to="birthdays/config">**Birthdays**</DashboardLink> (Cumpleaños) en el panel.
+
+| Ajuste | Descripción |
+| --- | --- |
+| **Canal de anuncios** | Dónde se publica el mensaje de cumpleaños |
+| **Zona horaria** | Qué zona horaria decide cuándo empieza "hoy" |
+| **Hora del anuncio** | La hora del día a la que salen los anuncios |
+| **Rol a mencionar** | Un rol opcional que se menciona junto al anuncio |
+| **Mensaje de anuncio** | Admite `{mention}` para una mención y `{user}` para el nombre sin mención |
+| **Rol de cumpleaños** | Un rol opcional que se aplica durante el día, con una duración configurable en horas |
+
+## Cómo se registran los miembros
+
+Hay dos vías, y las dos guardan el mismo registro:
+
+- `/birthday set` con un día y un mes
+- El **botón de registro**, un mensaje con un botón que publicas en un canal. Los miembros que nunca usarían un comando de barra sí pulsarán un botón.
+
+`/birthday remove` borra su entrada. `/birthday view` muestra la de un miembro y `/birthday list` muestra los próximos.
+
+Solo se guardan el día y el mes. A los miembros no se les pide el año, así que no se registra ninguna edad.
+
+## La lista de cumpleaños
+
+La pestaña <DashboardLink to="birthdays/entries">**Birthday List**</DashboardLink> (Lista de cumpleaños) del panel muestra todos los cumpleaños registrados, primero los más próximos, con búsqueda y la opción de añadir, editar o quitar una entrada en nombre de alguien.
+
+El orden depende de lo pronto que llegue la próxima celebración, no de la fecha del calendario, así que los cumpleaños de diciembre no se quedan al final de la lista once meses al año.
+
+Un cumpleaños el 29 de febrero se celebra el 28 de febrero en los años que no lo tienen, en lugar de saltarse tres años seguidos.
+
+## Permisos necesarios
+
+| Acción | Clave de permiso |
+| --- | --- |
+| Ver la configuración | `birthdays.config.view_config` |
+| Cambiar la configuración y el botón de registro | `birthdays.config.manage_config` |
+| Ver la lista de cumpleaños | `birthdays.entries.view_entries` |
+| Cambiar la entrada de otra persona | `birthdays.entries.manage_entries` |
+
+Registrar tu propio cumpleaños no requiere ningún permiso. Cualquiera de las dos claves de configuración da acceso también a la lista, así que el staff que ya gestiona los cumpleaños no necesita un segundo permiso para seguir viéndola.
