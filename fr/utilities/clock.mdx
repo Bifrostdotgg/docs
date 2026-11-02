@@ -1,0 +1,30 @@
+---
+title: "Salons horloge"
+description: "Transformer le nom d’un salon en horloge en direct pour le fuseau horaire de ton choix."
+icon: "clock"
+---
+
+Un salon horloge est un salon vocal ou textuel dont le nom affiche l’heure actuelle quelque part. Les serveurs dont les membres sont répartis sur plusieurs fuseaux horaires s’en servent pour que personne n’ait à calculer l’heure qu’il est pour l’équipe staff, ni à quelle heure un événement commence vraiment.
+
+## En configurer un
+
+`/clock setup` prend un salon et un fuseau horaire. `/clock list` montre ceux que tu as et `/clock remove` en supprime un.
+
+Le bot renomme le salon à intervalles réguliers. Les membres n’ont besoin d’aucune permission, et personne ne peut interagir avec : un salon vocal verrouillé que personne ne peut rejoindre fonctionne bien, puisque le nom est tout l’intérêt.
+
+## À savoir avant d’en ajouter plusieurs
+
+**Discord limite fortement le renommage des salons**, à deux renommages par tranche de dix minutes et par salon. Une horloge ne peut donc pas avancer chaque minute. Elle se met à jour aussi souvent que la limite le permet, ce qui veut dire que l’heure affichée peut avoir quelques minutes de retard.
+
+C’est une limite de Discord et non de Heimdall, et elle s’applique à tous les bots qui proposent cette fonction. C’est bon à savoir, car une horloge qui affiche 14:58 alors qu’il est 15:01 semble cassée alors qu’elle ne l’est pas.
+
+Pour la même raison, préfère une horloge par fuseau horaire dont tu as réellement besoin. Six salons horloge ne consomment pas six fois le quota de renommage, car la limite est par salon, mais ils rendent six fois plus probable qu’un nom en retard soit remarqué.
+
+## Permissions requises
+
+| Action | Clé de permission |
+| --- | --- |
+| Voir les paramètres | `clock.config.view_config` |
+| Ajouter et retirer des horloges | `clock.config.manage_config` |
+
+Le bot a besoin de la permission **Gérer les salons** sur chaque salon horloge pour le renommer.

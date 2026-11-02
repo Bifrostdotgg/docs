@@ -1,0 +1,46 @@
+---
+title: "AFK"
+description: "Permettre aux membres de laisser un message d’absence que le bot transmet à leur place."
+icon: "moon"
+---
+
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+Un membre lance `/afk` avec une raison facultative. Pendant son absence, toute personne qui le mentionne reçoit une courte réponse indiquant qu’il est AFK et depuis combien de temps il est parti. Le message s’efface tout seul dès que ce membre envoie un message sur le serveur.
+
+Le message est propre à chaque serveur, pas global. En définir un sur un serveur n’affecte aucun autre serveur.
+
+## Comment les avis restent sous contrôle
+
+Trois règles empêchent que cela transforme un salon animé en mur de réponses du bot :
+
+- Seules les mentions tapées dans le message comptent. Répondre à un ancien message d’un membre absent ne déclenche pas d’avis, pas plus qu’une mention de rôle qui l’inclut par hasard.
+- Un avis par membre absent, par salon et par tranche de dix minutes. Dix personnes qui appellent la même personne produisent une seule réponse, pas dix.
+- L’avis affiche le nom d’affichage du membre absent au lieu de le mentionner, donc apprendre qu’il est absent ne le réveille jamais.
+
+## Ce que peut faire la personne qui l’appelle
+
+Chaque avis comporte deux boutons :
+
+| Bouton | Ce qu’il fait |
+| --- | --- |
+| **Leave a message** | Ouvre une fenêtre. Le message est gardé et envoyé par MP quand le membre absent revient. |
+| **Tell me when they are back** | T’envoie un MP dès que ce membre reparle. |
+
+Les messages gardés et les demandes de notification appartiennent à cette absence. Définir un nouveau message AFK en démarre une nouvelle, donc rien n’est repris d’une absence précédente.
+
+## Le retour
+
+N’importe quel message sur le serveur efface le message d’absence. Le bot répond par une courte confirmation qui se supprime au bout de dix secondes, et envoie par MP au membre tout ce qui a été gardé pour lui.
+
+Si ses MP sont fermés, les messages gardés ne peuvent pas être livrés, c’est pourquoi la confirmation dans le salon indique combien il y en avait.
+
+## Permissions requises
+
+| Action | Clé de permission |
+| --- | --- |
+| Définir un message AFK | `afk.set_afk` (accordée à tout le monde par défaut) |
+
+Tout le monde peut l’utiliser d’office. Pour le restreindre, refuse cette clé sur `@everyone` et autorise-la sur les rôles qui doivent l’avoir.
+
+Désactiver l’AFK, soit en tant que module, soit en désactivant la commande `/afk` dans <DashboardLink to="settings/commands">**Settings \> Commands**</DashboardLink>, arrête les réponses automatiques en plus de la commande.

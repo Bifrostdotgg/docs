@@ -1,0 +1,334 @@
+---
+title: "レベルとXP"
+description: "メッセージとボイスによるXP、レベルとレベル曲線、報酬ロール、Amariや他のBotからのXPのインポート。"
+icon: "chart-line"
+---
+
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+レベルは、ゲーム機能のエンゲージメントシステムの一部です。メンバーはチャットとボイスチャンネルにいた時間でXPを獲得し、XPが貯まるとレベルになります。好きなレベルでロールを付与することもできます。サーバーを別のレベリングBotから移行する場合は、全員のXPを引き継げるので、誰もゼロからやり直す必要はありません。
+
+このページの内容は、すべて <DashboardLink to="games/config/engagement">**Games \> Configuration \> Engagement**</DashboardLink>（ゲーム > 設定 > エンゲージメント）で設定します。
+
+## オンにする
+
+**Enable engagement**（エンゲージメントを有効にする）をオンにして保存します。それまでは何も記録されず、XPはオンにした時点から数えられます。過去のメッセージがさかのぼって数えられることはありません。履歴を取り込むには、下で説明するインポートを使います。
+
+| 設定 | 内容 |
+| --- | --- |
+| **XP per message**（メッセージごとのXP） | メンバーがメッセージ1件で獲得するXP。デフォルトは15 |
+| **Message XP cooldown (s)**（メッセージXPのクールダウン（秒）） | 同じメンバーが再びメッセージのXPを獲得できるまでの秒数。スパムしても余分には獲得できません。デフォルトは60 |
+| **XP per voice minute**（ボイス1分ごとのXP） | ボイスチャンネルにいた1分ごとのXP。通話中、数分ごとに付与されます。デフォルトは10 |
+| **Announcement channel**（お知らせチャンネル） | レベルアップと実績の解除を投稿するチャンネル。任意 |
+| **Announce level-ups**（レベルアップをお知らせ） | メンバーが新しいレベルに達したときにメッセージを投稿します |
+
+メンバーは `/economy level` で自分のレベルを確認でき、`/economy leaderboard` には **Level**（レベル）カテゴリがあります。スタッフは `/economy engagement-admin` または <DashboardLink to="games/member-admin">**Games \> Member Admin**</DashboardLink>（ゲーム > メンバー管理）から、メンバーのレベルやXPを設定できます。管理者による変更では、レベルアップのメッセージは投稿されません。
+
+## レベル報酬ロール
+
+**Level role rewards**（レベル報酬ロール）で、レベルとロールを対応付けます。そのレベルに達したメンバーにロールが付与されます。報酬は積み重なります。レベル20のメンバーは、レベル5とレベル10のロールも持ち続けます。
+
+Botには **ロールの管理**（Manage Roles）権限と、すべての報酬ロールより上にあるロールが必要です。Heimdallは、サーバーの乗っ取りに使われるおそれのあるロールの付与を拒否するため、次のような報酬ロールはスキップされます。
+
+- Discordでモデレーションや管理の権限（管理者、サーバー管理、ロールの管理、メンバーをBANなど）を持っている
+- Heimdall自体の [権限システム](/ja/permissions) で何らかの許可を与えられている
+- Botの最上位のロールより上にある、連携サービスに管理されている、または `@everyone` である
+
+拒否されたロールは決して付与されません。[バックグラウンドジョブ](#background-jobs) では、失敗の一覧に理由とともに表示され、**Member Admin** でのレベルやXPの変更では、保存後に表示されます。
+
+## レベル曲線
+
+レベル曲線は、各レベルに必要なXPを決めます。サーバーには曲線が1つあり、すべてのメンバーのレベルは、その曲線上でXPから計算されます。曲線は **Level curve**（レベル曲線）カードで選びます。カードには、選んだ曲線のレベル1から50までのプレビューが、現在の曲線と並べて表示されます。
+
+| 曲線 | 必要なXP | レベル1 | レベル5 | レベル10 |
+| --- | --- | --- | --- | --- |
+| **MEE6**（デフォルト） | レベルLからL + 1に上がるのに 5L² + 50L + 100 XP | 100 | 1,150 | 4,675 |
+| **Amari** | レベルLに達するのに合計 20(L - 1)² + 35 XP。レベル1は35 XPで、その後レベルLからL + 1に上がるのにさらに 40L - 20 | 35 | 355 | 1,655 |
+| **Custom**（カスタム） | レベルLからL + 1に上がるのに aL² + bL + c XP | c | | |
+
+表は、各レベルに達するまでの合計XPを示しています。MEE6は、曲線を変更できるようになる前にすべてのサーバーで使われていた曲線なので、この設定に触れていないサーバーでは何も変わりません。
+
+カスタム曲線では、各数値に範囲があります。
+
+| 係数 | 使える値 |
+| --- | --- |
+| `a` | 0から100 |
+| `b` | 0から10,000 |
+| `c` | 1から100,000 |
+
+`a` と `b` を0にすると、どのレベルも `c` XPで上がる平らな曲線になります。曲線に関係なく、レベルの上限は10,000です。
+
+### 変更したときに起きること
+
+**Change level curve**（レベル曲線を変更）をクリックして確定します。すべてのメンバーのXPはそのまま残り、新しい曲線でXPからレベルが計算し直されます。そのため、レベルが上がるメンバーも下がるメンバーもいます。
+
+- 再計算はバックグラウンドで行われます。大きなサーバーでは数分かかることがあり、その間に表示されるレベルは古い場合があります。終わるまでカードには **Recalculating levels**（レベルを再計算中）と表示され、それまで曲線を再び変更することはできません。
+- 何人のメンバーのレベルが上がっても、この変更でレベルアップのメッセージは投稿されません。
+- レベルが再計算されると、メンバーには新しいレベルで獲得した報酬ロールが付与されます。これは [バックグラウンドジョブ](#background-jobs) として実行されます。
+- デフォルトでは、レベルが下がったメンバーからもロールは外されません。**Also remove reward roles above each member's new level**（各メンバーの新しいレベルより上の報酬ロールも外す）にチェックを入れると、メンバーがもう持っていないレベルの報酬ロールも外されます。対象になるのは報酬リストにあるロールだけで、メンバーが他の理由で持っているロールはそのままです。
+
+<Warning>
+  レベルごとにより多くのXPが必要な曲線に変えると、レベルが下がります。外すオプションにチェックを入れると、メンバーはこれまで（場合によっては長い間）持っていた報酬ロールを失います。先にプレビューを確認してください。
+</Warning>
+
+## Amariからインポートする
+
+Amariは公開APIを終了したため、AmariからサーバーのXPをエクスポートする公式な方法はありません。ただし、AmariのWebサイトでは、ログインしている人なら誰でもランキングを見られます。Heimdallは、そのWebサイトから得られるファイルを読み込めます。インポート自体は、ソースに **Amari** を選んで **Import XP**（XPをインポート）カードで行います。
+
+<Tip>
+  インポートの前にサーバーを **Amari** の曲線に切り替えるか、インポート中に **Switch this server to Amari's level curve first**（先にこのサーバーをAmariのレベル曲線に切り替える）にチェックを入れたままにしてください（デフォルトでチェックが入っています）。Amariの曲線なら、すべてのメンバーがAmariでのXPとレベルをそのまま引き継げます。他の曲線では、メンバーはAmariでのレベルを引き継ぎ、XPはこちらでのそのレベルの開始時点に設定されるため、次のレベルまでの進捗は失われます。
+</Tip>
+
+### スクリプトでエクスポートする
+
+エクスポーターは、Amariにログインしている状態で自分のブラウザに貼り付ける短いスクリプトです。サーバーのランキングを1ページずつ読み取り、ファイルとして保存します。
+
+<Steps>
+  <Step title="Amariを開いてログインする">
+    [amaribot.com](https://amaribot.com) にアクセスし、Discordでログインします。サーバーのランキングを開き、表示できることを確認してください。Webサイトでランキングが表示できない場合は、エクスポーターでも読み取れません。
+  </Step>
+  <Step title="ブラウザのコンソールを開く">
+    **F12** を押し（またはページを右クリックして **検証** を選び）、**Console**（コンソール）タブを開きます。コンソールがamaribot.comのタブのものであることを確認してください。
+  </Step>
+  <Step title="ブラウザに求められたら貼り付けを許可する">
+    Firefoxでは、`allow pasting` と入力してEnterを押すまで、コンソールへの貼り付けがブロックされます。ChromeやEdgeでも同じ警告が表示されることがあるので、求められたとおりに入力してください。これは、内容のわからないスクリプトからブラウザがあなたを守るための仕組みです。そのため、下に読みやすい版を載せています。
+  </Step>
+  <Step title="エクスポーターを貼り付けてEnterを押す">
+    Import XPカードの **Copy exporter**（エクスポーターをコピー）か、下のボックスからコピーします。サーバーID（Import XPカードに表示されています）を尋ねられ、次に開始ページを尋ねられます。開始ページは1のままにしてください。
+  </Step>
+  <Step title="ダウンロードを待つ">
+    コンソールには、読み取ったページが順に表示されます。Amariがページを読み取れる速さを制限しており、スクリプトはそのたびに待機するため、大きなサーバーでは時間がかかります。終わると、ブラウザが `amari-<server id>-p1-<last page>.json` のような名前のファイルをダウンロードします。
+  </Step>
+</Steps>
+
+```js Amari exporter
+(async()=>{let guildId=prompt("Server (guild) ID to export:")?.trim();if(!/^\d{17,20}$/.test(guildId??""))return console.error("Not a server ID");let startPage=Math.max(1,Number(prompt("Start page (1 unless resuming):","1"))||1),sleep=(ms)=>new Promise((r)=>setTimeout(r,ms)),header=(res,...names)=>{for(let n of names){let v=res.headers.get(n);if(v!==null&&v!=="")return Number(v)}return NaN},pages=[],gapMs=1500,stopReason=null,lastPage=1/0,pageSize=null,save=()=>{let file={source:"amari",guildId,exportedAt:new Date().toISOString(),startPage,pages},a=document.createElement("a");return a.href=URL.createObjectURL(new Blob([JSON.stringify(file)],{type:"application/json"})),a.download=`amari-${guildId}-p${startPage}-${startPage+pages.length-1}.json`,a.click(),a.download};for(let page=startPage;page<=lastPage&&page<=1e4;page++){let res=null,backoff=3;for(let attempt=1;;attempt++){try{res=await fetch(`/api/leaderboard?guildId=${guildId}&page=${page}`,{headers:{"x-user-agent":"Amari-bot-v1"},credentials:"include"})}catch{res=null}if(res&&res.ok)break;if(res&&res.status===429){let wait=(header(res,"retry-after")||30)+2;console.log(`Page ${page}: rate limited, waiting ${Math.ceil(wait)}s (this is normal)`),gapMs=Math.min(gapMs*2,1e4),await sleep(wait*1000);continue}if(attempt>=10){let why=res?`HTTP ${res.status}`:"network error";stopReason=res&&(res.status===401||res.status===403)?`Page ${page} kept returning ${why}. Check you are still logged in on amaribot.com, then re-run with start page ${page}.`:`Page ${page} kept failing (${why}). Re-run later with start page ${page}.`;break}console.log(`Page ${page}: ${res?`HTTP ${res.status}`:"network error"}, retrying in ${backoff}s`),gapMs=Math.min(gapMs*2,1e4),await sleep(backoff*1000),backoff=Math.min(backoff*2,120)}if(stopReason)break;if(!(res.headers.get("content-type")??"").includes("json")){stopReason=`Page ${page} was not JSON (a browser check page?). Reload amaribot.com, then re-run with start page ${page}.`;break}let body=await res.json(),rows=Array.isArray(body?.data)?body.data:[];if(rows.length===0)break;if(pages.push(body),pageSize??=rows.length,Number.isFinite(body.total_count)&&pageSize>0)lastPage=Math.ceil(body.total_count/pageSize);if(console.log(`Page ${page}/${Number.isFinite(lastPage)?lastPage:"?"}: ${rows.length} rows`),rows.length<pageSize)break;await sleep(gapMs)}if(pages.length===0)return console.error(stopReason??"No rows found. Check the server ID and that you can see its leaderboard.");let name=save();if(stopReason)console.warn(`Stopped early. Saved ${pages.length} pages to ${name}. ${stopReason}`);else console.log(`Done: ${pages.length} pages saved to ${name}`)})();
+```
+
+<Accordion title="エクスポーターの読みやすい版と、各部分の働き">
+  これは、1行に詰め込む前の同じスクリプトです。読んで確認するか、こちらの版を代わりに貼り付けても構いません。動作はまったく同じです。
+
+  ```js
+  // Amari leaderboard exporter. Paste into the devtools console on https://amaribot.com while
+  // logged in. It only calls amaribot.com's own API with your own session, the same way the
+  // leaderboard page does, and downloads JSON; nothing is sent anywhere else. If it stops early
+  // it still saves what it has and tells you which page to resume from; the Heimdall importer
+  // merges several files.
+  (async () => {
+    const guildId = prompt("Server (guild) ID to export:")?.trim();
+    if (!/^\d{17,20}$/.test(guildId ?? "")) return console.error("Not a server ID");
+    const startPage = Math.max(1, Number(prompt("Start page (1 unless resuming):", "1")) || 1);
+
+    const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+    const header = (res, ...names) => {
+      for (const n of names) {
+        const v = res.headers.get(n);
+        if (v !== null && v !== "") return Number(v);
+      }
+      return NaN;
+    };
+
+    const pages = [];
+    let gapMs = 1500;
+    let stopReason = null;
+    let lastPage = Infinity;
+    let pageSize = null;
+
+    const save = () => {
+      const file = { source: "amari", guildId, exportedAt: new Date().toISOString(), startPage, pages };
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(new Blob([JSON.stringify(file)], { type: "application/json" }));
+      a.download = `amari-${guildId}-p${startPage}-${startPage + pages.length - 1}.json`;
+      a.click();
+      return a.download;
+    };
+
+    for (let page = startPage; page <= lastPage && page <= 10000; page++) {
+      let res = null;
+      let backoff = 3;
+      for (let attempt = 1; ; attempt++) {
+        try {
+          // The leaderboard page sends this header on every API call; without it Amari answers 403.
+          res = await fetch(`/api/leaderboard?guildId=${guildId}&page=${page}`, {
+            headers: { "x-user-agent": "Amari-bot-v1" },
+            credentials: "include",
+          });
+        } catch {
+          res = null;
+        }
+        if (res && res.ok) break;
+        if (res && res.status === 429) {
+          const wait = (header(res, "retry-after") || 30) + 2;
+          console.log(`Page ${page}: rate limited, waiting ${Math.ceil(wait)}s (this is normal)`);
+          gapMs = Math.min(gapMs * 2, 10000);
+          await sleep(wait * 1000);
+          continue;
+        }
+        // Amari answers a throttle with 403 "Forbidden. Please try again.", so a 403 is retried
+        // with backoff like a 5xx; only a persistent one means the session is really gone.
+        if (attempt >= 10) {
+          const why = res ? `HTTP ${res.status}` : "network error";
+          stopReason =
+            res && (res.status === 401 || res.status === 403)
+              ? `Page ${page} kept returning ${why}. Check you are still logged in on amaribot.com, then re-run with start page ${page}.`
+              : `Page ${page} kept failing (${why}). Re-run later with start page ${page}.`;
+          break;
+        }
+        console.log(`Page ${page}: ${res ? `HTTP ${res.status}` : "network error"}, retrying in ${backoff}s`);
+        gapMs = Math.min(gapMs * 2, 10000);
+        await sleep(backoff * 1000);
+        backoff = Math.min(backoff * 2, 120);
+      }
+      if (stopReason) break;
+
+      if (!(res.headers.get("content-type") ?? "").includes("json")) {
+        stopReason = `Page ${page} was not JSON (a browser check page?). Reload amaribot.com, then re-run with start page ${page}.`;
+        break;
+      }
+      const body = await res.json();
+      const rows = Array.isArray(body?.data) ? body.data : [];
+      if (rows.length === 0) break; // past the last page
+      pages.push(body);
+      // Size the run from the first full page: the last page's `count` is short, and Amari
+      // answers a page past the end with a 500, not an empty page.
+      pageSize ??= rows.length;
+      if (Number.isFinite(body.total_count) && pageSize > 0) {
+        lastPage = Math.ceil(body.total_count / pageSize);
+      }
+      console.log(`Page ${page}/${Number.isFinite(lastPage) ? lastPage : "?"}: ${rows.length} rows`);
+      if (rows.length < pageSize) break; // a short page is the last one
+      await sleep(gapMs);
+    }
+
+    if (pages.length === 0) {
+      return console.error(stopReason ?? "No rows found. Check the server ID and that you can see its leaderboard.");
+    }
+    const name = save();
+    if (stopReason) console.warn(`Stopped early. Saved ${pages.length} pages to ${name}. ${stopReason}`);
+    else console.log(`Done: ${pages.length} pages saved to ${name}`);
+  })();
+  ```
+
+  わかりやすく言うと、上から順に次のことをしています。
+
+  1. **サーバーIDを尋ね**、入力されたものがDiscordのサーバーIDでなければ停止します。次に、どのページから始めるかを尋ねます。再開するのでなければ1です。
+  2. **ランキングを1ページずつ読み取ります**。読み取り先はamaribot.com自身のアドレス（`/api/leaderboard`）で、ランキングのページをスクロールしたときに送られるのと同じリクエストです。amaribot.com上で動くため、ブラウザは既存のAmariのログイン情報を一緒に送ります。スクリプトがパスワードを見たり尋ねたりすることはありません。
+  3. **Amari自身のページが送る `x-user-agent` ヘッダーを送ります。** Amariはこのヘッダーのないランキングのリクエストを拒否します。ページのアドレスをタブで直接開いてもうまくいかないのはこのためです。
+  4. **Amariに速度を落とすよう言われると**（レート制限）、Amariに指定された時間に2秒を足して待ち、残りの処理の速度を落とします。コンソールに「rate limited, waiting」と表示されるのは正常です。
+  5. **ページの読み取りに失敗すると**、そのページを最大10回、毎回待ち時間を延ばしながら試します。Amariは混雑時に「Forbidden」と返すことがあるため、これも再試行します。処理が止まるのは失敗し続けるページがあるときだけで、そのときのメッセージで、ログインしたままか確認すべきかどうかがわかります。Amariがランキングのデータではないもの（たとえばブラウザのチェックページ）を返した場合は停止し、先にamaribot.comを再読み込みするよう求めます。
+  6. **ランキングの最後で停止します**。ページが空で返ってきたとき、最初のページより短かったとき、またはAmariが報告する合計と同じ数のページを読み取ったときです。10,000ページを超えて読み取ることはありません。
+  7. **ページの間で一時停止します**。最初は1.5秒で、レート制限の後は長くなります。
+  8. **すべてをファイルとして**、ブラウザのダウンロードに保存します。Heimdallを含め、どこにも何も送信されません。リクエストを送る先はamaribot.comだけです。
+  9. **途中で停止した場合も**、読み取ったページは保存され、再開するページが表示されます。その開始ページでもう一度実行し、両方のファイルをインポーターに追加してください。
+</Accordion>
+
+<Note>
+  エクスポーターは便宜上のもので、現状のまま提供されます。あなた自身のブラウザだけで動き、あなた自身のAmariのセッションだけを使うため、HeimdallがあなたのAmariのログイン情報を見ることはありません。AmariはいつでもWebサイトを変更する可能性があり、変更された場合、スクリプトが更新されるまで動かなくなることがあります。
+</Note>
+
+### スクリプトを使わずにエクスポートする
+
+スクリプトを実行したくない場合は、同じデータを手動で保存できます。Amariは単純なページのアドレスを拒否する（Webサイトが送るヘッダーが必要）ため、各ページをタブで開くだけではうまくいきません。代わりに、Webサイト自体が読み込むものを保存します。
+
+1. amaribot.comにログインした状態で、サーバーのランキングを開きます。
+2. 開発者ツール（**F12**）を開き、**Network**（ネットワーク）タブに移動します。
+3. ランキングのページを送っていきます。各ページは `leaderboard?guildId=...&page=N` という名前のリクエストとして表示されます。
+4. それぞれの **Response**（レスポンス）を開き、`.json` ファイルとして保存します（ほとんどのブラウザでは、リクエストを右クリックしてレスポンスをコピーし、ファイルに貼り付けます）。
+5. すべてのファイルを一度にインポーターに追加します。
+
+大きなサーバーでは時間がかかりますが、Webサイト以外は何も使いません。
+
+### ファイルをインポートする
+
+<Steps>
+  <Step title="Import XPを開く">
+    <DashboardLink to="games/config/engagement">**Games \> Configuration \> Engagement**</DashboardLink> を開き、**Import XP** カードを探して、ソースに **Amari** を選びます。先にエンゲージメントをオンにして保存しておく必要があります。
+  </Step>
+  <Step title="ファイルを追加する">
+    **Choose files**（ファイルを選択）をクリックし、エクスポーターのファイル、または手動で保存したすべてのページを選びます。複数のファイルを追加でき、それらは1つのリストにまとめられます。Amariのランキングは読み取り中にも動くため、同じメンバーが2回出てくることがよくあります。インポーターはXPの高いほうを残し、重複をいくつまとめたかを知らせます。ファイルがインポート先とは別のサーバーのものだった場合は、確認を求められます。
+  </Step>
+  <Step title="モードを選ぶ">
+    **Keep higher**（高いほうを残す）は、各メンバーに、現在こちらで持っているXPとインポートしたXPのうち高いほうを与えます。誰のXPも下げることはなく、何度実行しても安全です。**Overwrite**（上書き）は、インポートした各メンバーのXPをインポートしたXPに置き換えるため、すでにこちらでXPを獲得したメンバーのレベルが下がることがあります。どちらの場合も、ファイルにないメンバーは変更されません。
+  </Step>
+  <Step title="プレビューする">
+    **Preview**（プレビュー）をクリックします。この時点ではまだ何も書き込まれません。新しいメンバーの数、変わるメンバーの数、変わらないメンバーの数、インポート後のレベルの分布、そしてOverwriteモードでは、レベルが下がるメンバーの数が表示されます。
+  </Step>
+  <Step title="インポートする">
+    **Import**（インポート）をクリックして確定します。大きなインポートは1,000人ずつに分けて送信されるので、終わるまでページを開いたままにしてください。現在の分の後で停止して後から再開することもでき、どちらのモードでも同じ分をもう一度実行して問題ありません。**Switch this server to Amari's level curve first** にチェックが入っている場合は、XPをインポートする前に曲線が変更され、レベルが再計算されます。
+  </Step>
+</Steps>
+
+インポートしたレベルでは、レベルアップのメッセージは投稿されません。新しいレベルの報酬ロールは、その後、インポートの下に表示される [バックグラウンドジョブ](#background-jobs) によって付与されます。
+
+プレビューで、エクスポート内の一部のメンバーのレベルがXPと一致しないと表示される場合、たいていはAmariがまだレベルを更新していないためです。Amariの曲線ではXPが使われ、それ以外の曲線ではレベルが使われます。
+
+## 他のBotからインポートする
+
+MEE6や、メンバーとそのXPまたはレベルの一覧を出力できるその他のBotからインポートするには、ソースに **CSV or JSON file**（CSVまたはJSONファイル）を選びます。メンバーはDiscordのユーザーIDで照合されるため、一覧にはユーザー名ではなくIDを使う必要があります。
+
+**CSV** には、列の名前を示すヘッダー行が必要です。ヘッダーは大文字と小文字を区別しません。
+
+```csv
+userId,xp
+123456789012345678,15400
+234567890123456789,820
+```
+
+レベルしかない場合は `userId,level`、両方ある場合は `userId,xp,level` を使います。
+
+**JSON** は、同じ項目を持つオブジェクトのリストである必要があります。
+
+```json
+[
+  { "userId": "123456789012345678", "xp": 15400 },
+  { "userId": "234567890123456789", "level": 12 }
+]
+```
+
+JSONでは、ユーザーIDを引用符で囲んだテキストとして書いてください。DiscordのIDはJSONの数値としては長すぎて正しく扱えないため、引用符のないIDは、別の人のものとしてインポートされるのを防ぐために拒否されます。
+
+| 項目 | ルール |
+| --- | --- |
+| **userId** | DiscordのユーザーID（17〜20桁） |
+| **xp** | 0から1,000,000,000,000までの整数 |
+| **level** | 0から10,000までの整数 |
+
+各行には、XP、レベル、またはその両方が必要です。行にレベルがある場合、メンバーにとってなじみがあるのはレベルなので、メンバーはサーバーの曲線上でそのレベルの開始時点に置かれます。レベルがない場合や、サーバーがAmariの曲線を使っている場合はXPが使われます。ルールに反する行は、ファイル名と行番号とともに一覧表示されてスキップされ、残りの行は通常どおりインポートされます。各ファイルは最大50MBまでで、それより大きい場合は複数のファイルに分けてください。1つのファイルに含められるメンバー数に上限はなく、インポーターは1,000人ずつに分けて送信します。モード、プレビュー、バックグラウンドジョブは、Amariの場合と同じように動きます。
+
+<span id="background-jobs"></span>
+## バックグラウンドジョブ
+
+サーバーのすべてのメンバーに影響する変更もあり、大きなサーバーでは数分かかることがあります。Heimdallはこうした処理をバックグラウンドジョブとして実行するので、ダッシュボードで待つ必要はありません。現在対象になっているのは次のものです。
+
+- **Level reward roles**（レベル報酬ロール）：レベル曲線の変更やXPのインポートの後。
+- **Minecraft linked role**（Minecraftの連携ロール）：連携ロールの設定が変わった後（[Minecraft](/ja/integrations/minecraft#linked-role) を参照）。
+
+ジョブの進行状況は開始した場所に表示され、最近のジョブはすべて <DashboardLink to="settings/background-jobs">**Settings \> Background Jobs**</DashboardLink>（設定 > バックグラウンドジョブ）に一覧表示されます。各ジョブには、処理したメンバーの数と、その結果が表示されます。
+
+| カウント | 意味 |
+| --- | --- |
+| **Changed**（変更） | メンバーがロールを得た（または失った） |
+| **Already right**（変更不要） | メンバーは、レベルに応じたロールをすでに持っていた |
+| **Left the server**（退出済み） | メンバーはもうサーバーにいない |
+| **Failed**（失敗） | ロールを変更できなかった。**Show failures**（失敗を表示）で、拒否されたロールを含め、誰がなぜ失敗したかが一覧表示されます |
+
+Botが再起動しても、ジョブは中断したところから続きます。実行中に別の変更でもう一度処理が必要になった場合は、その後ろで待機します（**Another pass queued**、次の処理が待機中）。完了したジョブは7日間一覧に残ります。
+
+実行中のジョブは **Cancel**（キャンセル）できます。すでに処理されたメンバーは、ジョブが付与または削除したロールのままで、まだ処理されていないメンバーは、次の処理までそのままになります。
+
+曲線の変更で **Also remove reward roles above each member's new level** を選んだ場合を除き、報酬のジョブがロールを外すことはありません。各自に表示されるのは、その人が権限を持つ機能のジョブだけです。
+
+## 注意点
+
+一度に多くのレベルをまたぐインポートや曲線の変更ではお知らせが出ないため、メンバーがレベルアップのメッセージの洪水を目にすることはありませんが、知らされることもありません。XPが引き継がれたことをみんなに知ってほしい場合は、お知らせで伝えましょう。
+
+## 必要な権限
+
+| 操作 | 権限キー |
+| --- | --- |
+| エンゲージメントの設定を開く、XPのレートと報酬ロールを編集する | `games.manage` |
+| XPのインポート、レベル曲線の変更、レベル報酬ジョブの閲覧とキャンセル | `games.engagement_import` |
+| メンバーのレベルやXPの設定 | `games.manage` |
+| 自分のレベルの確認 | `games.use` |
+
+インポートと曲線の変更には、`games.manage`（ページを開くため）と `games.engagement_import` の両方が必要です。インポートのキーは慎重に付与してください。1回のインポートの誤りで、すべてのメンバーのレベルが変わってしまうことがあります。

@@ -1,0 +1,62 @@
+---
+title: "Streaming"
+description: "Un rol para los miembros mientras están en directo en Twitch, YouTube o Kick, que la sincronización de roles de Minecraft puede llevar al juego."
+icon: "tower-broadcast"
+---
+
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+Los miembros vinculan su cuenta de Twitch, YouTube o Kick y, mientras cualquiera de sus cuentas vinculadas está en directo, tienen un rol que eliges tú. Cuando termina el directo, se les quita el rol. Cuenta cualquier directo, sea del juego o la categoría que sea.
+
+Como es un rol normal de Discord, todo lo que ya reacciona a los roles reacciona también a este. El motivo principal para activarlo es Minecraft: asigna el rol en la sincronización de roles y los streamers tendrán un rango, una etiqueta o un prefijo en el juego mientras estén en directo.
+
+## Antes de que funcione
+
+- Heimdall necesita el permiso **Gestionar roles**, y el rol de directo tiene que estar por debajo del rol más alto de Heimdall.
+- El rol de directo no puede llevar permisos de staff. Lo recibe cualquiera que vincule una cuenta y empiece un directo, así que Heimdall rechaza un rol con permisos como Administrador, Gestionar servidor, Gestionar roles, Banear miembros o Gestionar mensajes, y también un rol que tenga permitido cualquier permiso del panel.
+- Quien gestiona cada instancia de Heimdall tiene que haber configurado los proveedores. Un proveedor que no está configurado lo indica cuando un miembro intenta vincularlo.
+
+## Configuración
+
+Ve a <DashboardLink to="streaming">**Streaming**</DashboardLink> en el panel.
+
+| Ajuste | Descripción |
+| --- | --- |
+| **Enable streaming roles** (activar los roles de streaming) | Activa la función y añade el comando `/streaming` a tu servidor |
+| **Live role** (rol de directo) | El rol que tienen los miembros mientras están en directo |
+
+Para llevar el rol a Minecraft, añádelo a tus asignaciones de **Role sync** (sincronización de roles) de Minecraft con la dirección de Discord a Minecraft. Consulta [Minecraft](/es/integrations/minecraft).
+
+## Cómo vinculan los miembros una cuenta
+
+Un miembro ejecuta `/streaming link` y recibe dos botones que solo ve él.
+
+- **Twitch or YouTube** inicia sesión con Discord y lee las cuentas de Twitch y YouTube que ya están conectadas a su perfil de Discord (**Ajustes de usuario \> Conexiones**). Solo cuentan las conexiones que Discord ha verificado, así que un miembro solo puede vincular una cuenta que sea realmente suya. Volver a vincular sustituye sus vínculos de Twitch y YouTube por lo que muestre su perfil en ese momento, y así es también como desaparece una conexión que se ha quitado.
+- **Kick** comprueba primero su cuenta de Discord y después inicia sesión en Kick. Kick no es un tipo de conexión de Discord, así que tiene su propio inicio de sesión.
+
+Los botones duran 15 minutos. `/streaming status` muestra los vínculos de un miembro y si cada uno está en directo, y `/streaming unlink` los quita todos.
+
+Los vínculos pertenecen a un solo servidor. Un miembro que quiera el rol en dos servidores tiene que vincular en cada uno.
+
+## La lista de cuentas vinculadas
+
+La página <DashboardLink to="streaming">**Streaming**</DashboardLink> muestra a todos los miembros con una cuenta vinculada, primero los que están en directo, con un enlace a cada canal. El staff puede desvincular a un miembro desde ahí. No hay forma de añadir un vínculo en nombre de otra persona, porque un vínculo solo tiene sentido cuando el miembro ha demostrado que la cuenta es suya.
+
+## La trampa: lo rápido que cambia el rol
+
+Twitch avisa a Heimdall en el momento en que empieza o termina un directo, así que el rol cambia en cuestión de segundos. Kick y YouTube se comprueban cada cierto tiempo, así que el rol puede ir unos minutos por detrás. YouTube se comprueba con menos frecuencia cuantos más canales haya vinculados en una instancia, porque Google limita cuántas consultas al día se permiten.
+
+En Minecraft, el modo de sincronización de roles decide cuándo llega el cambio al juego. **Straight away, over the bot connection** (al momento, por la conexión del bot) y **Straight away, over RCON** (al momento, por RCON) lo aplican de inmediato. **On the player's next join** (la próxima vez que entre el jugador) espera a que el jugador se vuelva a conectar, así que un streamer que ya está conectado no verá cambiar su rango hasta que vuelva a entrar.
+
+Heimdall solo quita el rol de directo a los miembros a los que se lo dio. Un miembro que ya tenía el rol, por ejemplo porque se lo dio el staff, lo conserva cuando termina su directo. Si el staff le quita el rol a alguien a mitad de un directo, Heimdall no se lo vuelve a poner hasta su siguiente directo.
+
+## Permisos necesarios
+
+| Acción | Clave de permiso |
+| --- | --- |
+| Ver la configuración | `streaming.config.view_config` |
+| Cambiar la configuración | `streaming.config.manage_config` |
+| Ver las cuentas vinculadas | `streaming.links.view_links` |
+| Desvincular las cuentas de otro miembro | `streaming.links.manage_links` |
+
+Vincular, consultar y desvincular tus propias cuentas no necesita ningún permiso.

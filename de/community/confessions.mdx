@@ -1,0 +1,55 @@
+---
+title: "Geständnisse"
+description: "Mitglieder anonym posten lassen, mit einem Audit-Trail für das Team, um Missbrauch zu behandeln."
+icon: "comment-dots"
+---
+
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+Mitglieder reichen ein Geständnis ein, und der Bot postet es mit einer eigenen Nummer und ohne Autor. Für andere Mitglieder sind Geständnisse anonym. Für Teammitglieder mit der passenden Berechtigung sind sie es nicht, und diese Grenze steht für Mitglieder direkt im Einreichungs-Panel, damit niemand getäuscht wird.
+
+## Einrichtung
+
+Geh im Dashboard zu <DashboardLink to="confessions/config">**Confessions**</DashboardLink>.
+
+| Einstellung | Beschreibung |
+| --- | --- |
+| **Enable confessions** (Geständnisse aktivieren) | Fügt `/confess` zu deinem Server hinzu. Ist es aus, wird der Befehl entfernt und der Panel-Button lehnt ab. |
+| **Confessions channel** (Geständniskanal) | Wo Geständnisse gepostet werden. Jeder, der den Kanal lesen kann, kann sie lesen. |
+| **Shortest and longest** (Kürzeste und längste) | Längenlimits, die schon beim Tippen gelten. Leerraum und unsichtbare Zeichen zählen nicht, niemand kann eine Einreichung also auffüllen, um das Minimum zu erreichen. |
+| **Cooldown** (Wartezeit) | Wie lange ein Mitglied zwischen zwei Geständnissen warten muss. Eine Einreichung, die abgelehnt wird, weil sie zu kurz oder zu lang ist, verbraucht die Wartezeit nicht. |
+
+## Das Einreichungs-Panel
+
+Postest du ein Panel, bekommen Mitglieder einen Button **Submit a confession!**, sie müssen den Befehl also nicht kennen. Postest du es erneut im selben Kanal, wird diese Nachricht aktualisiert, statt eine zweite hinzuzufügen. Postest du es in einem anderen Kanal, kommt dort eine Kopie dazu, und jede Kopie wird aufgelistet, wenn du das Panel postest (siehe [Panels in mehr als einem Kanal](/de/dashboard#panels-posted-in-more-than-one-channel)). Beide Wege öffnen dasselbe Eingabefeld und verhalten sich gleich.
+
+## Wer sehen kann, wer ein Geständnis geschrieben hat
+
+Andere Mitglieder erfahren es nie. Es gibt keinen Namen, keinen Avatar und nichts in der geposteten Nachricht, das auf den Autor zurückführt.
+
+Beim Team ist das anders. Jeder mit `confessions.log.view_author` kann unter <DashboardLink to="confessions/log">**Confessions \> Confession Log**</DashboardLink> nachsehen, wer ein Geständnis eingereicht hat, und der Bot hält jede dieser Abfragen fest. Das ist Absicht: Eine nicht nachverfolgbare Möglichkeit, auf deinem Server zu posten, ist ein Einfallstor für Belästigung, gegen das nur das Abschalten des Features hilft, und um jemanden zu blockieren, musst du wissen, wer es ist.
+
+**Forget who wrote a confession after (days)** (Autor eines Geständnisses vergessen nach (Tagen)) legt fest, wie lange das möglich bleibt. Lass es auf 0, um die Information unbegrenzt zu behalten. Jede andere Zahl sagt dem Bot, den Autor zu vergessen, sobald ein Geständnis dieses Alter erreicht. Das Geständnis selbst bleibt, aber ab dann kann niemand mehr herausfinden, wer es gepostet hat, auch du nicht.
+
+## Mit Missbrauch umgehen
+
+| Werkzeug | Was es tut |
+| --- | --- |
+| **Blocklist** (Sperrliste) | Gesperrte Mitglieder bekommen klar gesagt, dass sie nichts einreichen können, statt dass ihre Geständnisse still verschwinden. So versuchen sie es nicht immer wieder und wundern sich. |
+| **Delete** (Löschen) | Entfernt die Nachricht aus dem Kanal, behält den Text aber im Log, denn dieser Text ist der Beweis, auf dem eine Meldung beruht. |
+| **Length limits** (Längenlimits) | Verhindern sowohl Ein-Wort-Geständnisse als auch Textwände. |
+
+`@everyone` und `@here` in einem Geständnis werden entschärft: Sie stehen da wie geschrieben, pingen aber niemanden. Auch Formatierung wird maskiert, ein Geständnis kann also keine riesige Überschrift posten oder einen Link, der so aussieht, als hätte der Bot ihn geschrieben.
+
+## Erforderliche Berechtigungen
+
+| Aktion | Berechtigungsschlüssel |
+| --- | --- |
+| Ein Geständnis einreichen | `confessions.submit` (standardmäßig für alle freigegeben) |
+| Einstellungen ansehen | `confessions.config.view_config` |
+| Einstellungen und Sperrliste ändern | `confessions.config.manage_config` |
+| Das Geständnis-Log lesen | `confessions.log.view_log` |
+| Aufdecken, wer eines geschrieben hat | `confessions.log.view_author` |
+| Ein gepostetes Geständnis löschen | `confessions.log.delete_confession` |
+
+Die Konfigurationsschlüssel geben absichtlich keinen Zugriff auf das Log. Einen Kanal und eine Wartezeit festzulegen ist Verwaltungsarbeit; zu lesen, was deine Mitglieder gestanden haben, ist der private Teil, und wer für das eine Vertrauen genießt, genießt es nicht automatisch für das andere.

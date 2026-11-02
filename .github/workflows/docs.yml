@@ -109,3 +109,16 @@ jobs:
             exit 1
           fi
           echo "no em dashes"
+
+  translations:
+    name: Translations
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Language menus and translated pages
+        # Fails when a language menu in docs.json was not regenerated from the English one, when
+        # a translated page links to the English of another translated page, or when a page sits
+        # under a language folder without being listed. A translation that is behind its English
+        # page is only a warning: it is still correct about most things, and blocking every
+        # English edit on five retranslations would stop people fixing the English.
+        run: python3 scripts/i18n-pages.py check

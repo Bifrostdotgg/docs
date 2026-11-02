@@ -1,0 +1,57 @@
+---
+title: "Comandos de status e informações"
+description: "Como ver a latência e o tempo de atividade do bot, e informações sobre um usuário do Discord."
+icon: "circle-info"
+---
+
+Estes comandos de uso geral dão a membros e administradores informações operacionais básicas sobre o bot e sobre usuários do Discord.
+
+## Vendo a latência do bot
+
+```
+/ping
+```
+
+Mede a latência atual de ida e volta entre o bot e a API do Discord. A resposta mostra:
+
+- **Latência da API** - tempo para o bot receber um evento do Discord
+- **Latência do gateway** - ida e volta do heartbeat do WebSocket
+- **Latência do banco de dados** - tempo para concluir uma consulta simples ao banco de dados
+
+Este comando é útil para confirmar que o bot está respondendo e para identificar se a lentidão vem do bot, da API do Discord ou do banco de dados.
+
+## Vendo o tempo de atividade do bot
+
+```
+/uptime
+```
+
+Mostra há quanto tempo o bot está rodando desde a última reinicialização. Exibe a duração de forma legível (por exemplo, "3 dias, 14 horas, 22 minutos") e a data e hora exatas em que o bot iniciou.
+
+## Vendo informações de um usuário
+
+```
+/userinfo [user]
+```
+
+Mostra um cartão de perfil do membro indicado (ou o seu próprio perfil, se nenhum usuário for indicado). O cartão mostra:
+
+| Campo | Descrição |
+|---|---|
+| **Nome de usuário** | Nome de usuário e nome de exibição no Discord |
+| **ID do usuário** | ID snowflake do Discord |
+| **Conta criada** | Quando a conta do Discord foi registrada |
+| **Entrou no servidor** | Quando o membro entrou neste servidor |
+| **Cargos** | Todos os cargos que o membro tem no momento |
+| **Apelido** | Apelido específico do servidor, se houver |
+| **Bot** | Se a conta é de um bot |
+
+`/userinfo` funciona com qualquer membro visível, incluindo bots. Você pode consultar membros que saíram do servidor informando o ID de usuário deles.
+
+## Permissões necessárias
+
+Estes comandos ficam disponíveis para todos os membros por padrão:
+
+| Comando | Chave de permissão |
+|---|---|
+| `/ping`, `/uptime`, `/userinfo` | `ping.use` (permitido por padrão) |

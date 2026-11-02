@@ -1,0 +1,77 @@
+---
+title: "Jeux de plateau"
+description: "Jouer à des jeux de plateau interactifs dans Discord : 2048, Puissance 4, Memory, Morpion, Bataille navale et Solitaire."
+icon: "chess-board"
+---
+
+Heimdall inclut six jeux de plateau jouables entièrement dans Discord avec des boutons interactifs. Tous les jeux se jouent seul ou à deux, selon le type de jeu.
+
+## Jeux disponibles
+
+### 2048
+
+```
+/2048
+```
+
+Le casse-tête classique de nombres à faire glisser. Une grille de 4x4 tuiles numérotées : fais glisser les tuiles dans une direction et les nombres identiques fusionnent. Atteins la tuile 2048 pour gagner. Se joue entièrement avec les boutons de direction. Un joueur.
+
+### Puissance 4
+
+```
+/connect4 [opponent]
+```
+
+Fais tomber des jetons de couleur dans une grille de 7 colonnes et 6 rangées. Le premier à en aligner quatre (à l’horizontale, à la verticale ou en diagonale) gagne. Se joue seul contre le bot ou à deux.
+
+### Memory
+
+```
+/memory
+```
+
+Un jeu de paires de cartes. Le plateau affiche des cartes face cachée ; retournes-en deux à la fois et trouve les paires. Trouve toutes les paires en retournant le moins de cartes possible. Un joueur.
+
+### Morpion
+
+```
+/tictactoe [opponent]
+```
+
+Le classique trois-en-ligne sur une grille de 3x3. Se joue seul contre le bot ou à deux.
+
+### Bataille navale
+
+```
+/battleship [opponent]
+```
+
+Le jeu de stratégie navale. Place tes navires sur une grille de 10x10 et essaie de couler la flotte de ton adversaire avant qu’il ne coule la tienne. Se joue à deux ou seul contre le bot.
+
+### Solitaire
+
+```
+/solitaire
+```
+
+Le Solitaire Klondike classique. Range les cartes sur les piles de fondation par couleur, dans l’ordre croissant de l’As au Roi. Un joueur.
+
+## Jeux à deux
+
+Pour les jeux qui acceptent un adversaire, indique l’autre membre avec l’option `opponent` :
+
+```
+/connect4 opponent:@Username
+```
+
+L’adversaire reçoit une invitation qu’il doit accepter avant que la partie commence. S’il ne répond pas dans les 60 secondes, l’invitation expire.
+
+## Expiration des parties
+
+Les parties en cours expirent si aucun coup n’est joué pendant une période donnée (généralement 5 à 10 minutes selon le jeu). Le bot publie un message indiquant que la partie s’est terminée pour cause d’inactivité.
+
+## Permissions requises
+
+| Action | Clé de permission |
+|---|---|
+| Jouer aux jeux de plateau | `games.use` (autorisé par défaut) |

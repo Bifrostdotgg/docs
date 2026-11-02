@@ -1,0 +1,92 @@
+---
+title: "Fälle"
+description: "Ein nummerierter Eintrag für jede Moderationsaktion, auf Discord und in Minecraft."
+icon: "folder-open"
+---
+
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+Jeder Bann, jede Stummschaltung, jeder Kick, jede Verwarnung und jede Kanalsperre auf deinem Server, und jede Strafe und jeder Verstoß auf deinem Minecraft-Server, wird zu einem **Fall** mit eigener Nummer, etwa `#1482`. Ein Fall hält fest, was passiert ist, wer es getan hat, warum, und alles, was seitdem damit passiert ist: das Entbannen, den Einspruch, die Notizen des Teams und die angehängten Beweise. Die Fälle eines Mitglieds auf Discord und auf seinem verknüpften Minecraft-Account stehen auf einer Seite.
+
+Fälle sind ein Protokoll, keine neue Art zu bestrafen. Du bannst weiterhin mit `/ban`, `/mc-punish` oder im Spiel, genau wie vorher, und jeder Fall verlinkt zurück auf die Aktion, die er festhält.
+
+## Was zu einem Fall wird
+
+- Banns, Kicks, Stummschaltungen, Verwarnungen und Kanalsperren über Heimdall, durch das Team oder durch Automod.
+- Banns, Kicks und Timeouts über die eigenen Menüs von Discord oder durch einen anderen Bot. Sie werden der Person zugeschrieben, die sie ausgeführt hat. Das liest Heimdall aus dem Audit-Log, der Bot braucht also die Berechtigung **Audit-Log anzeigen** (View Audit Log).
+- Minecraft-Banns, IP-Banns, Stummschaltungen, Verwarnungen und Kicks, aus dem Dashboard, über `/mc-punish` oder im Spiel, sowie jeder Minecraft-Verstoß.
+
+Ein Entbannen, das Aufheben einer Stummschaltung oder ein Widerruf ist kein neuer Fall. Es beendet den Fall, den es aufhebt, und dieser gilt dann als widerrufen. Ein Bann, der seine Dauer abläuft, gilt als abgelaufen, und einer, der durch einen neueren Bann ersetzt wird, als ersetzt.
+
+Die Fallnummer erscheint im Moderations-Log, `Case #1482` in einer Log-Zeile ist also das, wonach das Team sucht.
+
+## Einen Fall finden
+
+### Im Dashboard
+
+Öffne <DashboardLink to="cases/list">**Cases \> All cases**</DashboardLink>. Filtere nach Plattform, Aktion, Status oder Moderator, oder such nach einer Person. Öffne einen Fall, um seine Zeitleiste zu sehen, und öffne die Person, um jeden Fall zu sehen, den sie auf Discord und auf jedem bestätigt mit ihr verknüpften Minecraft-Account hat. Heimdall rät nie eine Verknüpfung: Ein nicht verknüpfter Minecraft-Account ist eine eigene Person.
+
+### In Discord
+
+| Befehl | Was er tut |
+| --- | --- |
+| `/case view` | Zeigt einen Fall nach Nummer, mit Buttons, um eine Notiz oder einen Beweis hinzuzufügen und ihn aufzuheben |
+| `/case lookup` | Zeigt jeden Fall zu einem Discord-Nutzer oder einem Minecraft-Spieler |
+| `/case note` | Fügt einem Fall eine Notiz hinzu |
+| `/case evidence` | Hängt eine Datei oder einen Link an einen Fall an |
+| `/case reason` | Ändert den Grund eines Falls. Der frühere Grund bleibt im Fall erhalten |
+
+Rechtsklick auf ein Mitglied und **Apps \> View cases** zeigt dieselbe Liste wie `/case lookup`. Rechtsklick auf eine Nachricht und **Apps \> Add to case** kopiert sie als Notiz in einen Fall, mit einem Link zurück zur Nachricht. So landet eine Entscheidung, die das Team in einem Kanal besprochen hat, im Protokoll.
+
+### Im Spiel
+
+Teammitglieder mit `heimdall.admin` können mit `/hd case note <number> <text>` eine Notiz hinzufügen. Im Spiel lassen sich Notizen nur zu Minecraft-Fällen hinzufügen, und zu einem versteckten Fall nur von Teammitgliedern, die zusätzlich `heimdall.punishments.hidden` haben.
+
+## Einen Fall aufheben
+
+Die Buttons **Unban**, **Unmute** und **Revoke** an einem Fall heben ihn über denselben Weg auf wie der eigene Befehl der Plattform, sie verlangen also dieselbe Berechtigung: `moderation.enforcement.ban` zum Entbannen auf Discord, `minecraft.punishments.revoke` zum Widerrufen in Minecraft. Eine Verwarnung kann man nicht aufheben, sie wird stattdessen erlassen, und ihre Punkte zählen nicht mehr.
+
+## Einsprüche
+
+Legt ein gebanntes oder stummgeschaltetes Mitglied Einspruch ein, wird der Einspruch mit seinem Fall verknüpft. Der Link auf einem Bann-Bildschirm im Spiel und in jeder Zeile der Bann-Seite nennt den Fall, und ein Einspruch ohne Fall wird dem offenen Bann oder der offenen Stummschaltung des Mitglieds zugeordnet. Ein Einspruch wird immer nur mit einem Fall verknüpft, der die einspruchsführende Person oder einen mit ihr verknüpften Account betrifft. Ein Mitglied kann seinen Einspruch also nicht an den Fall von jemand anderem hängen.
+
+Der Fall zeigt den Einspruch und sein Ergebnis, und der Einspruch unter <DashboardLink to="appeals/submissions">**Appeals \> Submissions**</DashboardLink> verlinkt auf seinen Fall. Wird er angenommen, wird der Fall auf der Plattform aufgehoben, von der er stammt: ein Entbannen oder das Aufheben einer Stummschaltung auf Discord oder ein Widerruf in Minecraft.
+
+<span id="public-bans-page"></span>
+## Öffentliche Bann-Seite
+
+<DashboardLink to="cases/bans-page">**Cases \> Bans page**</DashboardLink> veröffentlicht auf deiner Bann-Seite eine Liste von Banns und Stummschaltungen, Discord und Minecraft zusammen, jeweils mit Fallnummer. Du bestimmst in Stufen, wer was sieht:
+
+| Stufe | Wer das ist |
+| --- | --- |
+| Öffentlich | Jeder mit dem Link |
+| Angemeldet | Jeder, der mit Discord angemeldet ist |
+| Mitglieder | Mitglieder deines Servers |
+| Rollenstufen | Mitglieder mit einer der Rollen, die du wählst, bis zu fünf Stufen |
+
+Jede Stufe sieht alles, was die Stufen darüber sehen, plus das, was du für sie anhakst, keine Stufe kann also weniger sehen als die Öffentlichkeit. Für jede Stufe kannst du Minecraft-Banns, Minecraft-IP-Banns, Minecraft-Stummschaltungen, Discord-Banns, Gründe, wer den Eintrag jeweils verhängt hat, und abgelaufene Einträge anhaken. Versteckte Strafen werden nie aufgelistet, außer für angemeldete Teammitglieder, die versteckte Fälle sowieso sehen können.
+
+Discord-Banns sind für jede Stufe aus, bis du sie einschaltest, und <DashboardLink to="cases/bans-page">**Cases \> Bans page**</DashboardLink> warnt dich, wenn sie jemanden außerhalb deines Servers erreichen würden. Eine Minecraft-Bannliste ist in der Community üblich; eine öffentliche Liste von Discord-Accounts mit Bann-Gründen sind persönliche Informationen über echte Menschen.
+
+**Reset link** gibt der Seite eine neue Adresse, und die alte funktioniert nicht mehr.
+
+## Der Haken
+
+Moderation aus der Zeit vor den Fällen wird automatisch importiert, wenn der Bot zum ersten Mal mit Fällen startet. Ein Server mit jahrelanger Geschichte kann ein paar Minuten brauchen, und bis dahin listen <DashboardLink to="cases/list">**Cases**</DashboardLink> und die Bann-Seite nur Aktionen seit der Einführung der Fälle. Neue Fälle behalten ihre Nummern, wenn die Geschichte nachkommt, weil die älteren Aktionen die ersten Nummern bekommen haben.
+
+Beweisdateien brauchen einen für deinen Server eingerichteten Dateispeicher. Ohne ihn kannst du Links anhängen, aber keine Dateien, denn ein Discord-Anhangslink läuft ab, und Beweise, die unbemerkt nicht mehr laden, sind schlimmer als gar keine.
+
+## Erforderliche Berechtigungen
+
+Das Lesen ist nach Plattform getrennt, weil das Minecraft-Team oft nicht aus Discord-Moderatoren besteht. Teammitglieder, die den alten Tab Infractions oder den Minecraft-Strafverlauf lesen konnten, lesen dieselben Fälle weiter, ohne einen neuen Schlüssel.
+
+| Aktion | Berechtigungsschlüssel |
+| --- | --- |
+| Discord-Fälle lesen | `cases.view_discord` |
+| Minecraft-Fälle lesen | `cases.view_minecraft` |
+| Versteckte Fälle sehen, auf den Plattformen, die du lesen kannst | `cases.view_hidden` |
+| Notizen hinzufügen | `cases.comment` |
+| Beweise hinzufügen und entfernen | `cases.manage_evidence` |
+| Den Grund eines Falls ändern | `cases.edit_reason` |
+| Zusammenhängende Fälle verknüpfen und Notizen von jedem entfernen | `cases.manage` |
+| Die öffentliche Bann-Seite verwalten | `cases.manage_bans_page` |

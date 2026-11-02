@@ -1,0 +1,81 @@
+---
+title: "Casino-Spiele"
+description: "Casino-Spiele in Discord: Blackjack, Coinflip, Dice, Higher-Lower, Pferderennen, Mines und Roulette."
+icon: "dice"
+---
+
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+Casino-Spiele sind Wettspiele, die mit der virtuellen Economy deines Servers gespielt werden. Du setzt in jeder Runde Coins, ein Gewinn wird nach den Quoten des Spiels ausgezahlt, und ein Verlust verringert deinen Kontostand. Echtes Geld ist nicht im Spiel.
+
+<Warning>
+Casino-Spiele setzen voraus, dass das Economy-System eingerichtet ist. Mitglieder brauchen ein Coin-Guthaben, um Einsätze zu machen. Zur Einrichtung siehe die Seite [Economy](/de/games/economy).
+</Warning>
+
+## Verfügbare Spiele
+
+### Blackjack
+
+```
+/blackjack <bet>
+```
+
+Klassisches Blackjack gegen den Dealer. Komm näher an 21 heran als der Dealer, ohne drüber zu gehen. Unterstützt Hit, Stand, Double und Split, wo es passt. Ein Blackjack (Ass plus eine Karte mit Wert 10 beim ersten Geben) zahlt 3:2.
+
+### Coinflip
+
+```
+/coinflip <bet> <heads|tails>
+```
+
+Wähle Kopf oder Zahl. Bei richtigem Tipp wird 1:1 ausgezahlt.
+
+### Dice
+
+```
+/dice <bet> <target>
+```
+
+Wirf zwei Würfel und sag voraus, ob die Summe über oder unter dem Zielwert liegt oder ihn genau trifft. Die Auszahlung richtet sich nach der Wahrscheinlichkeit des Ergebnisses.
+
+### Higher-Lower
+
+```
+/higher-lower <bet>
+```
+
+Eine Karte wird aufgedeckt. Rate, ob die nächste Karte höher oder niedriger ist. Eine Serie richtiger Tipps vervielfacht deinen Gewinn. Du kannst jederzeit aussteigen und dir die bis dahin gesammelte Auszahlung sichern.
+
+### Pferderennen
+
+```
+/horse-racing <bet> <horse>
+```
+
+Setz auf eines von mehreren Pferden in einem simulierten Rennen. Jedes Pferd hat andere Quoten. Das Rennen läuft über mehrere Runden, und die Positionen werden in der Nachricht aktualisiert.
+
+### Mines
+
+```
+/mines <bet> <mine_count>
+```
+
+Unter einem Raster aus Feldern ist eine festgelegte Zahl von Minen versteckt. Deck Felder auf, um deinen Multiplikator zu erhöhen, und steig aus, bevor du auf eine Mine triffst. Mehr Minen bedeuten mehr Risiko und einen höheren möglichen Gewinn.
+
+### Roulette
+
+```
+/roulette <bet> <type>
+```
+
+Setz auf eine Zahl, eine Farbe (Rot/Schwarz) oder einen Bereich (ungerade/gerade, 1-18, 19-36). Ein virtuelles Rad dreht sich, und die Auszahlungen folgen den üblichen Roulette-Quoten: Einzelne Zahlen zahlen 35:1, Farben 1:1.
+
+## Einsatzlimits
+
+Mindest- und Höchsteinsatz pro Spiel legst du unter <DashboardLink to="games/config/economy">**Games > Configuration > Economy**</DashboardLink> fest. Mitglieder können nicht mehr setzen, als ihr aktueller Kontostand hergibt.
+
+## Erforderliche Berechtigungen
+
+| Aktion | Berechtigungsschlüssel |
+|---|---|
+| Casino-Spiele spielen | `games.use` (standardmäßig erlaubt) |

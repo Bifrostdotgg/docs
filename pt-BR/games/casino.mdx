@@ -1,0 +1,81 @@
+---
+title: "Jogos de cassino"
+description: "Como jogar jogos de cassino no Discord: Blackjack, Coinflip, Dice, Higher-Lower, Horse Racing, Mines e Roulette."
+icon: "dice"
+---
+
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+Os jogos de cassino são jogos de aposta que usam a economia virtual do seu servidor. Você aposta moedas em cada rodada; ganhar paga de acordo com as probabilidades do jogo. Perder diminui o seu saldo. Nenhum dinheiro real está envolvido.
+
+<Warning>
+Os jogos de cassino exigem que o sistema de economia esteja configurado. Os membros precisam de um saldo de moedas para apostar. Veja a página [Economia](/pt-BR/games/economy) para a configuração.
+</Warning>
+
+## Jogos disponíveis
+
+### Blackjack
+
+```
+/blackjack <bet>
+```
+
+Blackjack padrão contra a banca. Chegue mais perto de 21 do que a banca sem passar. Permite Hit (pedir carta), Stand (parar), Double (dobrar) e Split (dividir) quando cabível. Um Blackjack (Ás + carta de valor 10 na primeira distribuição) paga 3:2.
+
+### Coinflip
+
+```
+/coinflip <bet> <heads|tails>
+```
+
+Escolha cara (heads) ou coroa (tails). Paga 1:1 se você acertar.
+
+### Dice
+
+```
+/dice <bet> <target>
+```
+
+Role dois dados e preveja se a soma vai ser maior ou menor que o alvo, ou se vai bater exatamente no alvo. O pagamento acompanha a probabilidade do resultado.
+
+### Higher-Lower
+
+```
+/higher-lower <bet>
+```
+
+Uma carta é revelada. Adivinhe se a próxima carta vai ser maior ou menor. Uma sequência de acertos multiplica seus ganhos. Saque a qualquer momento para receber o prêmio acumulado.
+
+### Horse Racing
+
+```
+/horse-racing <bet> <horse>
+```
+
+Aposte em um dos vários cavalos de uma corrida simulada. Cada cavalo tem probabilidades diferentes. A corrida acontece ao longo de várias rodadas, com as posições atualizadas na mensagem.
+
+### Mines
+
+```
+/mines <bet> <mine_count>
+```
+
+Uma grade de quadrados esconde um número definido de minas. Revele quadrados para aumentar seu multiplicador e saque antes de acertar uma mina. Mais minas significam mais risco e uma recompensa potencial maior.
+
+### Roulette
+
+```
+/roulette <bet> <type>
+```
+
+Aposte em um número, uma cor (vermelho/preto) ou uma faixa (ímpar/par, 1-18, 19-36). Uma roleta virtual gira e os pagamentos seguem as probabilidades padrão da roleta: números únicos pagam 35:1, cores pagam 1:1.
+
+## Limites de aposta
+
+A aposta mínima e máxima de cada jogo são configuradas em <DashboardLink to="games/config/economy">**Games > Configuration > Economy**</DashboardLink> (Jogos > Configuração > Economia). Os membros não podem apostar mais do que o saldo atual.
+
+## Permissões necessárias
+
+| Ação | Chave de permissão |
+|---|---|
+| Jogar jogos de cassino | `games.use` (permitido por padrão) |

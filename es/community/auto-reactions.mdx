@@ -1,0 +1,32 @@
+---
+title: "Reacciones automáticas"
+description: "Cómo reaccionar automáticamente a cada mensaje en los canales que elijas."
+icon: "thumbs-up"
+---
+
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+Elige un canal y un conjunto de emojis, y el bot reaccionará a cada mensaje que se publique allí. El uso más habitual es votar al estilo de Reddit en un canal de sugerencias o de exposición, donde los miembros deberían poder votar sin que nadie tenga que añadir antes las reacciones.
+
+## Configurarlas
+
+Ve a <DashboardLink to="auto-reactions">**Auto Reactions**</DashboardLink> (reacciones automáticas) en el panel, añade un canal y elige los emojis.
+
+El orden importa. El bot reacciona en el orden en que los pones, y en Discord las reacciones no se pueden reordenar después, así que el voto a favor que quieres a la izquierda tiene que ir el primero de la lista.
+
+## Qué emojis puedes usar
+
+Funcionan tanto los emojis personalizados de tu servidor como los emojis Unicode estándar.
+
+**Aquí no se pueden usar los emojis propios de Heimdall.** Pertenecen a la aplicación del bot y no a tu servidor, y Discord no permite usarlos como reacciones en ningún caso. El selector de esta página directamente no los ofrece, y si una regla antigua contiene uno, se marca para que veas por qué esa reacción nunca aparece.
+
+Un emoji que se ha borrado de tu servidor se marca de la misma forma, porque, viendo solo el ID, un emoji obsoleto y uno del tipo equivocado parecen idénticos y necesitan soluciones distintas.
+
+## Permisos necesarios
+
+| Acción | Clave de permiso |
+| --- | --- |
+| Ver la configuración | `auto-reactions.view_config` |
+| Cambiar los canales y los emojis | `auto-reactions.manage_config` |
+
+Las reacciones automáticas son totalmente automáticas, así que los miembros no necesitan ningún permiso. El bot necesita **Añadir reacciones** y **Leer el historial de mensajes** en cada canal configurado.

@@ -1,0 +1,90 @@
+---
+title: "Rastreador de convites"
+description: "Como registrar com qual convite cada membro entrou e quantas pessoas cada membro trouxe."
+icon: "user-plus"
+---
+
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+O rastreador de convites registra qual convite cada membro novo usou, dá o crédito a quem criou o convite e mantém um total corrente por membro. Ele também adiciona marcadores que você pode usar na sua mensagem de boas-vindas.
+
+## Antes de começar
+
+O rastreamento de convites precisa da permissão **Gerenciar servidor**. O Discord só mostra a contagem de usos dos convites para bots que têm essa permissão, e essa contagem é a única forma de saber com qual convite alguém entrou. Sem ela, o recurso se desliga sozinho em vez de registrar dados incompletos, e o painel mostra um botão que guia você para conceder a permissão.
+
+Se você preferir não dar ao bot a permissão Gerenciar servidor, deixe o rastreamento de convites desligado. Nada mais é afetado.
+
+O rastreamento também só conta as entradas a partir do momento em que você o ativa. O Discord não diz quem usou um convite no passado, então um link que já tem 40 usos não pode ter essas 40 pessoas creditadas a ninguém. As entradas futuras pelo mesmo link são creditadas normalmente.
+
+## Como configurar
+
+Acesse <DashboardLink to="invites/config">**Invite Tracker**</DashboardLink> (Rastreador de convites) no painel e ative **Track invites** (rastrear convites). Isso também adiciona `/invites` ao seu servidor. Se quiser, defina um **join log channel** (canal de log de entradas), que recebe uma linha para cada entrada dizendo quem convidou a pessoa.
+
+## Como o total é calculado
+
+```
+total = joined - fake - left + bonus
+```
+
+| Parte | Significado |
+| --- | --- |
+| **joined** | Pessoas que entraram pelos convites daquele membro |
+| **fake** | A conta do Discord da pessoa era mais nova que a idade que você definiu, medida no momento em que ela entrou |
+| **left** | A pessoa já saiu do servidor |
+| **bonus** | Qualquer coisa que a staff adicionou ou removeu à mão |
+
+Cada subtração é uma opção que pode ser ligada ou desligada, porque outros bots de convite discordam sobre elas. Desligue **people who leave do not count** (quem sai não conta) se você acha que o crédito de ninguém deveria depender de quem fica no servidor.
+
+Dois detalhes que vale saber:
+
+- **O fake é julgado no momento da entrada e nunca é reavaliado.** Um membro que era novo quando entrou continua contado como fake. Do contrário, todos os totais iriam subindo discretamente conforme as contas envelhecessem, e cedo ou tarde alguém seria acusado de perder convites que nunca perdeu.
+- **Quem volta não conta duas vezes**, por padrão. Sair e entrar de novo pelo mesmo convite é o jeito mais fácil de inflar uma contagem e não exige uma segunda conta. A volta ainda fica registrada e visível em <DashboardLink to="invites/activity">**Invite Tracker \> Invites and Joins**</DashboardLink> (Rastreador de convites > Convites e entradas), ela só não soma nada.
+
+## Comandos
+
+| Comando | Quem |
+| --- | --- |
+| `/invites view` | Qualquer pessoa, para a própria contagem |
+| `/invites view member:` | Precisa da permissão de "ver de qualquer pessoa" |
+| `/invites leaderboard` | Os dez que mais convidaram. Os 100 primeiros ficam em <DashboardLink to="invites/leaderboard">**Invite Tracker \> Leaderboard**</DashboardLink> (Rastreador de convites > Ranking) |
+| `/invites create` | Staff, cria um convite com rótulo para diferenciar campanhas |
+| `/invites bonus` | Staff, adiciona ou remove convites à mão |
+
+Toda resposta é privada para quem rodou o comando. Um ranking não marca as pessoas que aparecem nele.
+
+## Marcadores para a mensagem de boas-vindas
+
+Adicione estes à sua mensagem de boas-vindas:
+
+| Marcador | Aparece como |
+| --- | --- |
+| `{inviter}` | O nome de exibição de quem convidou a pessoa |
+| `{invitermention}` | Uma menção a essa pessoa |
+| `{inviterinvites}` | Quantos convites ela tem agora |
+| `{invitecode}` | O código de convite usado |
+
+Se não for possível descobrir quem convidou, esses marcadores aparecem como "unknown" e a mensagem de boas-vindas é enviada mesmo assim.
+
+## Quando o bot não consegue saber
+
+Isso acontece, e não é uma falha. Cada caso aparece no log de entradas em vez de ficar escondido:
+
+| Aparece como | Por quê |
+| --- | --- |
+| Vanity URL, no inviter to credit (URL personalizada, ninguém para creditar) | A pessoa usou o seu link `discord.gg/yourserver`. |
+| Two invites used at once (dois convites usados ao mesmo tempo) | Duas pessoas entraram no mesmo instante. Dois códigos avançaram e nada diz quem usou qual. |
+| Invite could not be identified (não foi possível identificar o convite) | Descoberta de Servidores, ou o bot tinha acabado de reiniciar. |
+| Bot, added through OAuth (bot adicionado por OAuth) | Bots são adicionados, não convidados. |
+
+## Permissões necessárias
+
+| Ação | Chave de permissão |
+| --- | --- |
+| Ver a própria contagem | `invites.view_own` (concedida a todos por padrão) |
+| Ver a contagem de qualquer pessoa e o ranking | `invites.view_others` (concedida a todos por padrão) |
+| Ver as configurações | `invites.config.view_config` |
+| Alterar as configurações | `invites.config.manage_config` |
+| Criar convites com rótulo | `invites.manage.create_invite` |
+| Adicionar ou remover convites bônus | `invites.manage.manage_bonus` |
+
+O bônus é o único número aqui que uma pessoa pode inventar, por isso ele tem a própria chave e todo ajuste registra quem fez e por quê.

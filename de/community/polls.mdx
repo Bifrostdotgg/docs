@@ -1,0 +1,50 @@
+---
+title: "Umfragen"
+description: "Umfragen mit Einfachauswahl, Mehrfachauswahl, Rangfolge oder freien Antworten durchführen."
+icon: "square-poll-vertical"
+---
+
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+Umfragen können mehr als ein paar Reaktionen. Es gibt vier Antworttypen, die Ergebnisse aktualisieren sich live, und alles lässt sich exportieren.
+
+## Eine erstellen
+
+`/poll create` öffnet einen Assistenten, der dich durch Frage, Antworttyp, Optionen und Endzeitpunkt führt. `/poll from-template` überspringt den Assistenten für eine Umfrage, die du regelmäßig machst. Im Dashboard nutzt du <DashboardLink to="polls/create">**Polls \> Create poll**</DashboardLink>.
+
+| Antworttyp | Wofür |
+| --- | --- |
+| **Single choice** (Einfachauswahl) | Eine Option pro Mitglied, der Normalfall |
+| **Multi-select** (Mehrfachauswahl) | Mitglieder wählen mehrere, praktisch für „Bei welchen davon wärst du dabei?“ |
+| **Ranked choice** (Rangfolge) | Mitglieder bringen die Optionen in eine Reihenfolge. Gezählt wird per Instant-Runoff, sodass der Gewinner echte Mehrheitsunterstützung hat statt nur der größten Minderheit |
+| **Free text or numeric** (Freitext oder Zahl) | Offene Antworten, wenn die Optionen vorher nicht feststehen |
+
+Eine Rangfolge lohnt sich, wenn eine einfache Abstimmung ähnliche Optionen aufspalten und eine unbeliebte Option mit relativer Mehrheit gewinnen lassen würde.
+
+## Während sie läuft
+
+Die Ergebnisse aktualisieren sich, sobald Stimmen eingehen. `/poll list` zeigt, was offen ist, und `/poll close` beendet eine Umfrage vorzeitig.
+
+Ob die Abstimmenden sichtbar sind, ist eine eigene Berechtigung. Eine Umfrage kann also öffentliche Ergebnisse haben, während nur das Team (oder niemand) sieht, wer wofür gestimmt hat.
+
+## Nach dem Ende
+
+Beim Schließen werden die Ergebnisse gepostet. Wer darum gebeten hat, wird per DM benachrichtigt. Alle Ergebnisse lassen sich als CSV exportieren, für alles, was du außerhalb von Discord damit machen willst, und ein Audit-Log hält fest, wer jede Umfrage erstellt, bearbeitet und geschlossen hat. Du findest es im Dashboard unter <DashboardLink to="polls/audit">**Polls \> Audit log**</DashboardLink>.
+
+## Vorlagen
+
+Vorlagen speichern eine komplette Umfrage-Einrichtung. Machst du jede Woche eine Abstimmung mit denselben Optionen, bau sie einmal, speicher sie mit **Save as template** auf <DashboardLink to="polls/create">**Polls \> Create poll**</DashboardLink> und nutz danach `/poll from-template`. <DashboardLink to="polls/templates">**Polls \> Templates**</DashboardLink> listet deine gespeicherten Vorlagen.
+
+## Erforderliche Berechtigungen
+
+| Aktion | Berechtigungsschlüssel |
+| --- | --- |
+| Abstimmen | `polls.vote` (standardmäßig für alle freigegeben) |
+| Eine Umfrage erstellen | `polls.create_poll` |
+| Umfragen ansehen | `polls.polls.view_polls` |
+| Sehen, wer wofür gestimmt hat | `polls.polls.view_voters` |
+| Umfragen schließen und bearbeiten | `polls.polls.manage` |
+| Vorlagen ansehen | `polls.templates.view_templates` |
+| Vorlagen erstellen und bearbeiten | `polls.templates.manage_templates` |
+
+`view_voters` ist absichtlich vom Ansehen der Umfrage getrennt. Die Summen zu sehen und zu sehen, wie jedes Mitglied abgestimmt hat, sind zwei verschiedene Dinge, und eine geheime Abstimmung ist nicht mehr geheim, sobald beides zusammen vergeben wird.

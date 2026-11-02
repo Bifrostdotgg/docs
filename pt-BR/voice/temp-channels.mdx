@@ -1,0 +1,65 @@
+---
+title: "Canais de voz temporários"
+description: "Canais de voz temporários criados ao entrar, que se apagam sozinhos quando ficam vazios."
+icon: "microphone"
+---
+
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+O sistema de canais de voz temporários permite que os membros criem os próprios canais de voz quando precisarem. Você define um ou mais canais de voz "criadores". Quando um membro entra em um canal criador, o bot cria na hora um novo canal de voz, move o membro para ele e apaga o canal automaticamente quando o último membro sai.
+
+Isso acaba com a necessidade de os administradores criarem e apagarem canais de voz à mão para grupos pequenos, e dá aos membros controle sobre os próprios espaços sem conceder a eles a permissão Gerenciar canais.
+
+<Frame>
+  ![Voz: canais temporários](/images/Voice_TempVC.png)
+</Frame>
+
+## Como funciona para os membros
+
+Entre no canal de voz criador (normalmente com um nome como "Criar um canal" ou "Entre para criar"). O bot cria um novo canal, com o seu nome por padrão, e move você para ele. Depois você pode convidar outras pessoas para entrar. Quando todo mundo sai, o bot apaga o canal.
+
+Enquanto estiver no seu canal temporário, você controla o canal pelo comando `/tempvc`.
+
+## Configuração
+
+Acesse <DashboardLink to="tempvc/config">**Temp VC \> Configuration**</DashboardLink> (Canais temporários > Configuração) no painel.
+
+| Configuração | Descrição |
+| --- | --- |
+| **Creator channel** (canal criador) | O canal de voz em que os membros entram para disparar a criação de um canal |
+| **Category** (categoria) | A categoria onde os novos canais temporários são criados |
+| **Default name** (nome padrão) | Modelo para o nome dos novos canais. Aceita as variáveis `{user}` e `{count}`. |
+| **Default user limit** (limite padrão de usuários) | Quantos membros podem entrar nos novos canais (0 = ilimitado) |
+| **Default bitrate** (taxa de bits padrão) | A qualidade de áudio dos novos canais |
+| **Permitted roles** (cargos permitidos) | Quais cargos podem usar o canal criador (deixe vazio para todos os membros) |
+
+Você pode ter vários canais criadores com configurações diferentes.
+
+## Controles dos membros
+
+```text
+/tempvc create
+/tempvc delete
+/tempvc delete-all
+```
+
+| Subcomando | Descrição |
+| --- | --- |
+| `create` | Cria um canal temporário manualmente (sem entrar no canal criador) |
+| `delete` | Apaga na hora o seu canal temporário atual |
+| `delete-all` | Apaga todos os canais temporários que são seus |
+
+Os membros também podem renomear, definir um limite de usuários ou trancar o canal temporário pelo menu de contexto do canal de voz no Discord, desde que o bot tenha dado a eles as permissões adequadas.
+
+## Como ver os canais ativos
+
+Acesse <DashboardLink to="tempvc/active">**Temp VC \> Active Channels**</DashboardLink> (Canais temporários > Canais ativos) no painel para ver todos os canais temporários ativos no momento: quem criou, quantos membros estão neles e há quanto tempo estão ativos.
+
+## Permissões necessárias
+
+| Ação | Chave de permissão |
+| --- | --- |
+| Usar o canal criador | Disponível para todos os membros por padrão |
+| Ver a configuração | `tempvc.view_config` |
+| Alterar a configuração | `tempvc.manage_config` |
+| Gerenciar canais (por exemplo, apagar à força) | `tempvc.manage_channels` |

@@ -1,0 +1,52 @@
+---
+title: "Aniversários"
+description: "Como anunciar os aniversários dos membros no dia, com um cargo temporário opcional."
+icon: "cake-candles"
+---
+
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+Os membros registram o aniversário e, no dia, o bot posta um anúncio e pode dar a eles um cargo temporário. Os próprios membros fazem o registro, então você nunca precisa juntar as datas.
+
+## Configurando
+
+Vá até <DashboardLink to="birthdays/config">**Birthdays**</DashboardLink> (Aniversários) no painel.
+
+| Configuração | Descrição |
+| --- | --- |
+| **Canal de anúncio** | Onde a mensagem de aniversário é postada |
+| **Fuso horário** | Qual fuso horário decide quando o "hoje" começa |
+| **Hora do anúncio** | A hora do dia em que os anúncios saem |
+| **Cargo a mencionar** | Um cargo opcional para mencionar junto com o anúncio |
+| **Mensagem de anúncio** | Aceita `{mention}` para uma menção e `{user}` para o nome sem menção |
+| **Cargo de aniversário** | Um cargo opcional aplicado no dia, com duração em horas configurável |
+
+## Como os membros se registram
+
+São dois caminhos, e os dois gravam o mesmo registro:
+
+- `/birthday set` com dia e mês
+- A **mensagem de abertura**, uma mensagem com um botão que você posta em um canal. Membros que nunca usariam um comando de barra clicam num botão.
+
+`/birthday remove` apaga o registro do membro. `/birthday view` mostra o de um membro, e `/birthday list` mostra os próximos.
+
+Só o dia e o mês são guardados. Os membros não precisam informar o ano, então nenhuma idade é registrada.
+
+## A lista de aniversários
+
+A aba <DashboardLink to="birthdays/entries">**Birthday List**</DashboardLink> (Lista de aniversários) do painel mostra todos os aniversários registrados, os próximos primeiro, com busca e a opção de adicionar, editar ou remover um registro em nome de alguém.
+
+A ordem é pela proximidade da próxima comemoração, não pela data no calendário, então os aniversários de dezembro não ficam no fim da lista por onze meses do ano.
+
+Um aniversário em 29 de fevereiro é comemorado em 28 de fevereiro nos anos que não têm esse dia, em vez de ser pulado por três anos seguidos.
+
+## Permissões necessárias
+
+| Ação | Chave de permissão |
+| --- | --- |
+| Ver as configurações | `birthdays.config.view_config` |
+| Alterar as configurações e a mensagem de abertura | `birthdays.config.manage_config` |
+| Ver a lista de aniversários | `birthdays.entries.view_entries` |
+| Alterar o registro de outra pessoa | `birthdays.entries.manage_entries` |
+
+Registrar o próprio aniversário não exige permissão. Qualquer uma das chaves de configuração também dá acesso à lista, então a staff que já gerencia os aniversários não precisa de uma segunda permissão para continuar vendo a lista.

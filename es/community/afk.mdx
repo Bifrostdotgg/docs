@@ -1,0 +1,46 @@
+---
+title: "AFK"
+description: "Cómo dejar que los miembros pongan una nota de ausencia que el bot comunica por ellos."
+icon: "moon"
+---
+
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+Un miembro usa `/afk` con un motivo opcional. Mientras está fuera, quien lo mencione recibe una respuesta breve diciendo que está AFK y cuánto tiempo hace que se fue. La nota se borra sola en cuanto ese miembro envía cualquier mensaje en el servidor.
+
+La nota es de cada servidor, no global. Poner una en un servidor no afecta a ningún otro.
+
+## Cómo se mantienen a raya los avisos
+
+Tres reglas evitan que esto convierta un canal concurrido en un muro de respuestas del bot:
+
+- Solo cuentan las menciones escritas en el mensaje. Responder a un mensaje antiguo de un miembro ausente no genera ningún aviso, y tampoco una mención a un rol que lo incluya.
+- Un aviso por miembro ausente, por canal, cada diez minutos. Diez personas llamando a la misma persona generan una respuesta, no diez.
+- El aviso muestra el nombre visible del miembro ausente en lugar de mencionarlo, así que enterarse de que alguien está fuera nunca le despierta.
+
+## Qué puede hacer quien lo llama
+
+Cada aviso lleva dos botones:
+
+| Botón | Qué hace |
+| --- | --- |
+| **Dejar un mensaje** | Abre un cuadro de texto. El mensaje se guarda y se entrega por MD cuando vuelve el miembro ausente. |
+| **Avisarme cuando vuelva** | Te envía un MD en cuanto ese miembro vuelve a hablar. |
+
+Los mensajes guardados y los avisos pendientes pertenecen a esa ausencia concreta. Poner una nota AFK nueva empieza una ausencia nueva, así que no se arrastra nada de una ausencia anterior.
+
+## Al volver
+
+Cualquier mensaje en el servidor borra la nota. El bot responde con una breve confirmación que se borra sola a los diez segundos, y envía al miembro por MD todo lo que se le había guardado.
+
+Si tiene los MD cerrados, los mensajes guardados no se pueden entregar, y por eso la confirmación en el canal dice cuántos había.
+
+## Permisos necesarios
+
+| Acción | Clave de permiso |
+| --- | --- |
+| Poner una nota AFK | `afk.set_afk` (concedido a todos por defecto) |
+
+Todo el mundo puede usarlo desde el principio. Para restringirlo, deniega esa clave en `@everyone` y permítela en los roles que deban tenerla.
+
+Desactivar AFK, ya sea como módulo o desactivando el comando `/afk` en <DashboardLink to="settings/commands">**Settings \> Commands**</DashboardLink> (Ajustes > Comandos), detiene tanto las respuestas automáticas como el comando.

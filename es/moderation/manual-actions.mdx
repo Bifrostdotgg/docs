@@ -1,0 +1,102 @@
+---
+title: "Acciones de moderación manuales"
+description: "Usa comandos de barra para advertir, banear, expulsar, silenciar, desbanear y purgar mensajes."
+icon: "gavel"
+---
+
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+Heimdall ofrece comandos de barra para todas las acciones de moderación habituales. Cada acción crea un registro de sanción y avisa al miembro afectado por mensaje directo cuando es posible.
+
+## Advertir
+
+```
+/warn <user> <reason> [points] [expiry] [silent]
+```
+
+Da una advertencia a un miembro. La advertencia se registra como una sanción con un valor en puntos opcional. Si no indicas un valor en puntos, por defecto es 1.
+
+| Opción | Obligatoria | Descripción |
+|---|---|---|
+| `user` | Sí | El miembro al que se advierte |
+| `reason` | Sí | El motivo de la advertencia, que ve el miembro |
+| `points` | No | Sustituye el valor en puntos predeterminado de esta advertencia |
+| `expiry` | No | Cuánto falta para que caduquen los puntos de esta sanción (por ejemplo, `7d`, `30d`) |
+| `silent` | No | Si se marca, no se avisa al miembro por MD |
+
+El miembro advertido recibe un MD con el nombre de tu servidor, el motivo y el valor en puntos asignado.
+
+## Banear
+
+```
+/ban <user> <reason> [delete_days] [duration] [silent]
+```
+
+Banea a un miembro del servidor. También funciona con miembros que ya han salido del servidor.
+
+| Opción | Obligatoria | Descripción |
+|---|---|---|
+| `user` | Sí | El miembro o el ID de usuario que se banea |
+| `reason` | Sí | El motivo del baneo |
+| `delete_days` | No | Cuántos días de historial de mensajes se borran (de 0 a 7) |
+| `duration` | No | En un baneo temporal, cuánto falta para que el miembro se desbanee automáticamente (por ejemplo, `7d`) |
+| `silent` | No | Si se marca, no se avisa al miembro por MD antes de banearlo |
+
+## Desbanear
+
+```
+/unban <user> [reason]
+```
+
+Quita el baneo a un usuario.
+
+## Expulsar
+
+```
+/kick <user> <reason> [silent]
+```
+
+Saca a un miembro del servidor. Puede volver a entrar con un enlace de invitación. La expulsión queda registrada como sanción.
+
+## Silenciar
+
+```
+/mute <user> <duration> <reason> [silent]
+```
+
+Aplica un aislamiento temporal de Discord a un miembro, que le impide enviar mensajes o entrar en canales de voz durante el tiempo indicado.
+
+| Opción | Obligatoria | Descripción |
+|---|---|---|
+| `user` | Sí | El miembro al que se silencia |
+| `duration` | Sí | Cuánto dura el silencio (por ejemplo, `1h`, `12h`, `7d`). Máximo 28 días. |
+| `reason` | Sí | El motivo del silencio |
+| `silent` | No | Si se marca, no se avisa al miembro por MD |
+
+## Purgar
+
+```
+/purge count <count> [user]
+/purge time <duration> [user]
+```
+
+Borra mensajes en bloque del canal actual. Hay dos modos:
+
+- **count**: borra los `count` mensajes más recientes (hasta 100).
+- **time**: borra todos los mensajes enviados dentro del último `duration` (por ejemplo, `1h`).
+
+El filtro opcional `user` limita el borrado a los mensajes de un miembro concreto. Discord solo permite el borrado en bloque de mensajes con menos de 14 días.
+
+## MD de aviso de sanción
+
+Cuando Heimdall sanciona a un miembro, intenta enviarle un MD que explica la acción, el servidor donde ha ocurrido y el motivo. Si el miembro tiene los MD desactivados, el bot omite el aviso sin decir nada. La opción `silent` suprime el MD en cualquier caso.
+
+## Permisos necesarios
+
+| Comando | Clave de permiso |
+|---|---|
+| `/warn` | `moderation.enforcement.warn` |
+| `/ban`, `/unban` | `moderation.enforcement.ban` |
+| `/kick` | `moderation.enforcement.kick` |
+| `/mute` | `moderation.enforcement.mute` |
+| `/purge` | `moderation.enforcement.purge` |

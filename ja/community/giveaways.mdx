@@ -1,0 +1,64 @@
+---
+title: "プレゼント企画"
+description: "ボタンで参加でき、自動抽選と再抽選に対応した、期間限定のプレゼント企画の実施方法。"
+icon: "gift"
+---
+
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+プレゼント企画はタイマーで進み、ボタンで参加できます。参加者数はリアルタイムで更新され、タイマーが終わると当選者が自動で抽選されます。当選者が反応しない場合は再抽選もできます。
+
+## 開始する
+
+手早く始めるなら `/giveaway start` です。賞品、期間、当選者数を指定します。もっと細かく設定したい場合は `/giveaway create` で詳しい設定フローが開きます。ダッシュボードの <DashboardLink to="giveaways/create">**Giveaways \> Create giveaway**</DashboardLink>（プレゼント企画 > 作成）でも同じことができます。
+
+| 設定 | 説明 |
+| --- | --- |
+| **Prize**（賞品） | プレゼントする内容 |
+| **Duration**（期間） | 参加を受け付ける期間 |
+| **Winners**（当選者数） | 抽選する人数 |
+| **Requirements**（参加条件） | 参加できる人についての、ロールやアカウント作成からの期間の条件（任意） |
+
+メンバーは、プレゼント企画のメッセージにあるボタンで参加します。参加者が増えるたびにカウンターが更新されるので、誰も何かを更新しなくてもメッセージは役に立つ状態を保ちます。
+
+## 抽選と再抽選
+
+タイマーが終わると、Botが当選者を抽選して発表します。抽選はアトミックに行われるため、参加がまだ続いている最中にプレゼント企画が終了しても、同じ当選枠に2人が選ばれることはありません。
+
+| コマンド | 動作 |
+| --- | --- |
+| `/giveaway end` | 早めに終了し、すぐに抽選します |
+| `/giveaway cancel` | 当選者なしで終了します |
+| `/giveaway reroll` | 当選者が賞品を受け取らなかったときに、代わりの当選者を抽選します |
+| `/giveaway entrants` | 参加者を一覧表示します |
+| `/giveaway list` | 実施中のプレゼント企画を表示します |
+
+## テンプレートとシリーズ
+
+<DashboardLink to="giveaways/templates">**Giveaways \> Templates**</DashboardLink>（プレゼント企画 > テンプレート）では、プレゼント企画の設定を保存できるので、定期的に行う企画を毎回作り直す必要がありません。**Series**（シリーズ）は繰り返し行うプレゼント企画をまとめ、関係のない十数件の項目としてではなく、ひとつのものとして確認できるようにします。
+
+## 賞品の受け渡し
+
+<DashboardLink to="giveaways/fulfillment">**Giveaways \> Fulfillment**</DashboardLink>（プレゼント企画 > 受け渡し）ページでは、当選者が実際に賞品を受け取ったかを管理できます。自動ではなく人の手で渡す賞品の場合に重要です。賞品が未配送のプレゼント企画は、抽選が終わっても消えずに表示され続けます。
+
+## パートナーと共有
+
+プレゼント企画はパートナーサーバーと共有できます。あなたが実施する企画が相手のサーバーにも表示され、その逆も同様です。`/giveaway partners` でパートナー関係を管理し、`/giveaway share` で特定のプレゼント企画を提供します。ダッシュボードでは、プレゼント企画の作成または編集フォームからパートナーを招待します。<DashboardLink to="giveaways/sharing">**Giveaways \> Partner servers**</DashboardLink>（プレゼント企画 > パートナーサーバー）では、コードを使ってパートナーのプレゼント企画に参加したり、参加中の企画を確認したり、退出したりできます。
+
+## 必要な権限
+
+| 操作 | 権限キー |
+| --- | --- |
+| プレゼント企画への参加 | `giveaways.enter`（デフォルトで全員に付与） |
+| 作成 | `giveaways.create` |
+| プレゼント企画の閲覧 | `giveaways.giveaways.view` |
+| 終了、キャンセル、再抽選 | `giveaways.giveaways.manage` |
+| 参加者の閲覧 | `giveaways.giveaways.view_entrants` |
+| 受け渡し状況の閲覧 | `giveaways.fulfillment.view` |
+| 賞品を配送済みにする | `giveaways.fulfillment.manage` |
+| テンプレートの閲覧と管理 | `giveaways.templates.view`, `giveaways.templates.manage` |
+| シリーズの閲覧と管理 | `giveaways.series.view`, `giveaways.series.manage` |
+| 設定の閲覧と変更 | `giveaways.config.view`, `giveaways.config.manage` |
+| パートナー共有の閲覧と管理 | `giveaways.sharing.view`, `giveaways.sharing.manage` |
+
+参加者の閲覧は、あえてプレゼント企画の運営とは別の権限にしています。参加者リストはあなたのメンバーのリストであり、抽選を行うためにそれを読む必要はないからです。

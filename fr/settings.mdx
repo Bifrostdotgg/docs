@@ -1,0 +1,127 @@
+---
+title: "Paramètres du tableau de bord"
+description: "Configurer le comportement général du tableau de bord, les commandes slash, les modèles de serveur, le stockage de fichiers et le journal d’audit."
+icon: "gear"
+---
+
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+La page Settings est l’espace de configuration central du tableau de bord lui-même, plutôt que d’un plugin en particulier. Accède-y en cliquant sur <DashboardLink to="settings">**Settings**</DashboardLink> dans la barre latérale. Elle est divisée en onglets, chacun couvrant un aspect différent du comportement du tableau de bord et du bot pour ton serveur.
+
+## General
+
+L’onglet <DashboardLink to="settings/general">**General**</DashboardLink> contrôle le comportement global du tableau de bord.
+
+### Masquer les fonctionnalités refusées
+
+Quand cette option est activée, les sections du tableau de bord auxquelles l’utilisateur actuel n’a pas accès sont complètement masquées de la barre latérale au lieu d’apparaître grisées. Cela garde la barre latérale épurée pour les membres du staff qui n’ont besoin que de certaines zones.
+
+Les administrateurs voient toujours la barre latérale complète, quel que soit ce réglage.
+
+### Assistant de configuration
+
+L’assistant de configuration te guide dans la configuration initiale des fonctionnalités principales de Heimdall. Si tu as besoin d’y revenir, par exemple pour activer un nouvel ensemble de plugins, clique sur **Re-run Setup Wizard** pour le relancer depuis le début. Cela ne réinitialise aucune configuration existante ; il te guide simplement à nouveau à travers chaque étape.
+
+## Commands
+
+L’onglet <DashboardLink to="settings/commands">**Commands**</DashboardLink> te permet de configurer l’apparence et le comportement des commandes slash de Heimdall sur ton serveur.
+
+Chaque commande peut être individuellement :
+
+- **Activée ou désactivée** : les commandes désactivées sont retirées de la liste des commandes de Discord pour ton serveur
+{/* docs-manifest-ignore -- /feedback is an example rename target, not a shipped command */}
+- **Renommée** : donne à une commande un nom personnalisé qui suit les conventions de ton serveur (par exemple, renommer `/suggest` en `/feedback`)
+- **Dotée d’une autre description** : change la description affichée dans l’autocomplétion de Discord
+
+Les changements prennent effet en moins d’une minute, le temps que Discord diffuse la liste de commandes mise à jour sur ton serveur.
+
+## Role Permissions
+
+L’onglet <DashboardLink to="settings/roles">**Role Permissions**</DashboardLink> est l’endroit principal pour définir quels rôles Discord ont accès à quelles fonctionnalités de Heimdall. Consulte [Permissions](/fr/permissions) pour une explication complète du fonctionnement du système.
+
+Sélectionne un rôle dans la liste déroulante pour voir et modifier ses dérogations de permissions. Chaque clé de permission affiche son état actuel, **Allow**, **Deny** ou **Default**, avec un interrupteur à trois positions.
+
+## User Permissions
+
+L’onglet <DashboardLink to="settings/users">**User Permissions**</DashboardLink> te permet d’appliquer des dérogations par utilisateur en plus des permissions basées sur les rôles. Une dérogation au niveau de l’utilisateur l’emporte sur tous les rôles du membre, ce qui est utile pour donner accès à une personne précise sans changer ses rôles, ou pour bloquer une personne sur une fonctionnalité que ses rôles autoriseraient sinon.
+
+Sélectionne un utilisateur en cherchant son nom d’utilisateur Discord ou son ID, puis configure les dérogations comme pour les permissions de rôles.
+
+## Server Template
+
+L’onglet <DashboardLink to="settings/template">**Server Template**</DashboardLink> te permet d’exporter toute la configuration Heimdall de ton serveur dans un fichier JSON et de l’importer sur un autre serveur.
+
+### Exporter
+
+Clique sur **Export Configuration** pour télécharger un fichier JSON contenant les paramètres de chaque plugin, les dérogations de permissions, les règles d’automod, les catégories et toute autre configuration que Heimdall enregistre pour ton serveur.
+
+### Importer
+
+Clique sur **Import Configuration** et envoie un fichier JSON exporté précédemment. Tu peux choisir d’importer toutes les sections ou de sélectionner certains plugins à importer. La configuration existante des plugins sélectionnés est écrasée.
+
+<Warning>
+  Importer un modèle écrase la configuration existante des sections sélectionnées. Fais un export de ta configuration actuelle avant d’importer si tu as besoin d’une sauvegarde.
+</Warning>
+
+## File Storage
+
+L’onglet <DashboardLink to="settings/file-storage">**File Storage**</DashboardLink> connecte Heimdall à un fournisseur de stockage externe pour les pièces jointes. Par défaut, les fichiers joints aux conversations de tickets et de modmail sont stockés sur le CDN de Discord. Le stockage externe te permet de conserver ces fichiers après leur suppression par Discord (généralement au bout d’un an) et supprime les limites de taille de fichier.
+
+### Fournisseurs de stockage
+
+| Fournisseur | Remarques |
+| --- | --- |
+| **S3-compatible** | AWS S3, Cloudflare R2, MinIO et tout endpoint compatible S3 |
+| **UploadThing** | Hébergement de fichiers géré, sans infrastructure à maintenir |
+| **Zipline** | Serveur de partage de fichiers auto-hébergé |
+| **FiveManage** | Hébergement de fichiers de la communauté FiveM |
+| **Google Drive** | Stocke les fichiers dans un dossier Google Drive |
+| **OneDrive** | Stocke les fichiers dans un dossier OneDrive |
+| **Discord Channel** | Envoie les fichiers dans un salon Discord privé, en solution de repli |
+
+### Modes de stockage
+
+- **Oversized only** : seuls les fichiers qui dépassent la limite d’envoi de Discord partent vers le stockage externe ; les fichiers plus petits continuent d’utiliser le CDN de Discord.
+- **All files** : toutes les pièces jointes passent par le stockage externe, quelle que soit leur taille.
+
+### Fournisseur de débordement
+
+Tu peux configurer un fournisseur secondaire de débordement. Les fichiers qui dépassent un seuil en octets défini sont automatiquement envoyés vers ce fournisseur au lieu du principal. C’est utile quand ton fournisseur principal a des quotas de stockage et que tu veux garder les gros fichiers ailleurs. Discord, par exemple, ne permet d’envoyer que des fichiers de 8 Mo maximum. Un cas d’usage courant que nous voyons consiste à utiliser un Discord Channel comme fournisseur principal, puis à configurer autre chose, comme S3, en solution de repli.
+
+### Configuration
+
+Sélectionne ton fournisseur, saisis les identifiants requis (clé API, nom du bucket, région, endpoint selon le cas), puis clique sur **Save**. Le tableau de bord propose un guide de configuration propre à chaque fournisseur, accessible depuis le lien **Setup Guide** à côté du sélecteur de fournisseur.
+
+<Note>
+  Les identifiants sont chiffrés au repos et ne sont jamais affichés sur le tableau de bord après l’enregistrement. Pour mettre à jour un identifiant, colle une nouvelle valeur et enregistre.
+</Note>
+
+## Background Jobs
+
+L’onglet <DashboardLink to="settings/background-jobs">**Background Jobs**</DashboardLink> liste les tâches récentes qui modifient les rôles de nombreux membres à la fois, comme donner les rôles de récompense de niveau après un import d’XP ou un changement de courbe de niveaux, ou passer tout le monde sur un nouveau rôle Minecraft lié. Chaque tâche affiche sa progression, combien de membres elle a modifiés et ceux qu’elle n’a pas pu modifier, et une tâche en cours peut être annulée. Les tâches terminées restent listées pendant sept jours.
+
+Toute personne qui peut ouvrir le tableau de bord peut ouvrir cet onglet, mais chacun ne voit que les tâches des fonctionnalités pour lesquelles il a la permission. Consulte [Tâches en arrière-plan](/fr/community/levels#background-jobs) pour la signification des compteurs.
+
+## Audit Log
+
+L’onglet <DashboardLink to="settings/audit">**Audit Log**</DashboardLink> enregistre les actions effectuées sur le tableau de bord de Heimdall : quel membre du staff a modifié une configuration, créé ou supprimé une catégorie, modifié une permission, etc. C’est distinct du journal d’audit du serveur Discord.
+
+Chaque entrée affiche :
+
+| Champ | Description |
+| --- | --- |
+| **Timestamp** | Quand l’action a eu lieu |
+| **User** | Quel utilisateur du tableau de bord a effectué l’action |
+| **Action** | Ce qui a été modifié (par exemple « Permission override updated », « Category deleted ») |
+| **Details** | Un résumé de ce qui a changé, avec les valeurs avant et après quand c’est pertinent |
+
+Le journal d’audit est en lecture seule et ne peut pas être vidé. Les entrées sont conservées sur une période glissante de 90 jours.
+
+## Permissions requises
+
+| Action | Clé de permission |
+| --- | --- |
+| Voir et modifier les paramètres généraux | `dashboard.manage_settings` |
+| Voir et modifier les permissions de rôles et d’utilisateurs | `dashboard.manage_permissions` |
+| Gérer la configuration du stockage de fichiers | `file-storage.manage_config` |
+| Voir le journal d’audit | `dashboard.manage_permissions` |

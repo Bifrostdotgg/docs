@@ -1,0 +1,90 @@
+---
+title: "Einladungs-Tracker"
+description: "Erfassen, über welche Einladung jedes Mitglied beigetreten ist und wie viele Leute jedes Mitglied mitgebracht hat."
+icon: "user-plus"
+---
+
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+Der Einladungs-Tracker erfasst, welche Einladung jedes neue Mitglied genutzt hat, schreibt sie der Person gut, die sie erstellt hat, und führt für jedes Mitglied eine laufende Summe. Außerdem bringt er Platzhalter mit, die du in deiner Willkommensnachricht nutzen kannst.
+
+## Bevor du loslegst
+
+Das Erfassen von Einladungen braucht die Berechtigung **Server verwalten**. Discord zeigt die Nutzungszahlen von Einladungen nur Bots mit dieser Berechtigung, und diese Zahlen sind der einzige Weg, herauszufinden, über welche Einladung jemand beigetreten ist. Ohne sie schaltet sich die Funktion selbst ab, statt unvollständige Daten zu erfassen, und das Dashboard zeigt einen Button, der dich durch das Erteilen der Berechtigung führt.
+
+Wenn du dem Bot "Server verwalten" lieber nicht geben willst, lass den Einladungs-Tracker aus. Auf alles andere hat das keinen Einfluss.
+
+Außerdem zählt der Tracker Beitritte erst ab dem Moment, in dem du ihn aktivierst. Discord verrät nicht, wer eine Einladung in der Vergangenheit genutzt hat. Ein Link, der schon 40 Nutzungen hat, kann diese 40 Leute also niemandem gutschreiben. Künftige Beitritte über denselben Link werden ganz normal gutgeschrieben.
+
+## Einrichtung
+
+Öffne im Dashboard <DashboardLink to="invites/config">**Invite Tracker**</DashboardLink> und schalte **Track invites** ein. Damit kommt auch `/invites` auf deinen Server. Optional legst du einen **join log channel** (Beitritts-Logkanal) fest, der für jeden Beitritt eine Zeile bekommt, wer die Person eingeladen hat.
+
+## So wird die Summe berechnet
+
+```
+total = joined - fake - left + bonus
+```
+
+| Teil | Bedeutung |
+| --- | --- |
+| **joined** (beigetreten) | Leute, die über die Einladungen dieses Mitglieds beigetreten sind |
+| **fake** (unecht) | Ihr Discord-Account war jünger als das Alter, das du festlegst, gemessen im Moment des Beitritts |
+| **left** (verlassen) | Sie haben den Server seitdem verlassen |
+| **bonus** | Alles, was das Team von Hand hinzugefügt oder abgezogen hat |
+
+Jeder Abzug lässt sich einzeln ein- und ausschalten, weil andere Einladungs-Bots sich da nicht einig sind. Schalte **people who leave do not count** aus, wenn du findest, dass niemand Gutschriften dafür verlieren sollte, wer bleibt.
+
+Zwei Details, die du kennen solltest:
+
+- **Ob jemand unecht ist, wird beim Beitritt entschieden und nie neu bewertet.** Ein Mitglied, das beim Beitritt neu war, zählt dauerhaft als unecht. Sonst würde jede Summe still nach oben wandern, während die Accounts älter werden, und irgendwann würde jemand beschuldigt, Einladungen verloren zu haben, die er nie verloren hat.
+- **Wiederbeitritte zählen standardmäßig nicht doppelt.** Über eine Einladung zu verlassen und wieder beizutreten ist der einfachste Weg, eine Zahl aufzublähen, und braucht nicht mal einen zweiten Account. Der Wiederbeitritt wird trotzdem erfasst und ist unter <DashboardLink to="invites/activity">**Invite Tracker \> Invites and Joins**</DashboardLink> sichtbar, er zählt nur nichts.
+
+## Befehle
+
+| Befehl | Wer |
+| --- | --- |
+| `/invites view` | Jeder, für die eigene Zahl |
+| `/invites view member:` | Braucht die Berechtigung, die Zahl von jedem zu prüfen |
+| `/invites leaderboard` | Die zehn besten Einlader. Die Top 100 findest du unter <DashboardLink to="invites/leaderboard">**Invite Tracker \> Leaderboard**</DashboardLink> |
+| `/invites create` | Team, erstellt eine beschriftete Einladung, damit sich Kampagnen auseinanderhalten lassen |
+| `/invites bonus` | Team, fügt Einladungen von Hand hinzu oder zieht sie ab |
+
+Jede Antwort ist nur für die Person sichtbar, die den Befehl ausgeführt hat. Eine Bestenliste pingt die Leute darauf nicht.
+
+## Platzhalter für die Willkommensnachricht
+
+Füge diese in deine Willkommensnachricht ein:
+
+| Platzhalter | Wird angezeigt als |
+| --- | --- |
+| `{inviter}` | Der Anzeigename der Person, die eingeladen hat |
+| `{invitermention}` | Ein Ping für diese Person |
+| `{inviterinvites}` | Wie viele Einladungen sie jetzt hat |
+| `{invitecode}` | Der genutzte Einladungscode |
+
+Lässt sich nicht ermitteln, wer eingeladen hat, zeigen diese "unknown" an, und die Willkommensnachricht wird trotzdem gesendet.
+
+## Wenn der Bot es nicht sagen kann
+
+Das kommt vor und ist kein Fehler. Jeder dieser Fälle wird im Beitritts-Log angezeigt, statt versteckt zu werden:
+
+| Angezeigt als | Warum |
+| --- | --- |
+| Vanity URL, no inviter to credit (Vanity-URL, niemand, dem es gutgeschrieben werden kann) | Die Person hat deinen Link `discord.gg/yourserver` genutzt. |
+| Two invites used at once (Zwei Einladungen gleichzeitig genutzt) | Zwei Leute sind im selben Augenblick beigetreten. Zwei Codes sind hochgezählt worden, und nichts verrät, wer welchen genutzt hat. |
+| Invite could not be identified (Einladung nicht zuzuordnen) | Über die Discord-Serverentdeckung (Server Discovery), oder der Bot war gerade neu gestartet. |
+| Bot, added through OAuth (Bot, über OAuth hinzugefügt) | Bots werden hinzugefügt, nicht eingeladen. |
+
+## Erforderliche Berechtigungen
+
+| Aktion | Berechtigungsschlüssel |
+| --- | --- |
+| Die eigene Zahl prüfen | `invites.view_own` (standardmäßig für alle erteilt) |
+| Die Zahl von jedem und die Bestenliste prüfen | `invites.view_others` (standardmäßig für alle erteilt) |
+| Einstellungen ansehen | `invites.config.view_config` |
+| Einstellungen ändern | `invites.config.manage_config` |
+| Beschriftete Einladungen erstellen | `invites.manage.create_invite` |
+| Bonus-Einladungen hinzufügen oder abziehen | `invites.manage.manage_bonus` |
+
+Der Bonus ist die einzige Zahl hier, die sich jemand ausdenken kann. Deshalb hat er einen eigenen Schlüssel, und jede Anpassung hält fest, wer sie gemacht hat und warum.

@@ -1,0 +1,127 @@
+---
+title: "Ajustes del panel"
+description: "Cómo configurar el comportamiento general del panel, los ajustes de los comandos de barra, las plantillas de servidor, el almacenamiento de archivos y el registro de auditoría."
+icon: "gear"
+---
+
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+La página Settings (Ajustes) es la zona central de configuración del propio panel, no de un plugin concreto. Entra haciendo clic en <DashboardLink to="settings">**Settings**</DashboardLink> en la barra lateral. Está dividida en pestañas, y cada una cubre un aspecto distinto de cómo se comportan el panel y el bot en tu servidor.
+
+## General
+
+La pestaña <DashboardLink to="settings/general">**General**</DashboardLink> controla el comportamiento general del panel.
+
+### Ocultar las funciones denegadas
+
+Si lo activas, las secciones del panel a las que el usuario actual no tiene permiso para acceder desaparecen por completo de la barra lateral, en lugar de mostrarse en gris. Así la barra lateral queda limpia para los miembros del staff que solo necesitan acceder a zonas concretas.
+
+Los administradores siempre ven la barra lateral completa, sea cual sea este ajuste.
+
+### Asistente de configuración
+
+El asistente de configuración te guía por la configuración inicial de las funciones principales de Heimdall. Si necesitas volver a pasar por él (por ejemplo, al activar un nuevo grupo de plugins), haz clic en **Re-run Setup Wizard** (volver a ejecutar el asistente) para empezarlo de nuevo desde el principio. No restablece ninguna configuración existente; simplemente te guía otra vez por cada paso.
+
+## Comandos
+
+La pestaña <DashboardLink to="settings/commands">**Commands**</DashboardLink> (Comandos) te permite configurar cómo aparecen y se comportan los comandos de barra de Heimdall en tu servidor.
+
+Cada comando se puede, por separado:
+
+- **Activar o desactivar**: los comandos desactivados desaparecen de la lista de comandos de Discord en tu servidor
+{/* docs-manifest-ignore -- /feedback is an example rename target, not a shipped command */}
+- **Renombrar**: dale a un comando un nombre personalizado que encaje con las costumbres de tu servidor (por ejemplo, cambiar `/suggest` por `/feedback`)
+- **Cambiar su descripción**: cambia la descripción que se muestra en el autocompletado de Discord
+
+Los cambios se aplican en menos de un minuto, lo que tarda Discord en propagar la lista de comandos actualizada a tu servidor.
+
+## Permisos por rol
+
+La pestaña <DashboardLink to="settings/roles">**Role Permissions**</DashboardLink> (Permisos por rol) es el sitio principal para configurar qué roles de Discord tienen acceso a qué funciones de Heimdall. Consulta [Permisos](/es/permissions) para ver una explicación completa de cómo funciona el sistema.
+
+Elige un rol en el desplegable para ver y editar sus permisos específicos. Cada clave de permiso muestra su estado actual (**Allow**, **Deny** o **Default**, es decir, permitir, denegar o predeterminado) con un interruptor de tres posiciones.
+
+## Permisos por usuario
+
+La pestaña <DashboardLink to="settings/users">**User Permissions**</DashboardLink> (Permisos por usuario) te permite aplicar permisos específicos por usuario por encima de los permisos por rol. Un permiso a nivel de usuario tiene prioridad sobre cualquier rol que tenga el miembro, así que es útil para dar acceso a una persona concreta sin cambiar sus roles, o para bloquear a alguien en una función que sus roles le permitirían.
+
+Elige un usuario buscando su nombre de usuario o su ID de Discord y configura sus permisos igual que los permisos por rol.
+
+## Plantilla de servidor
+
+La pestaña <DashboardLink to="settings/template">**Server Template**</DashboardLink> (Plantilla de servidor) te permite exportar toda la configuración de Heimdall de tu servidor como un archivo JSON e importarla en otro servidor.
+
+### Exportar
+
+Haz clic en **Export Configuration** (exportar configuración) para descargar un archivo JSON con los ajustes de todos los plugins, los permisos específicos, las reglas del automod, las categorías y el resto de la configuración que Heimdall guarda para tu servidor.
+
+### Importar
+
+Haz clic en **Import Configuration** (importar configuración) y sube un archivo JSON exportado anteriormente. Puedes importar todas las secciones o elegir plugins concretos. La configuración existente de los plugins elegidos se sobrescribe.
+
+<Warning>
+  Importar una plantilla sobrescribe la configuración existente de las secciones elegidas. Exporta tu configuración actual antes de importar si necesitas una copia de seguridad.
+</Warning>
+
+## Almacenamiento de archivos
+
+La pestaña <DashboardLink to="settings/file-storage">**File Storage**</DashboardLink> (Almacenamiento de archivos) conecta Heimdall con un proveedor de almacenamiento externo para los adjuntos. Por defecto, los archivos adjuntos a las conversaciones de tickets y de modmail se guardan en la propia CDN de Discord. El almacenamiento externo te permite conservar esos archivos después de que Discord los borre (normalmente al cabo de un año) y quita los límites de tamaño de archivo.
+
+### Proveedores de almacenamiento
+
+| Proveedor | Notas |
+| --- | --- |
+| **Compatible con S3** | AWS S3, Cloudflare R2, MinIO y cualquier endpoint compatible con S3 |
+| **UploadThing** | Alojamiento de archivos gestionado, sin infraestructura que mantener |
+| **Zipline** | Servidor de archivos autoalojado |
+| **FiveManage** | Alojamiento de archivos de la comunidad de FiveM |
+| **Google Drive** | Guarda los archivos en una carpeta de Google Drive |
+| **OneDrive** | Guarda los archivos en una carpeta de OneDrive |
+| **Canal de Discord** | Sube los archivos a un canal privado de Discord como alternativa |
+
+### Modos de almacenamiento
+
+- **Solo los que se pasan de tamaño**: solo los archivos que superan el límite de subida de Discord se envían al almacenamiento externo; los más pequeños siguen usando la CDN de Discord.
+- **Todos los archivos**: todos los adjuntos pasan por el almacenamiento externo, sea cual sea su tamaño.
+
+### Proveedor de desbordamiento
+
+Puedes configurar un proveedor secundario de desbordamiento. Los archivos que superan un umbral de bytes configurado van automáticamente a ese proveedor en lugar de al principal. Es útil cuando tu proveedor principal tiene cuotas de almacenamiento y quieres guardar los archivos grandes en otro sitio. Discord, por ejemplo, solo permite subir archivos de hasta 8 MB. Un uso habitual que vemos es usar un canal de Discord como proveedor principal y configurar otro, como S3, como alternativa.
+
+### Configuración
+
+Elige tu proveedor, introduce las credenciales necesarias (clave de API, nombre del bucket, región y endpoint, según el caso) y haz clic en **Save** (guardar). El panel incluye una guía de configuración para cada proveedor, a la que se accede desde el enlace **Setup Guide** (guía de configuración) que hay junto al selector de proveedor.
+
+<Note>
+  Las credenciales se guardan cifradas y nunca se muestran en el panel una vez guardadas. Para actualizar una credencial, pega un valor nuevo y guarda.
+</Note>
+
+## Tareas en segundo plano
+
+La pestaña <DashboardLink to="settings/background-jobs">**Background Jobs**</DashboardLink> (Tareas en segundo plano) muestra las tareas recientes que cambian roles de muchos miembros a la vez, como dar los roles de recompensa por nivel después de importar XP o de cambiar la curva de niveles, o pasar a todo el mundo a un nuevo rol vinculado de Minecraft. Cada tarea muestra su progreso, a cuántos miembros ha cambiado y a cuáles no ha podido, y una tarea en curso se puede cancelar. Las tareas terminadas siguen en la lista durante siete días.
+
+Cualquiera que pueda abrir el panel puede abrir esta pestaña, pero cada persona solo ve las tareas de las funciones para las que tiene permiso. Consulta [Tareas en segundo plano](/es/community/levels#background-jobs) para saber qué significan los recuentos.
+
+## Registro de auditoría
+
+La pestaña <DashboardLink to="settings/audit">**Audit Log**</DashboardLink> (Registro de auditoría) registra las acciones hechas en el panel de Heimdall: qué miembro del staff cambió una configuración, creó o borró una categoría, modificó un permiso, etc. Es independiente del registro de auditoría del servidor de Discord.
+
+Cada entrada muestra:
+
+| Campo | Descripción |
+| --- | --- |
+| **Marca de tiempo** | Cuándo se hizo la acción |
+| **Usuario** | Qué usuario del panel hizo la acción |
+| **Acción** | Qué se cambió (por ejemplo, "Permission override updated" o "Category deleted") |
+| **Detalles** | Un resumen de lo que cambió, con los valores de antes y de después cuando procede |
+
+El registro de auditoría es de solo lectura y no se puede vaciar. Las entradas se conservan durante una ventana móvil de 90 días.
+
+## Permisos necesarios
+
+| Acción | Clave de permiso |
+| --- | --- |
+| Ver y cambiar los ajustes generales | `dashboard.manage_settings` |
+| Ver y cambiar los permisos por rol y por usuario | `dashboard.manage_permissions` |
+| Gestionar la configuración del almacenamiento de archivos | `file-storage.manage_config` |
+| Ver el registro de auditoría | `dashboard.manage_permissions` |

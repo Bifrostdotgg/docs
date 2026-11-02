@@ -1,0 +1,65 @@
+---
+title: "Temporäre Sprachkanäle"
+description: "Temporäre Sprachkanäle per Beitritt erstellen, die sich selbst löschen, wenn sie leer sind."
+icon: "microphone"
+---
+
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+Mit dem System für temporäre Sprachkanäle erstellen Mitglieder bei Bedarf ihre eigenen Sprachkanäle. Du legst einen oder mehrere "Ersteller"-Sprachkanäle fest. Betritt ein Mitglied einen Ersteller-Kanal, legt der Bot sofort einen neuen Sprachkanal an, verschiebt das Mitglied dorthin und löscht den Kanal automatisch, sobald das letzte Mitglied ihn verlässt.
+
+Administratoren müssen so keine Sprachkanäle für kleine Gruppen mehr von Hand anlegen und löschen, und Mitglieder bekommen die Kontrolle über ihre eigenen Räume, ohne dass sie die Berechtigung "Kanäle verwalten" brauchen.
+
+<Frame>
+  ![Temporäre Sprachkanäle](/images/Voice_TempVC.png)
+</Frame>
+
+## So funktioniert es für Mitglieder
+
+Tritt dem Ersteller-Sprachkanal bei (meist heißt er etwa "Create a channel" oder "Join to create"). Der Bot erstellt einen neuen Kanal, der standardmäßig nach dir benannt ist, und verschiebt dich hinein. Dann kannst du andere einladen. Wenn alle gegangen sind, löscht der Bot den Kanal.
+
+Solange du in deinem temporären Kanal bist, steuerst du ihn über den Befehl `/tempvc`.
+
+## Einrichtung
+
+Öffne im Dashboard <DashboardLink to="tempvc/config">**Temp VC \> Configuration**</DashboardLink>.
+
+| Einstellung | Beschreibung |
+| --- | --- |
+| **Creator channel** (Ersteller-Kanal) | Der Sprachkanal, dessen Betreten einen neuen Kanal erstellt |
+| **Category** (Kategorie) | Die Kategorie, in der neue temporäre Kanäle angelegt werden |
+| **Default name** (Standardname) | Vorlage für die Namen neuer Kanäle. Unterstützt die Variablen `{user}` und `{count}`. |
+| **Default user limit** (Standard-Nutzerlimit) | Wie viele Mitglieder neuen Kanälen beitreten können (0 = unbegrenzt) |
+| **Default bitrate** (Standard-Bitrate) | Audioqualität neuer Kanäle |
+| **Permitted roles** (Erlaubte Rollen) | Welche Rollen den Ersteller-Kanal nutzen dürfen (leer lassen für alle Mitglieder) |
+
+Du kannst mehrere Ersteller-Kanäle mit unterschiedlichen Einstellungen haben.
+
+## Steuerung für Mitglieder
+
+```text
+/tempvc create
+/tempvc delete
+/tempvc delete-all
+```
+
+| Unterbefehl | Beschreibung |
+| --- | --- |
+| `create` | Einen temporären Kanal manuell erstellen (ohne dem Ersteller-Kanal beizutreten) |
+| `delete` | Deinen aktuellen temporären Kanal sofort löschen |
+| `delete-all` | Alle temporären Kanäle löschen, die dir gehören |
+
+Mitglieder können ihren temporären Kanal auch über das Kontextmenü des Sprachkanals in Discord umbenennen, ein Nutzerlimit setzen oder ihn sperren, sofern der Bot ihnen die passenden Berechtigungen gegeben hat.
+
+## Aktive Kanäle ansehen
+
+Öffne im Dashboard <DashboardLink to="tempvc/active">**Temp VC \> Active Channels**</DashboardLink>, um alle aktuell aktiven temporären Kanäle zu sehen: wer sie erstellt hat, wie viele Mitglieder darin sind und wie lange sie schon aktiv sind.
+
+## Erforderliche Berechtigungen
+
+| Aktion | Berechtigungsschlüssel |
+| --- | --- |
+| Den Ersteller-Kanal nutzen | Standardmäßig für alle Mitglieder verfügbar |
+| Einstellungen ansehen | `tempvc.view_config` |
+| Einstellungen ändern | `tempvc.manage_config` |
+| Kanäle verwalten (z. B. erzwungenes Löschen) | `tempvc.manage_channels` |

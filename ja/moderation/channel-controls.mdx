@@ -1,0 +1,67 @@
+---
+title: "チャンネルの制御"
+description: "チャンネルのロック、チャンネルごとのBAN、退出と再参加によるBAN回避の防止。"
+icon: "lock"
+---
+
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+Heimdallには、チャンネル単位で処分を行う3つのツールがあります：チャンネルのロック、チャンネルBAN、退出BANの追跡です。これらはサーバー全体のBANと組み合わせて使い、サーバーからBANするほどではないものの、特定のチャンネルへのアクセスやサーバーへの再参加を制御する必要がある場面に対応します。
+
+## チャンネルのロックと解除
+
+```
+/lock [channel] [reason] [duration]
+/unlock [channel]
+```
+
+チャンネルをロックすると、明示的な上書き設定のあるロールを持たないメンバーは、メッセージを送れなくなります。対象のメンバーには、チャンネルは見えたまま読み取り専用になります。
+
+| オプション | 必須 | 説明 |
+|---|---|---|
+| `channel` | いいえ | ロックするチャンネル。デフォルトは現在のチャンネルです。 |
+| `reason` | いいえ | ロック時にチャンネルに投稿される理由。 |
+| `duration` | いいえ | この期間が過ぎると自動でロックを解除します（例：`2h`、`1d`）。 |
+
+ロック時には、オプションでチャンネルにシステムメッセージを投稿してメンバーに知らせられます。ロックを解除すると、チャンネルが再び開いたことを示す別のメッセージが投稿されます。
+
+ロックされたチャンネルは、ダッシュボードの <DashboardLink to="moderation/locked-channels">**Moderation > Locked Channels**</DashboardLink>（モデレーション > ロック中のチャンネル）で管理されます。スタッフはここで現在ロックされているチャンネルをすべて確認し、画面からロックを解除できます。
+
+## チャンネルBAN
+
+```
+/channelban <user> [channel] [reason] [duration]
+```
+
+特定のメンバーを1つのチャンネルからBANし、そのチャンネルでの閲覧と書き込みをできなくします。これは対象を絞ったツールで、メンバーはサーバーに残ったまま、ほかのチャンネルには普段どおりアクセスできます。
+
+| オプション | 必須 | 説明 |
+|---|---|---|
+| `user` | はい | チャンネルからBANするメンバー |
+| `channel` | いいえ | BANするチャンネル。デフォルトは現在のチャンネルです。 |
+| `reason` | いいえ | BANの理由 |
+| `duration` | いいえ | チャンネルBANの期間（例：`7d`）。デフォルトは無期限です。 |
+
+チャンネルBANは、チャンネルの権限の上書き設定を変更することで機能します。期間が切れると、上書き設定は自動で削除されます。有効なチャンネルBANは、ダッシュボードの <DashboardLink to="moderation/channel-bans">**Moderation > Channel Bans**</DashboardLink>（モデレーション > チャンネルBAN）で確認、管理できます。
+
+## 退出BAN
+
+退出BANは、メンバーが退出と再参加によって警告やミュートを逃れるのを防ぎます。有効にすると、サーバーから退出したメンバーは、免除ロールを持っていない限り、設定した期間だけ自動でBANされます。最近違反があったメンバーだけでなく、すべての退出に適用されるため、有効にする前に免除ロールを設定しておきましょう。
+
+### 退出BANの設定
+
+<DashboardLink to="moderation/leave-bans">**Moderation \> Leave Bans**</DashboardLink>（モデレーション > 退出BAN）を開き、**Enable Ban on Leave**（退出時のBANを有効化）をオンにします。次の項目を設定します。
+
+- **Default Ban Duration**（デフォルトのBAN期間）：自動BANの期間、または無期限
+- **Ban Reason**（BANの理由）：BANに記録される理由
+- **Immune Roles**（免除ロール）：これらのロールのいずれかを持つメンバーは退出BANされません。Botは常に対象外です
+
+退出BANは違反として記録されるため、メンバーの記録にBANの理由が反映されます。
+
+## 必要な権限
+
+| 操作 | 権限キー |
+|---|---|
+| `/lock`、`/unlock` | `moderation.enforcement.lock_channels` |
+| `/channelban` | `moderation.enforcement.ban` |
+| 退出BANの設定の管理 | `moderation.enforcement.manage_rules` |

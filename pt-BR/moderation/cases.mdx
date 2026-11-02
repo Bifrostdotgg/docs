@@ -1,0 +1,92 @@
+---
+title: "Casos"
+description: "Um registro numerado para cada ação de moderação, no Discord e no Minecraft."
+icon: "folder-open"
+---
+
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+Cada ban, mute, expulsão, advertência e ban de canal no seu servidor, e cada punição e ofensa no seu servidor de Minecraft, vira um **caso** com número próprio, como `#1482`. Um caso guarda o que aconteceu, quem fez, por quê, e tudo o que aconteceu com ele desde então: o desban, o recurso, as notas que a staff adicionou e as provas que anexou. Os casos de um membro no Discord e na conta de Minecraft vinculada a ele ficam numa página só.
+
+Os casos são um registro, não um novo jeito de punir. Você continua banindo com `/ban`, `/mc-punish` ou dentro do jogo, exatamente como antes, e cada caso leva de volta à ação que registra.
+
+## O que vira um caso
+
+- Bans, expulsões, mutes, advertências e bans de canal feitos pelo Heimdall, pela staff ou pelo automod.
+- Bans, expulsões e castigos feitos pelos menus do próprio Discord ou por outro bot. Eles são creditados a quem os fez, o que o Heimdall lê no registro de auditoria, então o bot precisa da permissão **Ver registro de auditoria**.
+- Bans, bans de IP, mutes, advertências e expulsões do Minecraft, feitos pelo painel, por `/mc-punish` ou dentro do jogo, e todas as ofensas do Minecraft.
+
+Um desban, o fim de um mute ou uma revogação não é um caso novo. Ele encerra o caso que retira, que passa a aparecer como revogado. Um ban que cumpre todo o prazo aparece como expirado, e um ban substituído por um mais novo aparece como substituído.
+
+O número do caso aparece no log de moderação, então `Case #1482` numa linha de log é o que a staff procura.
+
+## Encontrando um caso
+
+### No painel
+
+Abra <DashboardLink to="cases/list">**Cases \> All cases**</DashboardLink> (Casos > Todos os casos). Filtre por plataforma, ação, status ou moderador, ou procure uma pessoa. Abra um caso para ver a linha do tempo dele, e abra a pessoa para ver todos os casos que ela tem no Discord e em qualquer conta de Minecraft confirmada como vinculada a ela. O Heimdall nunca adivinha um vínculo: uma conta de Minecraft não vinculada é outra pessoa.
+
+### No Discord
+
+| Comando | O que faz |
+| --- | --- |
+| `/case view` | Mostra um caso pelo número, com botões para adicionar uma nota ou prova e para retirá-lo |
+| `/case lookup` | Mostra todos os casos de um usuário do Discord ou de um jogador de Minecraft |
+| `/case note` | Adiciona uma nota a um caso |
+| `/case evidence` | Anexa um arquivo ou link a um caso |
+| `/case reason` | Muda o motivo de um caso. O motivo anterior fica guardado no caso |
+
+Clique com o botão direito em um membro e escolha **Apps \> View cases** (Apps > Ver casos) para ver a mesma lista de `/case lookup`. Clique com o botão direito em uma mensagem e escolha **Apps \> Add to case** (Apps > Adicionar ao caso) para copiá-la para um caso como nota, com um link de volta para a mensagem. É assim que uma decisão que a staff discutiu em um canal vai parar no registro.
+
+### No jogo
+
+A staff com `heimdall.admin` pode adicionar uma nota com `/hd case note <number> <text>`. Dentro do jogo, as notas só podem ir em casos do Minecraft, e em um caso oculto só para a staff que também tenha `heimdall.punishments.hidden`.
+
+## Retirando um caso
+
+Os botões **Unban** (Desbanir), **Unmute** (Tirar mute) e **Revoke** (Revogar) de um caso o retiram pelo mesmo caminho do comando da própria plataforma, então pedem a mesma permissão: `moderation.enforcement.ban` para desbanir no Discord, `minecraft.punishments.revoke` para revogar no Minecraft. Uma advertência não tem o que retirar, então ela é perdoada, e os pontos dela deixam de contar.
+
+## Recursos
+
+Quando um membro banido ou silenciado entra com um recurso, o recurso é vinculado ao caso dele. O link na tela de ban dentro do jogo e em cada linha da página de bans indica o caso, e um recurso sem caso é associado ao ban ou mute em aberto do membro. Um recurso só é vinculado a um caso sobre a própria pessoa que está recorrendo, ou sobre uma conta vinculada a ela, então um membro não consegue anexar o recurso dele ao caso de outra pessoa.
+
+O caso mostra o recurso e o resultado, e o recurso em <DashboardLink to="appeals/submissions">**Appeals \> Submissions**</DashboardLink> (Recursos > Envios) leva ao caso dele. Aceitar o recurso retira o caso na plataforma de onde ele veio: um desban ou fim de mute no Discord, ou uma revogação no Minecraft.
+
+<span id="public-bans-page"></span>
+## Página pública de bans
+
+<DashboardLink to="cases/bans-page">**Cases \> Bans page**</DashboardLink> (Casos > Página de bans) publica uma lista de bans e mutes no seu site de bans, com Discord e Minecraft juntos, cada um com o número do caso. Você escolhe quem vê o quê, em níveis:
+
+| Nível | Quem é |
+| --- | --- |
+| Público | Qualquer pessoa com o link |
+| Logado | Qualquer pessoa logada com o Discord |
+| Membros | Membros do seu servidor |
+| Níveis por cargo | Membros com um dos cargos que você escolher, até cinco níveis |
+
+Cada nível vê tudo o que os níveis acima dele veem, mais o que você marcar para ele, então nenhum nível vê menos que o público. Para cada nível, você pode marcar bans do Minecraft, bans de IP do Minecraft, mutes do Minecraft, bans do Discord, motivos, quem aplicou cada entrada e entradas expiradas. Punições ocultas nunca aparecem na lista, exceto para a staff logada que já pode ver casos ocultos.
+
+Os bans do Discord ficam desligados em todos os níveis até você ligá-los, e <DashboardLink to="cases/bans-page">**Cases \> Bans page**</DashboardLink> avisa quando eles chegariam a alguém de fora do seu servidor. Uma lista de bans do Minecraft é algo comum na comunidade; uma lista pública de contas do Discord com motivos de ban é informação pessoal sobre pessoas reais.
+
+**Reset link** (Redefinir link) dá à página um novo endereço, e o antigo para de funcionar.
+
+## O detalhe importante
+
+A moderação de antes da existência dos casos é importada automaticamente na primeira vez que o bot inicia com os casos. Um servidor com anos de histórico pode levar alguns minutos para ser importado e, até isso terminar, <DashboardLink to="cases/list">**Cases**</DashboardLink> (Casos) e a página de bans só listam as ações feitas depois que os casos chegaram. Os casos novos mantêm seus números quando o histórico chega, porque as ações mais antigas receberam os primeiros números.
+
+Os arquivos de prova precisam de armazenamento de arquivos configurado no seu servidor. Sem isso, você pode anexar links, mas não arquivos, porque o link de um anexo do Discord expira, e uma prova que para de carregar sem aviso é pior do que nenhuma.
+
+## Permissões necessárias
+
+A leitura é separada por plataforma, porque a staff do Minecraft muitas vezes não é moderadora no Discord. A staff que podia ler a antiga aba de infrações ou o histórico de punições do Minecraft continua lendo os mesmos casos sem precisar de uma chave nova.
+
+| Ação | Chave de permissão |
+| --- | --- |
+| Ler casos do Discord | `cases.view_discord` |
+| Ler casos do Minecraft | `cases.view_minecraft` |
+| Ver casos ocultos, nas plataformas que você pode ler | `cases.view_hidden` |
+| Adicionar notas | `cases.comment` |
+| Adicionar e remover provas | `cases.manage_evidence` |
+| Mudar o motivo de um caso | `cases.edit_reason` |
+| Vincular casos relacionados e remover notas de qualquer pessoa | `cases.manage` |
+| Gerenciar a página pública de bans | `cases.manage_bans_page` |

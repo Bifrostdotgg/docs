@@ -1,0 +1,81 @@
+---
+title: "Respuestas automáticas"
+description: "Cómo configurar respuestas automáticas a los mensajes de los miembros, activadas por palabras clave o por IA."
+icon: "reply"
+---
+
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+Las respuestas automáticas son contestaciones que Heimdall publica solo cuando un miembro envía un mensaje que coincide con un patrón configurado. A diferencia de las reglas del automod, que hacen cumplir las normas y castigan, las respuestas automáticas solo contestan: son informativas. Se suelen usar para responder preguntas frecuentes, mandar a los miembros al canal adecuado o responder a una palabra clave con un enlace útil.
+
+## Cómo funcionan
+
+Cada mensaje enviado en un canal cubierto se compara con las respuestas automáticas que hayas configurado. Cuando hay una coincidencia, el bot responde directamente al mensaje que la ha provocado. Cada respuesta automática tiene un tiempo de espera por canal para que el bot no repita la misma respuesta una y otra vez.
+
+La comparación se hace en dos fases:
+
+1. **Coincidencia por regex**: los patrones se comprueban por orden de prioridad. El primer patrón que coincide con el mensaje salta al momento y no se comprueba ningún otro.
+2. **Coincidencia por IA**: si no ha coincidido ningún patrón regex y tienes respuestas automáticas con IA configuradas, todas esas candidatas se envían al clasificador de IA en una sola llamada. El clasificador elige la que mejor encaja según tus descripciones en lenguaje natural, o no devuelve nada si ninguna descripción encaja.
+
+## Crear una respuesta automática
+
+Ve a <DashboardLink to="moderation/auto-responses">**Moderation > Auto-Responses**</DashboardLink> (Moderación > Respuestas automáticas) en el panel y haz clic en **New Auto-Response** (nueva respuesta automática).
+
+| Ajuste | Descripción |
+|---|---|
+| **Nombre** | Etiqueta interna de esta respuesta automática |
+| **Tipo de activador** | **Regex** (coincidencia de patrón) o **IA** (descripción en lenguaje natural) |
+| **Patrón** (regex) | Una expresión regular que se compara con el contenido del mensaje, sin distinguir mayúsculas y minúsculas por defecto |
+| **Descripción** (IA) | Una descripción en lenguaje sencillo de qué debería tratar el mensaje, que usa el clasificador de IA |
+| **Prioridad** | Los números más bajos se ejecutan primero cuando hay varias reglas regex |
+| **Tipo de respuesta** | **Texto**: una respuesta con un mensaje normal, o **Embed**: un embed enriquecido con título, descripción, color, imagen y pie |
+| **Contenido de la respuesta** | El texto o el contenido del embed con el que se responde |
+| **Ámbito** | **Global**: salta en todos los canales, o **Canal**: solo salta en los canales elegidos |
+| **Tiempo de espera** | Cuánto tiempo (en segundos) tiene que pasar para que la misma respuesta pueda volver a saltar en el mismo canal |
+| **Roles inmunes** | Roles que no activan esta respuesta automática |
+
+## Activadores regex
+
+Los patrones regex se comparan con todo el contenido del mensaje. Por defecto, la comparación no distingue mayúsculas y minúsculas. No hace falta anclar el patrón: un patrón como `how.*join` coincidirá con "how do I join", "how can I join the server" y frases parecidas.
+
+Si necesitas distinguir mayúsculas y minúsculas u otros modificadores, puedes configurar los modificadores del patrón en la respuesta automática.
+
+## Activadores por IA
+
+Las respuestas automáticas con IA usan una descripción en lenguaje natural en lugar de un patrón. Por ejemplo, una respuesta automática con IA con la descripción "un miembro pregunta dónde están las normas del servidor" saltará cuando el clasificador de IA determine que un mensaje pregunta por las normas, aunque cada vez esté redactado de forma totalmente distinta.
+
+La clasificación por IA se hace en una sola llamada agrupada para todas las respuestas automáticas con IA, así que el coste de rendimiento es bajo tengas las que tengas configuradas.
+
+<Note>
+Las respuestas automáticas con IA requieren que el plugin de IA esté activado y configurado en tu servidor. Las respuestas automáticas por regex funcionan por su cuenta.
+</Note>
+
+## Ámbito por canal
+
+Por defecto, una respuesta automática nueva es global: se aplica a todos los canales. Si pones el ámbito en **Canal**, puedes elegir los canales (o las categorías) concretos en los que se aplica la regla. Los mensajes de los hilos también comprueban las respuestas automáticas de su canal padre, así que una regla limitada a un canal cubre también los hilos de ese canal.
+
+## Tiempos de espera
+
+Cada respuesta automática tiene un tiempo de espera por canal. Si el bot ya ha respondido con una respuesta automática concreta en un canal dentro de ese tiempo, se salta la coincidencia para no repetirse. El tiempo de espera se cuenta por separado en cada canal, así que una respuesta en un canal no impide que la respuesta automática salte en otro.
+
+## Formatos de respuesta
+
+**Respuestas de texto**: la respuesta se envía como texto normal. Las respuestas largas se dividen automáticamente por los bloques de código o los párrafos para no pasar del límite de 2000 caracteres por mensaje de Discord.
+
+**Respuestas con embed**: la respuesta se envía como un embed enriquecido de Discord. Puedes configurar:
+
+| Campo | Descripción |
+|---|---|
+| **Título** | Texto de encabezado en negrita en la parte superior del embed |
+| **Descripción** | El texto principal |
+| **Color** | Un color hexadecimal para el borde izquierdo |
+| **Imagen** | Una imagen a todo lo ancho debajo del texto |
+| **Miniatura** | Una imagen pequeña en la esquina superior derecha |
+| **Pie** | Texto pequeño en la parte inferior del embed |
+
+## Permisos necesarios
+
+| Acción | Clave de permiso |
+|---|---|
+| Ver las respuestas automáticas | `moderation.enforcement.manage_auto_responses` |
+| Crear y editar respuestas automáticas | `moderation.enforcement.manage_auto_responses` |

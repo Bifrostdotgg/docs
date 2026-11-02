@@ -1,0 +1,30 @@
+---
+title: "Uhr-Kanäle"
+description: "Einen Kanalnamen in eine Live-Uhr für eine gewählte Zeitzone verwandeln."
+icon: "clock"
+---
+
+Ein Uhr-Kanal ist ein Sprach- oder Textkanal, dessen Name die aktuelle Uhrzeit irgendwo auf der Welt zeigt. Server mit Mitgliedern in verschiedenen Zeitzonen nutzen sie, damit niemand ausrechnen muss, wie spät es gerade beim Team ist oder wann ein Event wirklich anfängt.
+
+## Einen einrichten
+
+`/clock setup` nimmt einen Kanal und eine Zeitzone. `/clock list` zeigt die vorhandenen, und `/clock remove` löscht einen.
+
+Der Bot benennt den Kanal in regelmäßigen Abständen um. Mitglieder brauchen keine Berechtigung, und niemand kann damit interagieren: Ein gesperrter Sprachkanal, dem niemand beitreten kann, funktioniert gut, denn der Name ist ja der ganze Sinn.
+
+## Gut zu wissen, bevor du mehrere anlegst
+
+**Discord begrenzt das Umbenennen von Kanälen sehr streng**, auf zwei Umbenennungen pro zehn Minuten pro Kanal. Eine Uhr kann deshalb nicht jede Minute weiterspringen. Sie aktualisiert sich so oft, wie das Limit es erlaubt, und die angezeigte Zeit kann daher ein paar Minuten hinterherhängen.
+
+Das ist ein Limit von Discord, nicht von Heimdall, und es gilt für jeden Bot, der so etwas anbietet. Gut zu wissen ist es, weil eine Uhr, die 14:58 zeigt, obwohl es 15:01 ist, kaputt aussieht, es aber nicht ist.
+
+Aus demselben Grund: Nimm lieber nur eine Uhr pro Zeitzone, die du wirklich brauchst. Sechs Uhr-Kanäle verbrauchen nicht das sechsfache Umbenennungsbudget, weil das Limit pro Kanal gilt, aber sie machen es sechsmal wahrscheinlicher, dass jemandem ein veralteter Name auffällt.
+
+## Erforderliche Berechtigungen
+
+| Aktion | Berechtigungsschlüssel |
+| --- | --- |
+| Einstellungen ansehen | `clock.config.view_config` |
+| Uhren hinzufügen und entfernen | `clock.config.manage_config` |
+
+Der Bot braucht in jedem Uhr-Kanal **Kanäle verwalten** (Manage Channels), um ihn umzubenennen.

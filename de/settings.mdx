@@ -1,0 +1,127 @@
+---
+title: "Dashboard-Einstellungen"
+description: "Allgemeines Verhalten des Dashboards, Slash-Befehle, Server-Vorlagen, Dateispeicher und das Audit-Log einrichten."
+icon: "gear"
+---
+
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+Die Seite Settings ist der zentrale Ort für die Konfiguration des Dashboards selbst statt eines einzelnen Plugins. Du erreichst sie über <DashboardLink to="settings">**Settings**</DashboardLink> in der Seitenleiste. Sie ist in Tabs aufgeteilt, die jeweils einen anderen Aspekt davon abdecken, wie sich Dashboard und Bot auf deinem Server verhalten.
+
+## General (Allgemein)
+
+Der Tab <DashboardLink to="settings/general">**General**</DashboardLink> steuert das grundlegende Verhalten des Dashboards.
+
+### Verweigerte Features ausblenden
+
+Ist das aktiviert, werden Bereiche des Dashboards, auf die der aktuelle Nutzer keinen Zugriff hat, ganz aus der Seitenleiste ausgeblendet, statt ausgegraut angezeigt zu werden. So bleibt die Seitenleiste übersichtlich für Teammitglieder, die nur bestimmte Bereiche brauchen.
+
+Admins sehen unabhängig von dieser Einstellung immer die vollständige Seitenleiste.
+
+### Einrichtungsassistent
+
+Der Einrichtungsassistent führt dich durch die erste Konfiguration der Kern-Features von Heimdall. Musst du ihn noch einmal durchgehen, etwa wenn du eine neue Gruppe von Plugins aktivierst, klick auf **Re-run Setup Wizard**, um ihn von vorne zu starten. Das setzt keine bestehende Konfiguration zurück; er führt dich einfach noch einmal durch jeden Schritt.
+
+## Commands (Befehle)
+
+Im Tab <DashboardLink to="settings/commands">**Commands**</DashboardLink> stellst du ein, wie die Slash-Befehle von Heimdall auf deinem Server erscheinen und sich verhalten.
+
+Jeder Befehl lässt sich einzeln:
+
+- **Aktivieren oder deaktivieren**: Deaktivierte Befehle werden aus der Befehlsliste von Discord für deinen Server entfernt
+{/* docs-manifest-ignore -- /feedback is an example rename target, not a shipped command */}
+- **Umbenennen**: Gib einem Befehl einen eigenen Namen, der zu den Gepflogenheiten deines Servers passt (z. B. `/suggest` in `/feedback` umbenennen)
+- **Mit eigener Beschreibung versehen**: Ändere die Beschreibung, die in der Autovervollständigung von Discord erscheint
+
+Änderungen wirken innerhalb einer Minute, sobald Discord die aktualisierte Befehlsliste an deinen Server verteilt hat.
+
+## Role Permissions (Rollenberechtigungen)
+
+Der Tab <DashboardLink to="settings/roles">**Role Permissions**</DashboardLink> ist der wichtigste Ort, um festzulegen, welche Discord-Rollen Zugriff auf welche Heimdall-Features haben. Eine vollständige Erklärung des Systems findest du unter [Berechtigungen](/de/permissions).
+
+Wähl eine Rolle aus dem Dropdown, um ihre Berechtigungsüberschreibungen zu sehen und zu bearbeiten. Jeder Berechtigungsschlüssel zeigt seinen aktuellen Zustand, **Allow**, **Deny** oder **Default**, über einen Schalter mit drei Stellungen.
+
+## User Permissions (Nutzerberechtigungen)
+
+Im Tab <DashboardLink to="settings/users">**User Permissions**</DashboardLink> legst du Überschreibungen pro Nutzer zusätzlich zu den rollenbasierten Berechtigungen fest. Eine Überschreibung auf Nutzerebene hat Vorrang vor jeder Rolle des Mitglieds. Das ist praktisch, um einer bestimmten Person Zugriff zu geben, ohne ihre Rollen zu ändern, oder um eine einzelne Person von einem Feature auszuschließen, das ihre Rollen sonst erlauben würden.
+
+Such einen Nutzer über seinen Discord-Nutzernamen oder seine ID und stell die Überschreibungen dann genauso ein wie bei den Rollenberechtigungen.
+
+## Server Template (Server-Vorlage)
+
+Im Tab <DashboardLink to="settings/template">**Server Template**</DashboardLink> exportierst du die komplette Heimdall-Konfiguration deines Servers als JSON-Datei und importierst sie auf einem anderen Server.
+
+### Exportieren
+
+Klick auf **Export Configuration**, um eine JSON-Datei herunterzuladen. Sie enthält die Einstellungen jedes Plugins, Berechtigungsüberschreibungen, Automod-Regeln, Kategorien und alle anderen Konfigurationen, die Heimdall für deinen Server speichert.
+
+### Importieren
+
+Klick auf **Import Configuration** und lade eine zuvor exportierte JSON-Datei hoch. Du kannst alle Bereiche importieren oder bestimmte Plugins auswählen. Die bestehende Konfiguration der ausgewählten Plugins wird überschrieben.
+
+<Warning>
+  Der Import einer Vorlage überschreibt die bestehende Konfiguration der ausgewählten Bereiche. Exportier vor dem Import deine aktuelle Einrichtung, wenn du eine Sicherung brauchst.
+</Warning>
+
+## File Storage (Dateispeicher)
+
+Der Tab <DashboardLink to="settings/file-storage">**File Storage**</DashboardLink> verbindet Heimdall mit einem externen Speicheranbieter für Anhänge. Standardmäßig werden Dateien aus Ticket- und Modmail-Gesprächen über das eigene CDN von Discord gespeichert. Mit externem Speicher behältst du diese Dateien, auch nachdem Discord sie löscht (meist nach einem Jahr), und es gibt keine Größenbeschränkungen mehr.
+
+### Speicheranbieter
+
+| Anbieter | Hinweise |
+| --- | --- |
+| **S3-compatible** (S3-kompatibel) | AWS S3, Cloudflare R2, MinIO und jeder S3-kompatible Endpunkt |
+| **UploadThing** | Verwaltetes Datei-Hosting ohne eigene Infrastruktur |
+| **Zipline** | Selbst gehosteter Server zum Teilen von Dateien |
+| **FiveManage** | Datei-Hosting aus der FiveM-Community |
+| **Google Drive** | Dateien in einem Google-Drive-Ordner speichern |
+| **OneDrive** | Dateien in einem OneDrive-Ordner speichern |
+| **Discord Channel** (Discord-Kanal) | Dateien als Ausweichlösung in einen privaten Discord-Kanal hochladen |
+
+### Speichermodi
+
+- **Oversized only** (Nur zu große): Nur Dateien, die das Upload-Limit von Discord überschreiten, gehen an den externen Speicher; kleinere Dateien nutzen weiter das CDN von Discord.
+- **All files** (Alle Dateien): Alle Anhänge gehen unabhängig von ihrer Größe über den externen Speicher.
+
+### Überlauf-Anbieter
+
+Du kannst einen zweiten Anbieter für den Überlauf einrichten. Dateien, die eine eingestellte Byte-Schwelle überschreiten, gehen automatisch an den Überlauf-Anbieter statt an den primären. Das ist praktisch, wenn dein primärer Anbieter Speicherkontingente hat und du große Dateien woanders ablegen willst. Discord zum Beispiel lässt dich nur Dateien bis 8 MB hochladen. Häufig sehen wir, dass ein Discord-Kanal als primärer Anbieter genutzt und etwas anderes, etwa S3, als Ausweichlösung eingerichtet wird.
+
+### Einrichtung
+
+Wähl deinen Anbieter, gib die nötigen Zugangsdaten ein (API-Key, Bucket-Name, Region, Endpunkt, je nachdem) und klick auf **Save**. Das Dashboard bietet für jeden Anbieter eine eigene Einrichtungsanleitung, erreichbar über den Link **Setup Guide** neben der Anbieterauswahl.
+
+<Note>
+  Zugangsdaten werden verschlüsselt gespeichert und nach dem Speichern nie wieder im Dashboard angezeigt. Um Zugangsdaten zu ändern, füg einen neuen Wert ein und speichere.
+</Note>
+
+## Background Jobs (Hintergrundaufgaben)
+
+Der Tab <DashboardLink to="settings/background-jobs">**Background Jobs**</DashboardLink> listet die letzten Aufgaben, die Rollen bei vielen Mitgliedern auf einmal ändern, zum Beispiel das Vergeben von Level-Belohnungsrollen nach einem XP-Import oder einer Änderung der Level-Kurve, oder das Umstellen aller auf eine neue Minecraft-Verknüpfungsrolle. Jede Aufgabe zeigt ihren Fortschritt, wie viele Mitglieder sie geändert hat und bei welchen es nicht ging, und eine laufende Aufgabe lässt sich abbrechen. Abgeschlossene Aufgaben bleiben sieben Tage lang in der Liste.
+
+Jeder, der das Dashboard öffnen kann, kann diesen Tab öffnen, aber jede Person sieht nur die Aufgaben der Features, für die sie eine Berechtigung hat. Was die Zahlen bedeuten, steht unter [Hintergrundaufgaben](/de/community/levels#background-jobs).
+
+## Audit Log (Audit-Log)
+
+Der Tab <DashboardLink to="settings/audit">**Audit Log**</DashboardLink> hält Aktionen im Heimdall-Dashboard fest: welches Teammitglied eine Konfiguration geändert, eine Kategorie erstellt oder gelöscht, eine Berechtigung geändert hat und so weiter. Das ist getrennt vom Audit-Log deines Discord-Servers.
+
+Jeder Eintrag zeigt:
+
+| Feld | Beschreibung |
+| --- | --- |
+| **Timestamp** (Zeitstempel) | Wann die Aktion stattfand |
+| **User** (Nutzer) | Welcher Dashboard-Nutzer die Aktion ausgeführt hat |
+| **Action** (Aktion) | Was geändert wurde (z. B. „Permission override updated“, „Category deleted“) |
+| **Details** | Eine Zusammenfassung der Änderung, mit Werten vorher und nachher, wo es passt |
+
+Das Audit-Log kann nur gelesen und nicht geleert werden. Einträge bleiben in einem fortlaufenden Zeitraum von 90 Tagen erhalten.
+
+## Erforderliche Berechtigungen
+
+| Aktion | Berechtigungsschlüssel |
+| --- | --- |
+| Allgemeine Einstellungen ansehen und ändern | `dashboard.manage_settings` |
+| Rollen- und Nutzerberechtigungen ansehen und ändern | `dashboard.manage_permissions` |
+| Dateispeicher-Konfiguration verwalten | `file-storage.manage_config` |
+| Das Audit-Log ansehen | `dashboard.manage_permissions` |

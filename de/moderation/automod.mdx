@@ -1,0 +1,70 @@
+---
+title: "Automod-Regeln"
+description: "Automatische Moderationsregeln erstellen, die die Standards deines Servers ohne Eingreifen des Teams durchsetzen."
+icon: "robot"
+---
+
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+Mit Automod legst du Regeln fest, die der Bot auf jede Nachricht auf deinem Server anwendet. Trifft eine Regel auf eine Nachricht zu, kann der Bot sie löschen, den Absender verwarnen, ihn stummschalten oder jede Kombination der Aktionen ausführen, die du einstellst. Die Regeln laufen im Hintergrund, ohne dass das Team etwas tun muss.
+
+<Frame>
+  ![Automod-Regeln in der Moderation](/images/Moderation_Automod_rules.png)
+</Frame>
+
+## So funktionieren Regeln
+
+Jede Regel hat einen **Auslöser**, eine Reihe von **Ausnahmen** und eine **Reaktion**. Der Auslöser legt fest, nach welchem Muster die Regel sucht. Die Ausnahmen legen Kanäle, Rollen oder Nutzer fest, die die Regel ignorieren soll. Die Reaktion legt fest, was der Bot tut, wenn die Regel greift.
+
+Die Regeln werden der Reihe nach geprüft. Eine einzelne Nachricht kann auf mehrere Regeln zutreffen, und jede davon führt ihre Reaktion unabhängig aus.
+
+## Eine Regel erstellen
+
+Geh im Dashboard zu <DashboardLink to="moderation/rules">**Moderation \> Rules**</DashboardLink> und klick auf **New Rule**.
+
+### Auslösertypen
+
+| Typ | Beschreibung |
+| --- | --- |
+| **Keyword** (Schlüsselwort) | Trifft auf Nachrichten mit bestimmten Wörtern oder Wendungen zu. Standardmäßig ohne Unterscheidung von Groß- und Kleinschreibung. |
+| **Regex** | Trifft auf Nachrichten zu, die einem regulären Ausdruck entsprechen, für komplexe Filter. |
+| **Spam** | Erkennt wiederholte Nachrichten, Erwähnungsspam oder zu viele Nachrichten in kurzer Zeit. |
+| **Link** | Blockiert Links zu bestimmten Domains oder mit bestimmten URL-Mustern. |
+| **Attachment** (Anhang) | Blockiert bestimmte Dateitypen oder Anhänge ganz. |
+| **Caps** (Großbuchstaben) | Markiert Nachrichten, in denen ein hoher Anteil der Zeichen großgeschrieben ist. |
+
+### Regelaktionen
+
+| Aktion | Beschreibung |
+| --- | --- |
+| **Delete** (Löschen) | Entfernt die Nachricht sofort. |
+| **Warn** (Verwarnen) | Vergibt eine Verwarnung als Verstoß mit einstellbarer Punktzahl. |
+| **Mute** (Stummschalten) | Verhängt einen Timeout mit einstellbarer Dauer. |
+| **Kick** | Entfernt das Mitglied vom Server. |
+| **Ban** (Bannen) | Bannt das Mitglied, optional befristet. |
+| **Send response** (Antwort senden) | Postet eine Nachricht (optional per DM), die erklärt, warum die Aktion ausgeführt wurde. |
+
+Aktionen lassen sich kombinieren. Häufig wird Löschen \+ Verwarnen eingerichtet: Die Nachricht wird entfernt, und eine Verwarnung landet in der Verstoßliste des Mitglieds.
+
+### Ausnahmen
+
+Du kannst bestimmte Rollen, Kanäle oder Nutzer von einer Regel ausnehmen. Zum Beispiel kann ein Link-Filter deine Team-Rolle ausnehmen, damit Moderatoren frei Links posten können.
+
+### Punktwerte
+
+Vergibt eine Regel eine Verwarnung, kannst du die Punktzahl des Verstoßes festlegen. Diese Punkte fließen in das Eskalationssystem ein. Wie Schwellen funktionieren, steht unter [Eskalation](/de/moderation/escalation).
+
+## Eine Regel testen
+
+Nach dem Erstellen einer Regel prüfst du mit dem Eingabefeld **Test** unten im Regeleditor, ob eine Beispielnachricht wie erwartet zutrifft (oder nicht). Der Test führt die Logik der Regel aus, ohne sie wirklich durchzusetzen.
+
+## Reihenfolge und Priorität der Regeln
+
+Die Regeln werden von oben nach unten geprüft. Zieh Regeln in der Liste an eine andere Stelle, um sie umzusortieren. Pro Regel gibt es die Option **Stop on match** (Bei Treffer stoppen): Ist sie aktiviert und greift die Regel, werden für dieselbe Nachricht keine weiteren Regeln geprüft.
+
+## Erforderliche Berechtigungen
+
+| Aktion | Berechtigungsschlüssel |
+| --- | --- |
+| Regeln ansehen | `moderation.config.view_config` |
+| Regeln erstellen und bearbeiten | `moderation.enforcement.manage_rules` |

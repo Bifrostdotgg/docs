@@ -1,0 +1,334 @@
+---
+title: "Níveis e XP"
+description: "XP por mensagens e por voz, níveis e curvas de nível, cargos de recompensa e importação de XP do Amari ou de outro bot."
+icon: "chart-line"
+---
+
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+Os níveis fazem parte do sistema de engajamento do recurso de jogos. Os membros ganham XP conversando e passando tempo em canais de voz, o XP se soma em níveis e você pode dar um cargo em qualquer nível que quiser. Se o seu servidor está vindo de outro bot de níveis, dá para trazer o XP de todo mundo junto, para que ninguém comece do zero.
+
+Tudo nesta página é configurado em <DashboardLink to="games/config/engagement">**Games \> Configuration \> Engagement**</DashboardLink> (Jogos > Configuração > Engajamento).
+
+## Ligando
+
+Ligue **Enable engagement** (Ativar engajamento) e salve. Nada é contado antes disso, e o XP só conta a partir do momento em que está ligado: mensagens antigas não são contadas de forma retroativa. A importação mais abaixo é o jeito de trazer o histórico.
+
+| Configuração | O que faz |
+| --- | --- |
+| **XP per message** (XP por mensagem) | O XP que um membro ganha por mensagem. Padrão: 15 |
+| **Message XP cooldown (s)** (Intervalo do XP de mensagem, em segundos) | Segundos até o mesmo membro poder ganhar XP de mensagem de novo, para que fazer spam não renda nada a mais. Padrão: 60 |
+| **XP per voice minute** (XP por minuto de voz) | O XP por cada minuto completo em um canal de voz, creditado a cada poucos minutos durante a chamada. Padrão: 10 |
+| **Announcement channel** (Canal de anúncios) | Onde as subidas de nível e as conquistas desbloqueadas são postadas. Opcional |
+| **Announce level-ups** (Anunciar subidas de nível) | Posta uma mensagem quando um membro chega a um novo nível |
+
+Os membros veem o próprio nível com `/economy level`, e `/economy leaderboard` tem uma categoria **Level** (Nível). A staff pode definir o nível ou o XP de um membro com `/economy engagement-admin` ou em <DashboardLink to="games/member-admin">**Games \> Member Admin**</DashboardLink> (Jogos > Administração de membros); uma mudança feita por um administrador nunca posta mensagem de subida de nível.
+
+## Cargos de recompensa por nível
+
+Em **Level role rewards** (Cargos de recompensa por nível), associe um nível a um cargo. Um membro que chega a esse nível recebe o cargo. As recompensas se acumulam: um membro no nível 20 continua com os cargos dos níveis 5 e 10.
+
+O bot precisa de **Gerenciar cargos** e de um cargo acima de todos os cargos de recompensa. O Heimdall se recusa a entregar um cargo que poderia ser usado para tomar o controle do servidor, então um cargo de recompensa é ignorado se ele:
+
+- tiver uma permissão de moderação ou de administração no Discord (Administrador, Gerenciar servidor, Gerenciar cargos, Banir membros e parecidas), ou
+- tiver qualquer coisa permitida no próprio [sistema de permissões](/pt-BR/permissions) do Heimdall, ou
+- estiver acima do cargo mais alto do bot, for gerenciado por uma integração ou for `@everyone`.
+
+Um cargo recusado nunca é dado. Uma [tarefa em segundo plano](#background-jobs) o lista entre as falhas, com o motivo, e uma mudança de nível ou XP feita em **Member Admin** o mostra depois de salvar.
+
+## Curvas de nível
+
+A curva de nível decide quanto XP cada nível exige. O seu servidor tem uma curva, e o nível de cada membro é calculado a partir do XP dele nessa curva. Escolha a curva no cartão **Level curve** (Curva de nível). O cartão mostra uma prévia dos níveis 1 a 50 para a curva que você escolheu, ao lado da atual.
+
+| Curva | XP necessário | Nível 1 | Nível 5 | Nível 10 |
+| --- | --- | --- | --- | --- |
+| **MEE6** (padrão) | Ir do nível L para L + 1 custa 5L² + 50L + 100 XP | 100 | 1.150 | 4.675 |
+| **Amari** | Chegar ao nível L custa 20(L - 1)² + 35 XP no total: 35 XP para o nível 1, e depois mais 40L - 20 para ir do nível L para L + 1 | 35 | 355 | 1.655 |
+| **Custom** (Personalizada) | Ir do nível L para L + 1 custa aL² + bL + c XP | c | | |
+
+A tabela mostra o XP total para chegar a cada nível. A MEE6 é a curva que todo servidor usava antes de ser possível mudar a curva, então um servidor que nunca mexer nesta configuração não vê diferença nenhuma.
+
+Numa curva personalizada, cada número tem um intervalo:
+
+| Coeficiente | Valores permitidos |
+| --- | --- |
+| `a` | 0 a 100 |
+| `b` | 0 a 10.000 |
+| `c` | 1 a 100.000 |
+
+Definir `a` e `b` como 0 dá uma curva plana em que todo nível custa `c` XP. Os níveis param em 10.000, seja qual for a curva.
+
+### O que acontece quando você muda a curva
+
+Clique em **Change level curve** (Mudar a curva de nível) e confirme. Todo membro mantém o XP, e o nível dele é recalculado a partir desse XP na nova curva, então alguns níveis sobem e outros descem.
+
+- O recálculo roda em segundo plano. Num servidor grande, pode levar alguns minutos, e os níveis mostrados nesse meio-tempo podem estar desatualizados. O cartão mostra **Recalculating levels** (Recalculando níveis) até terminar, e a curva não pode ser mudada de novo antes disso.
+- Nenhuma mensagem de subida de nível é postada por causa da mudança, não importa quantos membros subam.
+- Depois que os níveis são recalculados, os membros recebem os cargos de recompensa que o novo nível deles conquistou. Isso roda como uma [tarefa em segundo plano](#background-jobs).
+- Por padrão, nenhum cargo é retirado, nem de um membro cujo nível desceu. Marque **Also remove reward roles above each member's new level** (Também remover os cargos de recompensa acima do novo nível de cada membro) para também tirar os cargos de recompensa de níveis que o membro não tem mais. Só os cargos da sua lista de recompensas são afetados; um cargo que o membro tem por qualquer outro motivo fica como está.
+
+<Warning>
+  Mudar para uma curva que exige mais XP por nível baixa os níveis. Se você marcar a opção de remover, os membros perdem cargos de recompensa que tinham, talvez havia muito tempo. Olhe a prévia antes.
+</Warning>
+
+## Importando do Amari
+
+O Amari fechou a API pública, então não existe um jeito oficial de exportar o XP de um servidor de lá. Mas o site do Amari ainda mostra o ranking para qualquer pessoa logada, e o Heimdall consegue ler o arquivo que o site gera. A importação em si fica no cartão **Import XP** (Importar XP), com **Amari** como origem.
+
+<Tip>
+  Mude o seu servidor para a curva **Amari** antes de importar, ou deixe marcada a opção **Switch this server to Amari's level curve first** (Mudar este servidor para a curva de nível do Amari antes) durante a importação (ela vem marcada por padrão). Na curva do Amari, todo membro mantém exatamente o XP e o nível que tinha no Amari. Em qualquer outra curva, os membros mantêm o nível do Amari e o XP deles é definido como o início desse nível aqui, então o progresso para o próximo nível se perde.
+</Tip>
+
+### Exportando com o script
+
+O exportador é um script curto que você cola no seu próprio navegador enquanto está logado no Amari. Ele lê o ranking do seu servidor página por página e salva tudo num arquivo.
+
+<Steps>
+  <Step title="Abra o Amari e faça login">
+    Acesse [amaribot.com](https://amaribot.com) e entre com o Discord. Abra o ranking do seu servidor para conferir se você consegue vê-lo. Se você não consegue ver o ranking no site, o exportador também não consegue.
+  </Step>
+  <Step title="Abra o console do navegador">
+    Aperte **F12** (ou clique com o botão direito na página e escolha **Inspecionar**) e abra a aba **Console**. Confira se o console é o da aba do amaribot.com.
+  </Step>
+  <Step title="Permita colar se o navegador pedir">
+    O Firefox bloqueia colar no console até você digitar `allow pasting` e apertar Enter. O Chrome e o Edge podem mostrar o mesmo aviso; digite o que eles pedirem. É o navegador protegendo você de scripts que você não entende, e é por isso que a versão legível está logo abaixo.
+  </Step>
+  <Step title="Cole o exportador e aperte Enter">
+    Copie-o pelo botão **Copy exporter** (Copiar exportador) no cartão Import XP, ou da caixa abaixo. Ele pede o ID do seu servidor (o cartão Import XP mostra o ID) e depois uma página inicial: deixe em 1.
+  </Step>
+  <Step title="Espere o download">
+    O console mostra cada página conforme ela é lida. Servidores grandes demoram, porque o Amari limita a velocidade de leitura das páginas e o script espera sempre que recebe esse aviso. Quando termina, o navegador baixa um arquivo com um nome como `amari-<server id>-p1-<last page>.json`.
+  </Step>
+</Steps>
+
+```js Amari exporter
+(async()=>{let guildId=prompt("Server (guild) ID to export:")?.trim();if(!/^\d{17,20}$/.test(guildId??""))return console.error("Not a server ID");let startPage=Math.max(1,Number(prompt("Start page (1 unless resuming):","1"))||1),sleep=(ms)=>new Promise((r)=>setTimeout(r,ms)),header=(res,...names)=>{for(let n of names){let v=res.headers.get(n);if(v!==null&&v!=="")return Number(v)}return NaN},pages=[],gapMs=1500,stopReason=null,lastPage=1/0,pageSize=null,save=()=>{let file={source:"amari",guildId,exportedAt:new Date().toISOString(),startPage,pages},a=document.createElement("a");return a.href=URL.createObjectURL(new Blob([JSON.stringify(file)],{type:"application/json"})),a.download=`amari-${guildId}-p${startPage}-${startPage+pages.length-1}.json`,a.click(),a.download};for(let page=startPage;page<=lastPage&&page<=1e4;page++){let res=null,backoff=3;for(let attempt=1;;attempt++){try{res=await fetch(`/api/leaderboard?guildId=${guildId}&page=${page}`,{headers:{"x-user-agent":"Amari-bot-v1"},credentials:"include"})}catch{res=null}if(res&&res.ok)break;if(res&&res.status===429){let wait=(header(res,"retry-after")||30)+2;console.log(`Page ${page}: rate limited, waiting ${Math.ceil(wait)}s (this is normal)`),gapMs=Math.min(gapMs*2,1e4),await sleep(wait*1000);continue}if(attempt>=10){let why=res?`HTTP ${res.status}`:"network error";stopReason=res&&(res.status===401||res.status===403)?`Page ${page} kept returning ${why}. Check you are still logged in on amaribot.com, then re-run with start page ${page}.`:`Page ${page} kept failing (${why}). Re-run later with start page ${page}.`;break}console.log(`Page ${page}: ${res?`HTTP ${res.status}`:"network error"}, retrying in ${backoff}s`),gapMs=Math.min(gapMs*2,1e4),await sleep(backoff*1000),backoff=Math.min(backoff*2,120)}if(stopReason)break;if(!(res.headers.get("content-type")??"").includes("json")){stopReason=`Page ${page} was not JSON (a browser check page?). Reload amaribot.com, then re-run with start page ${page}.`;break}let body=await res.json(),rows=Array.isArray(body?.data)?body.data:[];if(rows.length===0)break;if(pages.push(body),pageSize??=rows.length,Number.isFinite(body.total_count)&&pageSize>0)lastPage=Math.ceil(body.total_count/pageSize);if(console.log(`Page ${page}/${Number.isFinite(lastPage)?lastPage:"?"}: ${rows.length} rows`),rows.length<pageSize)break;await sleep(gapMs)}if(pages.length===0)return console.error(stopReason??"No rows found. Check the server ID and that you can see its leaderboard.");let name=save();if(stopReason)console.warn(`Stopped early. Saved ${pages.length} pages to ${name}. ${stopReason}`);else console.log(`Done: ${pages.length} pages saved to ${name}`)})();
+```
+
+<Accordion title="O exportador, em versão legível, e o que cada parte faz">
+  Este é o mesmo script antes de ser espremido numa linha só. Leia, ou cole esta versão no lugar se preferir: ela funciona exatamente igual.
+
+  ```js
+  // Amari leaderboard exporter. Paste into the devtools console on https://amaribot.com while
+  // logged in. It only calls amaribot.com's own API with your own session, the same way the
+  // leaderboard page does, and downloads JSON; nothing is sent anywhere else. If it stops early
+  // it still saves what it has and tells you which page to resume from; the Heimdall importer
+  // merges several files.
+  (async () => {
+    const guildId = prompt("Server (guild) ID to export:")?.trim();
+    if (!/^\d{17,20}$/.test(guildId ?? "")) return console.error("Not a server ID");
+    const startPage = Math.max(1, Number(prompt("Start page (1 unless resuming):", "1")) || 1);
+
+    const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+    const header = (res, ...names) => {
+      for (const n of names) {
+        const v = res.headers.get(n);
+        if (v !== null && v !== "") return Number(v);
+      }
+      return NaN;
+    };
+
+    const pages = [];
+    let gapMs = 1500;
+    let stopReason = null;
+    let lastPage = Infinity;
+    let pageSize = null;
+
+    const save = () => {
+      const file = { source: "amari", guildId, exportedAt: new Date().toISOString(), startPage, pages };
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(new Blob([JSON.stringify(file)], { type: "application/json" }));
+      a.download = `amari-${guildId}-p${startPage}-${startPage + pages.length - 1}.json`;
+      a.click();
+      return a.download;
+    };
+
+    for (let page = startPage; page <= lastPage && page <= 10000; page++) {
+      let res = null;
+      let backoff = 3;
+      for (let attempt = 1; ; attempt++) {
+        try {
+          // The leaderboard page sends this header on every API call; without it Amari answers 403.
+          res = await fetch(`/api/leaderboard?guildId=${guildId}&page=${page}`, {
+            headers: { "x-user-agent": "Amari-bot-v1" },
+            credentials: "include",
+          });
+        } catch {
+          res = null;
+        }
+        if (res && res.ok) break;
+        if (res && res.status === 429) {
+          const wait = (header(res, "retry-after") || 30) + 2;
+          console.log(`Page ${page}: rate limited, waiting ${Math.ceil(wait)}s (this is normal)`);
+          gapMs = Math.min(gapMs * 2, 10000);
+          await sleep(wait * 1000);
+          continue;
+        }
+        // Amari answers a throttle with 403 "Forbidden. Please try again.", so a 403 is retried
+        // with backoff like a 5xx; only a persistent one means the session is really gone.
+        if (attempt >= 10) {
+          const why = res ? `HTTP ${res.status}` : "network error";
+          stopReason =
+            res && (res.status === 401 || res.status === 403)
+              ? `Page ${page} kept returning ${why}. Check you are still logged in on amaribot.com, then re-run with start page ${page}.`
+              : `Page ${page} kept failing (${why}). Re-run later with start page ${page}.`;
+          break;
+        }
+        console.log(`Page ${page}: ${res ? `HTTP ${res.status}` : "network error"}, retrying in ${backoff}s`);
+        gapMs = Math.min(gapMs * 2, 10000);
+        await sleep(backoff * 1000);
+        backoff = Math.min(backoff * 2, 120);
+      }
+      if (stopReason) break;
+
+      if (!(res.headers.get("content-type") ?? "").includes("json")) {
+        stopReason = `Page ${page} was not JSON (a browser check page?). Reload amaribot.com, then re-run with start page ${page}.`;
+        break;
+      }
+      const body = await res.json();
+      const rows = Array.isArray(body?.data) ? body.data : [];
+      if (rows.length === 0) break; // past the last page
+      pages.push(body);
+      // Size the run from the first full page: the last page's `count` is short, and Amari
+      // answers a page past the end with a 500, not an empty page.
+      pageSize ??= rows.length;
+      if (Number.isFinite(body.total_count) && pageSize > 0) {
+        lastPage = Math.ceil(body.total_count / pageSize);
+      }
+      console.log(`Page ${page}/${Number.isFinite(lastPage) ? lastPage : "?"}: ${rows.length} rows`);
+      if (rows.length < pageSize) break; // a short page is the last one
+      await sleep(gapMs);
+    }
+
+    if (pages.length === 0) {
+      return console.error(stopReason ?? "No rows found. Check the server ID and that you can see its leaderboard.");
+    }
+    const name = save();
+    if (stopReason) console.warn(`Stopped early. Saved ${pages.length} pages to ${name}. ${stopReason}`);
+    else console.log(`Done: ${pages.length} pages saved to ${name}`);
+  })();
+  ```
+
+  Em linguagem simples, de cima para baixo:
+
+  1. **Ele pede o ID do seu servidor** e para se o que você digitou não for um ID de servidor do Discord. Depois pergunta de qual página começar, 1 a menos que você esteja retomando.
+  2. **Ele lê uma página do ranking por vez** do próprio endereço do amaribot.com (`/api/leaderboard`), a mesma requisição que a página do ranking faz quando você rola por ela. Como ele roda no amaribot.com, o navegador envia junto o seu login atual do Amari. O script nunca vê nem pede a sua senha.
+  3. **Ele envia o cabeçalho `x-user-agent` que a própria página do Amari envia.** O Amari recusa requisições do ranking sem ele, e é também por isso que abrir o endereço da página direto numa aba não funciona.
+  4. **Quando o Amari pede para ir mais devagar** (um limite de requisições), ele espera o tempo que o Amari pedir, mais dois segundos, e vai mais devagar pelo resto da execução. Ver "rate limited, waiting" no console é normal.
+  5. **Quando uma página falha**, ele tenta essa página até dez vezes, esperando mais a cada vez. O Amari às vezes responde a um momento de pico com "Forbidden", então isso também é tentado de novo; só uma página que continua falhando interrompe a execução, e a mensagem diz se você deve conferir se ainda está logado. Se o Amari responder com algo que não são dados do ranking (uma página de verificação do navegador, por exemplo), ele para e pede que você recarregue o amaribot.com antes.
+  6. **Ele para no fim** do ranking: quando uma página volta vazia ou menor que a primeira, ou quando já leu tantas páginas quanto o total que o Amari informa. Ele nunca lê mais de 10.000 páginas.
+  7. **Ele faz pausas entre as páginas**, de 1,5 segundo no começo, e mais depois de um limite de requisições.
+  8. **Ele salva tudo num arquivo** nos downloads do seu navegador. Nada é enviado ao Heimdall nem a nenhum outro lugar; as únicas requisições que ele faz são para o amaribot.com.
+  9. **Se ele parar antes do fim**, ainda salva as páginas que já tem e mostra a página de onde retomar. Rode de novo com essa página inicial e adicione os dois arquivos ao importador.
+</Accordion>
+
+<Note>
+  O exportador é uma conveniência, oferecida como está. Ele roda só no seu próprio navegador e só usa a sua própria sessão do Amari, então o Heimdall nunca vê o seu login do Amari. O Amari pode mudar o site a qualquer momento e, se isso acontecer, o script pode parar de funcionar até ser atualizado.
+</Note>
+
+### Exportando sem o script
+
+Se você preferir não rodar um script, dá para salvar os mesmos dados à mão. O Amari recusa os endereços simples das páginas (ele exige o cabeçalho que o site envia), então não dá para simplesmente abrir cada página numa aba. Em vez disso, salve o que o próprio site carrega:
+
+1. Abra o ranking do seu servidor no amaribot.com, logado.
+2. Abra as ferramentas de desenvolvedor (**F12**) e vá até a aba **Network** (Rede).
+3. Passe pelas páginas do ranking. Cada página aparece como uma requisição chamada `leaderboard?guildId=...&page=N`.
+4. Para cada uma, abra a **Response** (Resposta) e salve como um arquivo `.json` (na maioria dos navegadores, clique com o botão direito na requisição, copie a resposta e cole num arquivo).
+5. Adicione todos os arquivos ao importador de uma vez.
+
+É demorado para um servidor grande, mas não usa nada além do site.
+
+### Importando o arquivo
+
+<Steps>
+  <Step title="Abra o Import XP">
+    Vá até <DashboardLink to="games/config/engagement">**Games \> Configuration \> Engagement**</DashboardLink>, encontre o cartão **Import XP** e escolha **Amari** como origem. O engajamento precisa estar ligado e salvo antes.
+  </Step>
+  <Step title="Adicione os seus arquivos">
+    Clique em **Choose files** (Escolher arquivos) e selecione o arquivo do exportador, ou todas as páginas que você salvou à mão. Você pode adicionar vários arquivos: eles são juntados numa lista só. O ranking do Amari se mexe enquanto está sendo lido, então o mesmo membro muitas vezes aparece duas vezes; o importador fica com a cópia de XP maior e diz quantas repetições juntou. Se um arquivo veio de um servidor diferente daquele para o qual você está importando, você precisa confirmar.
+  </Step>
+  <Step title="Escolha um modo">
+    **Keep higher** (Manter o maior) dá a cada membro o que for maior: o XP que ele tem aqui agora ou o XP importado. Ele nunca abaixa ninguém e é seguro rodar mais de uma vez. **Overwrite** (Sobrescrever) substitui o XP de cada membro importado pelo XP importado, o que pode baixar o nível de membros que já ganharam XP aqui. Nos dois casos, os membros que não estão nos arquivos não mudam.
+  </Step>
+  <Step title="Pré-visualize">
+    Clique em **Preview** (Pré-visualizar). Nada é gravado ainda. Você vê quantos membros são novos, quantos mudam, quantos ficam iguais, como os níveis vão ficar distribuídos depois e, no modo Overwrite, quantos membros desceriam de nível.
+  </Step>
+  <Step title="Importe">
+    Clique em **Import** (Importar) e confirme. Importações grandes são enviadas em partes de 1.000 membros; mantenha a página aberta até terminar. Você pode parar depois da parte atual e retomar mais tarde, e rodar uma parte de novo é seguro nos dois modos. Se **Switch this server to Amari's level curve first** estiver marcado, a curva é mudada e os níveis são recalculados antes de qualquer XP ser importado.
+  </Step>
+</Steps>
+
+Os níveis importados não postam mensagens de subida de nível. Os cargos de recompensa dos novos níveis são dados depois por uma [tarefa em segundo plano](#background-jobs) que aparece abaixo da importação.
+
+Se a prévia disser que o nível de alguns membros na exportação não bate com o XP deles, normalmente é o Amari que ainda não atualizou um nível. Na curva do Amari, vale o XP; em qualquer outra curva, vale o nível.
+
+## Importando de outros bots
+
+Escolha **CSV or JSON file** (Arquivo CSV ou JSON) como origem para importar do MEE6 ou de qualquer outro bot que consiga dar uma lista de membros com o XP ou o nível deles. Os membros são identificados pelo ID de usuário do Discord, então a lista precisa usar IDs, não nomes de usuário.
+
+O **CSV** precisa de uma linha de cabeçalho com o nome das colunas. O cabeçalho não diferencia maiúsculas de minúsculas:
+
+```csv
+userId,xp
+123456789012345678,15400
+234567890123456789,820
+```
+
+Use `userId,level` se você só tem os níveis, ou `userId,xp,level` para os dois.
+
+O **JSON** precisa ser uma lista de objetos com os mesmos campos:
+
+```json
+[
+  { "userId": "123456789012345678", "xp": 15400 },
+  { "userId": "234567890123456789", "level": 12 }
+]
+```
+
+Escreva os IDs de usuário no JSON como texto entre aspas. Um ID do Discord é longo demais para sobreviver como número em JSON, então um ID sem aspas é rejeitado em vez de ser importado para a pessoa errada.
+
+| Campo | Regra |
+| --- | --- |
+| **userId** | Um ID de usuário do Discord, com 17 a 20 dígitos |
+| **xp** | Um número inteiro de 0 a 1.000.000.000.000 |
+| **level** | Um número inteiro de 0 a 10.000 |
+
+Cada linha precisa de XP, de um nível ou dos dois. Quando uma linha tem um nível, o membro é colocado no início desse nível na curva do seu servidor, porque o nível é o que os membros reconhecem; o XP é usado quando não há nível, ou quando o seu servidor está na curva do Amari. As linhas que quebram uma regra são listadas com o arquivo e a linha e ignoradas, e o resto é importado mesmo assim. Cada arquivo pode ter até 50 MB; divida um arquivo maior em vários. Não há limite de quantos membros um arquivo pode ter: o importador os envia em partes de 1.000. Os modos, a prévia e a tarefa em segundo plano funcionam do mesmo jeito que para o Amari.
+
+<span id="background-jobs"></span>
+## Tarefas em segundo plano
+
+Algumas mudanças afetam todos os membros de um servidor, o que pode levar minutos num servidor grande. O Heimdall roda essas mudanças como tarefas em segundo plano para que o painel não precise esperar. No momento, isso inclui:
+
+- **Cargos de recompensa por nível**, depois de uma mudança na curva de nível ou de uma importação de XP.
+- **Cargo vinculado do Minecraft**, depois de uma mudança na configuração do cargo vinculado (veja [Minecraft](/pt-BR/integrations/minecraft#linked-role)).
+
+Uma tarefa mostra o progresso onde você a iniciou, e todas as tarefas recentes aparecem em <DashboardLink to="settings/background-jobs">**Settings \> Background Jobs**</DashboardLink> (Configurações > Tarefas em segundo plano). Cada tarefa mostra a quantos membros já chegou e o que aconteceu com eles:
+
+| Contagem | Significado |
+| --- | --- |
+| **Changed** (Alterados) | O membro ganhou (ou perdeu) um cargo |
+| **Already right** (Já corretos) | O membro já tinha os cargos que o nível dele conquista |
+| **Left the server** (Saíram do servidor) | O membro não está mais no servidor |
+| **Failed** (Falharam) | O cargo não pôde ser alterado. **Show failures** (Mostrar falhas) lista quem e por quê, incluindo qualquer cargo recusado |
+
+Uma tarefa continua de onde parou depois que o bot reinicia. Se outra mudança precisar de uma passada enquanto uma está rodando, ela espera atrás (**Another pass queued**, Outra passada na fila). As tarefas concluídas ficam na lista por sete dias.
+
+Você pode clicar em **Cancel** (Cancelar) numa tarefa em andamento. Os membros a que ela já chegou mantêm os cargos que ela deu ou tirou; os membros a que ela ainda não chegou ficam como estão até a próxima passada.
+
+Uma tarefa de recompensa nunca tira um cargo, a menos que você tenha escolhido **Also remove reward roles above each member's new level** numa mudança de curva. Cada pessoa só vê as tarefas dos recursos para os quais tem permissão.
+
+## O detalhe importante
+
+Uma importação ou mudança de curva que atravessa muitos níveis de uma vez não os anuncia, então os membros não vão ver uma enxurrada de mensagens de subida de nível, mas também não vão ser avisados. Se você quer que as pessoas saibam que o XP delas foi trazido, diga isso num anúncio.
+
+## Permissões necessárias
+
+| Ação | Chave de permissão |
+| --- | --- |
+| Abrir as configurações de engajamento, editar as taxas de XP e os cargos de recompensa | `games.manage` |
+| Importar XP, mudar a curva de nível e ver ou cancelar as tarefas de cargos de recompensa | `games.engagement_import` |
+| Definir o nível ou o XP de um membro | `games.manage` |
+| Ver o próprio nível | `games.use` |
+
+Importar e mudar a curva exigem tanto `games.manage` (para abrir a página) quanto `games.engagement_import`. Conceda a chave de importação com cuidado: uma importação errada pode mudar o nível de todos os membros.

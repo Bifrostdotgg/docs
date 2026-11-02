@@ -1,0 +1,40 @@
+---
+title: "Modo concentración"
+description: "Permite a los miembros bloquearse a sí mismos el acceso al servidor durante un tiempo."
+icon: "lock"
+---
+
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+El modo concentración es de autoservicio. Un miembro ejecuta `/selfmute start` con una duración, y el bot le quita los roles y lo aísla en un único canal de concentración hasta que termine. Es para quien quiere estudiar, trabajar o dormir y sabe que, si no, no lo va a conseguir.
+
+Nadie más puede poner a un miembro en modo concentración, y no es una herramienta de moderación. Silenciar a alguien es una acción de moderación con un registro de sanción detrás. Esto es un miembro que lo elige, y no hay que confundir ambas cosas.
+
+## Cómo funciona
+
+`/selfmute start` recibe una duración. Se le quitan los roles y se guardan, y se le da acceso a un canal de concentración y a nada más. Cuando se acaba el tiempo, el bot le devuelve exactamente los roles que le quitó.
+
+El canal de concentración tiene un panel con un botón para salir. Que ese botón funcione o no depende de ti.
+
+## La única decisión que tienes que tomar
+
+Ve a <DashboardLink to="selfmute/config">**Self-Mute**</DashboardLink> en el panel y decide si los miembros pueden terminarlo antes de tiempo.
+
+Permitir salir antes lo convierte en un recordatorio amable. No permitirlo lo convierte en un compromiso de verdad, que es justo lo que algunas personas buscan. No hay una respuesta correcta, pero elige a propósito: un miembro que esperaba un compromiso y encontró una vía de escape, o que esperaba una vía de escape y no la encontró, acabará acudiendo al staff en cualquiera de los dos casos.
+
+`/selfmute cancel` lo termina antes de tiempo cuando está permitido.
+
+## Conviene saber
+
+- Los roles se restauran a partir de lo que se guardó, así que un rol que se le dé mientras está en modo concentración no se pierde.
+- Si el bot no puede gestionar uno de sus roles, porque está por encima del bot en la jerarquía, ese rol no se puede quitar. Mantén el rol del bot lo bastante alto o cuenta con que el modo concentración será parcial para tu staff.
+- Un miembro que sale y vuelve a entrar mientras está en modo concentración vuelve sin roles, ya que Discord no conserva los roles al salir del servidor. Aun así, sus roles guardados se restauran cuando se acaba el tiempo.
+
+## Permisos necesarios
+
+| Acción | Clave de permiso |
+| --- | --- |
+| Ver la configuración | `selfmute.config.view_config` |
+| Cambiar la configuración | `selfmute.config.manage_config` |
+
+Activar el modo concentración no necesita ningún permiso, ya que un miembro solo actúa sobre sí mismo.

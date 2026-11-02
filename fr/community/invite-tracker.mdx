@@ -1,0 +1,90 @@
+---
+title: "Suivi des invitations"
+description: "Enregistrer l’invitation utilisée par chaque membre pour rejoindre le serveur et le nombre de personnes que chaque membre a fait venir."
+icon: "user-plus"
+---
+
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+Le suivi des invitations enregistre l’invitation utilisée par chaque nouveau membre, crédite la personne qui l’a créée et tient un total à jour pour chaque membre. Il ajoute aussi des variables que tu peux utiliser dans ton message de bienvenue.
+
+## Avant de commencer
+
+Le suivi des invitations a besoin de la permission **Gérer le serveur**. Discord ne montre le nombre d’utilisations des invitations qu’aux bots qui l’ont, et ces nombres sont le seul moyen de savoir avec quelle invitation quelqu’un a rejoint. Sans elle, la fonctionnalité se désactive d’elle-même plutôt que d’enregistrer des données partielles, et le tableau de bord affiche un bouton qui te guide pour l’accorder.
+
+Si tu préfères ne pas donner Gérer le serveur au bot, laisse le suivi des invitations désactivé. Rien d’autre n’est affecté.
+
+Le suivi ne compte aussi que les arrivées à partir du moment où tu l’actives. Discord n’indique pas qui a utilisé une invitation par le passé, donc un lien qui a déjà 40 utilisations ne peut pas voir ces 40 personnes créditées à qui que ce soit. Les prochaines arrivées sur ce même lien sont créditées normalement.
+
+## Le mettre en place
+
+Ouvre <DashboardLink to="invites/config">**Invite Tracker**</DashboardLink> dans le tableau de bord et active **Track invites**. Ça ajoute aussi `/invites` à ton serveur. Si tu veux, choisis un **salon de journal des arrivées**, qui reçoit une ligne pour chaque arrivée indiquant qui a invité la personne.
+
+## Comment le total est calculé
+
+```
+total = joined - fake - left + bonus
+```
+
+| Élément | Signification |
+| --- | --- |
+| **joined** | Les personnes qui ont rejoint avec les invitations de ce membre |
+| **fake** | Leur compte Discord était plus récent que l’âge que tu as fixé, mesuré au moment de leur arrivée |
+| **left** | Elles ont quitté le serveur depuis |
+| **bonus** | Tout ce que le staff a ajouté ou retiré à la main |
+
+Chaque soustraction est une option à activer ou non, parce que les autres bots d’invitations ne sont pas d’accord entre eux à leur sujet. Désactive **people who leave do not count** si tu penses que personne ne devrait perdre de crédit selon qui reste.
+
+Deux détails bons à savoir :
+
+- **Le statut « fake » est jugé à l’arrivée et n’est jamais réévalué.** Un membre dont le compte était récent à son arrivée reste compté comme « fake ». Sinon, chaque total augmenterait discrètement à mesure que les comptes vieillissent, et quelqu’un finirait par être accusé d’avoir perdu des invitations qu’il n’a jamais perdues.
+- **Les retours ne comptent pas deux fois** par défaut. Quitter puis revenir avec la même invitation est le moyen le plus simple de gonfler un compteur, et ça ne demande pas de deuxième compte. Le retour est quand même enregistré et visible dans <DashboardLink to="invites/activity">**Invite Tracker \> Invites and Joins**</DashboardLink>, il n’ajoute simplement rien.
+
+## Commandes
+
+| Commande | Qui |
+| --- | --- |
+| `/invites view` | Tout le monde, pour son propre compteur |
+| `/invites view member:` | Demande la permission de « voir celui de n’importe qui » |
+| `/invites leaderboard` | Les dix meilleurs inviteurs. Les 100 premiers sont dans <DashboardLink to="invites/leaderboard">**Invite Tracker \> Leaderboard**</DashboardLink> |
+| `/invites create` | Le staff, crée une invitation avec un libellé pour distinguer les campagnes |
+| `/invites bonus` | Le staff, ajoute ou retire des invitations à la main |
+
+Chaque réponse n’est visible que par la personne qui a lancé la commande. Un classement ne mentionne pas les personnes qui y figurent.
+
+## Variables du message de bienvenue
+
+Ajoute-les à ton message de bienvenue :
+
+| Variable | S’affiche comme |
+| --- | --- |
+| `{inviter}` | Le pseudo affiché de la personne qui les a invités |
+| `{invitermention}` | Une mention de cette personne |
+| `{inviterinvites}` | Le nombre d’invitations qu’elle a maintenant |
+| `{invitecode}` | Le code d’invitation utilisé |
+
+Si l’inviteur ne peut pas être déterminé, ces variables affichent « unknown » et le message de bienvenue est quand même envoyé.
+
+## Quand le bot ne peut pas savoir
+
+Ça arrive, et ce n’est pas une panne. Chaque cas est affiché dans le journal des arrivées plutôt que caché :
+
+| Affiché comme | Pourquoi |
+| --- | --- |
+| Vanity URL, no inviter to credit | La personne a utilisé ton lien `discord.gg/yourserver`. |
+| Two invites used at once | Deux personnes ont rejoint au même instant. Deux codes ont avancé et rien n’indique qui a utilisé lequel. |
+| Invite could not be identified | La découverte de serveurs (Server Discovery), ou le bot venait de redémarrer. |
+| Bot, added through OAuth | Les bots sont ajoutés, pas invités. |
+
+## Permissions requises
+
+| Action | Clé de permission |
+| --- | --- |
+| Voir son propre compteur | `invites.view_own` (accordée à tout le monde par défaut) |
+| Voir le compteur de n’importe qui et le classement | `invites.view_others` (accordée à tout le monde par défaut) |
+| Voir les paramètres | `invites.config.view_config` |
+| Modifier les paramètres | `invites.config.manage_config` |
+| Créer des invitations avec libellé | `invites.manage.create_invite` |
+| Ajouter ou retirer des invitations bonus | `invites.manage.manage_bonus` |
+
+Le bonus est le seul chiffre ici qu’une personne peut inventer, il a donc sa propre clé et chaque ajustement enregistre qui l’a fait et pourquoi.

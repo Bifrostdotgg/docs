@@ -1,0 +1,62 @@
+---
+title: "Streaming"
+description: "Um cargo para os membros enquanto estão ao vivo na Twitch, no YouTube ou na Kick, que a sincronização de cargos do Minecraft pode levar para dentro do jogo."
+icon: "tower-broadcast"
+---
+
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+Os membros vinculam a conta da Twitch, do YouTube ou da Kick e, enquanto qualquer conta vinculada estiver ao vivo, recebem um cargo que você escolhe. Quando a live acaba, o cargo sai. Qualquer live conta, seja qual for o jogo ou a categoria.
+
+Como é um cargo comum do Discord, tudo o que já reage a cargos reage a este também. O principal motivo para ativar é o Minecraft: mapeie o cargo na sincronização de cargos e os streamers ganham uma patente, tag ou prefixo no jogo enquanto estão ao vivo.
+
+## Antes de funcionar
+
+- O Heimdall precisa da permissão **Gerenciar cargos**, e o cargo de live precisa ficar abaixo do cargo mais alto do Heimdall.
+- O cargo de live não pode ter permissões de staff. Qualquer pessoa que vincular uma conta e entrar ao vivo recebe esse cargo, então o Heimdall recusa um cargo com permissões como Administrador, Gerenciar servidor, Gerenciar cargos, Banir membros ou Gerenciar mensagens, e também um cargo que tenha qualquer permissão do painel liberada.
+- Em cada instância do Heimdall, os provedores precisam ser configurados por quem a administra. Um provedor que não está configurado avisa isso quando um membro tenta vinculá-lo.
+
+## Como configurar
+
+Acesse <DashboardLink to="streaming">**Streaming**</DashboardLink> no painel.
+
+| Configuração | Descrição |
+| --- | --- |
+| **Enable streaming roles** (ativar cargos de streaming) | Liga o recurso e adiciona o comando `/streaming` ao seu servidor |
+| **Live role** (cargo de live) | O cargo que os membros recebem enquanto estão ao vivo |
+
+Para levar o cargo para o Minecraft, adicione-o aos mapeamentos de **Role sync** (sincronização de cargos) do Minecraft com a direção definida de Discord para Minecraft. Veja [Minecraft](/pt-BR/integrations/minecraft).
+
+## Como os membros vinculam uma conta
+
+Um membro roda `/streaming link` e recebe dois botões, visíveis só para ele.
+
+- **Twitch or YouTube** faz login com o Discord e lê as contas da Twitch e do YouTube já conectadas ao perfil do Discord da pessoa (**Configurações de usuário \> Conexões**). Só contam as conexões que o Discord verificou, então um membro só consegue vincular uma conta que realmente é dele. Vincular de novo substitui os vínculos da Twitch e do YouTube pelo que o perfil mostrar naquele momento, e é assim também que uma conexão removida deixa de valer.
+- **Kick** confere primeiro a conta do Discord e depois faz login na Kick. A Kick não é um tipo de conexão do Discord, então tem o próprio login.
+
+Os botões duram 15 minutos. `/streaming status` mostra os vínculos de um membro e se cada um está ao vivo, e `/streaming unlink` remove todos eles.
+
+Os vínculos pertencem a um servidor. Um membro que quer o cargo em dois servidores precisa vincular em cada um.
+
+## A lista de contas vinculadas
+
+A página <DashboardLink to="streaming">**Streaming**</DashboardLink> lista todos os membros com uma conta vinculada, com quem está ao vivo primeiro, e um link para cada canal. A staff pode desvincular um membro por lá. Não há como adicionar um vínculo em nome de alguém, porque um vínculo só tem valor quando o próprio membro provou que a conta é dele.
+
+## O detalhe importante: a rapidez com que o cargo muda
+
+A Twitch avisa o Heimdall no momento em que uma live começa ou termina, então o cargo acompanha em segundos. A Kick e o YouTube são verificados de tempos em tempos, então o cargo pode atrasar alguns minutos. O YouTube é verificado com menos frequência quanto mais canais estiverem vinculados em uma instância, porque o Google limita quantas consultas por dia são permitidas.
+
+No Minecraft, o modo de sincronização de cargos decide quando a mudança chega ao jogo. **Straight away, over the bot connection** (na hora, pela conexão do bot) e **Straight away, over RCON** (na hora, por RCON) aplicam a mudança imediatamente. **On the player's next join** (na próxima entrada do jogador) espera até o jogador se reconectar, então um streamer que já está online não vai ver a patente mudar até entrar de novo.
+
+O Heimdall só remove o cargo de live dos membros a quem ele mesmo deu o cargo. Um membro que já tinha o cargo, por exemplo porque a staff deu a ele, continua com o cargo quando a live termina. Se a staff remover o cargo de alguém no meio da live, o Heimdall não o devolve até a próxima live.
+
+## Permissões necessárias
+
+| Ação | Chave de permissão |
+| --- | --- |
+| Ver as configurações | `streaming.config.view_config` |
+| Alterar as configurações | `streaming.config.manage_config` |
+| Ver as contas vinculadas | `streaming.links.view_links` |
+| Desvincular as contas de outro membro | `streaming.links.manage_links` |
+
+Vincular, conferir e desvincular as próprias contas não exige nenhuma permissão.
