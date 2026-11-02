@@ -148,7 +148,9 @@ ANCHOR_LINK = re.compile(r'(?:\]\(|href=")(/[a-zA-Z0-9/_-]+)?#([a-z0-9_-]+)')
 
 
 def slugify(text):
-    """The anchor Mintlify gives a heading (GitHub style), for the English headings we match."""
+    """Close to the anchor Mintlify gives a heading, for plain-word English headings. Mintlify
+    percent-encodes punctuation such as `&`, `:` and `/`, so a link to a heading with those (or
+    to a repeated heading) gets no span here; none exists today."""
     text = re.sub(r"`|\*\*|\*|_|\[|\]\([^)]*\)", "", text).strip().lower()
     return re.sub(r"\s+", "-", re.sub(r"[^\w\s-]", "", text))
 
@@ -210,13 +212,18 @@ def cmd_links(check):
                     if fixed != text:
                         write(path, fixed)
         wanted = anchors_wanted(locale)
+        lock = load_lock()
         for page in PAGES:
             path = f"{locale}/{page}.mdx"
             if not os.path.exists(path):
                 continue
             text = read(path)
             fixed = localize_links(text, locale)
-            fixed = with_anchors(fixed, read(f"{page}.mdx"), wanted.get(page, set()))
+            # Headings are matched to the English by position, which only holds while the
+            # translation is current: a stale page keeps the anchors it has until retranslated.
+            english = read(f"{page}.mdx")
+            if page_state(locale, page, lock) == "current" and len(headings(english)) == len(headings(fixed)):
+                fixed = with_anchors(fixed, english, wanted.get(page, set()))
             if fixed == text:
                 continue
             if check:
