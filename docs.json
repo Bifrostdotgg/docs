@@ -9,125 +9,766 @@
   },
   "favicon": "/favicon.png",
   "navigation": {
-    "tabs": [
+    "languages": [
       {
-        "tab": "Documentation",
-        "groups": [
+        "language": "en",
+        "default": true,
+        "tabs": [
           {
-            "group": "Getting Started",
-            "pages": [
-              "index",
-              "adding-to-server",
-              "dashboard",
-              "permissions",
-              "settings",
-              "premium"
+            "tab": "Documentation",
+            "groups": [
+              {
+                "group": "Getting Started",
+                "pages": [
+                  "index",
+                  "adding-to-server",
+                  "dashboard",
+                  "permissions",
+                  "settings",
+                  "premium"
+                ]
+              },
+              {
+                "group": "AI",
+                "pages": [
+                  "ai/odin",
+                  "ai/translate"
+                ]
+              },
+              {
+                "group": "Conversations",
+                "pages": [
+                  "support/tickets",
+                  "support/modmail",
+                  "support/applications",
+                  "support/analytics"
+                ]
+              },
+              {
+                "group": "Moderation",
+                "pages": [
+                  "moderation/overview",
+                  "moderation/manual-actions",
+                  "moderation/automod",
+                  "moderation/escalation",
+                  "moderation/infractions",
+                  "moderation/cases",
+                  "moderation/channel-controls",
+                  "moderation/stickies",
+                  "moderation/auto-responses",
+                  "moderation/appeals",
+                  "utilities/logging",
+                  "utilities/attachment-blocker",
+                  "utilities/dont-at-me",
+                  "moderation/honeypot"
+                ]
+              },
+              {
+                "group": "Community",
+                "pages": [
+                  "community/welcome",
+                  "community/levels",
+                  "community/suggestions",
+                  "community/starboard",
+                  "community/role-buttons",
+                  "community/tags",
+                  "community/reminders",
+                  "community/birthdays",
+                  "community/giveaways",
+                  "community/polls",
+                  "community/goals",
+                  "community/auto-reactions",
+                  "community/afk",
+                  "community/confessions",
+                  "community/invite-tracker",
+                  "community/streaming"
+                ]
+              },
+              {
+                "group": "Voice",
+                "pages": [
+                  "voice/temp-channels",
+                  "voice/transcription",
+                  "voice/waiting-room"
+                ]
+              },
+              {
+                "group": "Games",
+                "pages": [
+                  "games/overview",
+                  "games/board-games",
+                  "games/casino",
+                  "games/economy"
+                ]
+              },
+              {
+                "group": "Integrations",
+                "pages": [
+                  "integrations/minecraft",
+                  "integrations/planetside",
+                  "integrations/tebex",
+                  "integrations/namelessmc",
+                  "utilities/customer-portal"
+                ]
+              },
+              {
+                "group": "Reference",
+                "pages": [
+                  "reference/commands",
+                  "reference/permission-keys",
+                  "utilities/ping",
+                  "utilities/selfmute",
+                  "utilities/clock",
+                  "utilities/affiliate",
+                  "crawler"
+                ]
+              }
             ]
           },
           {
-            "group": "AI",
-            "pages": [
-              "ai/odin",
-              "ai/translate"
-            ]
-          },
-          {
-            "group": "Conversations",
-            "pages": [
-              "support/tickets",
-              "support/modmail",
-              "support/applications",
-              "support/analytics"
-            ]
-          },
-          {
-            "group": "Moderation",
-            "pages": [
-              "moderation/overview",
-              "moderation/manual-actions",
-              "moderation/automod",
-              "moderation/escalation",
-              "moderation/infractions",
-              "moderation/cases",
-              "moderation/channel-controls",
-              "moderation/stickies",
-              "moderation/auto-responses",
-              "moderation/appeals",
-              "utilities/logging",
-              "utilities/attachment-blocker",
-              "utilities/dont-at-me",
-              "moderation/honeypot"
-            ]
-          },
-          {
-            "group": "Community",
-            "pages": [
-              "community/welcome",
-              "community/levels",
-              "community/suggestions",
-              "community/starboard",
-              "community/role-buttons",
-              "community/tags",
-              "community/reminders",
-              "community/birthdays",
-              "community/giveaways",
-              "community/polls",
-              "community/goals",
-              "community/auto-reactions",
-              "community/afk",
-              "community/confessions",
-              "community/invite-tracker",
-              "community/streaming"
-            ]
-          },
-          {
-            "group": "Voice",
-            "pages": [
-              "voice/temp-channels",
-              "voice/transcription",
-              "voice/waiting-room"
-            ]
-          },
-          {
-            "group": "Games",
-            "pages": [
-              "games/overview",
-              "games/board-games",
-              "games/casino",
-              "games/economy"
-            ]
-          },
-          {
-            "group": "Integrations",
-            "pages": [
-              "integrations/minecraft",
-              "integrations/planetside",
-              "integrations/tebex",
-              "integrations/namelessmc",
-              "utilities/customer-portal"
-            ]
-          },
-          {
-            "group": "Reference",
-            "pages": [
-              "reference/commands",
-              "reference/permission-keys",
-              "utilities/ping",
-              "utilities/selfmute",
-              "utilities/clock",
-              "utilities/affiliate",
-              "crawler"
+            "tab": "Command Reference",
+            "groups": [
+              {
+                "group": "Commands",
+                "pages": [
+                  "reference/commands"
+                ]
+              }
             ]
           }
         ]
       },
       {
-        "tab": "Command Reference",
-        "groups": [
+        "language": "es",
+        "tabs": [
           {
-            "group": "Commands",
-            "pages": [
-              "reference/commands"
+            "tab": "Documentación",
+            "groups": [
+              {
+                "group": "Primeros pasos",
+                "pages": [
+                  "index",
+                  "adding-to-server",
+                  "dashboard",
+                  "permissions",
+                  "settings",
+                  "premium"
+                ]
+              },
+              {
+                "group": "IA",
+                "pages": [
+                  "ai/odin",
+                  "ai/translate"
+                ]
+              },
+              {
+                "group": "Conversaciones",
+                "pages": [
+                  "support/tickets",
+                  "support/modmail",
+                  "support/applications",
+                  "support/analytics"
+                ]
+              },
+              {
+                "group": "Moderación",
+                "pages": [
+                  "moderation/overview",
+                  "moderation/manual-actions",
+                  "moderation/automod",
+                  "moderation/escalation",
+                  "moderation/infractions",
+                  "moderation/cases",
+                  "moderation/channel-controls",
+                  "moderation/stickies",
+                  "moderation/auto-responses",
+                  "moderation/appeals",
+                  "utilities/logging",
+                  "utilities/attachment-blocker",
+                  "utilities/dont-at-me",
+                  "moderation/honeypot"
+                ]
+              },
+              {
+                "group": "Comunidad",
+                "pages": [
+                  "community/welcome",
+                  "community/levels",
+                  "community/suggestions",
+                  "community/starboard",
+                  "community/role-buttons",
+                  "community/tags",
+                  "community/reminders",
+                  "community/birthdays",
+                  "community/giveaways",
+                  "community/polls",
+                  "community/goals",
+                  "community/auto-reactions",
+                  "community/afk",
+                  "community/confessions",
+                  "community/invite-tracker",
+                  "community/streaming"
+                ]
+              },
+              {
+                "group": "Voz",
+                "pages": [
+                  "voice/temp-channels",
+                  "voice/transcription",
+                  "voice/waiting-room"
+                ]
+              },
+              {
+                "group": "Juegos",
+                "pages": [
+                  "games/overview",
+                  "games/board-games",
+                  "games/casino",
+                  "games/economy"
+                ]
+              },
+              {
+                "group": "Integraciones",
+                "pages": [
+                  "integrations/minecraft",
+                  "integrations/planetside",
+                  "integrations/tebex",
+                  "integrations/namelessmc",
+                  "utilities/customer-portal"
+                ]
+              },
+              {
+                "group": "Referencia",
+                "pages": [
+                  "reference/commands",
+                  "reference/permission-keys",
+                  "utilities/ping",
+                  "utilities/selfmute",
+                  "utilities/clock",
+                  "utilities/affiliate",
+                  "crawler"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "Referencia de comandos",
+            "groups": [
+              {
+                "group": "Comandos",
+                "pages": [
+                  "reference/commands"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "language": "pt-BR",
+        "tabs": [
+          {
+            "tab": "Documentação",
+            "groups": [
+              {
+                "group": "Primeiros passos",
+                "pages": [
+                  "index",
+                  "adding-to-server",
+                  "dashboard",
+                  "permissions",
+                  "settings",
+                  "premium"
+                ]
+              },
+              {
+                "group": "IA",
+                "pages": [
+                  "ai/odin",
+                  "ai/translate"
+                ]
+              },
+              {
+                "group": "Conversas",
+                "pages": [
+                  "support/tickets",
+                  "support/modmail",
+                  "support/applications",
+                  "support/analytics"
+                ]
+              },
+              {
+                "group": "Moderação",
+                "pages": [
+                  "moderation/overview",
+                  "moderation/manual-actions",
+                  "moderation/automod",
+                  "moderation/escalation",
+                  "moderation/infractions",
+                  "moderation/cases",
+                  "moderation/channel-controls",
+                  "moderation/stickies",
+                  "moderation/auto-responses",
+                  "moderation/appeals",
+                  "utilities/logging",
+                  "utilities/attachment-blocker",
+                  "utilities/dont-at-me",
+                  "moderation/honeypot"
+                ]
+              },
+              {
+                "group": "Comunidade",
+                "pages": [
+                  "community/welcome",
+                  "community/levels",
+                  "community/suggestions",
+                  "community/starboard",
+                  "community/role-buttons",
+                  "community/tags",
+                  "community/reminders",
+                  "community/birthdays",
+                  "community/giveaways",
+                  "community/polls",
+                  "community/goals",
+                  "community/auto-reactions",
+                  "community/afk",
+                  "community/confessions",
+                  "community/invite-tracker",
+                  "community/streaming"
+                ]
+              },
+              {
+                "group": "Voz",
+                "pages": [
+                  "voice/temp-channels",
+                  "voice/transcription",
+                  "voice/waiting-room"
+                ]
+              },
+              {
+                "group": "Jogos",
+                "pages": [
+                  "games/overview",
+                  "games/board-games",
+                  "games/casino",
+                  "games/economy"
+                ]
+              },
+              {
+                "group": "Integrações",
+                "pages": [
+                  "integrations/minecraft",
+                  "integrations/planetside",
+                  "integrations/tebex",
+                  "integrations/namelessmc",
+                  "utilities/customer-portal"
+                ]
+              },
+              {
+                "group": "Referência",
+                "pages": [
+                  "reference/commands",
+                  "reference/permission-keys",
+                  "utilities/ping",
+                  "utilities/selfmute",
+                  "utilities/clock",
+                  "utilities/affiliate",
+                  "crawler"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "Referência de comandos",
+            "groups": [
+              {
+                "group": "Comandos",
+                "pages": [
+                  "reference/commands"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "language": "fr",
+        "tabs": [
+          {
+            "tab": "Documentation",
+            "groups": [
+              {
+                "group": "Premiers pas",
+                "pages": [
+                  "index",
+                  "adding-to-server",
+                  "dashboard",
+                  "permissions",
+                  "settings",
+                  "premium"
+                ]
+              },
+              {
+                "group": "IA",
+                "pages": [
+                  "ai/odin",
+                  "ai/translate"
+                ]
+              },
+              {
+                "group": "Conversations",
+                "pages": [
+                  "support/tickets",
+                  "support/modmail",
+                  "support/applications",
+                  "support/analytics"
+                ]
+              },
+              {
+                "group": "Modération",
+                "pages": [
+                  "moderation/overview",
+                  "moderation/manual-actions",
+                  "moderation/automod",
+                  "moderation/escalation",
+                  "moderation/infractions",
+                  "moderation/cases",
+                  "moderation/channel-controls",
+                  "moderation/stickies",
+                  "moderation/auto-responses",
+                  "moderation/appeals",
+                  "utilities/logging",
+                  "utilities/attachment-blocker",
+                  "utilities/dont-at-me",
+                  "moderation/honeypot"
+                ]
+              },
+              {
+                "group": "Communauté",
+                "pages": [
+                  "community/welcome",
+                  "community/levels",
+                  "community/suggestions",
+                  "community/starboard",
+                  "community/role-buttons",
+                  "community/tags",
+                  "community/reminders",
+                  "community/birthdays",
+                  "community/giveaways",
+                  "community/polls",
+                  "community/goals",
+                  "community/auto-reactions",
+                  "community/afk",
+                  "community/confessions",
+                  "community/invite-tracker",
+                  "community/streaming"
+                ]
+              },
+              {
+                "group": "Vocal",
+                "pages": [
+                  "voice/temp-channels",
+                  "voice/transcription",
+                  "voice/waiting-room"
+                ]
+              },
+              {
+                "group": "Jeux",
+                "pages": [
+                  "games/overview",
+                  "games/board-games",
+                  "games/casino",
+                  "games/economy"
+                ]
+              },
+              {
+                "group": "Intégrations",
+                "pages": [
+                  "integrations/minecraft",
+                  "integrations/planetside",
+                  "integrations/tebex",
+                  "integrations/namelessmc",
+                  "utilities/customer-portal"
+                ]
+              },
+              {
+                "group": "Référence",
+                "pages": [
+                  "reference/commands",
+                  "reference/permission-keys",
+                  "utilities/ping",
+                  "utilities/selfmute",
+                  "utilities/clock",
+                  "utilities/affiliate",
+                  "crawler"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "Référence des commandes",
+            "groups": [
+              {
+                "group": "Commandes",
+                "pages": [
+                  "reference/commands"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "language": "de",
+        "tabs": [
+          {
+            "tab": "Dokumentation",
+            "groups": [
+              {
+                "group": "Erste Schritte",
+                "pages": [
+                  "index",
+                  "adding-to-server",
+                  "dashboard",
+                  "permissions",
+                  "settings",
+                  "premium"
+                ]
+              },
+              {
+                "group": "KI",
+                "pages": [
+                  "ai/odin",
+                  "ai/translate"
+                ]
+              },
+              {
+                "group": "Unterhaltungen",
+                "pages": [
+                  "support/tickets",
+                  "support/modmail",
+                  "support/applications",
+                  "support/analytics"
+                ]
+              },
+              {
+                "group": "Moderation",
+                "pages": [
+                  "moderation/overview",
+                  "moderation/manual-actions",
+                  "moderation/automod",
+                  "moderation/escalation",
+                  "moderation/infractions",
+                  "moderation/cases",
+                  "moderation/channel-controls",
+                  "moderation/stickies",
+                  "moderation/auto-responses",
+                  "moderation/appeals",
+                  "utilities/logging",
+                  "utilities/attachment-blocker",
+                  "utilities/dont-at-me",
+                  "moderation/honeypot"
+                ]
+              },
+              {
+                "group": "Community",
+                "pages": [
+                  "community/welcome",
+                  "community/levels",
+                  "community/suggestions",
+                  "community/starboard",
+                  "community/role-buttons",
+                  "community/tags",
+                  "community/reminders",
+                  "community/birthdays",
+                  "community/giveaways",
+                  "community/polls",
+                  "community/goals",
+                  "community/auto-reactions",
+                  "community/afk",
+                  "community/confessions",
+                  "community/invite-tracker",
+                  "community/streaming"
+                ]
+              },
+              {
+                "group": "Sprache",
+                "pages": [
+                  "voice/temp-channels",
+                  "voice/transcription",
+                  "voice/waiting-room"
+                ]
+              },
+              {
+                "group": "Spiele",
+                "pages": [
+                  "games/overview",
+                  "games/board-games",
+                  "games/casino",
+                  "games/economy"
+                ]
+              },
+              {
+                "group": "Integrationen",
+                "pages": [
+                  "integrations/minecraft",
+                  "integrations/planetside",
+                  "integrations/tebex",
+                  "integrations/namelessmc",
+                  "utilities/customer-portal"
+                ]
+              },
+              {
+                "group": "Referenz",
+                "pages": [
+                  "reference/commands",
+                  "reference/permission-keys",
+                  "utilities/ping",
+                  "utilities/selfmute",
+                  "utilities/clock",
+                  "utilities/affiliate",
+                  "crawler"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "Befehlsreferenz",
+            "groups": [
+              {
+                "group": "Befehle",
+                "pages": [
+                  "reference/commands"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "language": "ja",
+        "tabs": [
+          {
+            "tab": "ドキュメント",
+            "groups": [
+              {
+                "group": "はじめに",
+                "pages": [
+                  "index",
+                  "adding-to-server",
+                  "dashboard",
+                  "permissions",
+                  "settings",
+                  "premium"
+                ]
+              },
+              {
+                "group": "AI",
+                "pages": [
+                  "ai/odin",
+                  "ai/translate"
+                ]
+              },
+              {
+                "group": "会話",
+                "pages": [
+                  "support/tickets",
+                  "support/modmail",
+                  "support/applications",
+                  "support/analytics"
+                ]
+              },
+              {
+                "group": "モデレーション",
+                "pages": [
+                  "moderation/overview",
+                  "moderation/manual-actions",
+                  "moderation/automod",
+                  "moderation/escalation",
+                  "moderation/infractions",
+                  "moderation/cases",
+                  "moderation/channel-controls",
+                  "moderation/stickies",
+                  "moderation/auto-responses",
+                  "moderation/appeals",
+                  "utilities/logging",
+                  "utilities/attachment-blocker",
+                  "utilities/dont-at-me",
+                  "moderation/honeypot"
+                ]
+              },
+              {
+                "group": "コミュニティ",
+                "pages": [
+                  "community/welcome",
+                  "community/levels",
+                  "community/suggestions",
+                  "community/starboard",
+                  "community/role-buttons",
+                  "community/tags",
+                  "community/reminders",
+                  "community/birthdays",
+                  "community/giveaways",
+                  "community/polls",
+                  "community/goals",
+                  "community/auto-reactions",
+                  "community/afk",
+                  "community/confessions",
+                  "community/invite-tracker",
+                  "community/streaming"
+                ]
+              },
+              {
+                "group": "ボイス",
+                "pages": [
+                  "voice/temp-channels",
+                  "voice/transcription",
+                  "voice/waiting-room"
+                ]
+              },
+              {
+                "group": "ゲーム",
+                "pages": [
+                  "games/overview",
+                  "games/board-games",
+                  "games/casino",
+                  "games/economy"
+                ]
+              },
+              {
+                "group": "連携",
+                "pages": [
+                  "integrations/minecraft",
+                  "integrations/planetside",
+                  "integrations/tebex",
+                  "integrations/namelessmc",
+                  "utilities/customer-portal"
+                ]
+              },
+              {
+                "group": "リファレンス",
+                "pages": [
+                  "reference/commands",
+                  "reference/permission-keys",
+                  "utilities/ping",
+                  "utilities/selfmute",
+                  "utilities/clock",
+                  "utilities/affiliate",
+                  "crawler"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "コマンドリファレンス",
+            "groups": [
+              {
+                "group": "コマンド",
+                "pages": [
+                  "reference/commands"
+                ]
+              }
             ]
           }
         ]

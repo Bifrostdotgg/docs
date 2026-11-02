@@ -1,0 +1,4 @@
+{
+  "locales": ["es", "pt-BR", "fr", "de", "ja"],
+  "pages": ["index", "adding-to-server", "dashboard", "permissions", "settings", "premium"]
+}

@@ -54,6 +54,26 @@ The Heimdall build enforces the first two steps, so they are not optional:
 A `docsPath` pointing at a page that does not exist yet is the intended state while a
 feature is in flight. It is a promissory note the build can see.
 
+## Translations
+
+A few pages are translated into Spanish, Brazilian Portuguese, French, German and Japanese:
+the ones listed in `i18n/config.json`. A translation of `dashboard.mdx` lives at
+`es/dashboard.mdx`, and so on. Every other page shows in each language's menu as its English
+page.
+
+- **Edit the English menu only.** `navigation.languages` in `docs.json` holds one menu per
+  language, and every one except `en` is generated: run `python3 scripts/i18n-pages.py nav`
+  after changing the English menu. Tab and group names per language are in
+  `i18n/nav.<locale>.json`. CI fails when the generated menus are stale.
+- **Changing a translated English page makes its translations stale.** They stay published
+  and CI warns. To bring one back: retranslate the page, run
+  `python3 scripts/i18n-pages.py links` (points links at the translated pages), then
+  `python3 scripts/i18n-pages.py stamp <locale> <page>`.
+- **Translating:** keep the frontmatter keys, components, props, code, backticked commands and
+  permission keys, `DashboardLink` keys and image paths exactly as they are; translate the
+  prose, `title`, `description` and visible component text. No em dashes, in any language.
+- `python3 scripts/i18n-pages.py status` shows what is current, stale and missing.
+
 ## Linking to a dashboard page
 
 When a page tells the reader to open somewhere in the dashboard, link it with the
