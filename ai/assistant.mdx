@@ -1,0 +1,49 @@
+---
+title: "AI Assistant"
+description: "Ask the dashboard's built-in assistant about your server's setup, and have it prepare changes you review and apply."
+icon: "sparkles"
+---
+
+The AI assistant lives in the dashboard. Open it from the Bifrost head in the corner of any server page. Ask it how your server is set up ("who can close tickets?", "where do warnings get logged?") or ask it to change something ("send welcome messages to #arrivals", "add a Support ticket category"). It looks things up for you, and anything it wants to change is shown to you first. Nothing changes until you press **Apply**.
+
+## Before you start
+
+- **Chat needs Premium.** A server on [Premium](/premium) gets a monthly allowance of assistant messages: 150 on Premium and 500 on Premium Plus. White-Label includes the Premium allowance.
+- **Anyone can run the AI setup once.** When Heimdall joins a server, the first-time setup can be done by chatting with the assistant, even without Premium. Each Discord account gets one free setup: up to 25 messages, or one applied setup, whichever comes first.
+- **It needs the Use the AI Assistant permission.** Server owners have it. Grant it to other roles under **Permissions** in the dashboard; see the [Permissions guide](/permissions).
+
+## How changes work
+
+The assistant reads freely: channels, roles, members and every feature's settings. It never changes your server on its own. When you ask for a change, it explains what it is about to do and queues it as a proposal. Review the proposal in the chat and press **Apply** to make the change, or ignore it to leave everything as it was.
+
+Some changes cannot be undone, such as closing a ticket, cancelling a running giveaway, deleting a category, or taking coins, XP or invites away from a member. The assistant marks these clearly and asks you to confirm before they run.
+
+The assistant works with your own permissions. It cannot do anything in the dashboard that you could not do yourself, and when it is refused, it tells you which permission is missing.
+
+## Allowance
+
+Each message you send uses one message from the server's monthly allowance, whoever sends it. The assistant panel shows how many are left this month. The allowance resets at the start of each calendar month (UTC). Unused messages do not carry over.
+
+When the allowance is used up, the assistant stops answering until the next month. The rest of the dashboard and the bot keep working as normal.
+
+## The gotcha
+
+The assistant only knows what the dashboard can see and change. It cannot read your server's message history, and it will not invent settings a feature does not have. If you ask for something no feature offers, it says so and points you to the closest dashboard page instead. That is the right answer, not a failure.
+
+## Conversations
+
+Conversations are kept with the server, so you can come back to one later. They are deleted along with the rest of the server's data if Heimdall leaves the server.
+
+## Connecting other AI apps (MCP)
+
+On Premium, you can also connect an AI app that supports the Model Context Protocol (MCP), such as Claude, to your Heimdall servers. Add `https://bot.bifrost.gg/api/mcp` as a connector in the app and sign in with Discord when asked. The app works with your permissions, on the servers you allow. Manage or disconnect apps from **Connected apps** in the dashboard.
+
+## Need more help?
+
+If something here does not answer your question, ask in the [Bifrost Discord](https://discord.bifrost.gg/).
+
+## Required permissions
+
+| Action | Permission key |
+| --- | --- |
+| Chatting with the assistant | `dashboard.use_assistant` |
