@@ -27,6 +27,7 @@
           {
             "group": "AI",
             "pages": [
+              "ai/assistant",
               "ai/odin",
               "ai/translate"
             ]
