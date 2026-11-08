@@ -43,6 +43,7 @@ Navigate to <DashboardLink to="moderation/rules">**Moderation \> Rules**</Dashbo
 | **Kick** | Remove the member from the server. |
 | **Ban** | Ban the member, optionally with a duration. |
 | **Send response** | Post a message (optionally a DM) explaining why the action was taken. |
+| **Reset name** | Name rules only. Clears a matching server nickname, or gives the member the server's placeholder nickname when their display name or username matched. |
 
 Actions can be combined. A common setup is delete \+ warn, where the message is removed and a warning is added to the member's infraction record.
 
@@ -53,6 +54,36 @@ You can exempt specific roles, channels, or users from a rule. For example, you 
 ### Point values
 
 When a rule issues a warn action, you can set the point value attached to the infraction. These points feed into the escalation system. See [Escalation](/moderation/escalation) for how thresholds work.
+
+## Name rules
+
+A rule that targets **Username** or **Display name** checks member names instead of messages.
+
+| Target | What it checks |
+| --- | --- |
+| **Username** | The member's @username. |
+| **Display name** | The member's server nickname, or their global display name when they have no server nickname. |
+
+Names are checked when a member joins, when they change their server nickname, display name or username, and whenever they post a message.
+
+The full actions (warn, mute, kick, ban, DM) apply only to a **new** name: one a member joins with, or one they change after Heimdall has seen them. A name Heimdall sees for the first time on an existing member, for example when you turn a rule on or when they next post, is treated as one they already had: **Reset name** still fixes it, but they are not punished for it. This stops a new rule (such as Nickname Hoisting) from warning every member with an old name at once.
+
+Each name is acted on once. The same member posting again with the same name is not punished again; a new offending name is. A member who leaves and rejoins is checked as a new member. Name rules apply the rule's role exemptions, but not its channel exemptions, since a name does not belong to a channel.
+
+A **server nickname** can be set by staff as well as the member, so a matching nickname is only punished when the audit log shows the member set it themselves. If someone else set it, or the bot cannot read the audit log, the nickname is still reset and the match is logged, but nobody is punished.
+
+### Resetting a name
+
+Add the **Reset name** action to fix the name as well as punish it:
+
+- If the member's **server nickname** matched, the bot clears it.
+- If their **display name** or **username** matched, the bot sets their server nickname to a placeholder. Discord does not let a bot change someone's global name, so a server nickname is the only way to hide it in your server.
+
+The placeholder defaults to **Moderated name**. Change it under <DashboardLink to="moderation/settings">**Moderation \> Settings**</DashboardLink> (up to 32 characters).
+
+<Note>
+Reset name needs the bot to have the **Manage Nicknames** permission, and its role must be above the member's highest role. The server owner's name can never be changed. If the bot is missing either, it posts a notice to your bot diagnostics log instead.
+</Note>
 
 ## Testing a rule
 
