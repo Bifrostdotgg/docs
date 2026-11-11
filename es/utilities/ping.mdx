@@ -1,0 +1,57 @@
+---
+title: "Comandos de estado e información"
+description: "Cómo consultar la latencia y el tiempo activo del bot, y ver información sobre un usuario de Discord."
+icon: "circle-info"
+---
+
+Estos comandos de uso general dan a los miembros y a los administradores información básica sobre el funcionamiento del bot y sobre los usuarios de Discord.
+
+## Consultar la latencia del bot
+
+```
+/ping
+```
+
+Mide la latencia de ida y vuelta actual entre el bot y la API de Discord. La respuesta muestra:
+
+- **Latencia de la API**: el tiempo que tarda el bot en recibir un evento de Discord
+- **Latencia del gateway**: la ida y vuelta del latido (heartbeat) del WebSocket
+- **Latencia de la base de datos**: el tiempo que tarda en completarse una consulta sencilla a la base de datos
+
+Este comando sirve para comprobar que el bot responde y para saber si la lentitud viene del bot, de la API de Discord o de la base de datos.
+
+## Consultar el tiempo activo del bot
+
+```
+/uptime
+```
+
+Muestra cuánto tiempo lleva funcionando el bot desde su último reinicio. Indica una duración fácil de leer (por ejemplo, "3 días, 14 horas, 22 minutos") y la fecha y hora exactas en que se inició el bot.
+
+## Ver la información de un usuario
+
+```
+/userinfo [user]
+```
+
+Muestra una tarjeta de perfil del miembro indicado (o tu propio perfil si no indicas ningún usuario). La tarjeta muestra:
+
+| Campo | Descripción |
+|---|---|
+| **Nombre de usuario** | Nombre de usuario de Discord y nombre visible |
+| **ID de usuario** | ID snowflake de Discord |
+| **Cuenta creada** | Cuándo se registró la cuenta de Discord |
+| **Se unió al servidor** | Cuándo entró el miembro en este servidor |
+| **Roles** | Todos los roles que tiene el miembro ahora mismo |
+| **Apodo** | El apodo en este servidor, si tiene uno |
+| **Bot** | Si la cuenta es un bot |
+
+`/userinfo` funciona con cualquier miembro visible, bots incluidos. Puedes consultar a miembros que se han ido del servidor indicando su ID de usuario.
+
+## Permisos necesarios
+
+Estos comandos están disponibles para todos los miembros de forma predeterminada:
+
+| Comando | Clave de permiso |
+|---|---|
+| `/ping`, `/uptime`, `/userinfo` | `ping.use` (permitido por defecto) |

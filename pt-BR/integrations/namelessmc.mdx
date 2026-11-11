@@ -1,0 +1,29 @@
+---
+title: "NamelessMC"
+description: "Como vincular contas do Discord a perfis de fórum do NamelessMC."
+icon: "link"
+---
+
+A integração com o NamelessMC conecta contas do Discord a perfis de um fórum que usa o NamelessMC. Depois do vínculo, o Heimdall consegue verificar se a pessoa é membro do fórum e sincronizar cargos entre o fórum e o Discord.
+
+## Vínculo de contas
+
+Os membros vinculam a conta do fórum à conta do Discord com um comando de verificação:
+
+```
+/forumlink
+```
+
+Ao rodar esse comando, o membro precisa informar o nome de usuário ou o e-mail do fórum NamelessMC. O bot inicia um processo de verificação pela API do NamelessMC (o membro confirma o vínculo na página de configurações da conta do fórum) e, depois da confirmação, as contas ficam pareadas.
+
+Com o vínculo feito, o Heimdall pode dar cargos do Discord automaticamente com base nos grupos do fórum, e o portal do cliente pode mostrar o perfil do membro no fórum.
+
+## Sincronização de cargos
+
+Quando a sincronização de cargos está configurada, o Heimdall confere periodicamente os grupos do fórum de cada membro vinculado e atualiza os cargos dele no Discord para combinar. Assim os níveis de acesso no Discord ficam alinhados com a estrutura do seu fórum, de forma automática.
+
+## Permissões necessárias
+
+| Ação | Chave de permissão |
+|---|---|
+| Vincular uma conta do fórum | `namelessmc.use` (permitido por padrão) |

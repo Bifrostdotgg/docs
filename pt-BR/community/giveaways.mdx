@@ -1,0 +1,64 @@
+---
+title: "Sorteios"
+description: "Como fazer sorteios com tempo definido, entrada por botão, sorteio automático e novos sorteios."
+icon: "gift"
+---
+
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+Os sorteios rodam com um cronômetro e um botão para participar. O número de participantes atualiza ao vivo, os vencedores são sorteados automaticamente quando o tempo acaba, e você pode sortear de novo se um vencedor não responder.
+
+## Começando um
+
+`/giveaway start` é o caminho rápido: um prêmio, uma duração e quantos vencedores. `/giveaway create` abre o fluxo completo para algo mais elaborado, e <DashboardLink to="giveaways/create">**Giveaways \> Create giveaway**</DashboardLink> (Sorteios > Criar sorteio) faz o mesmo no painel.
+
+| Configuração | Descrição |
+| --- | --- |
+| **Prêmio** | O que está sendo sorteado |
+| **Duração** | Por quanto tempo as inscrições ficam abertas |
+| **Vencedores** | Quantos são sorteados |
+| **Requisitos** | Condições opcionais de cargo ou idade da conta para quem pode participar |
+
+Os membros participam pelo botão na mensagem do sorteio. O contador atualiza conforme as pessoas entram, então a mensagem continua útil sem ninguém precisar atualizar nada.
+
+## Sorteando e sorteando de novo
+
+Quando o tempo acaba, o bot sorteia os vencedores e os anuncia. Os sorteios são atômicos, então duas pessoas não podem ser escolhidas para a mesma vaga, mesmo que o sorteio termine enquanto ainda estão chegando inscrições.
+
+| Comando | O que faz |
+| --- | --- |
+| `/giveaway end` | Encerra antes do prazo e sorteia na hora |
+| `/giveaway cancel` | Encerra sem vencedor |
+| `/giveaway reroll` | Sorteia um substituto, para quando um vencedor nunca resgata o prêmio |
+| `/giveaway entrants` | Lista quem participou |
+| `/giveaway list` | Mostra os sorteios em andamento |
+
+## Modelos e séries
+
+Os <DashboardLink to="giveaways/templates">**Giveaways \> Templates**</DashboardLink> (Sorteios > Modelos) guardam a configuração de um sorteio, para que um sorteio recorrente não precise ser montado do zero toda vez. As **séries** agrupam sorteios que se repetem, para você vê-los como uma coisa só em vez de uma dúzia de entradas sem relação.
+
+## Entrega
+
+A página <DashboardLink to="giveaways/fulfillment">**Giveaways \> Fulfillment**</DashboardLink> (Sorteios > Entrega) acompanha se os vencedores receberam mesmo o prêmio, o que importa para qualquer coisa entregue por uma pessoa, e não automaticamente. Um sorteio com prêmio não entregue continua visível em vez de sumir depois que o sorteio é feito.
+
+## Parceiros e compartilhamento
+
+Os sorteios podem ser compartilhados com servidores parceiros, então um sorteio que você faz aparece no servidor deles e vice-versa. `/giveaway partners` gerencia essas parcerias, e `/giveaway share` oferece um sorteio específico. No painel, você convida um parceiro pelo formulário de criação ou edição de um sorteio, e <DashboardLink to="giveaways/sharing">**Giveaways \> Partner servers**</DashboardLink> (Sorteios > Servidores parceiros) é onde você entra no sorteio de um parceiro com um código, vê os sorteios de que participa e sai deles.
+
+## Permissões necessárias
+
+| Ação | Chave de permissão |
+| --- | --- |
+| Participar de um sorteio | `giveaways.enter` (concedida a todos por padrão) |
+| Criar um sorteio | `giveaways.create` |
+| Ver sorteios | `giveaways.giveaways.view` |
+| Encerrar, cancelar, sortear de novo | `giveaways.giveaways.manage` |
+| Ver quem participou | `giveaways.giveaways.view_entrants` |
+| Ver a entrega | `giveaways.fulfillment.view` |
+| Marcar prêmios como entregues | `giveaways.fulfillment.manage` |
+| Ver e gerenciar modelos | `giveaways.templates.view`, `giveaways.templates.manage` |
+| Ver e gerenciar séries | `giveaways.series.view`, `giveaways.series.manage` |
+| Ver e alterar as configurações | `giveaways.config.view`, `giveaways.config.manage` |
+| Ver e gerenciar o compartilhamento com parceiros | `giveaways.sharing.view`, `giveaways.sharing.manage` |
+
+Ver quem participou fica separado de fazer o sorteio de propósito: a lista de participantes é uma lista dos seus membros, e fazer um sorteio não exige lê-la.

@@ -1,0 +1,42 @@
+---
+title: "Honeypot"
+description: "Attraper les bots de spam en sanctionnant quiconque écrit dans un salon où personne ne devrait écrire."
+icon: "bug"
+---
+
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+Un honeypot (pot de miel) est un salon dans lequel aucun vrai membre n’écrirait jamais. Quiconque y écrit est presque à coup sûr un bot qui a rejoint le serveur et s’est mis à publier sans rien lire, donc le bot agit contre lui immédiatement.
+
+Ça marche parce que les bots de spam ne lisent ni le nom des salons, ni leur sujet, ni les messages épinglés avant de publier. Un humain voit un salon appelé « do-not-post-here » avec un avertissement épinglé, et passe son chemin.
+
+## Le mettre en place
+
+`/honeypot channel add` désigne un salon, et `/honeypot channel remove` le retire. `/honeypot status` affiche la configuration actuelle et `/honeypot toggle` active ou désactive l’application sans perdre ta liste de salons.
+
+`/honeypot action` choisit ce qui arrive à quelqu’un qui écrit dans le salon :
+
+| Action | Quand l’utiliser |
+| --- | --- |
+| **Ban** | L’option la plus forte, pour un salon qui est sans aucun doute un piège |
+| **Expulsion** | Permet à quelqu’un qui s’est vraiment trompé de revenir |
+| **Mute** | Laisse au staff le temps de regarder avant de décider |
+
+Tout est aussi configurable depuis la page <DashboardLink to="honeypot">**Honeypot**</DashboardLink> du tableau de bord.
+
+## Le rendre efficace
+
+- **Rends le salon clairement interdit pour un humain.** Un nom clair, un sujet et un message épinglé. Le but est que les humains soient prévenus et pas les bots.
+- **Place-le là où un bot le trouvera.** Un salon enfoui là où les nouveaux membres ne le voient pas n’attrape rien.
+- **Pense d’abord au mute.** Le bannissement est le plus efficace et le moins indulgent. Commencer par rendre muet te permet de voir ce que le piège attrape vraiment sur ton serveur avant de rendre la sanction définitive.
+
+Les actions passent par le même circuit de modération que les actions manuelles, donc elles apparaissent dans ton historique des sanctions et dans ton journal de modération, avec le honeypot indiqué comme source.
+
+## Permissions requises
+
+| Action | Clé de permission |
+| --- | --- |
+| Voir les paramètres | `honeypot.view_config` |
+| Modifier les salons et l’action | `honeypot.manage_config` |
+
+Le bot a besoin de la permission d’effectuer l’action que tu choisis, et son rôle doit être placé au-dessus des membres sur lesquels il doit agir.

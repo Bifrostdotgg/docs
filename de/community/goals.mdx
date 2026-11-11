@@ -1,0 +1,35 @@
+---
+title: "Ziele"
+description: "Fortschrittsbalken posten, die sich selbst aktualisieren: für Mitgliederzahl, Boosts, Rollen oder jede Zahl, die du festlegst."
+icon: "bullseye"
+---
+
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+Ein Ziel ist ein Fortschrittsbalken in einem Kanal, der sich selbst aktualisiert. Nutze ihn für einen Mitglieder-Meilenstein, ein Boost-Ziel, eine Recruiting-Aktion oder alles andere, das sich in einer Zahl ausdrücken lässt.
+
+## Was ein Ziel verfolgen kann
+
+| Quelle | Der Fortschritt kommt aus |
+| --- | --- |
+| **Member count** (Mitgliederzahl) | Wie viele Mitglieder der Server hat |
+| **Boosts** | Der aktuellen Boost-Anzahl des Servers |
+| **Role members** (Rollenmitglieder) | Wie viele Mitglieder eine gewählte Rolle haben |
+| **Manual** (Manuell) | Einer Zahl, die du selbst mit `/goal set` festlegst |
+
+Die ersten drei aktualisieren sich von selbst. Manuelle Ziele sind für alles, was der Bot nicht sehen kann, zum Beispiel gesammeltes Geld oder Anmeldungen auf einer anderen Seite. Du setzt sie mit `/goal set` oder schiebst sie mit `/goal add` ein Stück weiter.
+
+## Ein Ziel einrichten
+
+Öffne im Dashboard <DashboardLink to="goals">**Goals**</DashboardLink> und wähle Quelle, Zielwert und Kanal. Der Bot postet den Balken und hält ihn per Poller aktuell, damit er stimmt, ohne dass jemand etwas anfassen muss.
+
+Ziele dienen nur der Anzeige und brauchen deshalb keine Mitgliederberechtigungen. Niemand kann aus Versehen mit einem Ziel interagieren.
+
+## Erforderliche Berechtigungen
+
+| Aktion | Berechtigungsschlüssel |
+| --- | --- |
+| Einstellungen ansehen | `goals.config.view_config` |
+| Ziele erstellen und bearbeiten | `goals.config.manage_config` |
+
+`/goal set` und `/goal add` brauchen ebenfalls den Verwaltungsschlüssel, denn ein manuelles Ziel zu verschieben heißt, es zu bearbeiten.

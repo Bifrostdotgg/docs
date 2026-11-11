@@ -1,0 +1,64 @@
+---
+title: "Giveaways"
+description: "Organiser des giveaways à durée limitée, avec participation par bouton, tirages automatiques et nouveaux tirages."
+icon: "gift"
+---
+
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+Les giveaways fonctionnent avec un minuteur et un bouton pour participer. Le nombre de participants se met à jour en direct, les gagnants sont tirés automatiquement à la fin du minuteur, et tu peux refaire un tirage si un gagnant ne répond pas.
+
+## En lancer un
+
+`/giveaway start` est la voie rapide : un lot, une durée et un nombre de gagnants. `/giveaway create` ouvre le parcours complet pour tout ce qui est plus élaboré, et <DashboardLink to="giveaways/create">**Giveaways \> Create giveaway**</DashboardLink> fait la même chose sur le tableau de bord.
+
+| Paramètre | Description |
+| --- | --- |
+| **Prize** | Ce qui est à gagner |
+| **Duration** | Combien de temps les participations restent ouvertes |
+| **Winners** | Le nombre de gagnants tirés |
+| **Requirements** | Des conditions facultatives de rôle ou d’ancienneté du compte pour pouvoir participer |
+
+Les membres participent avec le bouton du message du giveaway. Le compteur se met à jour au fil des participations, donc le message reste utile sans que personne n’ait à rafraîchir quoi que ce soit.
+
+## Tirage et nouveau tirage
+
+À la fin du minuteur, le bot tire les gagnants et les annonce. Les tirages sont atomiques, donc deux personnes ne peuvent pas être tirées pour la même place, même si le giveaway se termine pendant que des participations arrivent encore.
+
+| Commande | Ce qu’elle fait |
+| --- | --- |
+| `/giveaway end` | Le termine plus tôt et fait le tirage tout de suite |
+| `/giveaway cancel` | Le termine sans gagnant |
+| `/giveaway reroll` | Tire un remplaçant, quand un gagnant ne réclame jamais son lot |
+| `/giveaway entrants` | Liste les participants |
+| `/giveaway list` | Affiche les giveaways en cours |
+
+## Modèles et séries
+
+<DashboardLink to="giveaways/templates">**Giveaways \> Templates**</DashboardLink> enregistre la configuration d’un giveaway pour qu’un giveaway récurrent n’ait pas à être recréé à chaque fois. Les **Series** regroupent les giveaways répétés pour que tu les voies comme un seul ensemble plutôt qu’une douzaine d’entrées sans lien.
+
+## Remise des lots
+
+La page <DashboardLink to="giveaways/fulfillment">**Giveaways \> Fulfillment**</DashboardLink> suit si les gagnants ont réellement reçu leur lot, ce qui compte pour tout ce qui est remis par une personne plutôt qu’automatiquement. Un giveaway dont le lot n’a pas été remis reste visible au lieu de disparaître une fois le tirage fait.
+
+## Partenaires et partage
+
+Les giveaways peuvent être partagés avec des serveurs partenaires, pour qu’un giveaway que tu organises apparaisse chez eux et inversement. `/giveaway partners` gère ces relations, et `/giveaway share` propose un giveaway précis. Sur le tableau de bord, tu invites un partenaire depuis le formulaire de création ou de modification d’un giveaway, et <DashboardLink to="giveaways/sharing">**Giveaways \> Partner servers**</DashboardLink> est l’endroit où tu rejoins le giveaway d’un partenaire avec un code, vois ceux auxquels tu participes, et les quittes.
+
+## Permissions requises
+
+| Action | Clé de permission |
+| --- | --- |
+| Participer à un giveaway | `giveaways.enter` (accordée à tout le monde par défaut) |
+| En créer un | `giveaways.create` |
+| Voir les giveaways | `giveaways.giveaways.view` |
+| Terminer, annuler, refaire un tirage | `giveaways.giveaways.manage` |
+| Voir les participants | `giveaways.giveaways.view_entrants` |
+| Voir la remise des lots | `giveaways.fulfillment.view` |
+| Marquer les lots comme remis | `giveaways.fulfillment.manage` |
+| Voir et gérer les modèles | `giveaways.templates.view`, `giveaways.templates.manage` |
+| Voir et gérer les séries | `giveaways.series.view`, `giveaways.series.manage` |
+| Voir et modifier les paramètres | `giveaways.config.view`, `giveaways.config.manage` |
+| Voir et gérer le partage avec les partenaires | `giveaways.sharing.view`, `giveaways.sharing.manage` |
+
+Voir les participants est volontairement séparé de la gestion du giveaway : la liste des participants est une liste de tes membres, et faire un tirage ne demande pas de la lire.

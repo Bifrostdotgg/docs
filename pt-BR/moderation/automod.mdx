@@ -1,0 +1,70 @@
+---
+title: "Regras de automod"
+description: "Como criar regras de moderação automática que fazem valer as regras do servidor sem intervenção da staff."
+icon: "robot"
+---
+
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+O automod permite definir regras que o bot avalia em cada mensagem do seu servidor. Quando uma mensagem bate com uma regra, o bot pode apagá-la, advertir quem enviou, aplicar um mute ou qualquer combinação de ações que você configurar. As regras rodam em segundo plano, sem precisar da staff.
+
+<Frame>
+  ![Regras de automod da moderação](/images/Moderation_Automod_rules.png)
+</Frame>
+
+## Como as regras funcionam
+
+Cada regra tem um **gatilho**, um conjunto de **exceções** e uma **resposta**. O gatilho define o padrão que a regra procura. As exceções definem canais, cargos ou usuários que a regra deve ignorar. A resposta define o que o bot faz quando a regra dispara.
+
+As regras são avaliadas em ordem. Uma única mensagem pode bater com várias regras, e cada uma aplica sua resposta de forma independente.
+
+## Criando uma regra
+
+Vá até <DashboardLink to="moderation/rules">**Moderation \> Rules**</DashboardLink> (Moderação > Regras) no painel e clique em **New Rule** (Nova regra).
+
+### Tipos de gatilho
+
+| Tipo | Descrição |
+| --- | --- |
+| **Palavra-chave** | Pega mensagens que contêm palavras ou frases específicas. Não diferencia maiúsculas de minúsculas por padrão. |
+| **Regex** | Pega mensagens usando um padrão de expressão regular, para filtros complexos. |
+| **Spam** | Detecta mensagens repetidas, spam de menções ou excesso de mensagens em pouco tempo. |
+| **Link** | Bloqueia links de domínios específicos ou que batem com padrões de URL. |
+| **Anexo** | Bloqueia tipos de arquivo específicos ou anexos por completo. |
+| **Maiúsculas** | Sinaliza mensagens em que uma porcentagem alta dos caracteres está em maiúsculas. |
+
+### Ações das regras
+
+| Ação | Descrição |
+| --- | --- |
+| **Apagar** | Remove a mensagem na hora. |
+| **Advertir** | Aplica uma infração de advertência com um valor em pontos configurável. |
+| **Mute** | Aplica um castigo por uma duração configurável. |
+| **Expulsar** | Remove o membro do servidor. |
+| **Banir** | Bane o membro, com duração opcional. |
+| **Enviar resposta** | Posta uma mensagem (opcionalmente por DM) explicando por que a ação foi tomada. |
+
+As ações podem ser combinadas. Uma configuração comum é apagar \+ advertir, em que a mensagem é removida e uma advertência é adicionada ao histórico de infrações do membro.
+
+### Exceções
+
+Você pode isentar cargos, canais ou usuários específicos de uma regra. Por exemplo, você pode ter um filtro de links que isenta o cargo da staff, para que os moderadores possam postar links à vontade.
+
+### Valores de pontos
+
+Quando uma regra aplica uma advertência, você pode definir o valor em pontos ligado à infração. Esses pontos alimentam o sistema de escalonamento. Veja [Escalonamento](/pt-BR/moderation/escalation) para entender como os limites funcionam.
+
+## Testando uma regra
+
+Depois de criar uma regra, use o campo **Test** (Teste) no fim do editor de regras para conferir se uma mensagem de exemplo bate (ou não bate) como esperado. O teste roda a lógica da regra sem aplicá-la de verdade.
+
+## Ordem e prioridade das regras
+
+As regras são avaliadas de cima para baixo. Arraste as regras na lista para reordená-las. Cada regra tem a opção **Stop on match** (Parar ao bater): quando ativada, se essa regra disparar, nenhuma outra regra é avaliada para a mesma mensagem.
+
+## Permissões necessárias
+
+| Ação | Chave de permissão |
+| --- | --- |
+| Ver regras | `moderation.config.view_config` |
+| Criar e editar regras | `moderation.enforcement.manage_rules` |

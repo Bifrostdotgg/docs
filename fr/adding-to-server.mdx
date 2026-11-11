@@ -1,0 +1,58 @@
+---
+title: "Ajouter Heimdall à ton serveur"
+description: "Comment inviter Heimdall, lui donner les permissions dont il a besoin et terminer la configuration initiale."
+icon: "robot"
+---
+
+## Prérequis
+
+Tu as besoin de la permission **Gérer le serveur** sur le serveur Discord auquel tu veux ajouter Heimdall.
+
+## Inviter le bot
+
+Va sur **[bot.bifrost.gg](https://bot.bifrost.gg)** et clique sur **Add to Server**. C’est la version de Heimdall hébergée par Bifröst : pas besoin d’auto-hébergement. Le lien d’invitation demande exactement les permissions dont le bot a besoin. Discord te demandera de choisir un serveur dans la liste des serveurs que tu gères, puis de confirmer les permissions demandées.
+
+<Note>
+Si tu évalues Heimdall avant de l’ajouter, consulte les offres disponibles sur **[bifrost.gg/heimdall/pricing](https://bifrost.gg/heimdall/pricing)**. Certaines fonctionnalités sont disponibles dans toutes les offres ; d’autres demandent une offre payante.
+</Note>
+
+<Info>
+Tu peux retirer des permissions à Heimdall après son arrivée : Discord le permet via **Paramètres du serveur > Rôles** ou via les permissions propres à chaque salon. Cependant, toute fonctionnalité qui demande une permission que tu as retirée cessera de fonctionner. Quand un membre essaie d’utiliser une fonctionnalité concernée, Heimdall répond avec un message d’erreur qui indique exactement quelle permission Discord manque, au lieu d’échouer sans rien dire. Il est donc facile de repérer et de corriger les permissions manquantes si quelque chose cesse de fonctionner.
+</Info>
+
+## Permissions requises
+
+Les permissions Discord suivantes sont nécessaires pour que Heimdall fonctionne correctement avec tous les plugins :
+
+| Permission | Pourquoi elle est nécessaire |
+|---|---|
+| Gérer les rôles | Donner des rôles via les boutons de rôles et synchroniser les rôles Minecraft |
+| Gérer les salons | Créer et supprimer les salons vocaux temporaires |
+| Expulser des membres | Exécuter les expulsions depuis les commandes de modération |
+| Bannir des membres | Exécuter les bans et gérer les bans au départ |
+| Gérer les messages | Supprimer des messages lors des purges et gérer les messages persistants |
+| Voir les anciens messages | Purger des messages par nombre et lire le contexte pour le modmail |
+| Envoyer des messages | Répondre aux commandes et envoyer des notifications |
+| Intégrer des liens | Envoyer des embeds enrichis pour tous les messages mis en forme |
+| Joindre des fichiers | Envoyer des pièces jointes dans les fils de tickets et de modmail |
+| Utiliser les commandes de l’application | Enregistrer les commandes slash et y répondre |
+| Gérer les fils | Créer et archiver les fils de tickets et de modmail |
+| Exclure temporairement des membres | Appliquer des exclusions temporaires pour les mutes |
+
+## Ce qui se passe quand le bot arrive
+
+Quand Heimdall rejoint ton serveur pour la première fois, il enregistre toutes les commandes slash auprès de Discord et crée une entrée de configuration du serveur dans sa base de données. Aucun salon ni rôle n’est créé automatiquement : tout se configure depuis le tableau de bord.
+
+## Étapes suivantes
+
+<Steps>
+  <Step title="Connecte-toi au tableau de bord">
+    Va sur **[bot.bifrost.gg](https://bot.bifrost.gg)** et connecte-toi avec ton compte Discord. Ton serveur apparaîtra dans le sélecteur de serveurs. Consulte [Utiliser le tableau de bord](/fr/dashboard) pour une visite guidée.
+  </Step>
+  <Step title="Configure les permissions">
+    Par défaut, toutes les commandes de modération sont réservées aux membres qui ont la permission Administrateur. Configure le système de permissions pour donner aux bons rôles l’accès à chaque fonctionnalité. Consulte [Permissions](/fr/permissions).
+  </Step>
+  <Step title="Active et configure les plugins">
+    Chaque fonctionnalité doit être configurée avant de devenir active. Utilise la barre latérale du tableau de bord pour aller sur la page de configuration de chaque plugin et la paramétrer.
+  </Step>
+</Steps>

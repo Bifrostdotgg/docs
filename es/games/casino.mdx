@@ -1,0 +1,81 @@
+---
+title: "Juegos de casino"
+description: "Juega a juegos de casino en Discord: Blackjack, Coinflip, Dice, Higher-Lower, Horse Racing, Mines y Roulette."
+icon: "dice"
+---
+
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+Los juegos de casino son juegos de apuestas que se juegan con la economía virtual de tu servidor. Apuestas monedas en cada ronda; si ganas, cobras según las probabilidades del juego. Si pierdes, tu saldo baja. No hay dinero real de por medio.
+
+<Warning>
+Los juegos de casino requieren tener configurado el sistema de economía. Los miembros necesitan un saldo de monedas para apostar. Consulta la página de [Economía](/es/games/economy) para configurarlo.
+</Warning>
+
+## Juegos disponibles
+
+### Blackjack
+
+```
+/blackjack <bet>
+```
+
+Blackjack clásico contra la banca. Acércate más a 21 que la banca sin pasarte. Admite pedir carta, plantarse, doblar y dividir cuando corresponde. Un blackjack (un as más una carta que vale 10 en el primer reparto) paga 3:2.
+
+### Coinflip
+
+```
+/coinflip <bet> <heads|tails>
+```
+
+Elige cara o cruz. Paga 1:1 si aciertas.
+
+### Dice
+
+```
+/dice <bet> <target>
+```
+
+Tira dos dados y predice si la suma será mayor o menor que el objetivo, o si dará justo el objetivo. El premio depende de la probabilidad del resultado.
+
+### Higher-Lower
+
+```
+/higher-lower <bet>
+```
+
+Se descubre una carta. Adivina si la siguiente será más alta o más baja. Una racha de aciertos multiplica tus ganancias. Retírate cuando quieras para cobrar lo acumulado.
+
+### Horse Racing
+
+```
+/horse-racing <bet> <horse>
+```
+
+Apuesta por uno de varios caballos en una carrera simulada. Cada caballo tiene sus propias probabilidades. La carrera se desarrolla en varias rondas y las posiciones se van actualizando en el mensaje.
+
+### Mines
+
+```
+/mines <bet> <mine_count>
+```
+
+Una cuadrícula de casillas esconde un número fijo de minas. Descubre casillas para subir tu multiplicador y retírate antes de dar con una mina. Más minas significa más riesgo y un premio potencial mayor.
+
+### Roulette
+
+```
+/roulette <bet> <type>
+```
+
+Apuesta a un número, a un color (rojo/negro) o a un rango (par/impar, 1-18, 19-36). Gira una ruleta virtual y los premios siguen las probabilidades estándar de la ruleta: un número suelto paga 35:1 y los colores pagan 1:1.
+
+## Límites de apuesta
+
+La apuesta mínima y máxima de cada juego se configuran en <DashboardLink to="games/config/economy">**Games > Configuration > Economy**</DashboardLink>. Los miembros no pueden apostar más que su saldo actual.
+
+## Permisos necesarios
+
+| Acción | Clave de permiso |
+|---|---|
+| Jugar a los juegos de casino | `games.use` (permitido por defecto) |

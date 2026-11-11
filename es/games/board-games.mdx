@@ -1,0 +1,77 @@
+---
+title: "Juegos de mesa"
+description: "Juegos de mesa interactivos en Discord: 2048, Conecta 4, Memory, tres en raya, hundir la flota y solitario."
+icon: "chess-board"
+---
+
+Heimdall incluye seis juegos de mesa que se juegan por completo dentro de Discord con botones interactivos. Según el juego, se puede jugar en solitario o entre dos jugadores.
+
+## Juegos disponibles
+
+### 2048
+
+```
+/2048
+```
+
+El clásico rompecabezas de deslizar números. Una cuadrícula de 4x4 con fichas numeradas: deslizas las fichas en una dirección y los números iguales se fusionan. Llega a la ficha 2048 para ganar. Se juega solo con botones de dirección. Un jugador.
+
+### Conecta 4
+
+```
+/connect4 [opponent]
+```
+
+Deja caer fichas de colores en una cuadrícula de 7 columnas y 6 filas. Gana quien consiga primero cuatro en línea (en horizontal, en vertical o en diagonal). Admite un jugador contra el bot o dos jugadores.
+
+### Memory
+
+```
+/memory
+```
+
+Un juego de emparejar cartas. El tablero muestra cartas boca abajo: das la vuelta a dos cada vez y buscas parejas. Encuentra todas las parejas con el menor número de vueltas. Un jugador.
+
+### Tres en raya
+
+```
+/tictactoe [opponent]
+```
+
+El clásico de hacer tres en línea en una cuadrícula de 3x3. Admite un jugador contra el bot o dos jugadores.
+
+### Hundir la flota
+
+```
+/battleship [opponent]
+```
+
+El juego de estrategia naval. Coloca tus barcos en una cuadrícula de 10x10 e intenta hundir la flota de tu rival antes de que hunda la tuya. Admite dos jugadores o un jugador contra el bot.
+
+### Solitario
+
+```
+/solitaire
+```
+
+El solitario Klondike de toda la vida. Ordena las cartas en las pilas de base por palo, en orden ascendente del as al rey. Un jugador.
+
+## Juegos para dos jugadores
+
+En los juegos que admiten rival, indica al otro miembro con la opción `opponent`:
+
+```
+/connect4 opponent:@Username
+```
+
+El rival recibe una invitación que tiene que aceptar antes de que empiece la partida. Si no responde en 60 segundos, la invitación caduca.
+
+## Tiempo de espera de las partidas
+
+Las partidas activas caducan si no se hace ningún movimiento durante un tiempo determinado (normalmente de 5 a 10 minutos, según el juego). El bot publica un mensaje indicando que la partida ha terminado por inactividad.
+
+## Permisos necesarios
+
+| Acción | Clave de permiso |
+|---|---|
+| Jugar a juegos de mesa | `games.use` (permitido por defecto) |

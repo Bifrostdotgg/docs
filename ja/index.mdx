@@ -1,0 +1,204 @@
+---
+title: "Heimdallドキュメント"
+description: "プラグイン型のDiscord Botであり、コミュニティ管理プラットフォームでもあるHeimdallの総合ドキュメント。"
+---
+
+Heimdallは、Bifröstが開発した、プラグインシステムを中心に作られたDiscord Botです。各機能はプラグインになっていて、それぞれ個別に有効化・無効化できます。設定はWebダッシュボード [bot.bifrost.gg](https://bot.bifrost.gg) で行い、サーバーの管理者はモデレーションのルールからチケットのカテゴリ、ゲームのエコノミー設定まで、すべてをここで管理できます。
+
+このドキュメントでは、サーバーの管理者と一般メンバーの両方が使えるすべての機能を説明しています。Heimdallの導入を検討中の方は、[料金ページ](https://bifrost.gg/heimdall/pricing) で利用できるプランを比較してください。
+
+## はじめに
+
+<Columns cols={2}>
+  <Card title="Heimdallをサーバーに追加する" icon="robot" href="/ja/adding-to-server">
+    Botを招待して、初期セットアップを行います。
+  </Card>
+
+  <Card title="ダッシュボードの使い方" icon="gauge" href="/ja/dashboard">
+    ログインして画面を操作し、サーバーを設定します。
+  </Card>
+
+  <Card title="権限を理解する" icon="shield-halved" href="/ja/permissions">
+    Heimdallの権限システムの仕組みと設定方法。
+  </Card>
+
+  <Card title="コマンドリファレンス" icon="terminal" href="/reference/commands">
+    すべてのプラグインのスラッシュコマンドの完全な一覧。
+  </Card>
+
+  <Card title="PremiumとWhite-Label" icon="crown" href="/ja/premium">
+    有料プランで使えるようになる機能、解除される制限、アップグレードの方法。
+  </Card>
+
+  <Card title="料金" icon="tag" href="https://bifrost.gg/heimdall/pricing">
+    プランを比較して、各プランに含まれる機能を確認できます。
+  </Card>
+</Columns>
+
+## モデレーション
+
+<Columns cols={2}>
+  <Card title="手動のモデレーション処分" icon="gavel" href="/ja/moderation/manual-actions">
+    警告、BAN、キック、ミュート、一括削除のコマンド。
+  </Card>
+
+  <Card title="Automodルール" icon="robot" href="/ja/moderation/automod">
+    キーワードやパターンの照合による、自動のルール適用。
+  </Card>
+
+  <Card title="段階的処分" icon="arrow-up" href="/ja/moderation/escalation">
+    貯まったポイントに応じて、ミュート、キック、BANを自動で行う段階的な処分。
+  </Card>
+
+  <Card title="違反の履歴" icon="clock-rotate-left" href="/ja/moderation/infractions">
+    メンバーの警告やBANの履歴を確認・管理します。
+  </Card>
+
+  <Card title="チャンネルの制御" icon="lock" href="/ja/moderation/channel-controls">
+    チャンネルのロック、チャンネル単位のBAN、退出による処分逃れのブロック。
+  </Card>
+
+  <Card title="異議申し立て" icon="scale-balanced" href="/ja/moderation/appeals">
+    BANされたメンバーが専用フォームから異議を申し立てられるようにします。
+  </Card>
+</Columns>
+
+## サポート
+
+<Columns cols={2}>
+  <Card title="チケット" icon="ticket" href="/ja/support/tickets">
+    カテゴリ、スタッフの割り当て、分析機能を備えた本格的なサポートチケットシステム。
+  </Card>
+
+  <Card title="Modmail" icon="envelope" href="/ja/support/modmail">
+    メンバーのメッセージをスタッフチームに届ける、DM型のサポートスレッド。
+  </Card>
+
+  <Card title="応募フォーム" icon="file-lines" href="/ja/support/applications">
+    スタッフによる審査の流れを備えた、設定自由な応募フォーム。
+  </Card>
+
+  <Card title="サポート分析" icon="chart-line" href="/ja/support/analytics">
+    応答時間、チケットの件数、スタッフの実績、顧客満足度のレビュー。
+  </Card>
+</Columns>
+
+## コミュニティ
+
+<Columns cols={2}>
+  <Card title="ウェルカムメッセージ" icon="door-open" href="/ja/community/welcome">
+    新しいメンバーが参加したときに、整形されたメッセージを送ります。
+  </Card>
+
+  <Card title="提案" icon="lightbulb" href="/ja/community/suggestions">
+    投票とスタッフによる審査を備えた提案システム。
+  </Card>
+
+  <Card title="スターボード" icon="star" href="/ja/community/starboard">
+    人気のメッセージをハイライトチャンネルに自動で再投稿します。
+  </Card>
+
+  <Card title="ロールボタン" icon="circle-check" href="/ja/community/role-buttons">
+    切り替えボタンでロールを自分で付けられるパネル。
+  </Card>
+
+  <Card title="タグ" icon="tags" href="/ja/community/tags">
+    スラッシュコマンドで呼び出せる、保存済みのテキストや埋め込みのテンプレート。
+  </Card>
+
+  <Card title="リマインダー" icon="bell" href="/ja/community/reminders">
+    Discordで直接、自分用のリマインダーを設定します。
+  </Card>
+</Columns>
+
+## ボイス
+
+<Columns cols={2}>
+  <Card title="一時ボイスチャンネル" icon="microphone" href="/ja/voice/temp-channels">
+    参加すると作成され、誰もいなくなると自動で削除されるボイスチャンネル。
+  </Card>
+
+  <Card title="ボイス文字起こし" icon="closed-captioning" href="/ja/voice/transcription">
+    ボイスメッセージを自動でテキストに文字起こしします。
+  </Card>
+
+  <Card title="待合室" icon="hourglass" href="/ja/voice/waiting-room">
+    メンバーが待合室のボイスチャンネルに入ったときにスタッフに通知します。
+  </Card>
+</Columns>
+
+## ゲームとエコノミー
+
+<Columns cols={2}>
+  <Card title="概要" icon="gamepad" href="/ja/games/overview">
+    ゲームを有効にして、チャンネルとロールのアクセスを設定します。
+  </Card>
+
+  <Card title="ボードゲーム" icon="chess-board" href="/ja/games/board-games">
+    2048、四目並べ、神経衰弱、三目並べ、バトルシップ、ソリティア。
+  </Card>
+
+  <Card title="カジノゲーム" icon="dice" href="/ja/games/casino">
+    ブラックジャック、コイントス、サイコロ、ハイ＆ロー、競馬、マインズ、ルーレット。
+  </Card>
+
+  <Card title="エコノミー" icon="coins" href="/ja/games/economy">
+    サーバー通貨、デイリー報酬、チップ、ランキング。
+  </Card>
+</Columns>
+
+## 連携機能
+
+<Columns cols={2}>
+  <Card title="Minecraft" icon="server" href="/ja/integrations/minecraft">
+    ホワイトリストの管理、アカウント連携、RCON、サーバーのリアルタイムステータス。
+  </Card>
+
+  <Card title="PlanetSide 2" icon="crosshairs" href="/ja/integrations/planetside">
+    Census APIでの検索、アウトフィット管理、人口の追跡。
+  </Card>
+
+  <Card title="Tebex" icon="store" href="/ja/integrations/tebex">
+    Tebexストアと連携して、取引を確認したりギフトカードを発行したりします。
+  </Card>
+
+  <Card title="NamelessMC" icon="link" href="/ja/integrations/namelessmc">
+    DiscordアカウントをNamelessMCのフォーラムのプロフィールと連携します。
+  </Card>
+</Columns>
+
+## AIと言語
+
+<Columns cols={2}>
+  <Card title="Odin AI" icon="brain" href="/ja/ai/odin">
+    コンテキストとナレッジベースを設定できるAIアシスタント。
+  </Card>
+
+  <Card title="翻訳" icon="language" href="/ja/ai/translate">
+    チャンネルごとの自動翻訳に対応した、DeepLによるメッセージ翻訳。
+  </Card>
+</Columns>
+
+## ユーティリティ
+
+<Columns cols={2}>
+  <Card title="ログ" icon="scroll" href="/ja/utilities/logging">
+    サーバーのイベント（編集、削除、参加、BAN）を指定したチャンネルに送ります。
+  </Card>
+
+  <Card title="添付ファイルブロッカー" icon="file-slash" href="/ja/utilities/attachment-blocker">
+    特定のファイル形式を、サーバー全体またはチャンネルごとにブロックします。
+  </Card>
+
+  <Card title="Don't @ Me" icon="bell-slash" href="/ja/utilities/dont-at-me">
+    保護されたロールにメンションしたユーザーに警告します。
+  </Card>
+
+  <Card title="カスタマーポータル" icon="user-gear" href="/ja/utilities/customer-portal">
+    連携済みのアカウントや連携機能にメンバーがアクセスできるセルフサービスパネル。
+  </Card>
+
+  <Card title="ステータスと情報" icon="circle-info" href="/ja/utilities/ping">
+    Botのレイテンシ、稼働時間、ユーザー情報のコマンド。
+  </Card>
+</Columns>

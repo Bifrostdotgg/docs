@@ -1,0 +1,70 @@
+---
+title: "Règles d’automod"
+description: "Créer des règles de modération automatiques qui font respecter les règles du serveur sans intervention du staff."
+icon: "robot"
+---
+
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+L’automod te permet de définir des règles que le bot applique à chaque message de ton serveur. Quand un message correspond à une règle, le bot peut le supprimer, avertir l’auteur, appliquer un mute, ou toute combinaison d’actions que tu configures. Les règles tournent en arrière-plan sans que le staff ait besoin d’intervenir.
+
+<Frame>
+  ![Règles d’automod de la modération](/images/Moderation_Automod_rules.png)
+</Frame>
+
+## Comment fonctionnent les règles
+
+Chaque règle a un **déclencheur**, un ensemble d’**exemptions** et une **réponse**. Le déclencheur définit le motif que la règle recherche. Les exemptions définissent les salons, rôles ou utilisateurs que la règle doit ignorer. La réponse définit ce que fait le bot quand la règle se déclenche.
+
+Les règles sont évaluées dans l’ordre. Un même message peut correspondre à plusieurs règles, chacune appliquant sa réponse indépendamment.
+
+## Créer une règle
+
+Va dans <DashboardLink to="moderation/rules">**Moderation \> Rules**</DashboardLink> sur le tableau de bord et clique sur **New Rule**.
+
+### Types de déclencheurs
+
+| Type | Description |
+| --- | --- |
+| **Keyword** | Repère les messages qui contiennent certains mots ou certaines phrases. Insensible à la casse par défaut. |
+| **Regex** | Repère les messages avec une expression régulière, pour un filtrage complexe. |
+| **Spam** | Détecte les messages répétés, le spam de mentions ou les limites de débit de messages. |
+| **Link** | Bloque les liens qui correspondent à certains domaines ou motifs d’URL. |
+| **Attachment** | Bloque certains types de fichiers ou toutes les pièces jointes. |
+| **Caps** | Signale les messages dont une grande partie des caractères sont en majuscules. |
+
+### Actions des règles
+
+| Action | Description |
+| --- | --- |
+| **Delete** | Supprime le message immédiatement. |
+| **Warn** | Donne un avertissement avec un nombre de points configurable. |
+| **Mute** | Applique une exclusion temporaire d’une durée configurable. |
+| **Kick** | Expulse le membre du serveur. |
+| **Ban** | Bannit le membre, éventuellement pour une durée donnée. |
+| **Send response** | Publie un message (éventuellement en MP) qui explique pourquoi l’action a été prise. |
+
+Les actions peuvent être combinées. Une configuration courante est supprimer \+ avertir : le message est retiré et un avertissement est ajouté à l’historique des sanctions du membre.
+
+### Exemptions
+
+Tu peux exempter certains rôles, salons ou utilisateurs d’une règle. Par exemple, tu peux avoir un filtre de liens qui exempte ton rôle staff pour que les modérateurs puissent publier des liens librement.
+
+### Points
+
+Quand une règle donne un avertissement, tu peux définir le nombre de points attaché à la sanction. Ces points alimentent le système d’escalade. Consulte [Escalade](/fr/moderation/escalation) pour le fonctionnement des seuils.
+
+## Tester une règle
+
+Après avoir créé une règle, utilise le champ **Test** en bas de l’éditeur de règle pour vérifier qu’un message d’exemple correspond (ou ne correspond pas) comme prévu. Le test exécute la logique de la règle sans l’appliquer réellement.
+
+## Ordre et priorité des règles
+
+Les règles sont évaluées de haut en bas. Fais glisser les règles dans la liste pour changer leur ordre. Une option **Stop on match** est disponible pour chaque règle : quand elle est activée et que cette règle se déclenche, aucune autre règle n’est évaluée pour le même message.
+
+## Permissions requises
+
+| Action | Clé de permission |
+| --- | --- |
+| Voir les règles | `moderation.config.view_config` |
+| Créer et modifier des règles | `moderation.enforcement.manage_rules` |

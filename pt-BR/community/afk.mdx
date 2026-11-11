@@ -1,0 +1,46 @@
+---
+title: "AFK"
+description: "Como deixar os membros definirem um aviso de ausência que o bot entrega por eles."
+icon: "moon"
+---
+
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+Um membro usa `/afk` com um motivo opcional. Enquanto ele estiver fora, quem mencioná-lo recebe uma resposta curta dizendo que ele está AFK e há quanto tempo saiu. O aviso some sozinho assim que esse membro envia qualquer mensagem no servidor.
+
+O aviso é por servidor, não global. Definir um em um servidor não afeta nenhum outro.
+
+## Como os avisos ficam sob controle
+
+Três regras impedem que isso transforme um canal movimentado numa parede de respostas do bot:
+
+- Só contam as menções digitadas na mensagem. Responder a uma mensagem antiga de um membro ausente não gera aviso, e uma menção a um cargo que por acaso inclua essa pessoa também não.
+- Um aviso por membro ausente, por canal, a cada dez minutos. Dez pessoas chamando a mesma pessoa geram uma resposta, não dez.
+- O aviso mostra o nome de exibição do membro ausente em vez de mencioná-lo, então saber que alguém está fora nunca acorda essa pessoa.
+
+## O que quem está chamando pode fazer
+
+Cada aviso traz dois botões:
+
+| Botão | O que faz |
+| --- | --- |
+| **Deixar uma mensagem** | Abre uma caixa. A mensagem fica guardada e é entregue por DM quando o membro ausente voltar. |
+| **Me avise quando voltar** | Envia uma DM para você assim que esse membro falar de novo. |
+
+Mensagens guardadas e pedidos de aviso pertencem àquela ausência. Definir um novo aviso de AFK começa uma nova, então nada passa de uma ausência anterior para a próxima.
+
+## Voltando
+
+Qualquer mensagem no servidor apaga o aviso. O bot responde com uma confirmação curta que se apaga depois de dez segundos, e envia por DM ao membro tudo o que foi guardado para ele.
+
+Se as DMs dele estiverem fechadas, as mensagens guardadas não podem ser entregues, e é por isso que a confirmação no canal diz quantas eram.
+
+## Permissões necessárias
+
+| Ação | Chave de permissão |
+| --- | --- |
+| Definir um aviso de AFK | `afk.set_afk` (concedida a todos por padrão) |
+
+Todo mundo pode usar logo de cara. Para restringir, negue essa chave em `@everyone` e permita nos cargos que devem tê-la.
+
+Desligar o AFK, seja como módulo ou desativando o comando `/afk` em <DashboardLink to="settings/commands">**Settings \> Commands**</DashboardLink> (Configurações > Comandos), interrompe as respostas automáticas e também o comando.

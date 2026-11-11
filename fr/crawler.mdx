@@ -1,0 +1,60 @@
+---
+title: "HeimdallBot"
+description: "Ce que HeimdallBot récupère sur ton site, pourquoi, et comment le limiter ou le bloquer."
+icon: "robot"
+---
+
+Si tu gères un site web et que tu as trouvé **HeimdallBot** dans tes logs, cette page est pour toi.
+
+```
+Mozilla/5.0 (compatible; HeimdallBot/2.0; +https://heimdall.gg/docs/crawler)
+```
+
+Heimdall est un bot Discord. Toutes les instances de Heimdall envoient le même user agent, y compris les serveurs qui font tourner leur propre copie personnalisée, donc une seule règle les couvre toutes.
+
+## Pourquoi il passe
+
+HeimdallBot ne récupère une page que parce qu’un administrateur de serveur Discord l’y a envoyé. Il ne parcourt pas le web à la recherche de contenu.
+
+- **Imports de base de connaissances.** Un administrateur de serveur importe une page ou explore un site en profondeur pour qu’[Odin](/fr/ai/odin), l’assistant IA de Heimdall, puisse s’en servir pour répondre aux questions de ses membres. En général, il s’agit de sa propre documentation, de son wiki ou de son centre d’aide.
+- **Vérifications hebdomadaires.** Chaque page importée de cette façon est vérifiée environ une fois par semaine pour garder la copie à jour. La vérification envoie `If-None-Match` et `If-Modified-Since`, donc une page inchangée ne te coûte en général qu’une réponse `304` sans corps.
+- **Sites surveillés.** Un administrateur peut demander qu’un site qu’il a importé soit surveillé pour repérer les nouvelles pages. Un site surveillé est réexploré environ une fois par semaine, en visitant jusqu’à 100 pages, et 25 nouvelles pages au maximum sont ajoutées à chaque fois.
+- **Vérifications de liens.** Quand quelqu’un publie un lien sur un serveur qui utilise le [bloqueur de pièces jointes](/fr/utilities/attachment-blocker), Heimdall peut consulter cette seule page pour savoir s’il s’agit d’un GIF ou d’une vidéo. Il lit au maximum les 256 premiers Ko et garde la réponse en mémoire jusqu’à une journée.
+
+## Comment il se comporte
+
+- **Il respecte robots.txt** ([RFC 9309](https://www.rfc-editor.org/rfc/rfc9309)) pour chaque récupération liée à une base de connaissances, redirections comprises. Un groupe `HeimdallBot` s’applique si tu en as un, sinon c’est ton groupe `*`.
+  - Si robots.txt renvoie une erreur 4xx, il n’y a pas de robots.txt et toutes les pages peuvent être récupérées. L’exception est `429 Too Many Requests`, que HeimdallBot prend comme une raison de ne rien récupérer sur ton site cette fois-là.
+  - S’il renvoie une erreur 5xx ou ne répond pas à temps, HeimdallBot réessaie une fois, puis ne récupère rien sur ton site cette fois-là.
+- **Il espace ses requêtes.** Chaque exploration, import ou vérification hebdomadaire envoie au maximum deux requêtes par seconde à un même site, et moins si ton robots.txt fixe un `Crawl-delay`. Deux tâches qui tournent en même temps, par exemple deux serveurs Discord qui importent ton site au même moment, ont chacune leur propre rythme. Un délai supérieur à 10 secondes est traité comme 10.
+- **Il respecte `noindex` et `nofollow` pendant l’exploration.** Ça couvre `<meta name="robots">`, `<meta name="HeimdallBot">` et l’en-tête `X-Robots-Tag`. Les liens marqués `rel="nofollow"`, `ugc` ou `sponsored` ne sont jamais suivis.
+- **Une exploration en profondeur reste limitée.** Elle reste sur le même site, visite 100 pages au maximum et s’arrête au bout de 5 minutes.
+- **Il peut demander une version Markdown.** Sur les sites de documentation qui en proposent une, comme Mintlify, GitBook et Docusaurus, il demande d’abord la version `.md` de la page. Elle est en général plus légère que le HTML.
+- **Il n’exécute pas de JavaScript et ne se connecte à aucun compte.**
+
+La vérification de liens du bloqueur de pièces jointes ne lit pas robots.txt. Comme un aperçu de lien, elle récupère une page parce qu’une personne l’a partagée. Pour l’arrêter, bloque le user agent.
+
+## Le bloquer ou le limiter
+
+Pour tenir HeimdallBot à l’écart de tout ton site, ajoute ceci à ton robots.txt :
+
+```
+User-agent: HeimdallBot
+Disallow: /
+```
+
+Pour le tenir à l’écart d’une partie de ton site, ou le ralentir :
+
+```
+User-agent: HeimdallBot
+Disallow: /private/
+Crawl-delay: 5
+```
+
+robots.txt est lu une fois par tâche : une exploration, un lot d’imports ou une vérification hebdomadaire. Une nouvelle exploration respecte un changement tout de suite, et les vérifications hebdomadaires le respectent dans la semaine. Les pages déjà importées restent dans la base de connaissances du serveur, mais ne sont plus actualisées depuis ton site.
+
+Tu peux aussi bloquer le user agent au niveau de ton serveur ou de ton pare-feu en filtrant sur `HeimdallBot`.
+
+## Contact
+
+Si HeimdallBot se comporte mal sur ton site, ou si tu as besoin de quelque chose que robots.txt ne permet pas d’exprimer, écris à [hello@bifrost.gg](mailto:hello@bifrost.gg).

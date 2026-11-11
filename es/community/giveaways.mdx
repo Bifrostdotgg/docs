@@ -1,0 +1,64 @@
+---
+title: "Sorteos"
+description: "Cómo hacer sorteos con tiempo límite, participación con un botón, sorteo automático y nuevos sorteos."
+icon: "gift"
+---
+
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+Los sorteos funcionan con un temporizador y un botón para participar. El número de participantes se actualiza en directo, los ganadores se eligen automáticamente cuando acaba el tiempo y puedes volver a sortear si un ganador no responde.
+
+## Empezar uno
+
+`/giveaway start` es la vía rápida: un premio, una duración y cuántos ganadores. `/giveaway create` abre el proceso completo para algo más elaborado, y <DashboardLink to="giveaways/create">**Giveaways \> Create giveaway**</DashboardLink> (Sorteos > Crear sorteo) hace lo mismo desde el panel.
+
+| Ajuste | Descripción |
+| --- | --- |
+| **Premio** | Lo que se sortea |
+| **Duración** | Cuánto tiempo está abierta la participación |
+| **Ganadores** | Cuántos se eligen |
+| **Requisitos** | Condiciones opcionales de rol o de antigüedad de la cuenta para poder participar |
+
+Los miembros participan con el botón del mensaje del sorteo. El contador se actualiza a medida que se apunta la gente, así que el mensaje sigue siendo útil sin que nadie tenga que actualizar nada.
+
+## Elegir ganadores y volver a sortear
+
+Cuando acaba el tiempo, el bot elige a los ganadores y los anuncia. Los sorteos son atómicos, así que no pueden salir dos personas para el mismo puesto aunque el sorteo termine mientras todavía están llegando participaciones.
+
+| Comando | Qué hace |
+| --- | --- |
+| `/giveaway end` | Lo termina antes de tiempo y elige ganadores ya |
+| `/giveaway cancel` | Lo termina sin ganador |
+| `/giveaway reroll` | Elige un sustituto, para cuando un ganador nunca reclama el premio |
+| `/giveaway entrants` | Muestra quién ha participado |
+| `/giveaway list` | Muestra los sorteos en curso |
+
+## Plantillas y series
+
+Las <DashboardLink to="giveaways/templates">**Giveaways \> Templates**</DashboardLink> (Sorteos > Plantillas) guardan la configuración de un sorteo para no tener que montar de nuevo uno recurrente cada vez. Las **series** agrupan los sorteos que se repiten para que los veas como una sola cosa y no como una docena de entradas sin relación.
+
+## Entrega
+
+La página <DashboardLink to="giveaways/fulfillment">**Giveaways \> Fulfillment**</DashboardLink> (Sorteos > Entrega) lleva el control de si los ganadores han recibido de verdad su premio, algo importante para todo lo que entrega una persona y no el sistema automáticamente. Un sorteo con un premio sin entregar sigue a la vista en lugar de desaparecer una vez hecho el sorteo.
+
+## Servidores asociados y compartir
+
+Los sorteos se pueden compartir con servidores asociados, de modo que un sorteo tuyo aparece en el suyo y viceversa. `/giveaway partners` gestiona esas relaciones y `/giveaway share` ofrece un sorteo concreto. En el panel, invitas a un servidor asociado desde el formulario de creación o edición de un sorteo, y en <DashboardLink to="giveaways/sharing">**Giveaways \> Partner servers**</DashboardLink> (Sorteos > Servidores asociados) es donde te unes al sorteo de un asociado con un código, ves en cuáles participas y los dejas.
+
+## Permisos necesarios
+
+| Acción | Clave de permiso |
+| --- | --- |
+| Participar en un sorteo | `giveaways.enter` (concedido a todos por defecto) |
+| Crear uno | `giveaways.create` |
+| Ver los sorteos | `giveaways.giveaways.view` |
+| Terminar, cancelar y volver a sortear | `giveaways.giveaways.manage` |
+| Ver quién ha participado | `giveaways.giveaways.view_entrants` |
+| Ver las entregas | `giveaways.fulfillment.view` |
+| Marcar premios como entregados | `giveaways.fulfillment.manage` |
+| Ver y gestionar plantillas | `giveaways.templates.view`, `giveaways.templates.manage` |
+| Ver y gestionar series | `giveaways.series.view`, `giveaways.series.manage` |
+| Ver y cambiar la configuración | `giveaways.config.view`, `giveaways.config.manage` |
+| Ver y gestionar el uso compartido con asociados | `giveaways.sharing.view`, `giveaways.sharing.manage` |
+
+Ver quién ha participado está separado de gestionar el sorteo a propósito: la lista de participantes es una lista de tus miembros, y hacer un sorteo no requiere leerla.

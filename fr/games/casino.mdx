@@ -1,0 +1,81 @@
+---
+title: "Jeux de casino"
+description: "Jouer à des jeux de casino dans Discord : Blackjack, Coinflip, Dice, Higher-Lower, Horse Racing, Mines et Roulette."
+icon: "dice"
+---
+
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+Les jeux de casino sont des jeux de mise qui utilisent la monnaie virtuelle de ton serveur. Tu mises des pièces à chaque manche : si tu gagnes, le gain dépend des cotes du jeu. Si tu perds, ton solde diminue. Aucun argent réel n’est en jeu.
+
+<Warning>
+Les jeux de casino demandent que le système d’économie soit configuré. Les membres ont besoin d’un solde de pièces pour miser. Voir la page [Économie](/fr/games/economy) pour la configuration.
+</Warning>
+
+## Jeux disponibles
+
+### Blackjack
+
+```
+/blackjack <bet>
+```
+
+Un Blackjack classique contre le croupier. Approche-toi plus de 21 que le croupier sans dépasser. Tirer, Rester, Doubler et Séparer sont disponibles quand c’est possible. Un Blackjack (un As et une carte valant 10 dès la première distribution) paie 3:2.
+
+### Coinflip
+
+```
+/coinflip <bet> <heads|tails>
+```
+
+Choisis pile (heads) ou face (tails). Un bon choix paie 1:1.
+
+### Dice
+
+```
+/dice <bet> <target>
+```
+
+Lance deux dés et prédis si la somme sera supérieure ou inférieure à la cible, ou exactement égale. Le gain dépend de la probabilité du résultat.
+
+### Higher-Lower
+
+```
+/higher-lower <bet>
+```
+
+Une carte est révélée. Devine si la suivante sera plus haute ou plus basse. Une série de bonnes réponses multiplie tes gains. Encaisse quand tu veux pour récupérer le gain accumulé.
+
+### Horse Racing
+
+```
+/horse-racing <bet> <horse>
+```
+
+Mise sur l’un des chevaux d’une course simulée. Chaque cheval a sa propre cote. La course se déroule sur plusieurs tours, avec les positions mises à jour dans le message.
+
+### Mines
+
+```
+/mines <bet> <mine_count>
+```
+
+Une grille de cases cache un nombre donné de mines. Révèle des cases pour augmenter ton multiplicateur, puis encaisse avant de tomber sur une mine. Plus il y a de mines, plus le risque et le gain potentiel sont élevés.
+
+### Roulette
+
+```
+/roulette <bet> <type>
+```
+
+Mise sur un numéro, une couleur (rouge/noir) ou une plage (pair/impair, 1-18, 19-36). Une roue virtuelle tourne et les gains suivent les cotes classiques de la roulette : un numéro seul paie 35:1, une couleur paie 1:1.
+
+## Limites de mise
+
+Les mises minimale et maximale par jeu se configurent dans <DashboardLink to="games/config/economy">**Games > Configuration > Economy**</DashboardLink>. Les membres ne peuvent pas miser plus que leur solde actuel.
+
+## Permissions requises
+
+| Action | Clé de permission |
+|---|---|
+| Jouer aux jeux de casino | `games.use` (autorisé par défaut) |

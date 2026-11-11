@@ -1,0 +1,55 @@
+---
+title: "Confessions"
+description: "Permettre aux membres de publier anonymement, avec un historique pour le staff afin de gérer les abus."
+icon: "comment-dots"
+---
+
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+Les membres envoient une confession et le bot la publie avec son propre numéro et sans auteur. Les confessions sont anonymes pour les autres membres. Elles ne le sont pas pour le staff qui a la bonne permission, et cette limite est indiquée aux membres sur le panneau d’envoi pour que personne ne soit induit en erreur.
+
+## Configuration
+
+Va dans <DashboardLink to="confessions/config">**Confessions**</DashboardLink> sur le tableau de bord.
+
+| Paramètre | Description |
+| --- | --- |
+| **Enable confessions** | Ajoute `/confess` à ton serveur. Tant que c’est désactivé, la commande est retirée et le bouton du panneau refuse les envois. |
+| **Confessions channel** | L’endroit où les confessions sont publiées. Toute personne qui peut lire le salon peut les lire. |
+| **Shortest and longest** | Les limites de longueur, appliquées pendant que le membre tape. Les espaces et les caractères invisibles ne sont pas comptés, donc personne ne peut gonfler un texte pour atteindre le minimum. |
+| **Cooldown** | Combien de temps un membre doit attendre entre deux confessions. Un envoi refusé parce qu’il est trop court ou trop long ne consomme pas le délai. |
+
+## Le panneau d’envoi
+
+Publier un panneau donne aux membres un bouton **Submit a confession!**, pour qu’ils n’aient pas besoin de connaître la commande. Le republier dans le même salon met à jour ce message au lieu d’en ajouter un deuxième. Le publier dans un autre salon y ajoute une copie, et toutes les copies sont listées quand tu publies le panneau (voir [Panneaux publiés dans plusieurs salons](/fr/dashboard#panels-posted-in-more-than-one-channel)). Les deux chemins ouvrent la même fenêtre et se comportent de façon identique.
+
+## Qui peut voir l’auteur d’une confession
+
+Les autres membres ne le découvrent jamais. Il n’y a ni nom, ni avatar, ni rien dans le message publié qui permette de remonter jusqu’à l’auteur.
+
+Pour le staff, c’est différent. Toute personne qui a `confessions.log.view_author` peut voir qui a envoyé une confession dans <DashboardLink to="confessions/log">**Confessions \> Confession Log**</DashboardLink>, et le bot enregistre chaque consultation. C’est volontaire : un moyen intraçable de publier sur ton serveur est une porte ouverte au harcèlement, sans autre remède que la désactivation de la fonctionnalité, et pour bloquer quelqu’un, il faut savoir qui c’est.
+
+**Forget who wrote a confession after (days)** décide combien de temps cela reste possible. Laisse 0 pour garder l’information indéfiniment. Tout autre nombre demande au bot d’oublier l’auteur dès qu’une confession atteint cet âge. La confession elle-même reste, mais à partir de là, personne ne peut savoir qui l’a publiée, toi compris.
+
+## Gérer les abus
+
+| Outil | Ce qu’il fait |
+| --- | --- |
+| **Blocklist** | Les membres bloqués sont clairement informés qu’ils ne peuvent pas envoyer de confession, au lieu de voir leurs confessions disparaître sans explication, pour qu’ils ne continuent pas d’essayer en se demandant pourquoi. |
+| **Delete** | Retire le message du salon mais garde le texte dans le journal, car ce texte est la preuve sur laquelle repose un signalement. |
+| **Length limits** | Empêchent à la fois les confessions d’un seul mot et les pavés de texte. |
+
+`@everyone` et `@here` dans une confession sont neutralisés : ils s’affichent tels quels mais ne mentionnent personne. La mise en forme est aussi échappée, donc une confession ne peut pas publier un grand titre ni un lien déguisé en message du bot.
+
+## Permissions requises
+
+| Action | Clé de permission |
+| --- | --- |
+| Envoyer une confession | `confessions.submit` (accordée à tout le monde par défaut) |
+| Voir les paramètres | `confessions.config.view_config` |
+| Modifier les paramètres et la liste de blocage | `confessions.config.manage_config` |
+| Lire le journal des confessions | `confessions.log.view_log` |
+| Révéler l’auteur d’une confession | `confessions.log.view_author` |
+| Supprimer une confession publiée | `confessions.log.delete_confession` |
+
+Les clés de configuration ne donnent volontairement pas accès au journal. Choisir un salon et un délai d’attente relève de l’administration ; lire ce que tes membres ont confessé est la partie privée, et avoir la confiance pour l’un n’est pas la même chose qu’avoir la confiance pour l’autre.

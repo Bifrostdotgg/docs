@@ -1,0 +1,65 @@
+---
+title: "Salons vocaux temporaires"
+description: "Des salons vocaux temporaires créés en rejoignant un salon, qui se suppriment tout seuls quand ils sont vides."
+icon: "microphone"
+---
+
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+Le système de salons vocaux temporaires permet aux membres de créer leurs propres salons vocaux à la demande. Tu désignes un ou plusieurs salons vocaux « créateurs ». Quand un membre rejoint un salon créateur, le bot crée aussitôt un nouveau salon vocal, y déplace le membre, puis supprime le salon automatiquement quand le dernier membre en sort.
+
+Les administrateurs n’ont plus besoin de créer et supprimer à la main des salons vocaux pour les petits groupes, et les membres gèrent leur propre espace sans avoir la permission « Gérer les salons ».
+
+<Frame>
+  ![Salons vocaux temporaires](/images/Voice_TempVC.png)
+</Frame>
+
+## Comment ça marche pour les membres
+
+Rejoins le salon vocal créateur (en général nommé « Create a channel » ou « Join to create », par exemple). Le bot crée un nouveau salon, à ton nom par défaut, et t’y déplace. Tu peux ensuite inviter d’autres personnes. Quand tout le monde est parti, le bot supprime le salon.
+
+Tant que tu es dans ton salon temporaire, tu le contrôles avec la commande `/tempvc`.
+
+## Configuration
+
+Ouvre <DashboardLink to="tempvc/config">**Temp VC \> Configuration**</DashboardLink> dans le tableau de bord.
+
+| Paramètre | Description |
+| --- | --- |
+| **Salon créateur** | Le salon vocal que les membres rejoignent pour déclencher la création d’un salon |
+| **Catégorie** | La catégorie où les nouveaux salons temporaires sont créés |
+| **Nom par défaut** | Le modèle de nom des nouveaux salons. Prend en charge les variables `{user}` et `{count}`. |
+| **Limite d’utilisateurs par défaut** | Le nombre de membres qui peuvent rejoindre les nouveaux salons (0 = illimité) |
+| **Débit par défaut** | La qualité audio des nouveaux salons |
+| **Rôles autorisés** | Les rôles qui peuvent utiliser le salon créateur (laisse vide pour tous les membres) |
+
+Tu peux avoir plusieurs salons créateurs avec des paramètres différents.
+
+## Contrôles des membres
+
+```text
+/tempvc create
+/tempvc delete
+/tempvc delete-all
+```
+
+| Sous-commande | Description |
+| --- | --- |
+| `create` | Crée un salon temporaire à la main (sans rejoindre le salon créateur) |
+| `delete` | Supprime immédiatement ton salon temporaire actuel |
+| `delete-all` | Supprime tous les salons temporaires qui t’appartiennent |
+
+Les membres peuvent aussi renommer leur salon temporaire, lui fixer une limite d’utilisateurs ou le verrouiller depuis le menu contextuel du salon vocal dans Discord, à condition que le bot leur ait donné les permissions nécessaires.
+
+## Voir les salons actifs
+
+Ouvre <DashboardLink to="tempvc/active">**Temp VC \> Active Channels**</DashboardLink> dans le tableau de bord pour voir tous les salons temporaires actifs : qui les a créés, combien de membres s’y trouvent et depuis combien de temps ils sont actifs.
+
+## Permissions requises
+
+| Action | Clé de permission |
+| --- | --- |
+| Utiliser le salon créateur | Disponible pour tous les membres par défaut |
+| Voir la configuration | `tempvc.view_config` |
+| Modifier la configuration | `tempvc.manage_config` |
+| Gérer les salons (par exemple forcer une suppression) | `tempvc.manage_channels` |

@@ -1,0 +1,186 @@
+---
+title: "Premium und White-Label"
+description: "Was Heimdall Premium und White-Label freischalten, welche Limits sie aufheben, was sie kosten und wie du upgradest."
+icon: "crown"
+---
+
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+Heimdall ist kostenlos für Discord-Server jeder Größe, ohne Mitgliederlimit. Jedes Kern-Plugin ist im Free-Plan enthalten, mit Limits, die großzügig genug sind, um eine ganze Community zu betreiben. Premium hebt diese Limits auf und schaltet eine Reihe von Profi-Features frei. White-Label setzt dein eigenes Branding obendrauf.
+
+Wenn du Pläne vergleichst, findest du auf der [Preisseite](https://bifrost.gg/heimdall/pricing) eine vollständige Gegenüberstellung.
+
+## Was Premium freischaltet
+
+Premium macht zwei Dinge: Es hebt jedes Nutzungslimit des Free-Plans an, und es schaltet Features ein, die es kostenlos nicht gibt.
+
+<Columns cols={2}>
+  <Card title="Höhere Limits" icon="arrow-up-right-dots">
+    Unbegrenzte Team-Plätze, Tags, Starboards und Bewerbungsformulare, dazu viel höhere Obergrenzen für Tickets, Automod und mehr.
+  </Card>
+
+  <Card title="Support-Suite" icon="headset">
+    SLA-Zeitpläne, Team-Quoten, Ticket-Bewertung durch das Team, Statistiken und Kundenbewertungen.
+  </Card>
+
+  <Card title="Eigenes Branding" icon="palette">
+    Leg unter <DashboardLink to="settings/branding">**Settings \> Branding**</DashboardLink> eigene Embed-Farben und Footer-Texte fest, damit die Nachrichten des Bots zu deinem Server passen.
+  </Card>
+
+  <Card title="Profi-Features" icon="bolt">
+    Kundenportal, Tebex-Shopverwaltung, gehostete Sprach-Transkription, CSV-Export für Umfragen und Priority-Support.
+  </Card>
+</Columns>
+
+## Aufgehobene Limits
+
+Jedes Limit unten gilt pro Server. Die Free-Werte sind bewusst großzügig; Premium hebt jeden einzelnen an. White-Label entspricht Premium.
+
+| Feature | Free | Premium |
+| --- | --- | --- |
+| Team-Plätze im Dashboard | 3 | Unbegrenzt |
+| Ticket-Panels | 1 | 25 |
+| Ticket-Kategorien | 5 | 25 |
+| Formularfragen pro Ticket-Kategorie | 5 | Maximum |
+| Automod-Regeln | 5 | 50 |
+| Eskalationsstufen | 3 | Unbegrenzt |
+| Autoantworten | 5 | 50 |
+| Sticky-Nachrichten | 5 | 25 |
+| Modmail-Kategorien | 2 | 25 |
+| Modmail-Formularfelder pro Kategorie | 3 | 10 |
+| Bewerbungsformulare | 3 | Unbegrenzt |
+| Einspruchsformulare | 1 | 10 |
+| Rollen-Button-Panels | 5 | 25 |
+| Starboards | 1 | Unbegrenzt |
+| Tags | 15 | Unbegrenzt |
+| Ausstehende geplante Posts | 1 | Unbegrenzt |
+| Aktive Umfragen | 1 | 50 |
+| Vorschlagskanäle | 1 | 10 |
+| Aufbewahrung des Konsolenarchivs | 7 Tage | 365 Tage |
+
+## Features nur mit Premium
+
+Diese sind im Free-Plan ausgeschaltet und stehen mit Premium zur Verfügung.
+
+| Feature | Was es tut |
+| --- | --- |
+| Support-Suite | SLA-Zeitpläne, Team-Quoten, Ticket-Bewertung durch das Team, Statistiken und Kundenbewertungen für Tickets und Modmail |
+| Anhänge als Formularantwort | Mitglieder können in Ticket-, Bewerbungs- und Modmail-Formularen Dateien als Antwort hochladen |
+| Log-Weiterleitung pro Unterkategorie | Logs aus verschiedenen Unterkategorien in verschiedene Kanäle schicken |
+| Eigene Embed-Farben und Footer | Embeds des Bots mit deiner eigenen Akzentfarbe und deinem Footer-Text versehen |
+| Kundenportal | Ein gehostetes Self-Service-Panel, in dem Mitglieder ihre eigenen Tickets und verknüpften Accounts verfolgen |
+| Tebex-Shopverwaltung | Pakete, Verkäufe und Kundensuchen für deinen Tebex-Shop aus Discord verwalten |
+| CSV-Export für Umfragen | Umfrageergebnisse als CSV-Datei exportieren |
+| Gehostete Sprach-Transkription | Automatische Transkription von Sprach-Tickets und Aufnahmen |
+| Priority-Support | Schnellere Hilfe vom Bifröst-Team |
+
+## White-Label
+
+White-Label ist der höchste Tarif. Er enthält alles aus Premium und macht den Bot dann zu deinem:
+
+- Entfernt jedes Heimdall- und Bifröst-Branding aus Nachrichten und Embeds des Bots
+- Läuft unter deiner eigenen Bot-Identität, mit deren Namen, Avatar und Token
+- Gemacht für Netzwerke, Agenturen und Communitys mit eigener Marke
+
+White-Label wird pro Platz lizenziert. Ein Platz gilt für einen White-Label-Server. Betreibst du White-Label-Bots auf drei Servern, sind das drei Plätze, und du kannst jederzeit Plätze hinzufügen oder entfernen.
+
+<Note>
+  White-Label läuft über deine eigene Bot-Anwendung, für die Bereitstellung brauchst du also das Token des Bots. Eröffne ein Ticket auf dem [Support-Server](https://discord.bifrost.gg), wenn du Hilfe bei der Einrichtung möchtest.
+</Note>
+
+### Privilegierte Intents
+
+Deine Bot-Anwendung braucht zwei eingeschaltete privilegierte Gateway-Intents, bevor Heimdall sie betreiben kann. Öffne im [Discord Developer Portal](https://discord.com/developers/applications) deine Anwendung, geh zum Tab **Bot** und stell unter **Privileged Gateway Intents** ein:
+
+| Intent | Einstellung | Warum |
+| --- | --- | --- |
+| Server Members Intent | An | Berechtigungen, Moderation, Willkommensnachrichten, Autorollen und Rollen-Sync brauchen alle Daten zu Mitgliedern und Rollen |
+| Message Content Intent | An | Tickets, Modmail, Automod, Nachrichten-Logging und Übersetzung lesen alle den Inhalt von Nachrichten |
+| Presence Intent | Aus | Heimdall liest nie den Online-Status |
+
+Ist einer der beiden nötigen Intents aus, lehnt Discord den Login des Bots ab, und er startet nicht. Schalt ihn ein und stell den Bot dann erneut bereit.
+
+Unter 10.000 Nutzern reicht es, die Intents einzuschalten. Sobald dein Bot 10.000 eindeutige erreichbare Nutzer hat, schickt Discord dem Account, dem die Anwendung gehört, eine DM mit der Bitte, eine Prüfung der Intents zu beantragen, mit einer Frist von 90 Tagen. Bis dahin funktioniert der Bot weiter, verpasst du die Frist aber, schaltet Discord die Intents ab.
+
+<Card title="Privilegierte Intents beantragen" icon="shield-check" href="https://bifrost.gg/heimdall/guides/privileged-intents">
+  Antworten zum Kopieren für jede Frage im Prüfformular von Discord, mit dem Namen deines Bots personalisiert, plus die Screenshots zum Anhängen.
+</Card>
+
+### Eigener Status
+
+Dein White-Label-Bot kann in der Mitgliederliste einen eigenen Status zeigen und zwischen mehreren wechseln. Um ihn festzulegen, öffne im Dashboard dein Profilmenü, wähl **Whitelabel Bot** und such die Karte **Custom status**. Änderungen erreichen deinen laufenden Bot wenige Augenblicke nach dem Speichern.
+
+- Füg bis zu 10 Status hinzu. Bei zwei oder mehr wechselt der Bot der Reihe nach durch.
+- Wähl, wie oft gewechselt wird, von alle 15 Sekunden bis einmal am Tag. Standard ist jede Minute.
+- Jeder Status hat einen Typ: **Playing** (Spielt), **Watching** (Schaut), **Listening to** (Hört), **Competing in** (Tritt an in) oder **Custom** (nur dein Text, ohne Verb davor).
+- Jeder Status kann bis zu 128 Zeichen lang sein.
+
+Zwei Platzhalter setzen Live-Zahlen ein:
+
+| Platzhalter | Zeigt |
+| --- | --- |
+| `{servers}` | Auf wie vielen Servern dein Bot ist |
+| `{members}` | Die Gesamtzahl der Mitglieder auf diesen Servern |
+
+Zum Beispiel erscheint `Watching over {members} members` als „Watching over 1,234 members“. Die Zahlen werden etwa alle 10 Minuten aktualisiert, wenn ein einzelner Status sie nutzt, und bei jedem Wechsel, wenn du mehrere hast.
+
+<Note>
+  Discord begrenzt, wie oft ein Bot seinen Status ändern kann. Deshalb ist der schnellste Wechsel alle 15 Sekunden.
+</Note>
+
+## Preise
+
+| Plan | Monatlich | Jährlich |
+| --- | --- | --- |
+| Premium | 5,99 £/Monat | 57,99 £/Jahr |
+| White-Label | 9,99 £/Monat pro Platz | 95,99 £/Jahr pro Platz |
+
+Mit jährlicher Abrechnung sparst du rund 20 % gegenüber monatlich, und alle Preise enthalten die Mehrwertsteuer. Odin AI ist ein separates optionales Add-on mit eigener Abrechnung. Die Preise dafür stehen unter [Odin AI](/de/ai/odin).
+
+<Note>
+  Du hattest schon vor der Einführung der Pauschalpreise ein Abo? Dein bestehender Plan und Preis bleiben unverändert. Alte Pläne funktionieren genau wie bisher, und nichts wird umgestellt oder neu abgerechnet.
+</Note>
+
+## Wie Limits durchgesetzt werden
+
+Limits werden geprüft, wenn du eine Konfiguration erstellst oder bearbeitest, nie während der Bot läuft. Auf ein Limit triffst du also nur, wenn du etwas Neues hinzufügst. Laufende Tickets, Automod und alles andere funktionieren unabhängig von deinem Plan weiter.
+
+Wechselst du von einem bezahlten Plan zurück, wird nichts gelöscht.
+
+<Steps>
+  <Step title="Der Abrechnungszeitraum endet">
+    Du behältst vollen Zugriff bis zum Ende des Zeitraums, den du schon bezahlt hast.
+  </Step>
+
+  <Step title="14 Tage Kulanzzeit">
+    Danach funktioniert noch 14 Tage lang alles weiter, damit du Zeit hast, dich zu entscheiden oder neu abzuschließen.
+  </Step>
+
+  <Step title="Was über dem Limit liegt, wird pausiert">
+    Alles über den Free-Limits wird deaktiviert, nicht gelöscht. Standardmäßig bleiben deine neuesten Einträge aktiv, und du kannst neu auswählen, welche du behalten willst.
+  </Step>
+
+  <Step title="Sofort wiederhergestellt">
+    Schließ jederzeit neu ab, und jeder pausierte Eintrag wird genau so wieder eingeschaltet, wie er war.
+  </Step>
+</Steps>
+
+Sicherheits-Features wie Moderation, Automod und Einsprüche bekommen eine verlängerte Kulanzzeit und vorher immer deutlichere Warnungen, damit dein Server nie ungeschützt bleibt.
+
+## So upgradest du
+
+<Steps>
+  <Step title="Das Dashboard öffnen">
+    Melde dich unter [bot.bifrost.gg](https://bot.bifrost.gg) an und wähl deinen Server.
+  </Step>
+
+  <Step title="Zu Billing gehen">
+    Öffne den Bereich **Billing** und wähl **Premium** oder **White-Label**, mit monatlicher oder jährlicher Abrechnung.
+  </Step>
+
+  <Step title="Den Checkout abschließen">
+    Schließ den Checkout ab, und deine neuen Limits und Features sind sofort freigeschaltet. Du musst den Bot nicht neu einladen.
+  </Step>
+</Steps>
+
+Du kannst auch auf der [Preisseite](https://bifrost.gg/heimdall/pricing) anfangen.

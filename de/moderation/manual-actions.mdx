@@ -1,0 +1,102 @@
+---
+title: "Manuelle Moderationsaktionen"
+description: "Mit Slash-Befehlen verwarnen, bannen, kicken, muten, entbannen und Nachrichten löschen."
+icon: "gavel"
+---
+
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+Heimdall bietet Slash-Befehle für alle üblichen Moderationsaktionen. Jede Aktion legt einen Verstoß-Eintrag an und benachrichtigt das betroffene Mitglied, wenn möglich, per Direktnachricht.
+
+## Verwarnen
+
+```
+/warn <user> <reason> [points] [expiry] [silent]
+```
+
+Verwarnt ein Mitglied. Die Verwarnung wird als Verstoß mit einem optionalen Punktwert erfasst. Ist kein Punktwert angegeben, gilt standardmäßig 1.
+
+| Option | Erforderlich | Beschreibung |
+|---|---|---|
+| `user` | Ja | Das Mitglied, das verwarnt werden soll |
+| `reason` | Ja | Der Grund für die Verwarnung, der dem Mitglied angezeigt wird |
+| `points` | Nein | Den Standard-Punktwert für diese Verwarnung überschreiben |
+| `expiry` | Nein | Wie lange es dauert, bis die Punkte dieses Verstoßes verfallen (z. B. `7d`, `30d`) |
+| `silent` | Nein | Wenn gesetzt, wird das Mitglied nicht per DM benachrichtigt |
+
+Das verwarnte Mitglied bekommt eine DM mit dem Namen deines Servers, dem Grund und dem vergebenen Punktwert.
+
+## Bannen
+
+```
+/ban <user> <reason> [delete_days] [duration] [silent]
+```
+
+Bannt ein Mitglied vom Server. Funktioniert auch bei Mitgliedern, die den Server schon verlassen haben.
+
+| Option | Erforderlich | Beschreibung |
+|---|---|---|
+| `user` | Ja | Das Mitglied oder die Nutzer-ID, die gebannt werden soll |
+| `reason` | Ja | Der Grund für den Bann |
+| `delete_days` | Nein | Wie viele Tage des Nachrichtenverlaufs gelöscht werden (0 bis 7) |
+| `duration` | Nein | Bei einem zeitlich begrenzten Bann: wie lange es dauert, bis das Mitglied automatisch entbannt wird (z. B. `7d`) |
+| `silent` | Nein | Wenn gesetzt, wird das Mitglied vor dem Bann nicht per DM benachrichtigt |
+
+## Entbannen
+
+```
+/unban <user> [reason]
+```
+
+Hebt den Bann eines Nutzers auf.
+
+## Kicken
+
+```
+/kick <user> <reason> [silent]
+```
+
+Entfernt ein Mitglied vom Server. Es kann über einen Einladungslink wieder beitreten. Ein Kick wird als Verstoß erfasst.
+
+## Muten
+
+```
+/mute <user> <duration> <reason> [silent]
+```
+
+Setzt ein Mitglied in einen Discord-Timeout, sodass es für die angegebene Dauer keine Nachrichten senden und keinen Sprachkanälen beitreten kann.
+
+| Option | Erforderlich | Beschreibung |
+|---|---|---|
+| `user` | Ja | Das Mitglied, das gemutet werden soll |
+| `duration` | Ja | Wie lange der Mute dauert (z. B. `1h`, `12h`, `7d`). Höchstens 28 Tage. |
+| `reason` | Ja | Der Grund für den Mute |
+| `silent` | Nein | Wenn gesetzt, wird das Mitglied nicht per DM benachrichtigt |
+
+## Nachrichten löschen (Purge)
+
+```
+/purge count <count> [user]
+/purge time <duration> [user]
+```
+
+Löscht Nachrichten im aktuellen Kanal in großer Menge. Es gibt zwei Modi:
+
+- **count**: Die letzten `count` Nachrichten löschen (bis zu 100).
+- **time**: Alle Nachrichten löschen, die innerhalb der letzten `duration` gesendet wurden (z. B. `1h`).
+
+Der optionale Filter `user` beschränkt das Löschen auf Nachrichten eines bestimmten Mitglieds. Discord erlaubt das Massenlöschen nur für Nachrichten, die jünger als 14 Tage sind.
+
+## Benachrichtigungen per DM bei Verstößen
+
+Bestraft Heimdall ein Mitglied, versucht der Bot, ihm per DM die Aktion, den Server, auf dem sie passiert ist, und den Grund zu erklären. Hat das Mitglied DMs deaktiviert, überspringt der Bot die Benachrichtigung stillschweigend. Mit dem Flag `silent` wird die DM in jedem Fall unterdrückt.
+
+## Erforderliche Berechtigungen
+
+| Befehl | Berechtigungsschlüssel |
+|---|---|
+| `/warn` | `moderation.enforcement.warn` |
+| `/ban`, `/unban` | `moderation.enforcement.ban` |
+| `/kick` | `moderation.enforcement.kick` |
+| `/mute` | `moderation.enforcement.mute` |
+| `/purge` | `moderation.enforcement.purge` |

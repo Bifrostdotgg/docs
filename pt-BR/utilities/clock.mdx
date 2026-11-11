@@ -1,0 +1,30 @@
+---
+title: "Canais de relógio"
+description: "Como transformar o nome de um canal em um relógio ao vivo para o fuso horário escolhido."
+icon: "clock"
+---
+
+Um canal de relógio é um canal de voz ou de texto cujo nome mostra a hora atual em algum lugar. Servidores com membros espalhados por vários fusos horários usam esses canais para que ninguém precise calcular que horas são para a equipe de staff, ou quando um evento começa de verdade.
+
+## Configurando um
+
+`/clock setup` recebe um canal e um fuso horário. `/clock list` mostra os que você tem e `/clock remove` apaga um.
+
+O bot renomeia o canal periodicamente. Os membros não precisam de nenhuma permissão, e ninguém consegue interagir com ele: um canal de voz trancado em que ninguém pode entrar funciona bem, já que o nome é o que importa.
+
+## Bom saber antes de adicionar vários
+
+**O Discord limita bastante a renomeação de canais**, a duas renomeações a cada dez minutos por canal. Por isso um relógio não consegue avançar a cada minuto. Ele atualiza com a frequência que o limite permite, o que significa que a hora exibida pode ficar alguns minutos atrasada.
+
+Esse é um limite do Discord, não do Heimdall, e vale para todo bot que oferece isso. É bom saber porque um relógio mostrando 14:58 quando são 15:01 parece quebrado, mas não está.
+
+Pelo mesmo motivo, prefira um relógio por fuso horário que você realmente precisa. Seis canais de relógio não gastam seis vezes o limite de renomeações, porque o limite é por canal, mas deixam seis vezes mais provável que alguém repare num nome desatualizado.
+
+## Permissões necessárias
+
+| Ação | Chave de permissão |
+| --- | --- |
+| Ver as configurações | `clock.config.view_config` |
+| Adicionar e remover relógios | `clock.config.manage_config` |
+
+O bot precisa de **Gerenciar canais** em cada canal de relógio para renomeá-lo.

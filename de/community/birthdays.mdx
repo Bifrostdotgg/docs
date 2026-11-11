@@ -1,0 +1,52 @@
+---
+title: "Geburtstage"
+description: "Geburtstage von Mitgliedern am jeweiligen Tag ankündigen, optional mit einer befristeten Rolle."
+icon: "cake-candles"
+---
+
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+Mitglieder tragen ihren Geburtstag ein, und am Tag selbst postet der Bot eine Ankündigung und kann ihnen eine befristete Rolle geben. Die Mitglieder tragen sich selbst ein, du musst die Daten also nie einsammeln.
+
+## Einrichtung
+
+Geh im Dashboard zu <DashboardLink to="birthdays/config">**Birthdays**</DashboardLink>.
+
+| Einstellung | Beschreibung |
+| --- | --- |
+| **Announcement channel** (Ankündigungskanal) | Wo die Geburtstagsnachricht gepostet wird |
+| **Timezone** (Zeitzone) | Welche Zeitzone bestimmt, wann „heute“ beginnt |
+| **Announcement hour** (Ankündigungsstunde) | Die Stunde des Tages, zu der die Ankündigungen rausgehen |
+| **Ping role** (Ping-Rolle) | Eine optionale Rolle, die zusammen mit der Ankündigung erwähnt wird |
+| **Announcement message** (Ankündigungstext) | Unterstützt `{mention}` für einen Ping und `{user}` für den Namen ohne Ping |
+| **Birthday role** (Geburtstagsrolle) | Eine optionale Rolle für den Tag, mit einstellbarer Dauer in Stunden |
+
+## Wie Mitglieder sich eintragen
+
+Es gibt zwei Wege, und beide schreiben denselben Eintrag:
+
+- `/birthday set` mit Tag und Monat
+- Den **Opener**, eine Nachricht mit Button, die du in einem Kanal postest. Mitglieder, die nie einen Slash-Befehl ausführen würden, klicken einen Button.
+
+`/birthday remove` löscht den eigenen Eintrag. `/birthday view` zeigt den eines Mitglieds, und `/birthday list` zeigt die anstehenden.
+
+Gespeichert werden nur Tag und Monat. Mitglieder werden nicht nach dem Jahr gefragt, es wird also kein Alter erfasst.
+
+## Die Geburtstagsliste
+
+Der Tab <DashboardLink to="birthdays/entries">**Birthday List**</DashboardLink> im Dashboard zeigt alle eingetragenen Geburtstage, die nächsten zuerst. Du kannst suchen und für jemanden einen Eintrag hinzufügen, bearbeiten oder entfernen.
+
+Sortiert wird danach, wie bald die nächste Feier ansteht, nicht nach Kalenderdatum. Dezember-Geburtstage stehen also nicht elf Monate im Jahr ganz unten.
+
+Ein Geburtstag am 29. Februar wird in Jahren ohne diesen Tag am 28. Februar gefeiert, statt drei Jahre am Stück übersprungen zu werden.
+
+## Erforderliche Berechtigungen
+
+| Aktion | Berechtigungsschlüssel |
+| --- | --- |
+| Einstellungen ansehen | `birthdays.config.view_config` |
+| Einstellungen und Opener ändern | `birthdays.config.manage_config` |
+| Die Geburtstagsliste ansehen | `birthdays.entries.view_entries` |
+| Den Eintrag von jemand anderem ändern | `birthdays.entries.manage_entries` |
+
+Den eigenen Geburtstag einzutragen braucht keine Berechtigung. Jeder der beiden Konfigurationsschlüssel gibt auch Zugriff auf die Liste, Teammitglieder, die Geburtstage schon verwalten, brauchen also keine zweite Freigabe, um sie weiter zu sehen.

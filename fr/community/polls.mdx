@@ -1,0 +1,50 @@
+---
+title: "Sondages"
+description: "Organiser des sondages à choix unique, à choix multiples, à classement ou à réponse libre."
+icon: "square-poll-vertical"
+---
+
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+Les sondages vont plus loin qu’une série de réactions. Quatre types de réponses sont disponibles, les résultats se mettent à jour en direct, et tout peut être exporté.
+
+## En créer un
+
+`/poll create` ouvre un assistant qui te guide pour la question, le type de réponse, les options et l’heure de clôture. `/poll from-template` saute l’assistant pour un sondage que tu organises régulièrement. Sur le tableau de bord, utilise <DashboardLink to="polls/create">**Polls \> Create poll**</DashboardLink>.
+
+| Type de réponse | À utiliser pour |
+| --- | --- |
+| **Single choice** | Une option par membre, le cas habituel |
+| **Multi-select** | Les membres en choisissent plusieurs, utile pour « auxquels de ces événements participerais-tu » |
+| **Ranked choice** | Les membres classent les options, comptées par vote alternatif pour que le gagnant ait un vrai soutien majoritaire et pas seulement la plus grosse minorité |
+| **Free text or numeric** | Des réponses ouvertes, quand les options ne sont pas connues à l’avance |
+
+Le vote par classement vaut la peine quand un vote simple diviserait des options proches et laisserait une option impopulaire gagner à la majorité relative.
+
+## Pendant le sondage
+
+Les résultats se mettent à jour au fil des votes. `/poll list` montre les sondages ouverts, et `/poll close` en termine un plus tôt.
+
+La visibilité des votants est une permission à part, donc un sondage peut avoir des résultats publics tout en réservant au staff, ou à personne, qui a voté pour quoi.
+
+## Après la clôture
+
+La clôture publie les résultats. Toute personne qui a demandé à être prévenue reçoit un MP. L’ensemble des résultats peut être exporté en CSV pour tout ce que tu veux faire en dehors de Discord, et un journal d’audit enregistre qui a créé, modifié et clôturé chaque sondage. Tu le trouves dans <DashboardLink to="polls/audit">**Polls \> Audit log**</DashboardLink> sur le tableau de bord.
+
+## Modèles
+
+Les modèles enregistrent toute la configuration d’un sondage. Si tu organises un vote hebdomadaire avec les mêmes options, crée-le une fois, enregistre-le avec **Save as template** dans <DashboardLink to="polls/create">**Polls \> Create poll**</DashboardLink>, puis utilise `/poll from-template` ensuite. <DashboardLink to="polls/templates">**Polls \> Templates**</DashboardLink> liste tes modèles enregistrés.
+
+## Permissions requises
+
+| Action | Clé de permission |
+| --- | --- |
+| Voter | `polls.vote` (accordée à tout le monde par défaut) |
+| Créer un sondage | `polls.create_poll` |
+| Voir les sondages | `polls.polls.view_polls` |
+| Voir qui a voté pour quoi | `polls.polls.view_voters` |
+| Clôturer et modifier des sondages | `polls.polls.manage` |
+| Voir les modèles | `polls.templates.view_templates` |
+| Créer et modifier des modèles | `polls.templates.manage_templates` |
+
+`view_voters` est volontairement séparée de la consultation du sondage. Voir les totaux et voir comment chaque membre a voté sont deux choses différentes, et un vote à bulletin secret cesse d’être secret dès qu’on accorde les deux ensemble.

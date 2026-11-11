@@ -1,0 +1,57 @@
+---
+title: "Status- und Info-Befehle"
+description: "Latenz und Laufzeit des Bots prüfen und Informationen zu einem Discord-Nutzer ansehen."
+icon: "circle-info"
+---
+
+Diese allgemeinen Befehle geben Mitgliedern und Admins grundlegende Betriebsinformationen über den Bot und über Discord-Nutzer.
+
+## Die Latenz des Bots prüfen
+
+```
+/ping
+```
+
+Misst die aktuelle Round-Trip-Latenz zwischen dem Bot und der API von Discord. Die Antwort zeigt:
+
+- **API-Latenz**: die Zeit, bis der Bot ein Event von Discord empfängt
+- **Gateway-Latenz**: der Round-Trip des WebSocket-Heartbeats
+- **Datenbank-Latenz**: die Zeit für eine einfache Datenbankabfrage
+
+Mit diesem Befehl prüfst du, ob der Bot reagiert, und findest heraus, ob eine Verlangsamung vom Bot, von der Discord-API oder von der Datenbank kommt.
+
+## Die Laufzeit des Bots prüfen
+
+```
+/uptime
+```
+
+Zeigt, wie lange der Bot seit seinem letzten Neustart läuft. Du siehst eine gut lesbare Dauer (z. B. „3 Tage, 14 Stunden, 22 Minuten“) und das genaue Datum samt Uhrzeit, zu der der Bot gestartet ist.
+
+## Nutzerinformationen ansehen
+
+```
+/userinfo [user]
+```
+
+Zeigt eine Profilkarte für das angegebene Mitglied (oder dein eigenes Profil, wenn du keinen Nutzer angibst). Die Karte zeigt:
+
+| Feld | Beschreibung |
+|---|---|
+| **Nutzername** | Discord-Nutzername und Anzeigename |
+| **Nutzer-ID** | Discord-Snowflake-ID |
+| **Account erstellt** | Wann der Discord-Account registriert wurde |
+| **Server beigetreten** | Wann das Mitglied diesem Server beigetreten ist |
+| **Rollen** | Alle Rollen, die das Mitglied gerade hat |
+| **Spitzname** | Der serverspezifische Spitzname, falls gesetzt |
+| **Bot** | Ob der Account ein Bot ist |
+
+`/userinfo` funktioniert bei jedem sichtbaren Mitglied, auch bei Bots. Mitglieder, die den Server verlassen haben, kannst du über ihre Nutzer-ID nachschlagen.
+
+## Erforderliche Berechtigungen
+
+Diese Befehle stehen standardmäßig allen Mitgliedern zur Verfügung:
+
+| Befehl | Berechtigungsschlüssel |
+|---|---|
+| `/ping`, `/uptime`, `/userinfo` | `ping.use` (standardmäßig erlaubt) |

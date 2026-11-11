@@ -1,0 +1,35 @@
+---
+title: "Objectifs"
+description: "Publier des barres de progression qui se mettent à jour toutes seules pour le nombre de membres, les boosts, les rôles ou n’importe quel chiffre que tu fixes."
+icon: "bullseye"
+---
+
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+Un objectif est une barre de progression publiée dans un salon, qui se met à jour toute seule. Utilise-le pour un palier de membres, un objectif de boosts, une campagne de recrutement ou tout ce que tu peux chiffrer.
+
+## Ce qu’un objectif peut suivre
+
+| Source | La progression vient de |
+| --- | --- |
+| **Nombre de membres** | Le nombre de membres du serveur |
+| **Boosts** | Le nombre de boosts actuel du serveur |
+| **Membres d’un rôle** | Le nombre de membres qui ont un rôle choisi |
+| **Manuel** | Un chiffre que tu fixes toi-même avec `/goal set` |
+
+Les trois premières se mettent à jour toutes seules. Les objectifs manuels servent pour tout ce que le bot ne peut pas voir, comme l’argent récolté ou les inscriptions sur un autre site : tu les déplaces avec `/goal set` ou tu les fais avancer avec `/goal add`.
+
+## En créer un
+
+Ouvre <DashboardLink to="goals">**Goals**</DashboardLink> (Objectifs) dans le tableau de bord, puis choisis la source, la cible et le salon. Le bot publie la barre et la tient à jour grâce à une vérification régulière, donc elle reste exacte sans que personne n’y touche.
+
+Les objectifs servent uniquement à l’affichage, ils n’ont donc besoin d’aucune permission côté membres. Personne ne peut interagir avec un objectif par accident.
+
+## Permissions requises
+
+| Action | Clé de permission |
+| --- | --- |
+| Voir les paramètres | `goals.config.view_config` |
+| Créer et modifier des objectifs | `goals.config.manage_config` |
+
+`/goal set` et `/goal add` demandent aussi la clé de gestion, puisque déplacer un objectif manuel revient à le modifier.

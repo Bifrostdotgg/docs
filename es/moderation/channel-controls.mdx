@@ -1,0 +1,67 @@
+---
+title: "Control de canales"
+description: "Bloquea canales, aplica baneos por canal y evita que alguien esquive un baneo saliendo y volviendo a entrar."
+icon: "lock"
+---
+
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+Heimdall ofrece tres herramientas de control a nivel de canal: el bloqueo de canales, los baneos de canal y el seguimiento del baneo al salir. Funcionan junto a los baneos de todo el servidor para las situaciones en las que no está justificado banear a alguien del servidor entero, pero hay que controlar el acceso a canales concretos o la vuelta al servidor.
+
+## Bloquear y desbloquear canales
+
+```
+/lock [channel] [reason] [duration]
+/unlock [channel]
+```
+
+Bloquear un canal impide enviar mensajes a los miembros que no tengan roles con una excepción explícita. El canal sigue visible, pero queda en solo lectura para los miembros afectados.
+
+| Opción | Obligatoria | Descripción |
+|---|---|---|
+| `channel` | No | El canal que se bloquea. Por defecto, el canal actual. |
+| `reason` | No | Un motivo que se publica en el canal al bloquearlo. |
+| `duration` | No | Desbloquea automáticamente pasado este tiempo (por ejemplo, `2h`, `1d`). |
+
+Al bloquearlo, se puede publicar opcionalmente un mensaje del sistema en el canal para avisar a los miembros. Al desbloquearlo, otro mensaje indica que el canal vuelve a estar abierto.
+
+Los canales bloqueados se siguen en el panel, en <DashboardLink to="moderation/locked-channels">**Moderation > Locked Channels**</DashboardLink>, donde el staff puede ver todos los canales bloqueados ahora mismo y desbloquearlos desde la interfaz.
+
+## Baneos de canal
+
+```
+/channelban <user> [channel] [reason] [duration]
+```
+
+Banea a un miembro concreto de un canal y le quita la posibilidad de leer o escribir en él. Es una herramienta muy precisa: el miembro sigue en el servidor y puede usar todos los demás canales con normalidad.
+
+| Opción | Obligatoria | Descripción |
+|---|---|---|
+| `user` | Sí | El miembro al que se banea del canal |
+| `channel` | No | El canal del que se le banea. Por defecto, el canal actual. |
+| `reason` | No | El motivo del baneo |
+| `duration` | No | Cuánto dura el baneo del canal (por ejemplo, `7d`). Por defecto, permanente. |
+
+Los baneos de canal funcionan modificando las sobrescrituras de permisos del canal. Cuando se cumple la duración, la sobrescritura se elimina automáticamente. Puedes ver y gestionar los baneos de canal activos en el panel, en <DashboardLink to="moderation/channel-bans">**Moderation > Channel Bans**</DashboardLink>.
+
+## Baneo al salir
+
+El baneo al salir impide que un miembro esquive una advertencia o un silencio saliendo del servidor y volviendo a entrar. Cuando está activado, cualquier miembro que sale del servidor queda baneado automáticamente durante el tiempo que fijes, salvo que tenga un rol inmune. Se aplica a todas las salidas, no solo a los miembros con una sanción reciente, así que configura los roles inmunes antes de activarlo.
+
+### Configurar el baneo al salir
+
+Ve a <DashboardLink to="moderation/leave-bans">**Moderation \> Leave Bans**</DashboardLink> y activa **Enable Ban on Leave**. Configura:
+
+- **Default Ban Duration** (duración predeterminada del baneo): cuánto dura el baneo automático, o si es permanente
+- **Ban Reason** (motivo del baneo): el motivo que se registra en el baneo
+- **Immune Roles** (roles inmunes): a los miembros con cualquiera de estos roles nunca se les banea al salir. Los bots siempre se omiten
+
+Los baneos al salir se registran como sanciones, así que el historial del miembro refleja el motivo del baneo.
+
+## Permisos necesarios
+
+| Acción | Clave de permiso |
+|---|---|
+| `/lock`, `/unlock` | `moderation.enforcement.lock_channels` |
+| `/channelban` | `moderation.enforcement.ban` |
+| Gestionar los ajustes del baneo al salir | `moderation.enforcement.manage_rules` |

@@ -1,0 +1,204 @@
+---
+title: "Documentation de Heimdall"
+description: "La documentation complète de Heimdall, un bot Discord à plugins et une plateforme de gestion de communauté."
+---
+
+Heimdall est un bot Discord de Bifröst construit autour d’un système de plugins. Chaque fonctionnalité est un plugin qui peut être activé ou désactivé indépendamment. La configuration se fait sur le tableau de bord web à l’adresse [bot.bifrost.gg](https://bot.bifrost.gg), où les administrateurs de serveur contrôlent tout, des règles de modération aux catégories de tickets en passant par les réglages de l’économie des jeux.
+
+Cette documentation couvre toutes les fonctionnalités disponibles pour les administrateurs de serveur comme pour les membres. Si tu évalues Heimdall, consulte la [page des tarifs](https://bifrost.gg/heimdall/pricing) pour comparer les offres disponibles.
+
+## Bien démarrer
+
+<Columns cols={2}>
+  <Card title="Ajouter Heimdall à ton serveur" icon="robot" href="/fr/adding-to-server">
+    Invite le bot et lance la configuration initiale.
+  </Card>
+
+  <Card title="Utiliser le tableau de bord" icon="gauge" href="/fr/dashboard">
+    Connecte-toi, parcours l’interface et configure ton serveur.
+  </Card>
+
+  <Card title="Comprendre les permissions" icon="shield-halved" href="/fr/permissions">
+    Comment fonctionne le système de permissions de Heimdall et comment le configurer.
+  </Card>
+
+  <Card title="Référence des commandes" icon="terminal" href="/reference/commands">
+    La liste complète de toutes les commandes slash de tous les plugins.
+  </Card>
+
+  <Card title="Premium et White-Label" icon="crown" href="/fr/premium">
+    Ce que débloquent les offres payantes, les limites qu’elles lèvent et comment en profiter.
+  </Card>
+
+  <Card title="Tarifs" icon="tag" href="https://bifrost.gg/heimdall/pricing">
+    Compare les offres et vois quelles fonctionnalités sont incluses dans chacune.
+  </Card>
+</Columns>
+
+## Modération
+
+<Columns cols={2}>
+  <Card title="Actions manuelles" icon="gavel" href="/fr/moderation/manual-actions">
+    Les commandes d’avertissement, de ban, d’expulsion, de mute et de purge.
+  </Card>
+
+  <Card title="Règles d’automod" icon="robot" href="/fr/moderation/automod">
+    L’application automatique des règles par mots-clés et par motifs.
+  </Card>
+
+  <Card title="Escalade" icon="arrow-up" href="/fr/moderation/escalation">
+    Des sanctions progressives : mutes, expulsions et bans automatiques selon les points accumulés.
+  </Card>
+
+  <Card title="Suivi des sanctions" icon="clock-rotate-left" href="/fr/moderation/infractions">
+    Consulte et gère l’historique des avertissements et des bans d’un membre.
+  </Card>
+
+  <Card title="Contrôle des salons" icon="lock" href="/fr/moderation/channel-controls">
+    Verrouille des salons, applique des bans propres à un salon et bloque les départs pour échapper à une sanction.
+  </Card>
+
+  <Card title="Appels" icon="scale-balanced" href="/fr/moderation/appeals">
+    Permets aux membres bannis de faire appel via un formulaire dédié.
+  </Card>
+</Columns>
+
+## Support
+
+<Columns cols={2}>
+  <Card title="Tickets" icon="ticket" href="/fr/support/tickets">
+    Un système de tickets de support structuré, avec des catégories, l’attribution au staff et des statistiques.
+  </Card>
+
+  <Card title="Modmail" icon="envelope" href="/fr/support/modmail">
+    Des fils de support par MP qui acheminent les messages des membres vers ton équipe staff.
+  </Card>
+
+  <Card title="Candidatures" icon="file-lines" href="/fr/support/applications">
+    Des formulaires de candidature configurables avec un processus d’examen par le staff.
+  </Card>
+
+  <Card title="Statistiques" icon="chart-line" href="/fr/support/analytics">
+    Temps de réponse, volume de tickets, performances du staff et avis de satisfaction.
+  </Card>
+</Columns>
+
+## Communauté
+
+<Columns cols={2}>
+  <Card title="Messages de bienvenue" icon="door-open" href="/fr/community/welcome">
+    Envoie un message mis en forme aux nouveaux membres quand ils arrivent.
+  </Card>
+
+  <Card title="Suggestions" icon="lightbulb" href="/fr/community/suggestions">
+    Un système de suggestions structuré, avec votes et examen par le staff.
+  </Card>
+
+  <Card title="Starboard" icon="star" href="/fr/community/starboard">
+    Republie automatiquement les messages populaires dans un salon de mise en avant.
+  </Card>
+
+  <Card title="Boutons de rôles" icon="circle-check" href="/fr/community/role-buttons">
+    Des panneaux de rôles en libre-service avec des boutons à activer et désactiver.
+  </Card>
+
+  <Card title="Tags" icon="tags" href="/fr/community/tags">
+    Des bouts de texte enregistrés et des modèles d’embed, appelables avec une commande slash.
+  </Card>
+
+  <Card title="Rappels" icon="bell" href="/fr/community/reminders">
+    Crée des rappels personnels directement dans Discord.
+  </Card>
+</Columns>
+
+## Vocal
+
+<Columns cols={2}>
+  <Card title="Salons temporaires" icon="microphone" href="/fr/voice/temp-channels">
+    Des salons vocaux créés en les rejoignant, qui se suppriment tout seuls quand ils sont vides.
+  </Card>
+
+  <Card title="Transcription vocale" icon="closed-captioning" href="/fr/voice/transcription">
+    Transcris automatiquement les messages vocaux en texte.
+  </Card>
+
+  <Card title="Salle d’attente" icon="hourglass" href="/fr/voice/waiting-room">
+    Préviens le staff quand un membre entre dans un salon vocal d’attente.
+  </Card>
+</Columns>
+
+## Jeux et économie
+
+<Columns cols={2}>
+  <Card title="Vue d’ensemble" icon="gamepad" href="/fr/games/overview">
+    Active les jeux et configure l’accès par salon et par rôle.
+  </Card>
+
+  <Card title="Jeux de plateau" icon="chess-board" href="/fr/games/board-games">
+    2048, Puissance 4, Memory, Morpion, Bataille navale et Solitaire.
+  </Card>
+
+  <Card title="Jeux de casino" icon="dice" href="/fr/games/casino">
+    Blackjack, pile ou face, dés, plus ou moins, course de chevaux, Mines et roulette.
+  </Card>
+
+  <Card title="Économie" icon="coins" href="/fr/games/economy">
+    Monnaie du serveur, récompenses quotidiennes, pourboires et classements.
+  </Card>
+</Columns>
+
+## Intégrations
+
+<Columns cols={2}>
+  <Card title="Minecraft" icon="server" href="/fr/integrations/minecraft">
+    Gestion de la whitelist, liaison de comptes, RCON et statut du serveur en direct.
+  </Card>
+
+  <Card title="PlanetSide 2" icon="crosshairs" href="/fr/integrations/planetside">
+    Recherches via l’API Census, gestion d’outfit et suivi de la population.
+  </Card>
+
+  <Card title="Tebex" icon="store" href="/fr/integrations/tebex">
+    Connecte ta boutique Tebex pour voir les transactions et émettre des cartes cadeaux.
+  </Card>
+
+  <Card title="NamelessMC" icon="link" href="/fr/integrations/namelessmc">
+    Lie les comptes Discord aux profils du forum NamelessMC.
+  </Card>
+</Columns>
+
+## IA et langues
+
+<Columns cols={2}>
+  <Card title="Odin AI" icon="brain" href="/fr/ai/odin">
+    Un assistant IA avec un contexte configurable et une base de connaissances.
+  </Card>
+
+  <Card title="Traduction" icon="language" href="/fr/ai/translate">
+    La traduction de messages avec DeepL, et la traduction automatique par salon.
+  </Card>
+</Columns>
+
+## Outils
+
+<Columns cols={2}>
+  <Card title="Journaux" icon="scroll" href="/fr/utilities/logging">
+    Envoie les événements du serveur (modifications, suppressions, arrivées, bans) vers des salons dédiés.
+  </Card>
+
+  <Card title="Bloqueur de pièces jointes" icon="file-slash" href="/fr/utilities/attachment-blocker">
+    Bloque certains types de fichiers sur tout le serveur ou par salon.
+  </Card>
+
+  <Card title="Don't @ me" icon="bell-slash" href="/fr/utilities/dont-at-me">
+    Avertis les utilisateurs qui mentionnent des rôles protégés.
+  </Card>
+
+  <Card title="Portail client" icon="user-gear" href="/fr/utilities/customer-portal">
+    Un panneau en libre-service qui donne aux membres accès à leurs comptes liés et intégrations.
+  </Card>
+
+  <Card title="Statut et infos" icon="circle-info" href="/fr/utilities/ping">
+    Les commandes de latence du bot, de temps de fonctionnement et d’informations sur les utilisateurs.
+  </Card>
+</Columns>

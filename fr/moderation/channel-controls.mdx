@@ -1,0 +1,67 @@
+---
+title: "Contrôles des salons"
+description: "Verrouiller des salons, appliquer des bannissements par salon et empêcher de contourner un bannissement en quittant puis en revenant."
+icon: "lock"
+---
+
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+Heimdall propose trois outils de sanction au niveau des salons : le verrouillage de salon, le bannissement de salon et le suivi des départs (leave-bans). Ils complètent les bannissements du serveur pour les cas où un bannissement complet n’est pas justifié, mais où il faut contrôler l’accès à certains salons ou le retour sur le serveur.
+
+## Verrouiller et déverrouiller des salons
+
+```
+/lock [channel] [reason] [duration]
+/unlock [channel]
+```
+
+Verrouiller un salon empêche les membres sans rôle d’exception explicite d’y envoyer des messages. Le salon reste visible, mais en lecture seule pour les membres concernés.
+
+| Option | Obligatoire | Description |
+|---|---|---|
+| `channel` | Non | Le salon à verrouiller. Par défaut, le salon actuel. |
+| `reason` | Non | Une raison publiée dans le salon au moment du verrouillage. |
+| `duration` | Non | Déverrouille automatiquement après cette durée (par exemple `2h`, `1d`). |
+
+Au verrouillage, un message système peut être publié dans le salon pour prévenir les membres. Au déverrouillage, un autre message indique que le salon est de nouveau ouvert.
+
+Les salons verrouillés sont suivis dans le tableau de bord sous <DashboardLink to="moderation/locked-channels">**Moderation > Locked Channels**</DashboardLink>, où le staff peut voir tous les salons verrouillés et les déverrouiller depuis l’interface.
+
+## Bannissements de salon
+
+```
+/channelban <user> [channel] [reason] [duration]
+```
+
+Bannit un membre précis d’un seul salon : il ne peut plus le lire ni y écrire. C’est un outil ciblé, le membre reste sur le serveur et accède normalement à tous les autres salons.
+
+| Option | Obligatoire | Description |
+|---|---|---|
+| `user` | Oui | Le membre à bannir du salon |
+| `channel` | Non | Le salon dont il est banni. Par défaut, le salon actuel. |
+| `reason` | Non | La raison du bannissement |
+| `duration` | Non | La durée du bannissement de salon (par exemple `7d`). Permanent par défaut. |
+
+Les bannissements de salon modifient les permissions spécifiques du salon. Quand la durée expire, la permission spécifique est retirée automatiquement. Tu peux voir et gérer les bannissements de salon actifs dans le tableau de bord sous <DashboardLink to="moderation/channel-bans">**Moderation > Channel Bans**</DashboardLink>.
+
+## Leave-bans
+
+Les leave-bans empêchent un membre d’esquiver un avertissement ou un mute en quittant le serveur puis en revenant. Quand ils sont activés, tout membre qui quitte le serveur est banni automatiquement pour la durée que tu fixes, sauf s’il a un rôle immunisé. Ça s’applique à chaque départ, pas seulement aux membres qui ont une sanction récente, donc configure les rôles immunisés avant de l’activer.
+
+### Configurer les leave-bans
+
+Ouvre <DashboardLink to="moderation/leave-bans">**Moderation \> Leave Bans**</DashboardLink> et active **Enable Ban on Leave**. Configure :
+
+- **Default Ban Duration** : la durée du bannissement automatique, ou permanent
+- **Ban Reason** : la raison enregistrée sur le bannissement
+- **Immune Roles** : les membres qui ont l’un de ces rôles ne sont jamais bannis à leur départ. Les bots sont toujours ignorés
+
+Les leave-bans sont enregistrés comme sanctions, pour que le dossier du membre indique la raison du bannissement.
+
+## Permissions requises
+
+| Action | Clé de permission |
+|---|---|
+| `/lock`, `/unlock` | `moderation.enforcement.lock_channels` |
+| `/channelban` | `moderation.enforcement.ban` |
+| Gérer les paramètres des leave-bans | `moderation.enforcement.manage_rules` |

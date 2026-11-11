@@ -1,0 +1,67 @@
+---
+title: "Controles de canal"
+description: "Como bloquear canais, aplicar banimentos por canal e impedir a evasão de banimento por quem sai e volta."
+icon: "lock"
+---
+
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+O Heimdall oferece três ferramentas de aplicação no nível do canal: bloqueio de canal, banimento de canal e o acompanhamento de banimento ao sair. Elas funcionam junto com os banimentos do servidor inteiro para lidar com situações em que um banimento total não se justifica, mas é preciso controlar o acesso a canais específicos ou a volta ao servidor.
+
+## Como bloquear e desbloquear canais
+
+```
+/lock [channel] [reason] [duration]
+/unlock [channel]
+```
+
+Bloquear um canal impede que membros sem cargos de exceção explícitos enviem mensagens. O canal continua visível, mas fica somente leitura para os membros afetados.
+
+| Opção | Obrigatória | Descrição |
+|---|---|---|
+| `channel` | Não | O canal a bloquear. O padrão é o canal atual. |
+| `reason` | Não | Um motivo publicado no canal quando ele é bloqueado. |
+| `duration` | Não | Desbloqueia automaticamente depois desse período (por exemplo, `2h`, `1d`). |
+
+Quando o canal é bloqueado, uma mensagem do sistema pode ser publicada nele para avisar os membros. Quando é desbloqueado, outra mensagem indica que o canal está aberto de novo.
+
+Os canais bloqueados aparecem no painel em <DashboardLink to="moderation/locked-channels">**Moderation > Locked Channels**</DashboardLink> (Moderação > Canais bloqueados), onde a staff vê todos os canais bloqueados no momento e pode desbloqueá-los pela interface.
+
+## Banimentos de canal
+
+```
+/channelban <user> [channel] [reason] [duration]
+```
+
+Bane um membro específico de um canal, tirando a capacidade dele de ler ou escrever ali. É uma ferramenta pontual: o membro continua no servidor e acessa todos os outros canais normalmente.
+
+| Opção | Obrigatória | Descrição |
+|---|---|---|
+| `user` | Sim | O membro a banir do canal |
+| `channel` | Não | O canal do qual banir. O padrão é o canal atual. |
+| `reason` | Não | O motivo do banimento |
+| `duration` | Não | Quanto tempo o banimento de canal dura (por exemplo, `7d`). O padrão é permanente. |
+
+Os banimentos de canal funcionam alterando as substituições de permissão do canal. Quando a duração acaba, a substituição é removida automaticamente. Você pode ver e gerenciar os banimentos de canal ativos no painel em <DashboardLink to="moderation/channel-bans">**Moderation > Channel Bans**</DashboardLink> (Moderação > Banimentos de canal).
+
+## Banimentos ao sair
+
+Os banimentos ao sair impedem que um membro fuja de uma advertência ou de um silenciamento saindo e voltando para o servidor. Quando estão ativados, qualquer membro que sair do servidor é banido automaticamente pelo tempo que você definir, a menos que tenha um cargo imune. Isso vale para toda saída, não só para membros com uma infração recente, então defina os cargos imunes antes de ativar.
+
+### Como configurar os banimentos ao sair
+
+Acesse <DashboardLink to="moderation/leave-bans">**Moderation \> Leave Bans**</DashboardLink> (Moderação > Banimentos ao sair) e ative **Enable Ban on Leave**. Configure:
+
+- **Default Ban Duration**: quanto tempo dura o banimento automático, ou se ele é permanente
+- **Ban Reason**: o motivo registrado no banimento
+- **Immune Roles**: membros com qualquer um desses cargos nunca são banidos ao sair. Bots são sempre ignorados
+
+Os banimentos ao sair são registrados como infrações, então o histórico do membro mostra o motivo do banimento.
+
+## Permissões necessárias
+
+| Ação | Chave de permissão |
+|---|---|
+| `/lock`, `/unlock` | `moderation.enforcement.lock_channels` |
+| `/channelban` | `moderation.enforcement.ban` |
+| Gerenciar as configurações de banimento ao sair | `moderation.enforcement.manage_rules` |

@@ -1,0 +1,42 @@
+---
+title: "Honeypot"
+description: "Como pegar bots de spam punindo quem publica em um canal onde ninguém deveria publicar."
+icon: "bug"
+---
+
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+Um honeypot é um canal onde nenhum membro de verdade publicaria. Quem publica ali é quase certamente um bot que entrou e começou a postar sem ler nada, então o bot age sobre ele na hora.
+
+Funciona porque bots de spam não leem nomes de canal, tópicos nem mensagens fixadas antes de postar. Uma pessoa vê um canal chamado "nao-poste-aqui" com um aviso fixado e segue em frente.
+
+## Como configurar
+
+`/honeypot channel add` define um canal, e `/honeypot channel remove` tira um canal da lista. `/honeypot status` mostra a configuração atual e `/honeypot toggle` liga e desliga a aplicação sem perder sua lista de canais.
+
+`/honeypot action` escolhe o que acontece com quem publicar:
+
+| Ação | Quando usar |
+| --- | --- |
+| **Ban** (banir) | A opção mais forte, para um canal que é claramente uma armadilha |
+| **Kick** (expulsar) | Permite que quem errou de verdade entre de novo |
+| **Mute** (silenciar) | Dá tempo para a staff olhar antes de decidir |
+
+Tudo também pode ser configurado na página <DashboardLink to="honeypot">**Honeypot**</DashboardLink> do painel.
+
+## Como fazer funcionar bem
+
+- **Deixe óbvio para uma pessoa que o canal é proibido.** Um nome claro, um tópico e uma mensagem fixada. A ideia é que as pessoas sejam avisadas e os bots não.
+- **Coloque o canal onde um bot vai encontrá-lo.** Um canal escondido onde membros novos não conseguem ver não pega nada.
+- **Considere começar com silenciar.** Banir é o mais eficaz e o menos tolerante. Começar com silenciar permite ver o que a armadilha realmente pega no seu servidor antes de torná-la permanente.
+
+As ações passam pelo mesmo fluxo de moderação das ações manuais, então aparecem no seu histórico de infrações e no log de moderação com o honeypot indicado como origem.
+
+## Permissões necessárias
+
+| Ação | Chave de permissão |
+| --- | --- |
+| Ver as configurações | `honeypot.view_config` |
+| Alterar os canais e a ação | `honeypot.manage_config` |
+
+O bot precisa de permissão para executar a ação que você escolher, e o cargo dele precisa ficar acima dos membros sobre os quais ele vai agir.

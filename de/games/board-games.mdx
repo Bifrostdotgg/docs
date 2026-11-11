@@ -1,0 +1,77 @@
+---
+title: "Brettspiele"
+description: "Interaktive Brettspiele in Discord spielen: 2048, Vier gewinnt, Memory, Tic-Tac-Toe, Schiffe versenken und Solitaire."
+icon: "chess-board"
+---
+
+Heimdall bringt sechs Brettspiele mit, die du komplett in Discord über interaktive Buttons spielst. Je nach Spiel gibt es einen Einzelspieler- oder einen Zweispielermodus.
+
+## Verfügbare Spiele
+
+### 2048
+
+```
+/2048
+```
+
+Das klassische Schiebepuzzle mit Zahlen. Ein 4x4-Raster aus nummerierten Feldern: Schieb die Felder in eine Richtung, und gleiche Zahlen verschmelzen. Erreich das Feld 2048, um zu gewinnen. Gespielt wird komplett mit Richtungs-Buttons. Einzelspieler.
+
+### Vier gewinnt
+
+```
+/connect4 [opponent]
+```
+
+Wirf farbige Scheiben in ein Raster mit 7 Spalten und 6 Reihen. Wer zuerst vier in einer Reihe hat (waagerecht, senkrecht oder diagonal), gewinnt. Spielbar allein gegen den Bot oder zu zweit.
+
+### Memory
+
+```
+/memory
+```
+
+Ein Spiel, bei dem du Kartenpaare findest. Auf dem Brett liegen verdeckte Karten; deck immer zwei auf einmal auf und finde die Paare. Finde alle Paare mit so wenigen Zügen wie möglich. Einzelspieler.
+
+### Tic-Tac-Toe
+
+```
+/tictactoe [opponent]
+```
+
+Der Klassiker: drei in einer Reihe auf einem 3x3-Raster. Spielbar allein gegen den Bot oder zu zweit.
+
+### Schiffe versenken
+
+```
+/battleship [opponent]
+```
+
+Das Strategiespiel auf hoher See. Platzier deine Schiffe auf einem 10x10-Raster und versuch, die Flotte deines Gegners zu versenken, bevor er deine versenkt. Spielbar zu zweit oder allein gegen den Bot.
+
+### Solitaire
+
+```
+/solitaire
+```
+
+Klassisches Klondike-Solitaire. Leg die Karten nach Farbe aufsteigend von Ass bis König auf die Ablagestapel. Einzelspieler.
+
+## Spiele zu zweit
+
+Bei Spielen mit Gegner gibst du das andere Mitglied mit der Option `opponent` an:
+
+```
+/connect4 opponent:@Username
+```
+
+Der Gegner bekommt eine Einladung, die er annehmen muss, bevor das Spiel startet. Antwortet er nicht innerhalb von 60 Sekunden, verfällt die Einladung.
+
+## Zeitlimit für Spiele
+
+Laufende Spiele enden, wenn innerhalb einer bestimmten Zeit kein Zug gemacht wird (je nach Spiel meist 5 bis 10 Minuten). Der Bot postet dann eine Nachricht, dass das Spiel wegen Inaktivität beendet wurde.
+
+## Erforderliche Berechtigungen
+
+| Aktion | Berechtigungsschlüssel |
+|---|---|
+| Brettspiele spielen | `games.use` (standardmäßig erlaubt) |

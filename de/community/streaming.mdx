@@ -1,0 +1,62 @@
+---
+title: "Streaming"
+description: "Eine Rolle für Mitglieder, solange sie auf Twitch, YouTube oder Kick live sind, die der Minecraft-Rollen-Sync ins Spiel mitnehmen kann."
+icon: "tower-broadcast"
+---
+
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+Mitglieder verknüpfen ihren Twitch-, YouTube- oder Kick-Account, und solange einer der verknüpften Accounts live ist, haben sie eine Rolle, die du auswählst. Endet der Stream, verschwindet die Rolle wieder. Jeder Livestream zählt, egal welches Spiel oder welche Kategorie.
+
+Da es eine ganz normale Discord-Rolle ist, reagiert alles, was schon auf Rollen reagiert, auch auf diese. Der Hauptgrund, sie einzuschalten, ist Minecraft: Ordne die Rolle im Rollen-Sync zu, und Streamer bekommen einen Rang, einen Tag oder ein Präfix im Spiel, solange sie live sind.
+
+## Bevor es funktioniert
+
+- Heimdall braucht die Berechtigung **Rollen verwalten**, und die Live-Rolle muss unter der höchsten Rolle von Heimdall stehen.
+- Die Live-Rolle darf keine Team-Berechtigungen tragen. Jeder, der einen Account verknüpft und live geht, bekommt sie. Deshalb lehnt Heimdall eine Rolle mit Berechtigungen wie Administrator, Server verwalten, Rollen verwalten, Mitglieder bannen oder Nachrichten verwalten ab, ebenso eine Rolle, für die irgendeine Dashboard-Berechtigung erlaubt ist.
+- Bei jeder Heimdall-Instanz muss der Betreiber die Anbieter eingerichtet haben. Ein Anbieter, der nicht eingerichtet ist, sagt das, wenn ein Mitglied ihn verknüpfen will.
+
+## Einrichtung
+
+Öffne im Dashboard <DashboardLink to="streaming">**Streaming**</DashboardLink>.
+
+| Einstellung | Beschreibung |
+| --- | --- |
+| **Enable streaming roles** (Streaming-Rollen aktivieren) | Schaltet die Funktion ein und fügt deinem Server den Befehl `/streaming` hinzu |
+| **Live role** (Live-Rolle) | Die Rolle, die Mitglieder haben, solange sie live sind |
+
+Um die Rolle nach Minecraft mitzunehmen, füge sie deinen Minecraft-Zuordnungen unter **Role sync** hinzu, mit der Richtung Discord nach Minecraft. Siehe [Minecraft](/de/integrations/minecraft).
+
+## So verknüpfen Mitglieder einen Account
+
+Ein Mitglied führt `/streaming link` aus und bekommt zwei Buttons, die nur es selbst sieht.
+
+- **Twitch or YouTube** meldet es mit Discord an und liest die Twitch- und YouTube-Accounts aus, die bereits mit seinem Discord-Profil verbunden sind (**User Settings \> Connections**). Nur Verbindungen, die Discord verifiziert hat, zählen, ein Mitglied kann also nur einen Account verknüpfen, der ihm wirklich gehört. Eine erneute Verknüpfung ersetzt seine Twitch- und YouTube-Verknüpfungen durch das, was sein Profil in diesem Moment zeigt. So fällt auch eine entfernte Verbindung wieder heraus.
+- **Kick** prüft zuerst seinen Discord-Account und meldet es dann bei Kick an. Kick ist kein Verbindungstyp von Discord und hat deshalb eine eigene Anmeldung.
+
+Die Buttons gelten 15 Minuten. `/streaming status` zeigt die Verknüpfungen eines Mitglieds und ob sie gerade live sind, und `/streaming unlink` entfernt alle.
+
+Verknüpfungen gehören zu einem Server. Ein Mitglied, das die Rolle auf zwei Servern haben will, verknüpft auf jedem.
+
+## Die Liste der verknüpften Accounts
+
+Die Seite <DashboardLink to="streaming">**Streaming**</DashboardLink> listet jedes Mitglied mit einem verknüpften Account auf, Mitglieder, die live sind, zuerst, jeweils mit einem Link zum Kanal. Das Team kann dort die Verknüpfung eines Mitglieds aufheben. Eine Verknüpfung für jemand anderen hinzufügen geht nicht, denn eine Verknüpfung bedeutet nur dann etwas, wenn das Mitglied bewiesen hat, dass ihm der Account gehört.
+
+## Der Haken: wie schnell sich die Rolle ändert
+
+Twitch meldet Heimdall sofort, wenn ein Stream startet oder endet, die Rolle folgt also innerhalb von Sekunden. Kick und YouTube werden per Timer geprüft, deshalb kann die Rolle ein paar Minuten hinterherhinken. YouTube wird umso seltener geprüft, je mehr Kanäle auf einer Instanz verknüpft sind, weil Google begrenzt, wie viele Abfragen pro Tag erlaubt sind.
+
+In Minecraft entscheidet der Modus des Rollen-Syncs, wann die Änderung im Spiel ankommt. **Straight away, over the bot connection** und **Straight away, over RCON** wenden sie sofort an. **On the player's next join** wartet, bis der Spieler sich neu verbindet. Ein Streamer, der schon online ist, sieht seinen Rang also erst nach dem Wiederbeitritt.
+
+Heimdall entfernt die Live-Rolle nur bei Mitgliedern, denen es sie selbst gegeben hat. Ein Mitglied, das die Rolle schon hatte, zum Beispiel weil das Team sie vergeben hat, behält sie, wenn sein Stream endet. Entfernt das Team die Rolle bei jemandem mitten im Stream, vergibt Heimdall sie erst beim nächsten Stream wieder.
+
+## Erforderliche Berechtigungen
+
+| Aktion | Berechtigungsschlüssel |
+| --- | --- |
+| Einstellungen ansehen | `streaming.config.view_config` |
+| Einstellungen ändern | `streaming.config.manage_config` |
+| Verknüpfte Accounts ansehen | `streaming.links.view_links` |
+| Verknüpfungen eines anderen Mitglieds aufheben | `streaming.links.manage_links` |
+
+Eigene Accounts zu verknüpfen, zu prüfen und die Verknüpfung aufzuheben braucht keine Berechtigung.

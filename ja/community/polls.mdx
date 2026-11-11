@@ -1,0 +1,50 @@
+---
+title: "投票"
+description: "単一選択、複数選択、順位付け、自由記述の回答で投票を実施する方法。"
+icon: "square-poll-vertical"
+---
+
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+投票は、リアクションを並べるだけのものではありません。4種類の回答形式があり、結果はリアルタイムで更新され、すべてをエクスポートできます。
+
+## 投票を作成する
+
+`/poll create` を実行するとウィザードが開き、質問、回答形式、選択肢、締め切り時刻を順に設定できます。定期的に行う投票なら、`/poll from-template` でウィザードを省略できます。ダッシュボードでは <DashboardLink to="polls/create">**Polls \> Create poll**</DashboardLink>（投票 > 投票を作成）を使います。
+
+| 回答形式 | 用途 |
+| --- | --- |
+| **Single choice**（単一選択） | 1人1つの選択肢。一般的な投票 |
+| **Multi-select**（複数選択） | 複数を選べます。「どれに参加しますか」のような質問に便利 |
+| **Ranked choice**（順位付け） | 選択肢に順位を付けます。即時決選投票方式で集計されるため、勝者は最大の少数派ではなく、本当の過半数の支持を得た選択肢になります |
+| **Free text or numeric**（自由記述または数値） | 選択肢が事前にわからないときの自由回答 |
+
+似た選択肢で票が割れて、人気のない選択肢が相対多数で勝ってしまいそうなときは、順位付けを使う価値があります。
+
+## 実施中
+
+結果は票が入るたびに更新されます。`/poll list` で実施中の投票を表示し、`/poll close` で投票を早めに締め切れます。
+
+投票者を表示するかどうかは独立した権限になっています。そのため、結果は公開しつつ、誰が何に投票したかはスタッフだけに、あるいは誰にも見せないようにできます。
+
+## 締め切った後
+
+締め切ると結果が投稿されます。通知を希望した人にはDMで知らせます。Discordの外で使いたい場合は、すべての結果をCSVでエクスポートできます。また、各投票を誰が作成、編集、締め切ったかが監査ログに記録されます。監査ログは、ダッシュボードの <DashboardLink to="polls/audit">**Polls \> Audit log**</DashboardLink>（投票 > 監査ログ）にあります。
+
+## テンプレート
+
+テンプレートには、投票の設定全体を保存できます。毎週同じ選択肢で投票しているなら、一度作成して <DashboardLink to="polls/create">**Polls \> Create poll**</DashboardLink> の **Save as template**（テンプレートとして保存）で保存し、以降は `/poll from-template` を使いましょう。保存したテンプレートは <DashboardLink to="polls/templates">**Polls \> Templates**</DashboardLink>（投票 > テンプレート）に一覧表示されます。
+
+## 必要な権限
+
+| 操作 | 権限キー |
+| --- | --- |
+| 投票する | `polls.vote`（デフォルトで全員に付与） |
+| 投票の作成 | `polls.create_poll` |
+| 投票の閲覧 | `polls.polls.view_polls` |
+| 誰が何に投票したかの閲覧 | `polls.polls.view_voters` |
+| 投票の締め切りと編集 | `polls.polls.manage` |
+| テンプレートの閲覧 | `polls.templates.view_templates` |
+| テンプレートの作成と編集 | `polls.templates.manage_templates` |
+
+`view_voters` は、あえて投票の閲覧とは別の権限にしています。合計を見ることと、各メンバーがどう投票したかを見ることは別物で、両方を一緒に付与した時点で、秘密投票は秘密ではなくなるからです。
