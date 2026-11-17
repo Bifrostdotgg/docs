@@ -23,8 +23,8 @@ Undo reverses exactly what one change did, and nothing else:
 | The change | What undo does |
 | --- | --- |
 | Edited some settings | Puts those fields back to what they were before |
-| Created something (a ticket category, an opener, a role button panel, a tag, a Minecraft offence type) | Deletes it |
-| Deleted a permission override | Puts the override back |
+| Created something (a ticket category, an opener, a role button panel) | Deletes it |
+| Deleted a permission override | Puts the override back, unless one has been set up again since |
 
 Fields the change did not touch are left alone, so undoing one person's edit never rolls back what somebody else changed in the same settings afterwards.
 
@@ -38,7 +38,9 @@ Before anything is sent, undo shows each field it would put back, what it would 
 - **Anything older than 30 days.**
 - **A change that has already been undone.** Each change can be undone once. If two people press Undo on the same change at the same moment, only one undo is sent.
 
-Some changes cannot be undone at all, and the row says why. For example, a deleted ticket category would come back with a new id, so its openers and tickets would no longer point at it. In that case, build it again by hand.
+Some changes cannot be undone at all, and the row says why. For example, a deleted ticket category would come back with a new id, so its openers and tickets would no longer point at it. In that case, build it again by hand. A new tag or Minecraft offence type cannot be undone either, because its name can be taken again by something created later; delete the tag or switch the type off instead.
+
+If a deleted permission override has been set up again since, undo refuses rather than overwrite the newer one. Change it by hand instead.
 
 ## Undoing an assistant proposal or an app's changes in one go
 
