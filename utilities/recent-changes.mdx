@@ -1,0 +1,59 @@
+---
+title: "Recent changes and undo"
+description: "Seeing what changed in the dashboard over the last 30 days, and putting it back."
+icon: "rotate-left"
+---
+
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+Recent changes lists every change made to your server's settings through the dashboard in the last 30 days, whoever made it: a staff member in the browser, the AI assistant, or an app connected over MCP. Most changes have an **Undo** button next to them, and the ones that do not say why.
+
+It exists because changes made quickly are the ones most worth being able to take back. That covers a setting changed by mistake, an assistant proposal that turned out wrong, and a connected app that did more than you expected.
+
+## Where to find it
+
+Navigate to <DashboardLink to="settings/audit">**Settings \> Audit Log**</DashboardLink> in the dashboard. Recent changes is the first tab. The full audit log, which keeps everything for 90 days but cannot undo anything, is the second.
+
+Use the filter at the top to show only changes made by people, by the assistant, or by MCP apps, or only the ones that can still be undone.
+
+## What undo puts back
+
+Undo reverses exactly what one change did, and nothing else:
+
+| The change | What undo does |
+| --- | --- |
+| Edited some settings | Puts those fields back to what they were before |
+| Created something (a ticket category, an opener, a role button panel, a tag, a Minecraft offence type) | Deletes it |
+| Deleted a permission override | Puts the override back |
+
+Fields the change did not touch are left alone, so undoing one person's edit never rolls back what somebody else changed in the same settings afterwards.
+
+### When a field has been changed again since
+
+Before anything is sent, undo shows each field it would put back, what it would go back to, and what it is now. A field that someone changed again after this change starts **unticked**, with the name of who changed it. If you tick it anyway, undo overwrites their later change too. Leave it unticked and only the other fields go back.
+
+### What undo never brings back
+
+- **Secrets.** Webhook URLs, tokens and API keys are never stored for undo. A changed secret is listed, but you have to enter the old one again yourself.
+- **Anything older than 30 days.**
+- **A change that has already been undone.** Each change can be undone once. If two people press Undo on the same change at the same moment, only one undo is sent.
+
+Some changes cannot be undone at all, and the row says why. For example, a deleted ticket category would come back with a new id, so its openers and tickets would no longer point at it. In that case, build it again by hand.
+
+## Undoing an assistant proposal or an app's changes in one go
+
+On a change the assistant made, **Undo whole proposal** undoes every change from that proposal that can still be undone. On a change an MCP app made, **Undo this app's changes from here on** undoes everything that app changed on this server from that point. Both go newest first and stop at the first change that cannot be undone, so an older change is never put back on top of a newer one that is still in place.
+
+The assistant and connected apps can undo changes too, with the `list_recent_changes`, `preview_undo` and `undo_change` tools. The assistant's undo is a proposal like any other change, so nothing happens until you apply it.
+
+## Who can see and undo what
+
+Recent changes needs the `dashboard.view_recent_changes` permission. On top of that, each person only sees, and can only undo, changes in the sections they are allowed to change themselves. A member who manages tickets sees ticket changes and nothing else. Undoing is a change like any other, so it needs the same permission the original change needed.
+
+Server owners and administrators see everything.
+
+| Action | Permission key |
+| --- | --- |
+| Opening Recent changes | `dashboard.view_recent_changes` |
+| Seeing and undoing a change | `dashboard.view_recent_changes` and the permission that change needed |
+| Opening the full audit log | `dashboard.manage_permissions` |
