@@ -4,6 +4,8 @@ description: "Notifying staff when a member enters a designated waiting room voi
 icon: "hourglass"
 ---
 
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
 The waiting room plugin monitors a voice channel you designate as a waiting room. When a member joins that channel, the bot posts a notification in a configured staff channel so that a staff member can attend to them. This is useful for servers that handle one-on-one voice support sessions, interviews, or other cases where a member needs to signal they are ready to talk.
 
 <Frame>
@@ -18,7 +20,7 @@ When the member leaves the waiting room, the bot updates or removes the notifica
 
 ## Setup
 
-Navigate to **Waiting Room \> Configuration** in the dashboard.
+Navigate to <DashboardLink to="waiting-room/config">**Waiting Room \> Configuration**</DashboardLink> in the dashboard.
 
 | Setting | Description |
 | --- | --- |

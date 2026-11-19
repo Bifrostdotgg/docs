@@ -4,6 +4,8 @@ description: "Recording which invite each member joined with and how many people
 icon: "user-plus"
 ---
 
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
 The invite tracker records which invite each new member used, credits the person who created it, and keeps a running total per member. It also adds placeholders you can use in your welcome message.
 
 ## Before you start
@@ -16,7 +18,7 @@ Tracking also only counts joins from the moment you enable it. Discord does not 
 
 ## Setting it up
 
-Navigate to **Invite Tracker** in the dashboard and turn on **Track invites**. That also adds `/invites` to your server. Optionally set a **join log channel**, which gets a line for each join saying who invited them.
+Navigate to <DashboardLink to="invites/config">**Invite Tracker**</DashboardLink> in the dashboard and turn on **Track invites**. That also adds `/invites` to your server. Optionally set a **join log channel**, which gets a line for each join saying who invited them.
 
 ## How the total is worked out
 
@@ -36,7 +38,7 @@ Each subtraction is a switch, because other invite bots disagree about them. Tur
 Two details worth knowing:
 
 - **Fake is judged at join time and never re-judged.** A member who was new when they joined stays counted as fake. Otherwise every total would quietly drift upward as accounts aged, and somebody would eventually be accused of losing invites they never lost.
-- **Rejoins do not count twice** by default. Leaving and rejoining on one invite is the easiest way to inflate a count and needs no second account. The rejoin is still recorded and visible, it just adds nothing.
+- **Rejoins do not count twice** by default. Leaving and rejoining on one invite is the easiest way to inflate a count and needs no second account. The rejoin is still recorded and visible in <DashboardLink to="invites/activity">**Invite Tracker \> Invites and Joins**</DashboardLink>, it just adds nothing.
 
 ## Commands
 
@@ -44,7 +46,7 @@ Two details worth knowing:
 | --- | --- |
 | `/invites view` | Anyone, for their own count |
 | `/invites view member:` | Needs the "check anyone" permission |
-| `/invites leaderboard` | Top ten inviters |
+| `/invites leaderboard` | Top ten inviters. The top 100 are in <DashboardLink to="invites/leaderboard">**Invite Tracker \> Leaderboard**</DashboardLink> |
 | `/invites create` | Staff, makes a labelled invite so campaigns can be told apart |
 | `/invites bonus` | Staff, adds or removes invites by hand |
 

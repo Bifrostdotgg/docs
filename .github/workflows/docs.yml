@@ -57,8 +57,24 @@ jobs:
             -o heimdall-features.json
           python3 -c "import json;d=json.load(open('heimdall-features.json'));print(f\"manifest: {len(d['plugins'])} features\")"
 
+      - name: Fetch Heimdall's dashboard link keys
+        # The keys `<DashboardLink to="...">` may use, generated from the dashboard's sidebar
+        # registry and committed beside the feature manifest. Same branch and token as above.
+        # A missing file fails the job rather than skipping the check: a link check that quietly
+        # does not run is how these links would rot.
+        env:
+          HEIMDALL_READ_TOKEN: ${{ secrets.HEIMDALL_READ_TOKEN }}
+          BRANCH: ${{ steps.heimdall-branch.outputs.branch }}
+        run: |
+          curl -fsSL \
+            -H "Authorization: Bearer $HEIMDALL_READ_TOKEN" \
+            -H "Accept: application/vnd.github.raw+json" \
+            "https://api.github.com/repos/Bifrostdotgg/Heimdall/contents/docs/generated/dashboard-links.json?ref=${BRANCH}" \
+            -o dashboard-links.json
+          python3 -c "import json;d=json.load(open('dashboard-links.json'));print(f\"dashboard links: {len(d['links'])} keys\")"
+
       - name: Check pages against the manifest
-        run: python3 scripts/check-against-manifest.py heimdall-features.json
+        run: python3 scripts/check-against-manifest.py heimdall-features.json dashboard-links.json
 
       - name: Reference pages are up to date with the manifest
         # The two generated pages are committed, so a manifest change that nobody regenerated

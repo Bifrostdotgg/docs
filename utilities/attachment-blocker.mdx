@@ -4,6 +4,8 @@ description: "Controlling which media types members can post, server-wide, per c
 icon: "file-slash"
 ---
 
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
 The attachment blocker decides which kinds of media members are allowed to post, and removes anything that breaks the rule. It works on four media types: **Images**, **Videos**, **GIFs** and **Audio**. You set a rule for the whole server, override it in the channels that need something different, and restrict individual members when one person is the problem.
 
 <Frame>
@@ -42,7 +44,7 @@ Configurations made before blacklist mode existed are whitelists, so nothing cha
 
 ## Server defaults
 
-The server default applies everywhere that has no override. Set it from **Attachment Blocker \> Global Settings** in the dashboard, or in Discord:
+The server default applies everywhere that has no override. Set it from <DashboardLink to="attachment-blocker/global">**Attachment Blocker \> Global Settings**</DashboardLink> in the dashboard, or in Discord:
 
 ```text
 /attachment-blocker setup type: Images mode: Whitelist timeout: 60
@@ -54,7 +56,7 @@ Each call adds **one** type to the list, so run it once per type you want on the
 
 ## Channel overrides
 
-A channel override replaces the server default in that channel, mode and all. Add one from **Attachment Blocker \> Channel Overrides**, or:
+A channel override replaces the server default in that channel, mode and all. Add one from <DashboardLink to="attachment-blocker/channels">**Attachment Blocker \> Channel Overrides**</DashboardLink>, or:
 
 ```text
 /attachment-blocker channel add channel: #media type: Videos mode: Blacklist
@@ -68,7 +70,7 @@ Two things to know:
 
 ## Temporary voice channels
 
-Temporary voice channels are created on demand, so they cannot be given an override by hand. Instead you set the rule on the opener that spawns them, from **Attachment Blocker \> TempVC Openers**. Every temporary channel that opener creates gets that rule.
+Temporary voice channels are created on demand, so they cannot be given an override by hand. Instead you set the rule on the opener that spawns them, from <DashboardLink to="attachment-blocker/tempvc">**Attachment Blocker \> TempVC Openers**</DashboardLink>. Every temporary channel that opener creates gets that rule.
 
 ## Bypass roles
 
@@ -100,7 +102,7 @@ In the panel you choose the types to block, whether it applies across the server
 - **Overrides the channel rule.** It applies whatever that channel allows.
 - **Tells the member when it ends.** They are DMed when it is lifted and when it expires.
 
-`/attachment-blocker user list` shows the active restrictions, `/attachment-blocker user unrestrict` and `/attachmentunban` lift one, and **Attachment Blocker \> User Restrictions** in the dashboard does all of it from the web.
+`/attachment-blocker user list` shows the active restrictions, `/attachment-blocker user unrestrict` and `/attachmentunban` lift one, and <DashboardLink to="attachment-blocker/restrictions">**Attachment Blocker \> User Restrictions**</DashboardLink> in the dashboard does all of it from the web.
 
 ## Timeouts and DMs
 

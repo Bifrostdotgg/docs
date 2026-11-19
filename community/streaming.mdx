@@ -4,6 +4,8 @@ description: "A role for members while they are live on Twitch, YouTube or Kick,
 icon: "tower-broadcast"
 ---
 
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
 Members link their Twitch, YouTube or Kick account, and while any linked account is live they hold a role you choose. When the stream ends the role comes off. Any live stream counts, whatever the game or category.
 
 Because it is an ordinary Discord role, everything that already reacts to roles reacts to this one. The main reason to turn it on is Minecraft: map the role in role sync and streamers get an in-game rank, tag or prefix while they are live.
@@ -16,7 +18,7 @@ Because it is an ordinary Discord role, everything that already reacts to roles 
 
 ## Setting it up
 
-Navigate to **Streaming** in the dashboard.
+Navigate to <DashboardLink to="streaming">**Streaming**</DashboardLink> in the dashboard.
 
 | Setting | Description |
 | --- | --- |
@@ -38,7 +40,7 @@ Links belong to one server. A member who wants the role in two servers links in 
 
 ## The linked accounts list
 
-The dashboard lists every member with a linked account, live members first, with a link to each channel. Staff can unlink a member from there. There is no way to add a link on somebody's behalf, because a link only means something when the member proved they own the account.
+The <DashboardLink to="streaming">**Streaming**</DashboardLink> page lists every member with a linked account, live members first, with a link to each channel. Staff can unlink a member from there. There is no way to add a link on somebody's behalf, because a link only means something when the member proved they own the account.
 
 ## The gotcha: how quickly the role changes
 

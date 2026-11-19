@@ -7,18 +7,21 @@ compared the prose against it, so this repo could be confidently wrong about som
 had renamed - and a wrong permission key is the worst kind, because Heimdall resolves an unknown
 key to *denied* and logs at info. A role assigned one looks configured and silently does nothing.
 
-Three checks:
+Four checks:
 
   1. Every permission-key-shaped string in a page exists in the manifest.
   2. Every slash command mentioned exists in the manifest.
   3. Every plugin declaring a docsPath has a page at that path.
+  4. Every dashboard deep link (`<DashboardLink to="...">`, or a raw `bot.bifrost.gg/go/...`
+     URL) names a key in Heimdall's `docs/generated/dashboard-links.json`, and every page using
+     the component imports it. Skipped only when that file is not passed.
 
 Deliberately conservative about what it treats as a claim. A false positive here trains people
 to ignore the check, which is worse than not having it, so it only inspects strings inside
 backticks and skips anything that looks like an example placeholder.
 
 Run from the docs repo root:
-    python3 scripts/check-against-manifest.py path/to/heimdall-features.json
+    python3 scripts/check-against-manifest.py path/to/heimdall-features.json [path/to/dashboard-links.json]
 """
 import json
 import os
@@ -26,6 +29,17 @@ import re
 import sys
 
 MANIFEST = sys.argv[1] if len(sys.argv) > 1 else "heimdall-features.json"
+DASHBOARD_LINKS = sys.argv[2] if len(sys.argv) > 2 else None
+
+# Dashboard deep links. The component's `to` must be a plain string literal so it can be checked
+# here; anything else (an expression, a missing `to`) is reported rather than silently skipped.
+DASHBOARD_LINK_TAG = re.compile(r"<DashboardLink\b([^>]*)>")
+DASHBOARD_LINK_TO = re.compile(r'\bto="([^"]*)"')
+DASHBOARD_LINK_IMPORT = re.compile(
+    r'^import\s*\{[^}]*\bDashboardLink\b[^}]*\}\s*from\s*"/snippets/dashboard-link\.jsx";?\s*$',
+    re.M,
+)
+RAW_DEEP_LINK = re.compile(r"bot\.bifrost\.gg/go(?:/([A-Za-z0-9_/-]*))?")
 
 # A key is at least two dot-separated lowercase segments. Matched only inside backticks.
 KEY_IN_CODE = re.compile(r"`([a-z][a-z0-9_]*(?:\.[a-z][a-z0-9_]*)+)`")
@@ -68,6 +82,20 @@ def load_manifest(path):
         return json.load(handle)
 
 
+def load_dashboard_links(path):
+    if path is None:
+        return None
+    if not os.path.exists(path):
+        sys.exit(f"dashboard links not found: {path}\nPass the path to dashboard-links.json")
+    with open(path, encoding="utf-8") as handle:
+        data = json.load(handle)
+    keys = set()
+    for link in data["links"]:
+        keys.add(link["key"])
+        keys.update(link.get("aliases", []))
+    return keys
+
+
 def collect(manifest):
     keys, commands, docs_paths = set(), {}, {}
     for plugin in manifest["plugins"]:
@@ -102,6 +130,8 @@ def mdx_files():
 def main():
     manifest = load_manifest(MANIFEST)
     keys, commands, docs_paths = collect(manifest)
+    link_keys = load_dashboard_links(DASHBOARD_LINKS)
+    deep_links_checked = 0
     problems = []
 
     generated = {"reference/commands.mdx", "reference/permission-keys.mdx"}
@@ -115,6 +145,11 @@ def main():
         with open(path, encoding="utf-8") as handle:
             text = handle.read()
 
+        if link_keys is not None and "<DashboardLink" in text and not DASHBOARD_LINK_IMPORT.search(text):
+            problems.append(
+                f'{rel}  uses <DashboardLink> without `import {{ DashboardLink }} from "/snippets/dashboard-link.jsx";`'
+            )
+
         lines = text.splitlines()
         for line_no, line in enumerate(lines, 1):
             window = lines[max(0, line_no - 1 - IGNORE_LOOKBACK) : line_no]
@@ -126,6 +161,20 @@ def main():
                 if NOT_KEYS.match(candidate) or candidate in keys:
                     continue
                 problems.append(f"{rel}:{line_no}  unknown permission key `{candidate}`")
+
+            if link_keys is not None:
+                for match in DASHBOARD_LINK_TAG.finditer(line):
+                    to = DASHBOARD_LINK_TO.search(match.group(1))
+                    deep_links_checked += 1
+                    if not to:
+                        problems.append(f'{rel}:{line_no}  <DashboardLink> needs a literal to="..."')
+                    elif to.group(1) not in link_keys:
+                        problems.append(f"{rel}:{line_no}  unknown dashboard link `{to.group(1)}`")
+                for match in RAW_DEEP_LINK.finditer(line):
+                    key = (match.group(1) or "").strip("/") or "overview"
+                    deep_links_checked += 1
+                    if key not in link_keys:
+                        problems.append(f"{rel}:{line_no}  unknown dashboard link `{key}`")
 
             for match in CMD_IN_CODE.finditer(line):
                 name = match.group(1)
@@ -163,6 +212,10 @@ def main():
         f"[docs-manifest] OK - checked {len(keys)} keys and {len(commands)} commands "
         f"against every page, and {len(docs_paths)} declared docsPath(s) all have one."
     )
+    if link_keys is None:
+        print("[docs-manifest] dashboard links NOT checked: no dashboard-links.json passed")
+    else:
+        print(f"[docs-manifest] {deep_links_checked} dashboard link(s) all name a real page.")
 
 
 if __name__ == "__main__":

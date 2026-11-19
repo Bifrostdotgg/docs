@@ -1,0 +1,60 @@
+---
+title: "HeimdallBot"
+description: "What HeimdallBot fetches from your website, why, and how to limit or block it."
+icon: "robot"
+---
+
+If you run a website and found **HeimdallBot** in your logs, this page is for you.
+
+```
+Mozilla/5.0 (compatible; HeimdallBot/2.0; +https://heimdall.gg/docs/crawler)
+```
+
+Heimdall is a Discord bot. Every Heimdall instance sends the same user agent, including servers running their own branded copy, so one rule covers all of them.
+
+## Why it visits
+
+HeimdallBot only fetches a page because a Discord server admin pointed it there. It does not wander the web looking for content.
+
+- **Knowledge base imports.** A server admin imports a page or deep-crawls a site so that [Odin](/ai/odin), Heimdall's AI assistant, can answer their members' questions from it. Usually it is their own documentation, wiki or help centre.
+- **Weekly re-checks.** Each page imported that way is checked about once a week to keep the copy current. The check sends `If-None-Match` and `If-Modified-Since`, so an unchanged page usually costs you one bodiless `304`.
+- **Watched sites.** An admin can ask for a site they imported to be watched for new pages. A watched site is re-crawled about once a week, visiting up to 100 pages, and at most 25 new pages are added each time.
+- **Link checks.** When someone posts a link in a server that uses the [attachment blocker](/utilities/attachment-blocker), Heimdall may look at that one page to tell whether it is a GIF or a video. It reads at most the first 256 KB, and remembers the answer for up to a day.
+
+## How it behaves
+
+- **It honours robots.txt** ([RFC 9309](https://www.rfc-editor.org/rfc/rfc9309)) for every knowledge base fetch, redirects included. A `HeimdallBot` group applies if you have one, otherwise your `*` group does.
+  - If robots.txt returns a 4xx, there is no robots.txt and every page may be fetched. The exception is `429 Too Many Requests`, which HeimdallBot takes as a reason to fetch nothing from your site that time.
+  - If it returns a 5xx or times out, HeimdallBot tries once more, then fetches nothing from your site that time.
+- **It spaces its requests out.** Each crawl, import or weekly check sends at most two requests a second to one site, and fewer if your robots.txt sets a `Crawl-delay`. Two of them running at once, for example two Discord servers importing your site at the same moment, are paced separately. A delay longer than 10 seconds is treated as 10.
+- **It honours `noindex` and `nofollow` while crawling.** That covers `<meta name="robots">`, `<meta name="HeimdallBot">` and the `X-Robots-Tag` header. Links marked `rel="nofollow"`, `ugc` or `sponsored` are never followed.
+- **A deep crawl stays small.** It stays on the one site, visits at most 100 pages, and stops after 5 minutes.
+- **It may ask for a Markdown version.** On documentation sites that serve one, such as Mintlify, GitBook and Docusaurus, it asks for the page's `.md` version first. This is usually smaller than the HTML.
+- **It does not run JavaScript, and does not log in.**
+
+The attachment blocker's link check does not read robots.txt. Like a link preview, it fetches a page because a person shared it. To stop it, block the user agent.
+
+## Blocking or limiting it
+
+To keep HeimdallBot off your whole site, add this to your robots.txt:
+
+```
+User-agent: HeimdallBot
+Disallow: /
+```
+
+To keep it out of part of your site, or slow it down:
+
+```
+User-agent: HeimdallBot
+Disallow: /private/
+Crawl-delay: 5
+```
+
+robots.txt is read once per job: a crawl, a batch of imports, or a weekly check. A new crawl obeys a change straight away, and the weekly checks obey it within a week. Pages already imported stay in that server's knowledge base, but are no longer refreshed from your site.
+
+You can also block the user agent at your server or firewall by matching `HeimdallBot`.
+
+## Contact
+
+If HeimdallBot is misbehaving on your site, or you need something robots.txt cannot express, email [hello@bifrost.gg](mailto:hello@bifrost.gg).

@@ -4,6 +4,8 @@ description: "Using slash commands to warn, ban, kick, mute, unban, and purge me
 icon: "gavel"
 ---
 
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
 Heimdall provides slash commands for all standard moderation actions. Each action creates an infraction record and notifies the affected member via direct message where possible.
 
 ## Warn
@@ -12,7 +14,7 @@ Heimdall provides slash commands for all standard moderation actions. Each actio
 /warn <user> <reason> [points] [expiry] [silent]
 ```
 
-Issues a warning to a member. The warning is recorded as an infraction with an optional point value. If a point value is not specified, it defaults to whatever you have set in the moderation settings.
+Issues a warning to a member. The warning is recorded as an infraction with an optional point value. If a point value is not specified, it defaults to 1.
 
 | Option | Required | Description |
 |---|---|---|

@@ -63,6 +63,7 @@
             "group": "Community",
             "pages": [
               "community/welcome",
+              "community/levels",
               "community/suggestions",
               "community/starboard",
               "community/role-buttons",
@@ -114,7 +115,8 @@
               "utilities/ping",
               "utilities/selfmute",
               "utilities/clock",
-              "utilities/affiliate"
+              "utilities/affiliate",
+              "crawler"
             ]
           }
         ]

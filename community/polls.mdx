@@ -4,11 +4,13 @@ description: "Running polls with single-choice, multi-select, ranked-choice, or 
 icon: "square-poll-vertical"
 ---
 
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
 Polls go beyond a set of reactions. Four answer types are available, results update live, and everything can be exported.
 
 ## Creating one
 
-`/poll create` opens a wizard that walks through the question, the answer type, the options, and the closing time. `/poll from-template` skips the wizard for a poll you run regularly.
+`/poll create` opens a wizard that walks through the question, the answer type, the options, and the closing time. `/poll from-template` skips the wizard for a poll you run regularly. In the dashboard, use <DashboardLink to="polls/create">**Polls \> Create poll**</DashboardLink>.
 
 | Answer type | Use it for |
 | --- | --- |
@@ -27,11 +29,11 @@ Whether voters are visible is its own permission, so a poll can be public in its
 
 ## After it closes
 
-Closing posts the results. Anybody who asked to be told is notified by DM. The full result set can be exported as CSV for anything you want to do outside Discord, and an audit log records who created, edited, and closed each poll.
+Closing posts the results. Anybody who asked to be told is notified by DM. The full result set can be exported as CSV for anything you want to do outside Discord, and an audit log records who created, edited, and closed each poll. Find it under <DashboardLink to="polls/audit">**Polls \> Audit log**</DashboardLink> in the dashboard.
 
 ## Templates
 
-Templates save a whole poll setup. If you run a weekly vote with the same options, build it once and use `/poll from-template` after that.
+Templates save a whole poll setup. If you run a weekly vote with the same options, build it once, save it with **Save as template** on <DashboardLink to="polls/create">**Polls \> Create poll**</DashboardLink>, and use `/poll from-template` after that. <DashboardLink to="polls/templates">**Polls \> Templates**</DashboardLink> lists your saved templates.
 
 ## Required permissions
 

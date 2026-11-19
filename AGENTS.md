@@ -54,6 +54,23 @@ The Heimdall build enforces the first two steps, so they are not optional:
 A `docsPath` pointing at a page that does not exist yet is the intended state while a
 feature is in flight. It is a promissory note the build can see.
 
+## Linking to a dashboard page
+
+When a page tells the reader to open somewhere in the dashboard, link it with the
+`DashboardLink` snippet instead of only naming the path:
+
+```mdx
+import { DashboardLink } from "/snippets/dashboard-link.jsx";
+
+Navigate to <DashboardLink to="tickets/categories">**Tickets \> Categories**</DashboardLink> in the dashboard.
+```
+
+The link opens `bot.bifrost.gg/go/<key>`: the dashboard signs the reader in, asks which of
+their servers to open (skipped when they have one), and lands on that page. Valid keys are in
+Heimdall's `docs/generated/dashboard-links.json`, generated from the dashboard's sidebar, and
+CI fails on a key that is not there or a page that uses the component without importing it.
+Link the first mention of a page, not every one. Only `to="..."` as a plain string is checkable.
+
 ## Terminology
 
 - **Feature**, not plugin. "Plugin" is Heimdall's internal word for the same thing and means
