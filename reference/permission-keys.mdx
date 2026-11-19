@@ -26,7 +26,7 @@ denied and records it in its log at info level. Nothing in the dashboard marks i
 so the only symptom is a role that appears configured and cannot use the feature. If a
 permission you granted seems to do nothing, check the key against this page first.
 
-Heimdall recognises **206 keys** across **41 features**.
+Heimdall recognises **207 keys** across **41 features**.
 
 ## Affiliate
 
@@ -124,6 +124,7 @@ Heimdall recognises **206 keys** across **41 features**.
 | `cases.manage` | **Manage Cases**. Link related cases, and remove anyone's notes. |
 | `cases.manage_bans_page` | **Manage Bans Page**. Publish the public bans page, choose who sees what on it, and reset its link. |
 | `cases.manage_evidence` | **Manage Case Evidence**. Add evidence to the cases they can read, and remove it. |
+| `cases.search_bans_page_reasons` | **Search Reasons on Bans Page**. On the bans page, the search box also finds entries by the text of their reason. |
 | `cases.view_discord` | **View Discord Cases**. Read cases for Discord moderation actions. |
 | `cases.view_hidden` | **View Hidden Cases**. Read cases for punishments that were issued hidden. |
 | `cases.view_minecraft` | **View Minecraft Cases**. Read cases for Minecraft punishments and offenses. |
@@ -200,7 +201,7 @@ Heimdall recognises **206 keys** across **41 features**.
 
 | Permission key | Grants |
 | --- | --- |
-| `giveaways.config.manage` | **Manage Settings**. Change the guild timezone, giveaway defaults, and entry-DM toggles. |
+| `giveaways.config.manage` | **Manage Settings**. Change the server timezone, giveaway defaults, and entry-DM toggles. |
 | `giveaways.config.view` | **View Settings**. View the giveaways Settings tab. |
 | `giveaways.create` | **Create Giveaways**. Start new giveaways via /giveaway start or the dashboard. |
 | `giveaways.enter` | **Enter Giveaways**. Click the Enter button to join a running giveaway. |
@@ -275,7 +276,7 @@ Heimdall recognises **206 keys** across **41 features**.
 | `minecraft.punishments.issue` | **Issue punishments**. Ban, mute, warn or kick a Minecraft player from the dashboard or Discord. |
 | `minecraft.punishments.manage` | **Manage punishment settings**. Switch offenses-only / hook / replace, root command aliases, screens, and the Minecraft appeal form. |
 | `minecraft.punishments.revoke` | **Revoke punishments**. Unban, unmute or otherwise revoke an active punishment. |
-| `minecraft.punishments.silent` | **Override silent punishments**. Issue a punishment against the guild's silent-by-default setting. |
+| `minecraft.punishments.silent` | **Override silent punishments**. Issue a punishment against the Discord server's silent-by-default setting. |
 | `minecraft.punishments.view` | **View punishments**. View punishment history and the public bans page configuration. |
 | `minecraft.punishments.view_hidden` | **View hidden punishments**. See hidden punishments in full instead of a placeholder. |
 | `minecraft.server.manage_config` | **Manage Configuration**. Edit Minecraft plugin configuration. |

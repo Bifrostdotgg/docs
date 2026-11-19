@@ -1,6 +1,6 @@
 ---
 title: "Levels and XP"
-description: "XP from messages and voice, levels and level curves, reward roles, and importing XP from Amari or another bot."
+description: "XP from messages and voice, XP rules and multipliers, rank card and leaderboard images, weekly and monthly XP, card styles, reward roles, and importing XP from Amari, MEE6 or another bot."
 icon: "chart-line"
 ---
 
@@ -22,7 +22,69 @@ Switch on **Enable engagement** and save. Nothing is tracked before that, and XP
 | **Announcement channel** | Where level-ups and achievement unlocks are posted. Optional |
 | **Announce level-ups** | Post a message when a member reaches a new level |
 
-Members check their level with `/economy level`, and `/economy leaderboard` has a **Level** category. Staff can set a member's level or XP from `/economy engagement-admin` or from <DashboardLink to="games/member-admin">**Games \> Member Admin**</DashboardLink>; an admin change never posts a level-up message.
+Staff can set a member's level or XP from `/economy engagement-admin` or from <DashboardLink to="games/member-admin">**Games \> Member Admin**</DashboardLink>; an admin change never posts a level-up message.
+
+## XP rules
+
+The **XP rules** card decides where XP is earned and who earns it.
+
+| Setting | What it does |
+| --- | --- |
+| **No voice XP while deafened** | A member who is deafened (by themselves or by staff) earns no voice XP. On by default |
+| **People needed in a voice channel** | Voice XP is only earned while at least this many people are in the channel, not counting bots, or deafened members when the rule above is on. Default 2, so nobody earns alone. Set it to 1 to let members earn on their own |
+| **No-XP channels** | Messages and voice time here earn nothing. A category covers every channel in it, and a channel covers its threads. Up to 100 |
+| **No-XP roles** | Members with any of these roles earn nothing anywhere. Up to 50 |
+| **XP multipliers** | Boost or reduce XP for a role or a channel, from 0.1x to 5x. When several match, the highest one applies; they do not stack. Up to 50 |
+
+A multiplier applies to message and voice XP alike. Message XP is rounded to the nearest whole number (1.5x on 15 XP pays 23), and voice XP carries any fraction over to the next minute, so nothing is lost over a call.
+
+## Rank cards and leaderboards
+
+`/economy level` shows a member's rank card: an image with their avatar, name, level, progress to the next level, server rank, and their rank this week. Members who have not earned XP this week have no weekly rank. If the image cannot be drawn, a text card is shown instead.
+
+`/economy leaderboard` has three level categories:
+
+| Category | Ranks members by |
+| --- | --- |
+| **Level** | All-time XP |
+| **XP this week** | XP earned since Monday 00:00 UTC |
+| **XP this month** | XP earned since the 1st of the month, 00:00 UTC |
+
+They are shown as an image, ten members a page, with **Previous** and **Next** buttons for the person who ran the command. Members on the same XP share a rank. Pages go up to 50 (the top 500 members). The dashboard's level leaderboard has the same **All time**, **This week** and **This month** tabs.
+
+Weekly and monthly XP only count XP earned by chatting and voice, from when this feature arrived. An import or a staff change to a member's XP does not add to them, and setting a member's XP lower caps their weekly and monthly XP at the new value, so a member reset for farming drops off the weekly board.
+
+## Card styles
+
+Members style their own rank card with `/economy card`:
+
+| Command | What it does |
+| --- | --- |
+| `/economy card style [theme] [accent]` | Pick one of the themes (Heimdall, Midnight, Forest, Sunset, Ocean, Sakura, Mono) and an accent colour as hex, such as `#c084fc`. `default` puts the theme's own accent back. Free for everyone |
+| `/economy card background <image>` | Upload your own background. Needs Premium and one of the roles staff picked |
+| `/economy card reset` | Back to the default style, background included |
+
+Each change replies, only to you, with a preview of your card.
+
+### Uploaded backgrounds
+
+<Note>
+  Uploaded backgrounds are a Premium feature. Themes and accent colours are free.
+</Note>
+
+Pick who can upload under **Rank cards** on the Engagement page, in **Roles that can upload a background**. With no roles picked, which is the default, nobody can upload. A server that later leaves Premium keeps the backgrounds already uploaded; members just cannot upload new ones.
+
+An upload can be a PNG or JPEG image, up to 8 MB, with each side between 200 and 4,096 pixels. It is cropped to the card's shape and stored as a fresh image. Uploading again replaces the old background.
+
+Staff deal with an image that should not be shown:
+
+| Command | What it does |
+| --- | --- |
+| `/economy card remove <user>` | Remove a member's background |
+| `/economy card block <user>` | Remove it and stop that member uploading again. Their theme and accent stay |
+| `/economy card unblock <user>` | Let them upload again |
+
+A member's own `/economy card reset` does not lift a block. When Heimdall is removed from your server, uploaded backgrounds are deleted with the rest of the server's data once the usual grace period ends.
 
 ## Level reward roles
 
@@ -262,9 +324,31 @@ Imported levels do not post level-up messages. Reward roles for the new levels a
 
 If the preview says some members' level in the export does not match their XP, that is usually Amari not having updated a level yet. On Amari's curve the XP is used; on any other curve, the level is.
 
+## Importing from MEE6
+
+MEE6 shows a server's leaderboard through its own website, and Heimdall can read the pages it serves. Choose **MEE6** as the source in the **Import XP** card.
+
+<Steps>
+  <Step title="Make the leaderboard public">
+    In MEE6's dashboard, open the Leaderboard settings and turn on **Make my server's leaderboard public**. Without it, MEE6 shows an error instead of players.
+  </Step>
+  <Step title="Save each page">
+    Open `https://mee6.xyz/api/plugins/levels/leaderboard/<server id>?limit=1000&page=0` in your browser (the Import XP card shows the link with your server's ID filled in) and save the page as a `.json` file. If it lists 1,000 players, change `page=0` to `page=1` and save that too, and carry on until a page has fewer.
+  </Step>
+  <Step title="Import">
+    Add all the files, then preview and import exactly as for Amari above.
+  </Step>
+</Steps>
+
+MEE6's curve is Heimdall's default, so on a server that has not changed its curve every member keeps exactly their MEE6 XP and level. If your server is on another curve, **Switch this server to MEE6's level curve first** is offered and ticked; without it, members keep their MEE6 level and their XP is set to the start of that level here.
+
+<Note>
+  This is MEE6's own leaderboard data, which MEE6 does not document and can change at any time.
+</Note>
+
 ## Importing from other bots
 
-Choose **CSV or JSON file** as the source to import from MEE6 or any other bot that can give you a list of members and their XP or level. Members are matched by Discord user ID, so the list must use IDs, not usernames.
+Choose **CSV or JSON file** as the source to import from any other bot that can give you a list of members and their XP or level. Members are matched by Discord user ID, so the list must use IDs, not usernames.
 
 **CSV** needs a header row naming the columns. The header is not case sensitive:
 
@@ -325,9 +409,10 @@ An import or curve change that crosses many levels at once does not announce the
 
 | Action | Permission key |
 | --- | --- |
-| Opening the engagement settings, editing XP rates and reward roles | `games.manage` |
+| Opening the engagement settings, editing XP rates, XP rules, reward roles and upload roles | `games.manage` |
 | Importing XP, changing the level curve, and seeing or cancelling level reward jobs | `games.engagement_import` |
 | Setting a member's level or XP | `games.manage` |
-| Checking your own level | `games.use` |
+| Removing a member's card background, blocking or unblocking uploads | `games.manage` |
+| Checking your own level, the leaderboards, and styling your own card | `games.use` |
 
 Importing and changing the curve need both `games.manage` (to open the page) and `games.engagement_import`. Grant the import key deliberately: one wrong import can change every member's level.

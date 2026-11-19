@@ -13,7 +13,7 @@ Commands marked **opt in** are only registered in servers that have enabled the 
 They are genuinely absent until then rather than hidden, so do not expect to see them
 before switching the feature on.
 
-Heimdall registers **68 commands** with **275 subcommands** across
+Heimdall registers **68 commands** with **281 subcommands** across
 **37 features**.
 
 ## Affiliate
@@ -198,6 +198,7 @@ Permission keys, which must be copied exactly
 - `cases.manage` (Manage Cases)
 - `cases.manage_bans_page` (Manage Bans Page)
 - `cases.manage_evidence` (Manage Case Evidence)
+- `cases.search_bans_page_reasons` (Search Reasons on Bans Page)
 - `cases.view_discord` (View Discord Cases)
 - `cases.view_hidden` (View Hidden Cases)
 - `cases.view_minecraft` (View Minecraft Cases)
@@ -302,6 +303,12 @@ Heimdall Coins, levels and achievements
 | `/economy achievements list` |
 | `/economy achievements revoke` |
 | `/economy balance` |
+| `/economy card background` |
+| `/economy card block` |
+| `/economy card remove` |
+| `/economy card reset` |
+| `/economy card style` |
+| `/economy card unblock` |
 | `/economy claim` |
 | `/economy coins give` |
 | `/economy coins remove` |
@@ -655,7 +662,7 @@ Unlock a locked channel, restoring its previous permissions
 
 ### `/unmute`
 
-Remove a member's timeout / mute and cancel any scheduled reapply
+Remove a member's mute and cancel any scheduled reapply
 
 ### `/warn`
 
