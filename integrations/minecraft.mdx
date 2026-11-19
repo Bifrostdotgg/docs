@@ -203,6 +203,17 @@ Each tab has its own address, so `.../minecraft/settings#role-sync` opens on Rol
 
 The setup asks for **Your staff role**, and you can change or remove it afterwards under **In Discord**. Everyone with that Discord role can open the Minecraft pages, see each server and its live status, and post status cards in Discord (`minecraft.server.manage_status`). It does not let them approve whitelist requests, change settings or open a server console: grant those per role under <DashboardLink to="settings/roles">**Settings \> Role Permissions**</DashboardLink>.
 
+### Supported servers
+
+One plugin jar runs on all of these:
+
+| Platform | Versions | Java |
+| --- | --- | --- |
+| Paper or Spigot, or a compatible fork | 1.8.8 and newer | 8 or newer |
+| Folia or Canvas | Any | Whatever the server needs (21 for current Folia) |
+| Velocity proxy | 3.4.0 and newer | 17 or newer |
+| BungeeCord or Waterfall proxy | Any | Whatever the proxy build needs (17 for BungeeCord builds from 2025 on, 8 for older ones) |
+
 ## Rules
 
 <DashboardLink to="minecraft/rules">**Minecraft \> Rules**</DashboardLink> is where you define what counts as an offense on your Minecraft server and how repeat offenses escalate. Each rule is an offense type - griefing, chat spam, and so on - with a tier ladder: the first breach might warn, a later one might kick, and a further one might hand off to your ban plugin or to native punishments, depending on your punishment mode under Enforcement.
