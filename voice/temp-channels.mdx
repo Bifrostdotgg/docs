@@ -55,6 +55,20 @@ Members can also rename, set a user limit, or lock their temporary channel using
 
 Navigate to <DashboardLink to="tempvc/active">**Temp VC \> Active Channels**</DashboardLink> in the dashboard to see all currently active temporary channels - who created them, how many members are in them, and how long they have been active.
 
+## Leaderboard
+
+<DashboardLink to="tempvc/leaderboard">**Temp VC \> Leaderboard**</DashboardLink> ranks the longest-running temporary channels in your server. Every temporary channel is recorded when it closes, with its name, who created it, when it opened and closed, and how long it lasted. Channels that are still open are ranked alongside the closed ones, so you can watch a long-running channel climb the board as it goes.
+
+The open time is read from the channel itself, so it is exact. The top 100 channels are kept; a channel that closes with a shorter run than all of them is not recorded.
+
+If a channel was deleted while the bot was offline, the bot only finds out when it comes back, so its close time is shown as "by" that moment and its duration as "up to".
+
+### Adding a channel from before the leaderboard
+
+Channels that closed before the leaderboard existed were never recorded. To add one, select **Add past channel** and enter its name and when it closed. If you have the channel's ID, paste it: the open time is filled in exactly from the ID. You can find the ID in an old "Temp VC Created" message in your log channel, if the Temporary Voice log category was set up. Without an ID, enter the open time yourself.
+
+Entries added this way are marked **Added by hand**. Any entry can be removed with the delete button next to it, which removes it from the board and does not touch the channel.
+
 ## Required permissions
 
 | Action | Permission key |
@@ -63,3 +77,5 @@ Navigate to <DashboardLink to="tempvc/active">**Temp VC \> Active Channels**</Da
 | Viewing configuration | `tempvc.view_config` |
 | Changing configuration | `tempvc.manage_config` |
 | Managing channels (e.g. force-deleting) | `tempvc.manage_channels` |
+| Viewing the leaderboard | `tempvc.view_config`, `tempvc.manage_channels` or `tempvc.manage_config` |
+| Adding or removing leaderboard entries | `tempvc.manage_config` |
