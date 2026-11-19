@@ -14,17 +14,22 @@ The Minecraft integration connects your Discord server to one or more Minecraft 
 
 ## Dashboard navigation
 
-The Minecraft feature has seven pages in the dashboard sidebar:
+The Minecraft feature has eight pages in the dashboard sidebar:
 
 | Page | What is on it |
 | --- | --- |
 | <DashboardLink to="minecraft/networks">**Networks**</DashboardLink> | Your servers, who is on them, and what just happened |
+| <DashboardLink to="minecraft/whitelist">**Whitelist**</DashboardLink> | Who can join your servers, and how they get on the list |
 | <DashboardLink to="minecraft/players">**Players**</DashboardLink> | The roster, the join queue, and every player profile |
 | <DashboardLink to="minecraft/rules">**Rules**</DashboardLink> | What counts as an offense and how it escalates |
 | <DashboardLink to="minecraft/history">**History**</DashboardLink> | Everything that happened to a player, by time |
 | <DashboardLink to="minecraft/enforcement">**Enforcement**</DashboardLink> | How Heimdall punishes, and what the public sees |
 | <DashboardLink to="minecraft/bridge">**Chat Bridge**</DashboardLink> | Relay in-game chat into Discord channels, and back |
-| <DashboardLink to="minecraft/settings">**Settings**</DashboardLink> | Guild-wide linking, RCON, role sync, alerts and messages |
+| <DashboardLink to="minecraft/settings">**Settings**</DashboardLink> | Linking, role sync, your staff role, alerts, RCON and messages, for the whole Discord server |
+
+With one network, the sidebar lists your servers under Networks. With two or more, it lists each network, and each network has a page of its own with its servers, its join queue and its roster.
+
+After setup, the Networks page shows a **More you can set up** card listing the optional pieces you have not turned on yet (the linking panel, role sync, the chat bridge, a status card in Discord, and rules), each with a link to the page that sets it up. It only lists what your permissions let you open, it goes away once everything on it is done, and **Hide this** dismisses it for your browser.
 
 ## Account linking
 
@@ -35,6 +40,7 @@ A link ties one Minecraft name to one Discord account. Members start one from Di
 The panel is a Discord message with **Link Account**, **Unlink Account** and **My Account** buttons. Post it in any of these ways:
 
 - The last step of Minecraft setup offers to post it.
+- <DashboardLink to="minecraft/settings">**Minecraft \> Settings**</DashboardLink>, on the **Linking** tab: the **Linking panel** card shows where the panel is posted and posts it to a channel you pick. Posting happens straight away, without the page's Save.
 - <DashboardLink to="settings/messages">**Settings \> Messages**</DashboardLink>, on the **Account linking panel**: **Post** sends it to a channel you pick. Posting into the channel it is already in updates that message; posting somewhere else adds a copy there and leaves the others where they are (see [Panels posted in more than one channel](/dashboard#panels-posted-in-more-than-one-channel)). You can also rewrite the panel's text there and keep its buttons.
 - `/minecraft-setup panel` from Discord.
 
@@ -62,18 +68,18 @@ On a network that lets anyone join, **/linkdiscord** needs plugin 3.0.0-rc.13 or
 
 ### Letting anyone join
 
-Each network's policy, on its page under <DashboardLink to="minecraft/networks">**Minecraft \> Networks**</DashboardLink>, has **Anyone can join, linking is optional**. With it on, nobody is turned away, the whitelist is switched off on that network's servers, and players who want their Discord roles in game link as above. The rest of the network policy takes effect again when you turn it off.
+<DashboardLink to="minecraft/whitelist">**Minecraft \> Whitelist**</DashboardLink> has **Anyone can join, linking is optional** as one of its four choices (see [Who can join](#who-can-join)). With it chosen, nobody is turned away, the whitelist is switched off on that network's servers, and players who want their Discord roles in game link as above. Everyone who links is still added to the list, so nobody is locked out if you pick another choice later.
 
 Once linked, Heimdall can:
 
-- Whitelist the member, automatically or after staff approval, depending on the network's policy
+- Whitelist the member, automatically or after staff approval, depending on [who can join](#who-can-join)
 - Remove them from the whitelist if they lose access
-- Sync their Discord roles to groups in game (<DashboardLink to="minecraft/settings">**Minecraft \> Settings \> Role sync**</DashboardLink>)
+- Sync their Discord roles to groups in game (<DashboardLink to="minecraft/settings">**Minecraft \> Settings**</DashboardLink>, on the **Role sync** tab)
 - Display their Minecraft username alongside their Discord profile in the customer portal
 
 ### Linked role
 
-Heimdall can give every member who has linked a Minecraft account a Discord role, for example to open a channel only for players. Turn it on in <DashboardLink to="minecraft/settings">**Minecraft \> Settings**</DashboardLink>, under **Who can link, and how**, and pick the role.
+Heimdall can give every member who has linked a Minecraft account a Discord role, for example to open a channel only for players. Turn it on in <DashboardLink to="minecraft/settings">**Minecraft \> Settings**</DashboardLink>, on the **Linking** tab under **How linking works**, and pick the role.
 
 - The role is given as soon as the link is confirmed, whether or not the player is whitelisted yet. It works the same with the whitelist on or with linking only.
 - It comes off when the member unlinks their last Minecraft account, or when staff delete the player for good.
@@ -88,11 +94,34 @@ The bot needs the **Manage Roles** permission and a role above the linked role. 
 
 Navigate to <DashboardLink to="minecraft/players">**Minecraft \> Players**</DashboardLink> in the dashboard to view the full whitelist status - who is linked, who is pending verification, and who has been manually approved or denied.
 
-### Automatic whitelisting and approval
+### Who can join
 
-Each network's policy, under <DashboardLink to="minecraft/networks">**Minecraft \> Networks**</DashboardLink>, decides what a link grants: **Auto-whitelist** whitelists a linked member on that network without review, and **Require staff approval** holds requests in a queue on the <DashboardLink to="minecraft/players">**Players**</DashboardLink> page for a decision. The whitelist is pushed to your servers by the Heimdall plugin, not through RCON.
+<DashboardLink to="minecraft/whitelist">**Minecraft \> Whitelist**</DashboardLink> asks one question, **Who is allowed on your servers?**, with four answers. It is the same question the setup asks, so what you picked there is what is selected here.
 
-How members link, how many accounts each may hold, and how long a code stays valid are under <DashboardLink to="minecraft/settings">**Minecraft \> Settings \> Who can link, and how**</DashboardLink>.
+| Choice | What happens |
+| --- | --- |
+| **Anyone who links their Discord account** | A member who links is whitelisted straight away, without review. |
+| **People I approve** | A member who links, or a stranger who tries to join, files a request. It waits on the <DashboardLink to="minecraft/players">**Players**</DashboardLink> page until staff decide. |
+| **Only people I add myself** | Trying to join never files a request. Anyone staff have not added is turned away with a message. A member who has linked can still ask from their account panel in Discord. |
+| **Anyone can join, linking is optional** | The whitelist is off. Linking is only for role sync. |
+
+Changing the choice never takes access away from someone who already has it.
+
+Under the choice, the page shows only the settings that choice uses:
+
+- **Take access away when someone leaves your Discord**, with the message they see when they try to join afterwards. Shown for every choice except **Anyone can join**.
+- **More options** holds what happens when someone who is not on the list tries to join: file a request automatically, or only kick them with a message. It opens by itself when the stored setting is not the choice's usual one.
+- **Players must link a Discord account before they can join** is one setting for the whole Discord server. With it off, a player staff added by name can join without ever confirming who they are in Discord.
+
+Seeing and changing this page needs `minecraft.server.manage_config`. The whitelist is pushed to your servers by the Heimdall plugin, not through RCON.
+
+#### More than one whitelist
+
+A network is a set of servers that share a whitelist. It does not have to match your proxy. Every Discord server starts with one network, and **Add a network** on the Whitelist page creates another, for when some servers need different rules, such as a staff server or a private world.
+
+With two or more networks, the **Whitelist scope** card at the bottom of the page chooses between one shared list for every server and a list per network. While the list is shared, the page shows one answer, and it applies everywhere. Once each network has its own, a picker at the top of the page switches between them and each network answers the question separately.
+
+How members link, how many accounts each may hold, and how long a code stays valid are under <DashboardLink to="minecraft/settings">**Minecraft \> Settings**</DashboardLink>, on the **Linking** tab.
 
 ```text
 /import-whitelist
@@ -152,22 +181,29 @@ Channel filtering needs a Heimdall plugin build with ChatControl support on each
 
 ## RCON
 
-RCON lets you run commands on the Minecraft server directly from Discord. Configure the connection in <DashboardLink to="minecraft/settings">**Minecraft \> Settings \> RCON**</DashboardLink> with your server's RCON host, port, and password. RCON access is limited to members with the appropriate Heimdall permission.
+RCON lets you run commands on the Minecraft server directly from Discord. Configure the connection in <DashboardLink to="minecraft/settings">**Minecraft \> Settings**</DashboardLink>, on the **Connection** tab under **RCON**, with your server's RCON host, port, and password. RCON access is limited to members with the appropriate Heimdall permission.
 
 ## Minecraft server setup
 
 Servers are added under <DashboardLink to="minecraft/networks">**Minecraft \> Networks**</DashboardLink>: add a server, install the Heimdall plugin on it, and claim it with the code the dashboard gives you. The setup walks through each step and ends by offering to post the account-linking panel.
 
-Guild-wide settings are under <DashboardLink to="minecraft/settings">**Minecraft \> Settings**</DashboardLink>:
+The **Your servers** card on that page also holds **Get the plugin**, and any setup code that has not been run yet is listed directly under it.
 
-| Card | What it holds |
+Settings for the whole Discord server are under <DashboardLink to="minecraft/settings">**Minecraft \> Settings**</DashboardLink>, in five tabs. It is one form with one Save, so you can change things on several tabs and save once. If a save is refused because of a field on another tab, the save bar names the tab and that tab is marked.
+
+| Tab | What it holds |
 | --- | --- |
-| **Server address** | The address shown to members when they are told to join |
-| **Who can link, and how** | Whether a link is required to join, self-unlinking, accounts per member, code lifetime, reminders |
+| **Linking** | The linking panel and where it is posted, self-unlinking, accounts per member, the linked role, code lifetime, reminders |
 | **Role sync** | Discord roles mapped to groups in game |
-| **RCON** | Host, port and password for running commands |
-| **Player list command** | Which server or network `/playerlist` shows |
-| **Messages** | What players see in game, and a link to edit the account-linking panel |
+| **In Discord** | Your staff role, server alerts, and which server or network `/playerlist` shows |
+| **Connection** | The address shown to members when they are told to join, RCON, and which page Minecraft opens on |
+| **Messages** | What players see in game when they are let in or turned away |
+
+Each tab has its own address, so `.../minecraft/settings#role-sync` opens on Role sync.
+
+### Staff role
+
+The setup asks for **Your staff role**, and you can change or remove it afterwards under **In Discord**. Everyone with that Discord role can open the Minecraft pages, see each server and its live status, and post status cards in Discord (`minecraft.server.manage_status`). It does not let them approve whitelist requests, change settings or open a server console: grant those per role under <DashboardLink to="settings/roles">**Settings \> Role Permissions**</DashboardLink>.
 
 ## Rules
 
