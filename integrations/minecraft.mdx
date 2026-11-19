@@ -101,16 +101,16 @@ Navigate to <DashboardLink to="minecraft/players">**Minecraft \> Players**</Dash
 | Choice | What happens |
 | --- | --- |
 | **Anyone who links their Discord account** | A member who links is whitelisted straight away, without review. |
-| **People I approve** | A member who links, or a stranger who tries to join, files a request. It waits on the <DashboardLink to="minecraft/players">**Players**</DashboardLink> page until staff decide. |
-| **Only people I add myself** | Trying to join never files a request. Anyone staff have not added is turned away with a message. A member who has linked can still ask from their account panel in Discord. |
+| **People I approve** | A member who links waits on the <DashboardLink to="minecraft/players">**Players**</DashboardLink> page until staff decide. |
+| **Only people I add myself** | Anyone staff have not added is turned away with a message. A member who links still shows up on the **Players** page for staff to add, so with one shared whitelist this works the same as **People I approve**. |
 | **Anyone can join, linking is optional** | The whitelist is off. Linking is only for role sync. |
 
-Changing the choice never takes access away from someone who already has it.
+Changing the choice does not remove anyone from the whitelist. Moving away from **Anyone can join** turns the whitelist back on, so players who are not on it are turned away from then on.
 
 Under the choice, the page shows only the settings that choice uses:
 
 - **Take access away when someone leaves your Discord**, with the message they see when they try to join afterwards. Shown for every choice except **Anyone can join**.
-- **More options** holds what happens when someone who is not on the list tries to join: file a request automatically, or only kick them with a message. It opens by itself when the stored setting is not the choice's usual one.
+- **More options** appears only when each network has its own whitelist. It decides what happens when a linked member with no request on that network tries to join it: file a request automatically, or only kick them with a message and leave asking to their account panel in Discord.
 - **Players must link a Discord account before they can join** is one setting for the whole Discord server. With it off, a player staff added by name can join without ever confirming who they are in Discord.
 
 Seeing and changing this page needs `minecraft.server.manage_config`. The whitelist is pushed to your servers by the Heimdall plugin, not through RCON.
